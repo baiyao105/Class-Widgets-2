@@ -1,2 +1,2 @@
 # Class-Widgets-2
-Class Widgets™ 2 Project, 0%.
+Class Widgets™ 2 Project, Launch.
