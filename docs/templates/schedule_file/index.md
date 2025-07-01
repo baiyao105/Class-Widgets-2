@@ -1,0 +1,71 @@
+# Schedule File Template
+ Class Widgets 2, Schedule File Template.
+
+## Overview
+In Class Widgets 2, we still use JSON as the format for the schedule file.
+But now we improved the format to make it 
+more readable and easier to maintain:
+
+```json
+{
+  "meta": {
+    "id": "",
+    "version": 1,
+    "maxWeekCycle": 2,
+    "startDate": "2026-09-01"
+  },
+  
+  "subjects": [
+    {
+      "id": "math",
+      "name": "Mathematics",
+      "teacher": "Prof. Smith",
+      "icon": "ic_fluent_ruler_24_regular",
+      "location": "Room 9101",
+      "isLocalClassRoom": true
+    }
+  ],
+  
+  "days": [
+    {
+      "id": "Monday-All",
+      "dayOfWeek": 1,
+      "weeks": "all",
+      "entries": [
+        {
+          "id": "",
+          "type": "class",
+          "subjectId": "math",
+          "startTime": "10:00",
+          "endTime": "12:00"
+        },
+        {
+          "id": "",
+          "type": "break",
+          "title": "Break 1",
+          "startTime": "10:00",
+          "endTime": "12:00"
+        },
+        {
+          "id": "",
+          "type": "activity",
+          "title": "Meeting",
+          "startTime": "14:00",
+          "endTime": "15:30"
+        }
+      ]
+    },
+    {
+      "id": "Tuesday-Even",
+      "dayOfWeek": 2,
+      "weeks": [2],
+      "entries": []
+    },
+    {
+      "id": "2026-09-01",
+      "date": "2026-09-01",
+      "entries": []
+    }
+  ]
+}
+```
