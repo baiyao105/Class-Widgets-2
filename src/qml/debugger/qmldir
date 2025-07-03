@@ -1,0 +1,8 @@
+module Debugger
+
+# Components
+VarStatus 1.0 components/VarStatus.qml
+
+# Contents
+Overview 1.0 contents/Overview.qml
+Dashboard 1.0 contents/Dashboard.qml
