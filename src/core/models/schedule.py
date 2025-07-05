@@ -1,5 +1,5 @@
 from dataclasses import dataclass
-from datetime import datetime
+from datetime import datetime, timedelta
 from typing import Optional, List, Union
 from enum import Enum
 
@@ -83,6 +83,57 @@ class DayEntry:
         ]
 
         return sorted(next_entries, key=lambda e: e.start_time)
+
+    def get_remaining_time(self, now: Optional[datetime] = None) -> timedelta:
+        """
+        获取剩余时间/活动开始倒计时
+        :param now:
+        :return:
+        """
+        now = now or datetime.now()
+        current = self.get_current_entry(now)
+
+        if current:  # 当前活动倒计时
+            end_time = datetime.strptime(current.end_time, "%H:%M").time()
+            end_dt = now.replace(hour=end_time.hour, minute=end_time.minute, second=0, microsecond=0)
+            return max(end_dt - now, timedelta(0))
+        upcoming = self.get_next_entries(now)
+        if upcoming:  # 下一活动开始
+            next_start = datetime.strptime(upcoming[0].start_time, "%H:%M").time()
+            next_dt = now.replace(hour=next_start.hour, minute=next_start.minute, second=0, microsecond=0)
+            return max(next_dt - now, timedelta(0))
+
+        return timedelta(0)
+
+    def get_current_status(self, now: Optional[datetime] = None) -> Optional[EntryType]:
+        """
+        获取当前状态
+        :param now:
+        :return:
+        """
+        now = now or datetime.now()
+        current = self.get_current_entry(now)
+        if current:
+            return current.type
+        return EntryType.FREE
+
+    def get_current_subject(self, subjects: List[Subject], now: Optional[datetime] = None) -> Optional[Subject]:
+        """
+        获取当前正在进行的课程对应的 Subject
+        :param subjects:
+        :param now: 当前时间
+        :return: 匹配到的 Subject 或 None
+        """
+        now = now or datetime.now()
+        current = self.get_current_entry(now)
+
+        if not current:
+            return None
+        if current.type in {EntryType.CLASS, EntryType.ACTIVITY} and current.subject_id:
+            for subject in subjects:
+                if subject.id == current.subject_id:
+                    return subject
+        return None
 
 
 # 元信息

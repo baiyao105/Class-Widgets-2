@@ -59,7 +59,7 @@
     },
     {
       "id": "Friday-All",
-      "dayOfWeek": 5,
+      "dayOfWeek": 6,
       "weeks": "all",
       "entries": [
         {

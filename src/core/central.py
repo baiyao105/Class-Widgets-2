@@ -1,7 +1,7 @@
 from pathlib import Path
 from typing import Optional
 
-from PySide6.QtCore import QObject, QCoreApplication, Property, Signal
+from PySide6.QtCore import QObject, QCoreApplication, Property, Signal, Slot
 from loguru import logger
 
 from src.core import CONFIGS_PATH
@@ -59,22 +59,29 @@ class AppCentral(QObject):  # Class Widgets 的中枢
     def globalConfig(self):  # 全局配置
         return global_config.config
 
-    # private methods
-    def _load_schedule(self):  # 加载课程表
-        self.current_schedule_path = Path(
-            CONFIGS_PATH / "schedules" / global_config["schedule"]["current_schedule"]
-        ).with_suffix(".json")  # 获取路径
-        self.current_schedule_filename = self.current_schedule_path.name
+    @Slot()
+    def reloadSchedule(self):
+        logger.info(f"Force Reload schedule: {self.current_schedule_filename}")
+        self._load_schedule(force=True)
 
-        self.current_schedule_parser = ScheduleParser(path=self.current_schedule_path)
-        # 试解析
-        try:
-            self.schedule = self.current_schedule_parser.load()
-        except FileNotFoundError:
-            logger.warning("Schedule file not found, creating a new one...")
-            # TODO: 创建新课表 / 错误处理
-        except Exception as e:
-            logger.error(f"Load schedule failed: {e}")
+    # private methods
+    def _load_schedule(self, force=False):  # 加载课程表
+        path = Path(CONFIGS_PATH / "schedules" / global_config["schedule"]["current_schedule"]).with_suffix(".json")
+
+        if path != self.current_schedule_path or force:
+            self.current_schedule_path = path  # 获取路径
+            self.current_schedule_filename = self.current_schedule_path.name
+
+            self.current_schedule_parser = ScheduleParser(path=self.current_schedule_path)
+            # 试解析
+            try:
+                self.schedule = self.current_schedule_parser.load()
+                logger.info(f"Loaded schedule: {self.current_schedule_path}")
+            except FileNotFoundError:
+                logger.warning("Schedule file not found, creating a new one...")
+                # TODO: 创建新课表 / 错误处理
+            except Exception as e:
+                logger.error(f"Load schedule failed: {e}")
 
     def _load_runtime(self):
         self.runtime.update(self.schedule)

@@ -9,6 +9,8 @@ Window {
     title: "Class Widgets Debugger"
     width: 800
     height: 600
+    minimumWidth: 425
+    minimumHeight: 400
     visible: true
 
     color: {
@@ -43,10 +45,10 @@ Window {
             }
         }
 
-        // 概览
-        Overview {}
-
         // 面板
         Dashboard {}
+
+        // 概览
+        Overview {}
     }
 }
