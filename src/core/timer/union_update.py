@@ -3,6 +3,7 @@ from datetime import datetime, timedelta
 
 
 # 统一更新定时器
+
 class UnionUpdateTimer(QObject):
     tick = Signal()  # 每秒对齐 tick 一次
 
@@ -12,8 +13,6 @@ class UnionUpdateTimer(QObject):
         self._timer.setSingleShot(True)
         self._timer.timeout.connect(self._on_timeout)
 
-        self.interval = 1000  # 1s
-
     def start(self):
         self._align_and_start()
 
@@ -22,11 +21,12 @@ class UnionUpdateTimer(QObject):
 
     def _on_timeout(self):
         self.tick.emit()
-        self._align_and_start()  # 对齐下一秒
+        self._align_and_start()
 
     def _align_and_start(self):
         now = datetime.now()
-        next_tick = (now + timedelta(seconds=1)).replace(microsecond=0)
-        delay_ms = int((next_tick - now).total_seconds() * self.interval)
-
+        passed_ms = now.microsecond // 1000
+        delay_ms = 1000 - passed_ms
+        if delay_ms < 5:
+            delay_ms += 1000
         self._timer.start(delay_ms)

@@ -1,9 +1,11 @@
+from PySide6.QtWidgets import QApplication
+
 from .json_loader import JsonLoader
 from .calculator import get_cycle_week, get_week_number
 from uuid import uuid4
 
 
-# ============================== Parser =======================================
+# Parser
 def generate_id(prefix: str = "id") -> str:
     return f"{prefix}_{uuid4().hex}"
 
@@ -19,3 +21,7 @@ def to_dict(obj):
         return {k: to_dict(v) for k, v in obj.items()}
     else:
         return obj
+
+def qsTr(text: str):
+    print(__name__)
+    return QApplication.translate(__name__,text)
