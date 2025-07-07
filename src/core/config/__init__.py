@@ -6,6 +6,7 @@ from src.core import CONFIGS_PATH
 DEFAULT_CONFIG = {
     "schedule": {
         "current_schedule": "default",  # without suffix
+        "preparation_time": 2,  # minutes
     },
     "app": {
         "dev_mode": False,

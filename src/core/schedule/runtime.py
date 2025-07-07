@@ -4,12 +4,15 @@ from typing import Optional, List
 from PySide6.QtCore import QObject, Property, Signal
 from loguru import logger
 
+from src.core.config import global_config
 from src.core.models import DayEntry, Entry, MetaInfo, EntryType, Subject
 from src.core.models import ScheduleData
-from src.core.utils import to_dict, get_cycle_week, get_week_number
+from src.core.notification import NotificationLevel
+from src.core.utils import to_dict, get_cycle_week, get_week_number, qsTr
 
 
 class ScheduleRuntime(QObject):
+    notify = Signal(str, dict, str)  # entry_type, subject, title
     updated = Signal()
 
     def __init__(self, schedule: ScheduleData):
@@ -25,6 +28,7 @@ class ScheduleRuntime(QObject):
         # SCHEDULE
         self.schedule_meta: Optional[MetaInfo] = None  # 日程元数据
         self.current_day: Optional[DayEntry] = None  # 当前天的所有日程
+        self.previous_entry: Optional[Entry] = None  # 上一个日程(检测日程变更)
         self.current_entry: Optional[Entry] = None  # 当前正在进行的日程
         self.next_entries: Optional[List[Entry]] = None  # 接下来的日程
         self.remaining_time: Optional[timedelta] = None  # 剩余时间
@@ -115,6 +119,7 @@ class ScheduleRuntime(QObject):
     def update(self, schedule: ScheduleData = None):
         self._update_schedule(schedule)
         self._update_time()
+        self._update_notify()
         self.updated.emit()
 
     def _update_schedule(self, schedule: ScheduleData):
@@ -140,7 +145,27 @@ class ScheduleRuntime(QObject):
         self.current_week = get_week_number(self.schedule.meta.start_date, self.current_time)
         self.current_week_of_cycle = get_cycle_week(self.current_week, self.schedule.meta.max_week_cycle)
 
-    # For QML
-    # @Slot(result=int)
-    # def get_current_time(self) -> datetime:
-    #     return int(self.current_time.timestamp())
+    def _update_notify(self):
+        # 活动变更节点
+        if self.previous_entry != self.current_entry:
+            self.previous_entry = self.current_entry
+            logger.info(f"Notify: status changed to {self.current_status.value}; {self.previous_entry}")
+            self.notify.emit(self.current_status.value, self.current_subject, self.current_title)
+
+        # 预备铃
+        if (
+            self.next_entries and len(self.next_entries) > 0 and
+            self.current_status in {EntryType.FREE, EntryType.PREPARATION}
+        ):
+            next_entry = self.next_entries[0]
+            next_start = datetime.strptime(next_entry.start_time, "%H:%M")
+            next_start = datetime.combine(self.current_time.date(), next_start.time())
+            prep_min = global_config.config.get("schedule").get("preparation_time") or 2  # 准备时间
+
+            if next_start - timedelta(minutes=prep_min) == self.current_time.replace(microsecond=0):  # 调整当前精度……
+                logger.info(f"Notify: status changed to {EntryType.PREPARATION.value}; {next_entry}")
+                self.notify.emit(
+                    EntryType.PREPARATION.value,
+                    to_dict(next_entry.get_subject(self.schedule.subjects) if self.schedule.subjects else None),
+                    next_entry.title if next_entry else None
+                )

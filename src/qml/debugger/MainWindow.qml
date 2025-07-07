@@ -4,7 +4,7 @@ import QtQuick.Layouts
 import RinUI
 
 
-Window {
+ApplicationWindow {
     id: mainWindow
     title: "Class Widgets Debugger"
     width: 800
@@ -20,6 +20,24 @@ Window {
             return "#eee"
         }
     }
+
+    // notification signal from AppCentral.notification.notify
+    Item {
+        id: notificationLayer
+        property var level: [Severity.Info, Severity.Success, Severity.Warning, Severity.Error]
+
+        Connections {
+            target: AppCentral.notification
+            onNotify: (icon, level, title, message) => {
+                floatLayer.createInfoBar({
+                    severity: notificationLayer.level[level],
+                    title: title,
+                    text: message
+                })
+            }
+        }
+    }
+
 
     FluentPage {
         anchors.fill: parent

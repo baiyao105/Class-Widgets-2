@@ -41,8 +41,8 @@
           "id": "",
           "type": "activity",
           "title": "Meeting",
-          "startTime": "14:00",
-          "endTime": "15:30"
+          "startTime": "16:21",
+          "endTime": "22:30"
         }
       ]
     },
@@ -59,7 +59,7 @@
     },
     {
       "id": "Friday-All",
-      "dayOfWeek": 6,
+      "dayOfWeek": 7,
       "weeks": "all",
       "entries": [
         {
@@ -73,15 +73,22 @@
           "id": "",
           "type": "break",
           "title": "Break 1",
-          "startTime": "10:00",
-          "endTime": "12:00"
+          "startTime": "12:00",
+          "endTime": "12:10"
         },
         {
           "id": "",
           "type": "activity",
           "title": "Meeting",
-          "startTime": "14:00",
+          "startTime": "12:50",
           "endTime": "15:30"
+        },
+        {
+          "id": "",
+          "type": "activity",
+          "title": "Study",
+          "startTime": "16:19",
+          "endTime": "22:30"
         }
       ]
     }

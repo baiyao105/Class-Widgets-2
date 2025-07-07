@@ -7,6 +7,7 @@ from loguru import logger
 from src.core import CONFIGS_PATH
 from src.core.config import global_config, DEFAULT_CONFIG, verify_config
 from src.core.models import ScheduleData
+from src.core.notification import Notification
 from src.core.parser import ScheduleParser
 from src.core.schedule import ScheduleRuntime
 from src.core.timer import UnionUpdateTimer
@@ -28,6 +29,7 @@ class AppCentral(QObject):  # Class Widgets 的中枢
         self.app_instance = QCoreApplication.instance()
         self.union_update_timer = UnionUpdateTimer()
         self.runtime = ScheduleRuntime(self.schedule)
+        self._notification = Notification()
 
     def run(self):  # 运行
         global_config.load_config(DEFAULT_CONFIG)  # 加载配置
@@ -54,6 +56,10 @@ class AppCentral(QObject):  # Class Widgets 的中枢
     @Property(QObject, notify=updated)
     def scheduleRuntime(self):  # 运行时
         return self.runtime
+
+    @Property(QObject, notify=updated)
+    def notification(self):
+        return self._notification
 
     @Property(dict, notify=updated)
     def globalConfig(self):  # 全局配置
@@ -85,5 +91,6 @@ class AppCentral(QObject):  # Class Widgets 的中枢
 
     def _load_runtime(self):
         self.runtime.update(self.schedule)
+        self.runtime.notify.connect(self._notification.push_activity)
         self.union_update_timer.tick.connect(self.update)
         self.union_update_timer.start()  # 启动定时器 (interval=1000)

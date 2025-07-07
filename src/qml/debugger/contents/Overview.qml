@@ -9,6 +9,50 @@ ColumnLayout {
         typography: Typography.BodyStrong
         text: "Overview"
     }
+
+    SettingExpander {
+        Layout.fillWidth: true
+        icon: "ic_fluent_alert_badge_20_regular"
+        title: "Notifications"
+        description: "Debug"
+
+        SettingItem {
+            title: "Send notifications"
+            // 此 SettingItem 没有描述
+            content: ColumnLayout {
+                Layout.fillWidth: true
+                ComboBox {
+                    id: notificationLevel
+                    Layout.fillWidth: true
+                    model: ["Info", "Announcement", "Warning", "System"]
+                }
+                TextField {
+                    id: notificationTitle
+                    Layout.fillWidth: true
+                    placeholderText: "Title"
+                }
+                TextField {
+                    id: notificationText
+                    Layout.fillWidth: true
+                    placeholderText: "Text"
+                }
+
+                Button {
+                    highlighted: true
+                    text: "Send"
+                    onClicked: {
+                        AppCentral.notification.push(
+                            "ic_fluent_alert_20_regular",  // icon
+                            notificationLevel.currentIndex,  // level
+                            notificationTitle.text,  // title
+                            notificationText.text  // text
+                        )
+                    }
+                }
+            }
+        }
+    }
+
     SettingExpander {
         Layout.fillWidth: true
         icon: "ic_fluent_info_20_regular"

@@ -12,6 +12,24 @@ class EntryType(str, Enum):
     BREAK = "break"
     ACTIVITY = "activity"
     FREE = "free"
+    PREPARATION = "preparation"
+
+
+class WeekType(str, Enum):
+    ALL = "all"
+
+
+# FUNCTIONS
+def is_week_matched(week: int, cycle_week: int, weeks: Union[WeekType, List[int], int, None]) -> bool:
+    if weeks is None:
+        return False
+    if weeks == WeekType.ALL:
+        return True
+    if isinstance(weeks, list):
+        return week in weeks
+    if isinstance(weeks, int):
+        return weeks == cycle_week
+    return False
 
 
 # 科目
@@ -35,6 +53,17 @@ class Entry:
     subject_id: Optional[str] = None  # 当类型为 activity 时，指定 subject_id
     title: Optional[str] = None  # break / activity 用，可覆盖 subject
 
+    def get_subject(self, subjects: List[Subject]) -> Optional[Subject]:
+        """
+        获取当前活动对应的 Subject
+        :return:
+        """
+        if self.type in {EntryType.CLASS, EntryType.ACTIVITY} and self.subject_id:
+            for subject in subjects:
+                if subject.id == self.subject_id:
+                    return subject
+        return None
+
 
 # 天
 @dataclass
@@ -44,7 +73,7 @@ class DayEntry:
 
     # 以下二选一：
     day_of_week: Optional[int] = 1  # 1~7 表示星期一到星期日
-    weeks: Union[str, List[int], None] = None  # str "all"（暂时只想得到这个） 或 list [1, 2, 3]（第x到x周） 或 [1] 表示每x周
+    weeks: Union[WeekType, List[int], int, None] = None  # WeekType:ALL（暂时只想得到这个） 或 list:[1, 2, 3]（第x到x周） 或 int:1 表示每x周
 
     date: Optional[str] = None  # 指定具体日期，如 "2026-09-01"
 
@@ -164,17 +193,16 @@ class ScheduleData:
         week_number = get_week_number(self.meta.start_date, date)
         cycle_week = get_cycle_week(week_number, self.meta.max_week_cycle)
 
-        # 优先匹配 date 字段
+        # 优先匹配具体日期
         for day in self.days:
             if day.date == date_str:
                 return day
 
-        # 没有则匹配星期
+        # 其次匹配星期和周期条件
         for day in self.days:
             if day.day_of_week != weekday:
                 continue
-            if day.weeks is None or day.weeks == "all":
+            if is_week_matched(week_number, cycle_week, day.weeks):
                 return day
-            if isinstance(day.weeks, list) and cycle_week in day.weeks:
-                return day
+
         return None
