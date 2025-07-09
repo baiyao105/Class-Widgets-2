@@ -21,7 +21,3 @@ def to_dict(obj):
         return {k: to_dict(v) for k, v in obj.items()}
     else:
         return obj
-
-def qsTr(text: str):
-    print(__name__)
-    return QApplication.translate(__name__,text)
