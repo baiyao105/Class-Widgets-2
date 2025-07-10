@@ -8,7 +8,7 @@ from src.core.config import global_config
 from src.core.models import DayEntry, Entry, MetaInfo, EntryType, Subject
 from src.core.models import ScheduleData
 from src.core.notification import NotificationLevel
-from src.core.utils import to_dict, get_cycle_week, get_week_number, qsTr
+from src.core.utils import to_dict, get_cycle_week, get_week_number
 
 
 class ScheduleRuntime(QObject):

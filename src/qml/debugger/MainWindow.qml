@@ -13,13 +13,13 @@ ApplicationWindow {
     minimumHeight: 400
     visible: true
 
-    color: {
-        if (Theme.isDark) {
-            return "#333"
-        } else {
-            return "#eee"
-        }
-    }
+    // color: {
+    //     if (Theme.isDark()) {
+    //         return "#333"
+    //     } else {
+    //         return "#eee"
+    //     }
+    // }
 
     // notification signal from AppCentral.notification.notify
     Item {
