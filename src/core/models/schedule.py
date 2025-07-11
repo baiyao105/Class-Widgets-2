@@ -111,7 +111,7 @@ class DayEntry:
             if datetime.strptime(entry.start_time, "%H:%M").time() > now_time
         ]
 
-        return sorted(next_entries, key=lambda e: e.start_time)
+        return sorted(next_entries, key=lambda e: datetime.strptime(e.start_time, "%H:%M").time())
 
     def get_remaining_time(self, now: Optional[datetime] = None) -> timedelta:
         """
