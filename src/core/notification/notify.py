@@ -7,7 +7,7 @@ from src.core.models import EntryType
 
 
 class NotificationLevel(Enum):
-    INFO = 0  # 插件推送
+    INFO = 0  # 插件推送等一般消息
     ANNOUNCEMENT = 1  # 上下课提醒...
     WARNING = 2  # 比如软件更新
     SYSTEM = 3  # 内部使用

@@ -59,14 +59,14 @@
     },
     {
       "id": "Friday-All",
-      "dayOfWeek": 7,
+      "dayOfWeek": 5,
       "weeks": "all",
       "entries": [
         {
           "id": "",
           "type": "class",
           "subjectId": "math",
-          "startTime": "10:00",
+          "startTime": "9:45",
           "endTime": "12:00"
         },
         {

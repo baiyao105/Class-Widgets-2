@@ -24,7 +24,7 @@ ColumnLayout {
             VarStatus {
                 Layout.fillWidth: true
                 columns: 3
-                Layout.preferredHeight: 300
+                Layout.preferredHeight: 350
                 model: [
                     { name: "currentTime", value: AppCentral.scheduleRuntime.currentTime },
                     {
@@ -50,6 +50,11 @@ ColumnLayout {
                 Layout.fillWidth: true
                 Item {
                     Layout.fillWidth: true
+                }
+                // edit
+                Button {
+                    text: "Edit Schedule"
+                    onClicked: DebuggerCentral.showEditor()
                 }
                 // reload
                 Button {
