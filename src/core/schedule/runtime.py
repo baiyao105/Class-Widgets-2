@@ -142,8 +142,8 @@ class ScheduleRuntime(QObject):
 
     def _update_time(self):  # 更新时间
         self.current_day_of_week = self.current_time.isoweekday()
-        self.current_week = get_week_number(self.schedule.meta.start_date, self.current_time)
-        self.current_week_of_cycle = get_cycle_week(self.current_week, self.schedule.meta.max_week_cycle)
+        self.current_week = get_week_number(self.schedule.meta.startDate, self.current_time)
+        self.current_week_of_cycle = get_cycle_week(self.current_week, self.schedule.meta.maxWeekCycle)
 
     def _update_notify(self):
         # 活动变更节点
@@ -158,7 +158,7 @@ class ScheduleRuntime(QObject):
             self.current_status in {EntryType.FREE, EntryType.PREPARATION}
         ):
             next_entry = self.next_entries[0]
-            next_start = datetime.strptime(next_entry.start_time, "%H:%M")
+            next_start = datetime.strptime(next_entry.startTime, "%H:%M")
             next_start = datetime.combine(self.current_time.date(), next_start.time())
             prep_min = global_config.config.get("schedule").get("preparation_time") or 2  # 准备时间
 

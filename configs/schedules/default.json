@@ -1,96 +1,106 @@
 {
-  "meta": {
-    "id": "",
-    "version": 1,
-    "maxWeekCycle": 2,
-    "startDate": "2026-09-01"
-  },
-
-  "subjects": [
-    {
-      "id": "math",
-      "name": "Mathematics",
-      "teacher": "Prof. Smith",
-      "icon": "ic_fluent_ruler_24_regular",
-      "location": "Room 9101",
-      "isLocalClassRoom": true
-    }
-  ],
-
-  "days": [
-    {
-      "id": "Monday-All",
-      "dayOfWeek": 1,
-      "weeks": "all",
-      "entries": [
+    "meta": {
+        "id": "meta_6668c480019a4ca38598ecdf3dcf6707",
+        "version": 1,
+        "maxWeekCycle": 2,
+        "startDate": "2026-09-01"
+    },
+    "subjects": [
         {
-          "id": "",
-          "type": "class",
-          "subjectId": "math",
-          "startTime": "10:00",
-          "endTime": "12:00"
-        },
-        {
-          "id": "",
-          "type": "break",
-          "title": "Break 1",
-          "startTime": "10:00",
-          "endTime": "12:00"
-        },
-        {
-          "id": "",
-          "type": "activity",
-          "title": "Meeting",
-          "startTime": "16:21",
-          "endTime": "22:30"
+            "id": "math",
+            "name": "Mathematics",
+            "teacher": "Prof. Smith",
+            "icon": "ic_fluent_ruler_24_regular",
+            "location": "Room 9101",
+            "isLocalClassroom": true
         }
-      ]
-    },
-    {
-      "id": "Tuesday-Even",
-      "dayOfWeek": 2,
-      "weeks": [2],
-      "entries": []
-    },
-    {
-      "id": "2026-09-01",
-      "date": "2026-09-01",
-      "entries": []
-    },
-    {
-      "id": "Friday-All",
-      "dayOfWeek": 5,
-      "weeks": "all",
-      "entries": [
+    ],
+    "days": [
         {
-          "id": "",
-          "type": "class",
-          "subjectId": "math",
-          "startTime": "9:45",
-          "endTime": "12:00"
+            "id": "Monday-All",
+            "entries": [
+                {
+                    "id": "entry_5646b41e93f9433f9c990d1f012586f1",
+                    "type": "class",
+                    "startTime": "10:00",
+                    "endTime": "12:00",
+                    "subjectId": "math",
+                    "title": null
+                },
+                {
+                    "id": "entry_96d191ff598c420abac023b873d1a4bd",
+                    "type": "break",
+                    "startTime": "10:00",
+                    "endTime": "12:00",
+                    "subjectId": null,
+                    "title": "Break 1"
+                },
+                {
+                    "id": "entry_05a471559d7c4b93a152905a5d2a51ca",
+                    "type": "activity",
+                    "startTime": "16:21",
+                    "endTime": "22:30",
+                    "subjectId": null,
+                    "title": "Meeting"
+                }
+            ],
+            "dayOfWeek": 1,
+            "weeks": "all",
+            "date": null
         },
         {
-          "id": "",
-          "type": "break",
-          "title": "Break 1",
-          "startTime": "12:00",
-          "endTime": "12:10"
+            "id": "Tuesday-Even",
+            "entries": [],
+            "dayOfWeek": 2,
+            "weeks": 1,
+            "date": null
         },
         {
-          "id": "",
-          "type": "activity",
-          "title": "Meeting",
-          "startTime": "12:50",
-          "endTime": "15:30"
+            "id": "2026-09-01",
+            "entries": [],
+            "dayOfWeek": null,
+            "weeks": null,
+            "date": "2026-09-01"
         },
         {
-          "id": "",
-          "type": "activity",
-          "title": "Study",
-          "startTime": "16:19",
-          "endTime": "22:30"
+            "id": "Friday-All",
+            "entries": [
+                {
+                    "id": "entry_e7f4f1196bac4d9bb8e45bb642b96751",
+                    "type": "class",
+                    "startTime": "9:45",
+                    "endTime": "12:00",
+                    "subjectId": "math",
+                    "title": null
+                },
+                {
+                    "id": "entry_76b23bae59384d01aa27776b80da062d",
+                    "type": "break",
+                    "startTime": "12:00",
+                    "endTime": "12:10",
+                    "subjectId": null,
+                    "title": "Break 1"
+                },
+                {
+                    "id": "entry_d85c25f899c3451380c9e45c1d53245a",
+                    "type": "activity",
+                    "startTime": "12:50",
+                    "endTime": "15:30",
+                    "subjectId": null,
+                    "title": "Meeting"
+                },
+                {
+                    "id": "entry_125865e655314484ba5b617f6697bd91",
+                    "type": "activity",
+                    "startTime": "16:19",
+                    "endTime": "22:30",
+                    "subjectId": null,
+                    "title": "Study"
+                }
+            ],
+            "dayOfWeek": 5,
+            "weeks": "all",
+            "date": null
         }
-      ]
-    }
-  ]
+    ]
 }

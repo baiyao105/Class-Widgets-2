@@ -40,7 +40,7 @@ class Subject:
     teacher: Optional[str] = None
     icon: Optional[str] = None
     location: Optional[str] = None
-    is_local_classroom: bool = True
+    isLocalClassroom: bool = True
 
 
 # 活动条目
@@ -48,9 +48,9 @@ class Subject:
 class Entry:
     id: str
     type: EntryType
-    start_time: str
-    end_time: str
-    subject_id: Optional[str] = None  # 当类型为 activity 时，指定 subject_id
+    startTime: str
+    endTime: str
+    subjectId: Optional[str] = None  # 当类型为 activity 时，指定 subject_id
     title: Optional[str] = None  # break / activity 用，可覆盖 subject
 
     def get_subject(self, subjects: List[Subject]) -> Optional[Subject]:
@@ -58,9 +58,9 @@ class Entry:
         获取当前活动对应的 Subject
         :return:
         """
-        if self.type in {EntryType.CLASS, EntryType.ACTIVITY} and self.subject_id:
+        if self.type in {EntryType.CLASS, EntryType.ACTIVITY} and self.subjectId:
             for subject in subjects:
-                if subject.id == self.subject_id:
+                if subject.id == self.subjectId:
                     return subject
         return None
 
@@ -72,8 +72,8 @@ class DayEntry:
     entries: List[Entry]
 
     # 以下二选一：
-    day_of_week: Optional[int] = 1  # 1~7 表示星期一到星期日
-    weeks: Union[WeekType, List[int], int, None] = None  # WeekType:ALL（暂时只想得到这个） 或 list:[1, 2, 3]（第x到x周） 或 int:1 表示每x周
+    dayOfWeek: Optional[int] = 1  # 1~7 表示星期一到星期日
+    weeks: Union[WeekType, str, List[int], int, None] = None  # WeekType:ALL（暂时只想得到这个） 或 list:[1, 2, 3]（第x到x周） 或 int:1 表示每x周
 
     date: Optional[str] = None  # 指定具体日期，如 "2026-09-01"
 
@@ -88,8 +88,8 @@ class DayEntry:
 
         for entry in self.entries:
             try:
-                start = datetime.strptime(entry.start_time, "%H:%M").time()
-                end = datetime.strptime(entry.end_time, "%H:%M").time()
+                start = datetime.strptime(entry.startTime, "%H:%M").time()
+                end = datetime.strptime(entry.endTime, "%H:%M").time()
             except ValueError:
                 continue  # 忽略无效时间格式
             if start <= time < end:
@@ -108,10 +108,10 @@ class DayEntry:
 
         next_entries = [
             entry for entry in self.entries
-            if datetime.strptime(entry.start_time, "%H:%M").time() > now_time
+            if datetime.strptime(entry.startTime, "%H:%M").time() > now_time
         ]
 
-        return sorted(next_entries, key=lambda e: datetime.strptime(e.start_time, "%H:%M").time())
+        return sorted(next_entries, key=lambda e: datetime.strptime(e.startTime, "%H:%M").time())
 
     def get_remaining_time(self, now: Optional[datetime] = None) -> timedelta:
         """
@@ -123,12 +123,12 @@ class DayEntry:
         current = self.get_current_entry(now)
 
         if current:  # 当前活动倒计时
-            end_time = datetime.strptime(current.end_time, "%H:%M").time()
+            end_time = datetime.strptime(current.endTime, "%H:%M").time()
             end_dt = now.replace(hour=end_time.hour, minute=end_time.minute, second=0, microsecond=0)
             return max(end_dt - now, timedelta(0))
         upcoming = self.get_next_entries(now)
         if upcoming:  # 下一活动开始
-            next_start = datetime.strptime(upcoming[0].start_time, "%H:%M").time()
+            next_start = datetime.strptime(upcoming[0].startTime, "%H:%M").time()
             next_dt = now.replace(hour=next_start.hour, minute=next_start.minute, second=0, microsecond=0)
             return max(next_dt - now, timedelta(0))
 
@@ -158,9 +158,9 @@ class DayEntry:
 
         if not current:
             return None
-        if current.type in {EntryType.CLASS, EntryType.ACTIVITY} and current.subject_id:
+        if current.type in {EntryType.CLASS, EntryType.ACTIVITY} and current.subjectId:
             for subject in subjects:
-                if subject.id == current.subject_id:
+                if subject.id == current.subjectId:
                     return subject
         return None
 
@@ -170,8 +170,8 @@ class DayEntry:
 class MetaInfo:
     id: str
     version: int
-    max_week_cycle: int
-    start_date: str  # like"2026-09-01"
+    maxWeekCycle: int
+    startDate: str  # like"2026-09-01"
 
 
 # 总框架
@@ -190,8 +190,8 @@ class ScheduleData:
         date = date or datetime.now()
         date_str = date.strftime("%Y-%m-%d")
         weekday = date.isoweekday()
-        week_number = get_week_number(self.meta.start_date, date)
-        cycle_week = get_cycle_week(week_number, self.meta.max_week_cycle)
+        week_number = get_week_number(self.meta.startDate, date)
+        cycle_week = get_cycle_week(week_number, self.meta.maxWeekCycle)
 
         # 优先匹配具体日期
         for day in self.days:
@@ -200,7 +200,7 @@ class ScheduleData:
 
         # 其次匹配星期和周期条件
         for day in self.days:
-            if day.day_of_week != weekday:
+            if day.dayOfWeek != weekday:
                 continue
             if is_week_matched(week_number, cycle_week, day.weeks):
                 return day

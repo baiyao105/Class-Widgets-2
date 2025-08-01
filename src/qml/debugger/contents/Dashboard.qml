@@ -16,6 +16,24 @@ ColumnLayout {
         ColumnLayout {
             width: parent.width
 
+            // Footer
+            RowLayout {
+                Layout.fillWidth: true
+                Item {
+                    Layout.fillWidth: true
+                }
+                // edit
+                Button {
+                    text: "Edit Schedule"
+                    onClicked: DebuggerCentral.showEditor()
+                }
+                // reload
+                Button {
+                    text: "Reload Schedule File"
+                    onClicked: AppCentral.reloadSchedule()
+                }
+            }
+
             // ScheduleRuntime
             Text {
                 typography: Typography.BodyStrong
@@ -43,24 +61,6 @@ ColumnLayout {
                     { name: "currentSubject", value: JSON.stringify(AppCentral.scheduleRuntime.currentSubject) },
                     { name: "currentTitle", value: AppCentral.scheduleRuntime.currentTitle }
                 ]
-            }
-
-            // Footer
-            RowLayout {
-                Layout.fillWidth: true
-                Item {
-                    Layout.fillWidth: true
-                }
-                // edit
-                Button {
-                    text: "Edit Schedule"
-                    onClicked: DebuggerCentral.showEditor()
-                }
-                // reload
-                Button {
-                    text: "Reload Schedule File"
-                    onClicked: AppCentral.reloadSchedule()
-                }
             }
         }
     }

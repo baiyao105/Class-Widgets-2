@@ -10,6 +10,7 @@ from src.core.models import ScheduleData
 from src.core.notification import Notification
 from src.core.parser import ScheduleParser
 from src.core.schedule import ScheduleRuntime
+from src.core.schedule.editor import ScheduleEditor
 from src.core.timer import UnionUpdateTimer
 
 
@@ -30,6 +31,7 @@ class AppCentral(QObject):  # Class Widgets 的中枢
         self.union_update_timer = UnionUpdateTimer()
         self.runtime = ScheduleRuntime(self.schedule)
         self._notification = Notification()
+        self._schedule_editor = None
 
     def run(self):  # 运行
         global_config.load_config(DEFAULT_CONFIG)  # 加载配置
@@ -60,6 +62,14 @@ class AppCentral(QObject):  # Class Widgets 的中枢
     @Property(QObject, notify=updated)
     def notification(self):
         return self._notification
+
+    @Property(QObject, notify=updated)
+    def scheduleEditor(self):  # 课程表编辑器
+        if not self._schedule_editor:
+            schedule_path = Path(CONFIGS_PATH / "schedules" / global_config["schedule"]["current_schedule"]).with_suffix(".json")
+            self._schedule_editor = ScheduleEditor(schedule_path)
+            self._schedule_editor.updated.connect(self.update)
+        return self._schedule_editor
 
     @Property(dict, notify=updated)
     def globalConfig(self):  # 全局配置

@@ -42,8 +42,8 @@ class ScheduleParser:
         meta = MetaInfo(
             id=meta_data.get("id") or generate_id("meta"),
             version=meta_data["version"],
-            max_week_cycle=meta_data["maxWeekCycle"],
-            start_date=meta_data["startDate"]
+            maxWeekCycle=meta_data["maxWeekCycle"],
+            startDate=meta_data["startDate"]
         )
 
         if meta.version != SCHEMA_VERSION:
@@ -56,7 +56,7 @@ class ScheduleParser:
                 teacher=subject.get("teacher"),
                 icon=subject.get("icon"),
                 location=subject.get("location"),
-                is_local_classroom=subject.get("isLocalClassRoom", True)
+                isLocalClassroom=subject.get("isLocalClassRoom", True)
             )
             for subject in data.get("subjects", [])
         ]
@@ -71,19 +71,19 @@ class ScheduleParser:
                 entry = Entry(
                     id=e.get("id") or generate_id("entry"),
                     type=e_type,
-                    start_time=e["startTime"],
-                    end_time=e["endTime"],
-                    subject_id=e.get("subjectId"),
+                    startTime=e["startTime"],
+                    endTime=e["endTime"],
+                    subjectId=e.get("subjectId"),
                     title=e.get("title")
                 )
-                if e_type == EntryType.CLASS and entry.subject_id not in subject_ids:
-                    raise ValueError(f"无效的 subjectId: {entry.subject_id}")
+                if e_type == EntryType.CLASS and entry.subjectId not in subject_ids:
+                    raise ValueError(f"无效的 subjectId: {entry.subjectId}")
                 entries.append(entry)
 
             day_entry = DayEntry(
                 id=day.get("id") or generate_id("day"),
                 entries=entries,
-                day_of_week=day.get("dayOfWeek"),
+                dayOfWeek=day.get("dayOfWeek"),
                 weeks=day.get("weeks"),
                 date=day.get("date")
             )
