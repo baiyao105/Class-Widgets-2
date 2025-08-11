@@ -9,8 +9,8 @@ RESOURCES_PATH = SRC_PATH.parent / "resources"
 QML_PATH = SRC_PATH / "qml"
 
 CONFIGS_PATH = ROOT_PATH / "configs"
-THEMES_PATH = SRC_PATH / "themes"
-PLUGINS_PATH = SRC_PATH / "plugins"
+THEMES_PATH = ROOT_PATH / "themes"
+PLUGINS_PATH = ROOT_PATH / "plugins"
 
 EXAMPLES_PATH = ROOT_PATH / "examples"
 

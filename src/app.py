@@ -1,11 +1,11 @@
-from PySide6.QtGui import QGuiApplication
+from PySide6.QtWidgets import QApplication
 from src.core import AppCentral
 import sys
 
 from src.core.utils.debugger import DebuggerWindow, DebuggerCentral
 
 if __name__ == "__main__":
-    app = QGuiApplication(sys.argv)
+    app = QApplication(sys.argv)
 
     instance = AppCentral()
     instance.run()

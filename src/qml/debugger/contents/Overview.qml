@@ -70,6 +70,26 @@ ColumnLayout {
 
     SettingCard {
         Layout.fillWidth: true
+        title: qsTr("App Theme")
+        description: qsTr("Select which app theme to display")
+        icon.name: "ic_fluent_paint_brush_20_regular"
+
+        ComboBox {
+            property var data: [Theme.mode.Light, Theme.mode.Dark, Theme.mode.Auto]
+            model: ListModel {
+                ListElement { text: qsTr("Light") }
+                ListElement { text: qsTr("Dark") }
+                ListElement { text: qsTr("Use system setting") }
+            }
+            currentIndex: data.indexOf(Theme.getTheme())
+            onCurrentIndexChanged: {
+                Theme.setTheme(data[currentIndex])
+            }
+        }
+    }
+
+    SettingCard {
+        Layout.fillWidth: true
         icon.name: "ic_fluent_document_bullet_list_off_20_regular"
         title: qsTr("No Logs")
         description: qsTr("Do not save logs to local storage.")

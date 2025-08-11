@@ -8,3 +8,6 @@ EntryEditor 1.0 components/EntryEditor.qml
 # Contents
 Overview 1.0 contents/Overview.qml
 Dashboard 1.0 contents/Dashboard.qml
+
+# Window
+EditSchedule 1.0 EditSchedule.qml

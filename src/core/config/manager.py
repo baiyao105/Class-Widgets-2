@@ -21,7 +21,6 @@ def merge_config(target: Dict[str, Any], source: Dict[str, Any]) -> bool:
         elif isinstance(value, dict) and isinstance(target[key], dict):
             if merge_config(target[key], value):
                 modified = True
-
     return modified
 
 

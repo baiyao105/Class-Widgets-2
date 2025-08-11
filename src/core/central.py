@@ -6,12 +6,17 @@ from loguru import logger
 
 from src.core import CONFIGS_PATH
 from src.core.config import global_config, DEFAULT_CONFIG, verify_config
+from src.core.directories import PLUGINS_PATH
 from src.core.models import ScheduleData
 from src.core.notification import Notification
 from src.core.parser import ScheduleParser
+from src.core.plugin.api import PluginAPI
+from src.core.plugin.manager import PluginManager
 from src.core.schedule import ScheduleRuntime
 from src.core.schedule.editor import ScheduleEditor
+from src.core.themes import ThemeManager
 from src.core.timer import UnionUpdateTimer
+from src.core.widgets import WidgetsWindow
 
 
 class AppCentral(QObject):  # Class Widgets 的中枢
@@ -32,6 +37,12 @@ class AppCentral(QObject):  # Class Widgets 的中枢
         self.runtime = ScheduleRuntime(self.schedule)
         self._notification = Notification()
         self._schedule_editor = None
+        self.theme_manager = ThemeManager()
+        self.plugin_api = PluginAPI(self)
+        self.plugin_manager = PluginManager(self.plugin_api)
+
+        # widgets
+        self.widgetsWindow = None
 
     def run(self):  # 运行
         global_config.load_config(DEFAULT_CONFIG)  # 加载配置
@@ -104,3 +115,11 @@ class AppCentral(QObject):  # Class Widgets 的中枢
         self.runtime.notify.connect(self._notification.push_activity)
         self.union_update_timer.tick.connect(self.update)
         self.union_update_timer.start()  # 启动定时器 (interval=1000)
+
+        self.theme_manager.load()
+        self.plugin_manager.load_all()
+        self.widgetsWindow = WidgetsWindow(
+            theme_manager=self.theme_manager,
+            plugin_manager=self.plugin_manager,
+            app_central=self,
+        )
