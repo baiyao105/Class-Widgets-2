@@ -22,6 +22,10 @@ class PluginAPI(QObject):
 
     # ================== 对外 API ==================
 
+    # 注册小组件
+    def register_widget(self, widget_id: str, name: str, qml_path: str, backend_obj: QObject = None, icon: str = None):
+        self._app.widgets_window.register_widget(widget_id, name, qml_path, backend_obj, icon)
+
     # 获取当前课表数据
     def get_schedule(self):
         return self._app.schedule

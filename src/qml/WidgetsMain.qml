@@ -21,7 +21,20 @@ QQW.Window {
         Widget {
             text: "测试组件"
             Title {
-                text: Qt.formatDateTime(new Date(), "yyyy-MM-dd hh:mm:ss")
+                text: "已加载组件：" + widgetRepeater.count
+                Component.onCompleted: {
+                    console.log(widgetRepeater.models)
+                }
+            }
+        }
+        Repeater {
+            id: widgetRepeater
+            model: WidgetModel
+            delegate: Loader {
+                source: qmlPath
+                onLoaded: {
+                    console.log("onLoaded: " + qmlPath)
+                }
             }
         }
     }

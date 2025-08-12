@@ -16,8 +16,8 @@ Item {
 
     // colors
     property color backgroundColor: Theme.isDark()
-        ? Qt.alpha("#1E1D22", 0.6)
-        : Qt.alpha("#FBFAFF", 0.6)
+        ? Qt.alpha("#1E1D22", 0.7)
+        : Qt.alpha("#FBFAFF", 0.7)
     property color borderColor: Theme.isDark()
         ? Qt.alpha("#fff", 0.4)
         : Qt.alpha("#fff", 1)

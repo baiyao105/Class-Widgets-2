@@ -1,3 +1,4 @@
+import json
 from pathlib import Path
 from typing import Optional
 
@@ -7,7 +8,7 @@ from loguru import logger
 from src.core import CONFIGS_PATH
 from src.core.config import global_config, DEFAULT_CONFIG, verify_config
 from src.core.directories import PLUGINS_PATH
-from src.core.models import ScheduleData
+from src.core.models import ScheduleData, MetaInfo
 from src.core.notification import Notification
 from src.core.parser import ScheduleParser
 from src.core.plugin.api import PluginAPI
@@ -16,6 +17,7 @@ from src.core.schedule import ScheduleRuntime
 from src.core.schedule.editor import ScheduleEditor
 from src.core.themes import ThemeManager
 from src.core.timer import UnionUpdateTimer
+from src.core.utils import generate_id, to_dict
 from src.core.widgets import WidgetsWindow
 
 
@@ -42,7 +44,11 @@ class AppCentral(QObject):  # Class Widgets 的中枢
         self.plugin_manager = PluginManager(self.plugin_api)
 
         # widgets
-        self.widgetsWindow = None
+        self.widgets_window = WidgetsWindow(
+            theme_manager=self.theme_manager,
+            plugin_manager=self.plugin_manager,
+            app_central=self,
+        )
 
     def run(self):  # 运行
         global_config.load_config(DEFAULT_CONFIG)  # 加载配置
@@ -51,7 +57,7 @@ class AppCentral(QObject):  # Class Widgets 的中枢
         self._load_schedule()  # 加载课程表
         self._load_runtime()  # 加载运行时
 
-        logger.info(f"Current schedule: {self.schedule}")
+        logger.info(f"Current schedule: {self.schedule.meta.id}")
         logger.info(f"Configs loaded.")
 
     def update(self):  # 更新
@@ -117,9 +123,16 @@ class AppCentral(QObject):  # Class Widgets 的中枢
         self.union_update_timer.start()  # 启动定时器 (interval=1000)
 
         self.theme_manager.load()
+
+        # 添加外部插件路径
+        self.plugin_manager.add_search_path(PLUGINS_PATH)
+
+        # 添加内置插件（源码自带）
+        # 这里写模块路径，不用管它有没有 cwplugin.json
+        self.plugin_manager.add_builtin_plugin("src.plugins.helloworld")
+
+        # 加载插件（内置+外部）
         self.plugin_manager.load_all()
-        self.widgetsWindow = WidgetsWindow(
-            theme_manager=self.theme_manager,
-            plugin_manager=self.plugin_manager,
-            app_central=self,
-        )
+
+        self.widgets_window.run()
+
