@@ -123,6 +123,7 @@ class AppCentral(QObject):  # Class Widgets 的中枢
                     days=[]
                 )
                 # 保存到文件
+                self.current_schedule_path.parent.mkdir(parents=True, exist_ok=True)
                 try:
                     with open(self.current_schedule_path, "w", encoding="utf-8") as f:
                         json.dump(to_dict(self.schedule), f, ensure_ascii=False, indent=4)

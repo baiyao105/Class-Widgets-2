@@ -11,7 +11,7 @@ DEFAULT_CONFIG = {
         "preparation_time": 2,  # minutes
     },
     "preferences": {
-        "current_theme": Path(QML_PATH / "widgets"),
+        "current_theme": Path(QML_PATH / "widgets").as_uri(),
         "widgets": []
     },
     "plugins": {
