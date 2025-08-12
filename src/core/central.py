@@ -112,7 +112,23 @@ class AppCentral(QObject):  # Class Widgets 的中枢
                 logger.info(f"Loaded schedule: {self.current_schedule_path}")
             except FileNotFoundError:
                 logger.warning("Schedule file not found, creating a new one...")
-                # TODO: 创建新课表 / 错误处理
+                self.schedule = ScheduleData(
+                    meta=MetaInfo(
+                        id=generate_id("meta"),
+                        version=1,
+                        maxWeekCycle=2,
+                        startDate="2026-09-01"
+                    ),
+                    subjects=[],
+                    days=[]
+                )
+                # 保存到文件
+                try:
+                    with open(self.current_schedule_path, "w", encoding="utf-8") as f:
+                        json.dump(to_dict(self.schedule), f, ensure_ascii=False, indent=4)
+                    logger.info(f"Created new schedule file at {self.current_schedule_path}")
+                except Exception as e:
+                    logger.error(f"Failed to create new schedule file: {e}")
             except Exception as e:
                 logger.error(f"Load schedule failed: {e}")
 
