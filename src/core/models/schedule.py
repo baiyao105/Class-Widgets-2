@@ -39,6 +39,7 @@ class Subject:
     name: str
     teacher: Optional[str] = None
     icon: Optional[str] = None
+    color: Optional[str] = None  # 16进制颜色值，如 "#FF0000"(byd差点忘了)
     location: Optional[str] = None
     isLocalClassroom: bool = True
 

@@ -11,3 +11,4 @@ Dashboard 1.0 contents/Dashboard.qml
 
 # Window
 EditSchedule 1.0 EditSchedule.qml
+WidgetsEditor 1.0 WidgetsEditor.qml

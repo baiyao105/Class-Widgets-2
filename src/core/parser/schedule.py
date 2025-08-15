@@ -56,6 +56,7 @@ class ScheduleParser:
                 teacher=subject.get("teacher"),
                 icon=subject.get("icon"),
                 location=subject.get("location"),
+                color=subject.get("color"),
                 isLocalClassroom=subject.get("isLocalClassRoom", True)
             )
             for subject in data.get("subjects", [])
@@ -77,7 +78,9 @@ class ScheduleParser:
                     title=e.get("title")
                 )
                 if e_type == EntryType.CLASS and entry.subjectId not in subject_ids:
-                    raise ValueError(f"无效的 subjectId: {entry.subjectId}")
+                    entry.subjectId = None
+                    logger.warning(f"无效的 subjectId: {entry.subjectId} (ignored)")
+                    # raise ValueError(f"无效的 subjectId: {entry.subjectId}")
                 entries.append(entry)
 
             day_entry = DayEntry(

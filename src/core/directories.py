@@ -11,6 +11,7 @@ QML_PATH = SRC_PATH / "qml"
 CONFIGS_PATH = ROOT_PATH / "configs"
 THEMES_PATH = ROOT_PATH / "themes"
 PLUGINS_PATH = ROOT_PATH / "plugins"
+BUILTIN_PLUGINS_PATH = SRC_PATH / "plugins"
 
 EXAMPLES_PATH = ROOT_PATH / "examples"
 

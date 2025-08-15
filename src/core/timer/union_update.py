@@ -1,32 +1,25 @@
 from PySide6.QtCore import QObject, QTimer, Signal
-from datetime import datetime, timedelta
-
-
-# 统一更新定时器
+from datetime import datetime
 
 class UnionUpdateTimer(QObject):
-    tick = Signal()  # 每秒对齐 tick 一次
+    tick = Signal()  # 每秒触发一次
 
     def __init__(self, parent=None):
         super().__init__(parent)
         self._timer = QTimer(self)
-        self._timer.setSingleShot(True)
-        self._timer.timeout.connect(self._on_timeout)
+        self._timer.timeout.connect(self._check_time)
+        self._last_second = None
 
     def start(self):
-        self._align_and_start()
+        now = datetime.now()
+        self._last_second = now.second
+        self._timer.start(50)
 
     def stop(self):
         self._timer.stop()
 
-    def _on_timeout(self):
-        self.tick.emit()
-        self._align_and_start()
-
-    def _align_and_start(self):
+    def _check_time(self):
         now = datetime.now()
-        passed_ms = now.microsecond // 1000
-        delay_ms = 1000 - passed_ms
-        if delay_ms < 5:
-            delay_ms += 1000
-        self._timer.start(delay_ms)
+        if now.second != self._last_second:
+            self._last_second = now.second
+            self.tick.emit()

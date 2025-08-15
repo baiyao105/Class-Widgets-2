@@ -8,6 +8,8 @@ from src.core import QML_PATH
 from src.core.plugin import PluginManager
 from src.core.themes import ThemeManager
 from .model import WidgetListModel
+from ..config import global_config
+from ..utils import is_valid_context_property_name
 
 
 class WidgetsWindow(RinUI.RinUIWindow):
@@ -19,6 +21,7 @@ class WidgetsWindow(RinUI.RinUIWindow):
         self.display_mode_manager = WidgetDisplayModeManager()
 
         self.widget_model = WidgetListModel()
+        self.engine.addImportPath(QML_PATH)
         self.engine.rootContext().setContextProperty("WidgetModel", self.widget_model)
 
         self.engine.rootContext().setContextProperty("ThemeManager", self.theme_manager_)
@@ -29,6 +32,7 @@ class WidgetsWindow(RinUI.RinUIWindow):
         self.qml_main_path = Path(QML_PATH / "WidgetsMain.qml")
 
     def run(self):
+        self.widget_model.load_config()
         self.engine.addImportPath(str(self.theme_manager_.currentTheme))
         self.load(self.qml_main_path)
         self.theme_manager_.themeChanged.connect(self.on_theme_changed)
@@ -39,15 +43,14 @@ class WidgetsWindow(RinUI.RinUIWindow):
             "name": name,
             "icon": icon or "",
             "qml_path": qml_path,
-            "backend_obj": None,
+            "backend_obj": backend_obj,
         }
 
         self.widget_model.add_widget(widget_data)
-
-        if backend_obj is not None:
-            context_property_name = f"{widget_id}"
-            self.engine.rootContext().setContextProperty(context_property_name, backend_obj)
-            logger.debug(f"Set context property '{context_property_name}' for widget {widget_id}")
+        # if backend_obj is not None:
+        #     context_property_name = widget_id
+        #     self.engine.rootContext().setContextProperty(context_property_name, backend_obj)
+        #     logger.debug(f"Set context property '{context_property_name}' for widget {widget_id}")
 
     def on_theme_changed(self):
         self.engine.clearComponentCache()

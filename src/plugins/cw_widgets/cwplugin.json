@@ -1,0 +1,6 @@
+{
+    "id": "builtin.classwidgets.widgets",
+    "name": "Built-in Widgets",
+    "version": "*",
+    "entry": "widgets.py"
+}

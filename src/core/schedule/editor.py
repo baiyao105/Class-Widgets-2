@@ -63,8 +63,8 @@ class ScheduleEditor(QObject):
         self.updated.emit()
 
     # Subject 操作
-    @Slot(str, str, str, str, bool, result=str)
-    def addSubject(self, name: str, teacher: str = "", icon: str = "",
+    @Slot(str, str, str, str, str, bool, result=str)
+    def addSubject(self, name: str, teacher: str = "", icon: str = "", color: str = "",
                    location: str = "", is_local_classroom: bool = True) -> str:
         """添加科目"""
         subject = Subject(
@@ -72,6 +72,7 @@ class ScheduleEditor(QObject):
             name=name,
             teacher=teacher or None,
             icon=icon or None,
+            color=color or None,
             location=location or None,
             isLocalClassroom=is_local_classroom
         )
@@ -79,9 +80,9 @@ class ScheduleEditor(QObject):
         self.save()
         return subject.id
 
-    @Slot(str, str, str, str, str, bool)
+    @Slot(str, str, str, str, str, str, bool)
     def updateSubject(self, subject_id: str, name: str = "", teacher: str = "",
-                      icon: str = "", location: str = "", is_local_classroom: bool = True) -> None:
+                      icon: str = "", color: str = "", location: str = "", is_local_classroom: bool = True) -> None:
         """更新科目"""
         subject = self.getSubject(subject_id)
         if not subject:
@@ -93,6 +94,8 @@ class ScheduleEditor(QObject):
             subject.teacher = teacher
         if icon:
             subject.icon = icon
+        if color:
+            subject.color = color
         if location:
             subject.location = location
         subject.isLocalClassroom = is_local_classroom

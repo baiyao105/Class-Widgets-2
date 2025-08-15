@@ -21,3 +21,12 @@ def to_dict(obj):
         return {k: to_dict(v) for k, v in obj.items()}
     else:
         return obj
+
+# qml context
+import re
+
+def is_valid_context_property_name(name: str) -> bool:
+    # 只能包含字母数字和下划线，不能以数字开头，不能为空
+    if not name:
+        return False
+    return bool(re.match(r'^[a-zA-Z_]\w*$', name))

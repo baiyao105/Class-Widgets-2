@@ -12,10 +12,17 @@ DEFAULT_CONFIG = {
     },
     "preferences": {
         "current_theme": Path(QML_PATH / "widgets").as_uri(),
-        "widgets": []
+        "widgets_presets": {
+            "default": [
+                "classwidgets.currentActivity"
+            ]
+        },
+        "current_preset": "default",
     },
     "plugins": {
-        "enabled": []
+        "enabled": [
+            "builtin.classwidgets.widgets"
+        ]
     },
     "app": {
         "dev_mode": False,

@@ -1,3 +1,2 @@
-from .api import PluginAPI
+from .api import PluginAPI, CW2Plugin
 from .manager import PluginManager
-from .base import CW2Plugin

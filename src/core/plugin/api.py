@@ -1,4 +1,7 @@
+from datetime import datetime
+
 from PySide6.QtCore import QObject, Signal
+from typing import List, Optional
 
 class PluginAPI(QObject):
     """
@@ -20,32 +23,61 @@ class PluginAPI(QObject):
         self._app.theme_manager.themeChanged.connect(self.themeChanged.emit)
         self._app.notification.notify.connect(self.notify.emit)
 
+        # self._runtime = self._app.schedule_runtime
+
     # ================== 对外 API ==================
 
+    ### 控制
     # 注册小组件
-    def register_widget(self, widget_id: str, name: str, qml_path: str, backend_obj: QObject = None, icon: str = None):
+    def register_widget(
+            self, widget_id: str, name: str, qml_path: str,
+            backend_obj: QObject = None, icon: str = None
+    ):
         self._app.widgets_window.register_widget(widget_id, name, qml_path, backend_obj, icon)
-
-    # 获取当前课表数据
-    def get_schedule(self):
-        return self._app.schedule
 
     # 发通知
     def push_notification(self, message: str):
         self._app.notification.push_activity(message)
 
+    ### 获取
+    # 课表
+    def get_schedule(self):
+        return self._app.schedule
+
+    @property
+    def runtime(self):
+        return self._runtime
+
+    def get_datetime(self) -> datetime:
+        return self._app.runtime.current_time
+
     # 获取当前主题
-    def get_theme(self):
+    def get_theme(self) -> Optional[str]:
         return self._app.theme_manager.current_theme
 
-    # 设置主题
-    def set_theme(self, theme_name: str):
-        self._app.theme_manager.set_theme(theme_name)
-
     # 获取配置
-    def get_config(self):
+    def get_config(self) -> Optional[dict]:
         return self._app.globalConfig
 
     # 更新课表
     def reload_schedule(self):
         self._app.reloadSchedule()
+
+
+class CW2Plugin(QObject):
+    """
+    Class Widgets 2 插件基类
+    插件写法推荐继承这个
+    """
+    def __init__(self, plugin_api: PluginAPI):
+        super().__init__()
+        self.api = plugin_api  # 插件API实例
+
+    def on_load(self):
+        """插件加载时调用"""
+        pass
+
+    def on_unload(self):
+        """插件卸载时调用"""
+        pass
+

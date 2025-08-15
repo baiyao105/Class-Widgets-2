@@ -4,10 +4,9 @@ import QtQuick.Layouts
 import RinUI
 import Widgets
 
-
 Widget {
     id: root
-    text: qsTr("Current Actfsdivity")
+    text: qsTr("Current Activity")
 
     RowLayout {
         anchors.centerIn: parent
@@ -15,9 +14,9 @@ Widget {
         Icon {
             icon: "ic_fluent_symbols_20_regular"
         }
-        Button {
-            text: "Open"
-            onClicked: backend.sayHello()
+        Title {
+            text: AppCentral.scheduleRuntime.currentEntry.title
+                || AppCentral.scheduleRuntime.currentSubject.name || qsTr("Not Set")
         }
     }
 }

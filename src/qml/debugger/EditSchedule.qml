@@ -39,7 +39,6 @@ ApplicationWindow {
         }
     }
 
-
     FluentPage {
         anchors.fill: parent
         title: "Edit Schedule"
@@ -191,5 +190,23 @@ ApplicationWindow {
         }
 
         return "Unknown"
+    }
+
+    Frame {
+        background: Item {}
+        anchors {
+            left: parent.left
+            right: parent.right
+            top: parent.top
+        }
+        height: 40
+
+        Button {
+            anchors.right: parent.right
+            anchors.verticalCenter: parent.verticalCenter
+            highlighted: false
+            text: "Save"
+            onClicked: AppCentral.scheduleEditor.save()
+        }
     }
 }

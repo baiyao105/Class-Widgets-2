@@ -7,6 +7,8 @@ import RinUI
 ApplicationWindow {
     id: mainWindow
     title: "Class Widgets Debugger"
+    x: Screen.width/2 - width/2
+    y:600
     width: 800
     height: 600
     minimumWidth: 425

@@ -1,4 +1,5 @@
 import json
+from datetime import datetime
 from pathlib import Path
 from typing import Optional
 
@@ -117,7 +118,7 @@ class AppCentral(QObject):  # Class Widgets 的中枢
                         id=generate_id("meta"),
                         version=1,
                         maxWeekCycle=2,
-                        startDate="2026-09-01"
+                        startDate=f"{datetime.now().year}-09-01"
                     ),
                     subjects=[],
                     days=[]
@@ -142,14 +143,14 @@ class AppCentral(QObject):  # Class Widgets 的中枢
         self.theme_manager.load()
 
         # 添加外部插件路径
-        self.plugin_manager.add_search_path(PLUGINS_PATH)
+        self.plugin_manager.enabled_plugins = global_config.get("plugins").get("enabled")
+        # self.plugin_manager.add_search_path(PLUGINS_PATH)
 
         # 添加内置插件（源码自带）
         # 这里写模块路径，不用管它有没有 cwplugin.json
-        self.plugin_manager.add_builtin_plugin("src.plugins.helloworld")
+        # self.plugin_manager.add_builtin_plugin("src.plugins.cw_widgets")
 
         # 加载插件（内置+外部）
         self.plugin_manager.load_all()
-
         self.widgets_window.run()
 

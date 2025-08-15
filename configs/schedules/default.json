@@ -11,6 +11,7 @@
             "name": "Mathematics",
             "teacher": "Prof. Smith",
             "icon": "ic_fluent_ruler_24_regular",
+            "color": "#3574f0",
             "location": "Room 9101",
             "isLocalClassroom": true
         }
@@ -42,9 +43,17 @@
                     "endTime": "22:30",
                     "subjectId": null,
                     "title": "Meeting"
+                },
+                {
+                    "id": "entry_74213d8c983d418285582733d17f5cbf",
+                    "type": "class",
+                    "startTime": "04:30",
+                    "endTime": "07:00",
+                    "subjectId": "chinese",
+                    "title": null
                 }
             ],
-            "dayOfWeek": 1,
+            "dayOfWeek": 5,
             "weeks": "all",
             "date": null
         },

@@ -9,8 +9,7 @@ import Widgets
 Item {
     id: widgetBase
     // 最小宽度 = 内容 + 边距，默认可以被拉伸
-    implicitWidth: Math.max(headerRow.implicitWidth, contentArea.implicitWidth) + 48
-    Layout.minimumWidth: implicitWidth
+    implicitWidth: Math.max(headerRow.implicitWidth, contentArea.childrenRect.width) + 48
     height: 100
     clip: true
 
@@ -22,6 +21,9 @@ Item {
         ? Qt.alpha("#fff", 0.4)
         : Qt.alpha("#fff", 1)
 
+    // backend
+    property var backend: null
+
     // properties
     property alias text: subtitleLabel.text
     property alias subtitle: subtitleArea.children
@@ -30,6 +32,11 @@ Item {
 
     // 背景
     readonly property int borderWidth: 1
+
+    // 动画
+    Behavior on implicitWidth {
+        NumberAnimation { duration: 500; easing.type: Easing.OutBack }
+    }
 
     // 渐变边框
     Item {
@@ -45,6 +52,7 @@ Item {
                 gradient: Gradient {
                     GradientStop { position: 0; color: borderColor }
                     GradientStop { position: 0.5; color: Qt.alpha("#fff", 0) }
+                    GradientStop { position: 0.6; color: Qt.alpha("#fff", 0) }
                     GradientStop { position: 1; color: borderColor }
                 }
             }
@@ -94,12 +102,11 @@ Item {
                 }
             }
 
-            Item { Layout.fillWidth: true } // 占位符，推开右侧按钮
+            Item { Layout.fillWidth: true }
 
             RowLayout {
                 id: actionButtons
                 Layout.fillHeight: true
-                // 这里可以放按钮
             }
         }
 
@@ -108,18 +115,6 @@ Item {
             id: contentArea
             Layout.fillWidth: true
             Layout.fillHeight: true
-            // implicitWidth: contentText.implicitWidth
-            implicitWidth: {
-                let maxRight = 0
-                for (let i = 0; i < contentArea.children.length; i++) {
-                    let child = contentArea.children[i];
-                    if (!child.visible) continue;
-                    let rightEdge = child.x + child.width;
-                    if (rightEdge > maxRight)
-                        maxRight = rightEdge;
-                }
-                return maxRight;
-            }
         }
     }
 }
