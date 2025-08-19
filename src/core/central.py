@@ -3,12 +3,15 @@ from datetime import datetime
 from pathlib import Path
 from typing import Optional
 
-from PySide6.QtCore import QObject, QCoreApplication, Property, Signal, Slot
+from PySide6.QtCore import QObject, Property, Signal, Slot, QPoint
+from PySide6.QtGui import QIcon
+from PySide6.QtWidgets import QSystemTrayIcon, QApplication, QMenu
+from RinUI import RinUIWindow
 from loguru import logger
 
-from src.core import CONFIGS_PATH
+from src.core import CONFIGS_PATH, QML_PATH
 from src.core.config import global_config, DEFAULT_CONFIG, verify_config
-from src.core.directories import PLUGINS_PATH
+from src.core.directories import PLUGINS_PATH, ASSETS_PATH
 from src.core.models import ScheduleData, MetaInfo
 from src.core.notification import Notification
 from src.core.parser import ScheduleParser
@@ -18,12 +21,13 @@ from src.core.schedule import ScheduleRuntime
 from src.core.schedule.editor import ScheduleEditor
 from src.core.themes import ThemeManager
 from src.core.timer import UnionUpdateTimer
-from src.core.utils import generate_id, to_dict
+from src.core.utils import generate_id, to_dict, TrayIcon
 from src.core.widgets import WidgetsWindow
 
 
 class AppCentral(QObject):  # Class Widgets 的中枢
     updated = Signal()
+    togglePanel = Signal(QPoint)
 
     def __init__(self):  # 初始化
         super().__init__()
@@ -35,7 +39,7 @@ class AppCentral(QObject):  # Class Widgets 的中枢
         self.schedule: Optional[ScheduleData] = None
 
         # runtime
-        self.app_instance = QCoreApplication.instance()
+        self.app_instance = QApplication.instance()
         self.union_update_timer = UnionUpdateTimer()
         self.runtime = ScheduleRuntime(self.schedule)
         self._notification = Notification()
@@ -43,6 +47,9 @@ class AppCentral(QObject):  # Class Widgets 的中枢
         self.theme_manager = ThemeManager()
         self.plugin_api = PluginAPI(self)
         self.plugin_manager = PluginManager(self.plugin_api)
+
+        # app
+        self.settings = Settings()
 
         # widgets
         self.widgets_window = WidgetsWindow(
@@ -57,6 +64,7 @@ class AppCentral(QObject):  # Class Widgets 的中枢
 
         self._load_schedule()  # 加载课程表
         self._load_runtime()  # 加载运行时
+        self._init_tray_icon()  # 初始化托盘图标
 
         logger.info(f"Current schedule: {self.schedule.meta.id}")
         logger.info(f"Configs loaded.")
@@ -97,6 +105,7 @@ class AppCentral(QObject):  # Class Widgets 的中枢
     def reloadSchedule(self):
         logger.info(f"Force Reload schedule: {self.current_schedule_filename}")
         self._load_schedule(force=True)
+
 
     # private methods
     def _load_schedule(self, force=False):  # 加载课程表
@@ -144,13 +153,22 @@ class AppCentral(QObject):  # Class Widgets 的中枢
 
         # 添加外部插件路径
         self.plugin_manager.enabled_plugins = global_config.get("plugins").get("enabled")
-        # self.plugin_manager.add_search_path(PLUGINS_PATH)
-
-        # 添加内置插件（源码自带）
-        # 这里写模块路径，不用管它有没有 cwplugin.json
-        # self.plugin_manager.add_builtin_plugin("src.plugins.cw_widgets")
 
         # 加载插件（内置+外部）
         self.plugin_manager.load_all()
         self.widgets_window.run()
+
+    def _init_tray_icon(self):
+        self.tray_icon = TrayIcon(self)
+        self.tray_icon.togglePanel.connect(self._on_tray_toggle)
+
+    def _on_tray_toggle(self, pos: QPoint):
+        self.togglePanel.emit(pos)
+
+
+class Settings(RinUIWindow):
+    def __init__(self):
+        super().__init__()
+
+        self.load(QML_PATH / "windows" / "Settings.qml")
 

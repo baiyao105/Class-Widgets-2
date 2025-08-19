@@ -31,7 +31,7 @@ Item {
     default property alias content: contentArea.children
 
     // 背景
-    readonly property int borderWidth: 1
+    readonly property real borderWidth: 1.5
 
     // 动画
     Behavior on implicitWidth {

@@ -7,6 +7,7 @@ import QtQuick.Window as QQW
 import Widgets
 import RinUI
 import Debugger
+import Windows
 
 QQW.Window {
     id: root
@@ -17,6 +18,13 @@ QQW.Window {
     width: 1200
     height: 200
     color: "transparent"
+
+    Connections {
+        target: AppCentral
+        function onTogglePanel(pos) {
+            root.raise()
+        }
+    }
 
     Row {
         id: widgetsContainer
@@ -74,16 +82,20 @@ QQW.Window {
         }
     }
 
-    Button {
-        anchors.left: parent.left
-        anchors.top: parent.top
+    // Button {
+    //     anchors.left: parent.left
+    //     anchors.top: parent.top
+    //
+    //     text: "Widgets: " + JSON.stringify(WidgetModel.enabledWidgets)
+    //     onClicked: presetEditor.visible = true
+    // }
+    //
+    //
+    // WidgetsEditor {
+    //     id: presetEditor
+    // }
 
-        text: "Widgets: " + JSON.stringify(WidgetModel.enabledWidgets)
-        onClicked: presetEditor.visible = true
-    }
-
-
-    WidgetsEditor {
-        id: presetEditor
+    TrayPanel {
+        id: trayPanel
     }
 }

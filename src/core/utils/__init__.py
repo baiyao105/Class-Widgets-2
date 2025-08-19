@@ -2,6 +2,7 @@ from PySide6.QtWidgets import QApplication
 
 from .json_loader import JsonLoader
 from .calculator import get_cycle_week, get_week_number
+from .tray import TrayIcon
 from uuid import uuid4
 
 

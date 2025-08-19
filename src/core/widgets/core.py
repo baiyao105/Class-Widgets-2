@@ -4,7 +4,7 @@ from PySide6.QtQml import QQmlComponent, QQmlContext
 import RinUI
 from loguru import logger
 
-from src.core import QML_PATH
+from src.core import QML_PATH, PathManager
 from src.core.plugin import PluginManager
 from src.core.themes import ThemeManager
 from .model import WidgetListModel
@@ -19,6 +19,7 @@ class WidgetsWindow(RinUI.RinUIWindow):
         self.theme_manager_ = theme_manager
         self.app_central = app_central
         self.display_mode_manager = WidgetDisplayModeManager()
+        self.path_manager = PathManager()
 
         self.widget_model = WidgetListModel()
         self.engine.addImportPath(QML_PATH)
@@ -28,8 +29,9 @@ class WidgetsWindow(RinUI.RinUIWindow):
         self.engine.rootContext().setContextProperty("PluginManager", self.plugin_manager)
         self.engine.rootContext().setContextProperty("AppCentral", self.app_central)
         self.engine.rootContext().setContextProperty("DisplayModeManager", self.display_mode_manager)
+        self.engine.rootContext().setContextProperty("PathManager", self.path_manager)
 
-        self.qml_main_path = Path(QML_PATH / "WidgetsMain.qml")
+        self.qml_main_path = Path(QML_PATH / "MainInterface.qml")
 
     def run(self):
         self.widget_model.load_config()

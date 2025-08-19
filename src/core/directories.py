@@ -1,11 +1,12 @@
 from pathlib import Path
 
+from PySide6.QtCore import QObject, Slot
 
 # Define paths
 SRC_PATH = Path(__file__).parents[1]
 ROOT_PATH = SRC_PATH.parent
 
-RESOURCES_PATH = SRC_PATH.parent / "resources"
+ASSETS_PATH = SRC_PATH.parent / "assets"
 QML_PATH = SRC_PATH / "qml"
 
 CONFIGS_PATH = ROOT_PATH / "configs"
@@ -15,7 +16,34 @@ BUILTIN_PLUGINS_PATH = SRC_PATH / "plugins"
 
 EXAMPLES_PATH = ROOT_PATH / "examples"
 
+PATHS = [
+    SRC_PATH,
+    ASSETS_PATH,
+    QML_PATH,
+    THEMES_PATH,
+    PLUGINS_PATH,
+    BUILTIN_PLUGINS_PATH,
+    EXAMPLES_PATH,
+]
+
+
+class PathManager(QObject):
+    def __init__(self):
+        super().__init__()
+
+    @Slot(str, result=str)
+    def root(self, path_name: str) -> str:
+        return ROOT_PATH.joinpath(path_name).resolve().as_uri()
+
+    @Slot(str, result=str)
+    def assets(self, path_name: str) -> str:
+        return ASSETS_PATH.joinpath(path_name).resolve().as_uri()
+
+    @Slot(str, result=str)
+    def qml(self, path_name: str) -> str:
+        return QML_PATH.joinpath(path_name).resolve().as_uri()
+
 
 if __name__ == "__main__":
-    for path in [SRC_PATH, RESOURCES_PATH, QML_PATH, THEMES_PATH, PLUGINS_PATH]:
+    for path in PATHS:
         print(path)
