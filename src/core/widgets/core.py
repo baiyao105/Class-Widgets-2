@@ -8,12 +8,10 @@ from src.core import QML_PATH, PathManager
 from src.core.plugin import PluginManager
 from src.core.themes import ThemeManager
 from .model import WidgetListModel
-from ..config import global_config
-from ..utils import is_valid_context_property_name
 
 
 class WidgetsWindow(RinUI.RinUIWindow):
-    def __init__(self, plugin_manager: PluginManager, theme_manager: ThemeManager, app_central):
+    def __init__(self, plugin_manager: PluginManager, theme_manager: ThemeManager, app_central, widget_model: WidgetListModel):
         super().__init__()
         self.plugin_manager = plugin_manager
         self.theme_manager_ = theme_manager
@@ -21,7 +19,7 @@ class WidgetsWindow(RinUI.RinUIWindow):
         self.display_mode_manager = WidgetDisplayModeManager()
         self.path_manager = PathManager()
 
-        self.widget_model = WidgetListModel()
+        self.widget_model = widget_model
         self.engine.addImportPath(QML_PATH)
         self.engine.rootContext().setContextProperty("WidgetModel", self.widget_model)
 
@@ -49,16 +47,11 @@ class WidgetsWindow(RinUI.RinUIWindow):
         }
 
         self.widget_model.add_widget(widget_data)
-        # if backend_obj is not None:
-        #     context_property_name = widget_id
-        #     self.engine.rootContext().setContextProperty(context_property_name, backend_obj)
-        #     logger.debug(f"Set context property '{context_property_name}' for widget {widget_id}")
 
     def on_theme_changed(self):
         self.engine.clearComponentCache()
         self.engine.addImportPath(str(self.theme_manager_.currentTheme))
         self.load(self.qml_main_path)
-
 
 
 class WidgetDisplayModeManager(QObject):

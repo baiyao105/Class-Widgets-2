@@ -4,14 +4,13 @@ from pathlib import Path
 from typing import Optional
 
 from PySide6.QtCore import QObject, Property, Signal, Slot, QPoint
-from PySide6.QtGui import QIcon
-from PySide6.QtWidgets import QSystemTrayIcon, QApplication, QMenu
+from PySide6.QtWidgets import QApplication
 from RinUI import RinUIWindow
 from loguru import logger
 
 from src.core import CONFIGS_PATH, QML_PATH
 from src.core.config import global_config, DEFAULT_CONFIG, verify_config
-from src.core.directories import PLUGINS_PATH, ASSETS_PATH
+from src.core.directories import PathManager
 from src.core.models import ScheduleData, MetaInfo
 from src.core.notification import Notification
 from src.core.parser import ScheduleParser
@@ -22,7 +21,8 @@ from src.core.schedule.editor import ScheduleEditor
 from src.core.themes import ThemeManager
 from src.core.timer import UnionUpdateTimer
 from src.core.utils import generate_id, to_dict, TrayIcon
-from src.core.widgets import WidgetsWindow
+from src.core.widgets import WidgetsWindow, WidgetListModel
+from PySide6.QtQml import qmlRegisterSingletonInstance
 
 
 class AppCentral(QObject):  # Class Widgets 的中枢
@@ -45,17 +45,20 @@ class AppCentral(QObject):  # Class Widgets 的中枢
         self._notification = Notification()
         self._schedule_editor = None
         self.theme_manager = ThemeManager()
+        self.widget_model = WidgetListModel()
+
         self.plugin_api = PluginAPI(self)
         self.plugin_manager = PluginManager(self.plugin_api)
 
         # app
-        self.settings = Settings()
+        self.settings = Settings(self)
 
         # widgets
         self.widgets_window = WidgetsWindow(
             theme_manager=self.theme_manager,
             plugin_manager=self.plugin_manager,
             app_central=self,
+            widget_model=self.widget_model,
         )
 
     def run(self):  # 运行
@@ -165,10 +168,24 @@ class AppCentral(QObject):  # Class Widgets 的中枢
     def _on_tray_toggle(self, pos: QPoint):
         self.togglePanel.emit(pos)
 
+    # settings
+    @Slot()
+    def openSettings(self):
+        """显示设置窗口"""
+        if self.settings and self.settings.root_window:
+            self.settings.root_window.show()
+            self.settings.root_window.raise_()
+            self.settings.root_window.requestActivate()
+        else:
+            logger.warning("Settings window not initialized correctly.")
+
 
 class Settings(RinUIWindow):
-    def __init__(self):
+    def __init__(self, parent:AppCentral):
         super().__init__()
+        self.path_manager = PathManager()
+
+        self.engine.rootContext().setContextProperty("PathManager", self.path_manager)
 
         self.load(QML_PATH / "windows" / "Settings.qml")
 

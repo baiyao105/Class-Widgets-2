@@ -27,7 +27,6 @@ Window {
         color: Theme.currentTheme.colors.layerColor
         border.color: Theme.currentTheme.colors.cardBorderColor
         border.width: 1
-        opacity: window.appLayerEnabled
         radius: Theme.currentTheme.appearance.windowRadius
     }
 
@@ -64,6 +63,7 @@ Window {
                 description: qsTr("Adjust the settings of Class Widgets")
                 Hyperlink {
                     text: "Open"
+                    onClicked: AppCentral.openSettings()
                 }
             }
 
