@@ -1,6 +1,6 @@
 from PySide6.QtCore import QAbstractListModel, Qt, QModelIndex, QUrl, Signal, Property, Slot
 from loguru import logger
-from src.core.config import global_config
+# from src.core.config import global_config  # 不再直接使用global_config
 
 
 class WidgetListModel(QAbstractListModel):
@@ -13,8 +13,9 @@ class WidgetListModel(QAbstractListModel):
     # 合并信号：modelChanged，带一个str参数表示事件类型
     modelChanged = Signal(str)
 
-    def __init__(self):
+    def __init__(self, app_central=None):
         super().__init__()
+        self._app_central = app_central
         self._widgets = []         # All registered widgets
         self._widget_map = {}      # id -> widget_data quick lookup
         self._enabled_ids: list[str] = []  # Currently enabled widget IDs
@@ -22,8 +23,10 @@ class WidgetListModel(QAbstractListModel):
         self._current_preset = ""  # Currently selected preset name
 
     def load_config(self):
-        self._presets = global_config.get("preferences").get("widgets_presets", {})
-        self.switchPreset(global_config.get("preferences").get("current_preset", ""))
+        if self._app_central:
+            self._presets = self._app_central.get_config("preferences", "widgets_presets") or {}
+            current_preset = self._app_central.get_config("preferences", "current_preset") or ""
+            self.switchPreset(current_preset)
         logger.info("WidgetListModel Config loaded")
 
     def roleNames(self):

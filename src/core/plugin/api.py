@@ -33,7 +33,8 @@ class PluginAPI(QObject):
             self, widget_id: str, name: str, qml_path: str,
             backend_obj: QObject = None, icon: str = None
     ):
-        self._app.widgets_window.register_widget(widget_id, name, qml_path, backend_obj, icon)
+        """通过AppCentral统一注册widget"""
+        self._app.register_widget(widget_id, name, qml_path, backend_obj, icon)
 
     # 发通知
     def push_notification(self, message: str):

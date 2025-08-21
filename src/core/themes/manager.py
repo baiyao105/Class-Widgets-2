@@ -8,7 +8,7 @@ from loguru import logger
 
 from src.core import SRC_PATH, QML_PATH
 from src.core.directories import THEMES_PATH
-from src.core.config import global_config
+# from src.core.config import global_config  # 不再直接使用global_config
 
 # @dataclass
 # class ThemeMeta:
@@ -17,9 +17,7 @@ from src.core.config import global_config
 #     version: str
 
 
-def verify(theme_ver):
-    app_version = global_config.get("app").get("version")
-
+def verify(theme_ver, app_version):
     if theme_ver.strip() == "*":
         return True
     if theme_ver.startswith(">="):
@@ -37,9 +35,9 @@ def verify(theme_ver):
 class ThemeManager(QObject):
     themeChanged = Signal()
 
-    def __init__(self):
+    def __init__(self, app_central=None):
         super().__init__()
-        # self._currentTheme = global_config.get("preferences").get("current_theme") or Path(QML_PATH / "widgets").as_uri()
+        self._app_central = app_central
         self._currentTheme = None
         # builtin 主题
         self._themes: dict = {}
@@ -83,7 +81,8 @@ class ThemeManager(QObject):
                     try:
                         with open(theme_meta, encoding="utf-8") as theme_json:
                             meta = json.load(theme_json)
-                            if not verify(meta["theme"]):
+                            app_version = self._app_central.get_config("app", "version") if self._app_central else "1.0.0"
+                            if not verify(meta["theme"], app_version):
                                 logger.warning(f"Theme {theme.name} version is invalid (skipped)")
                                 continue
                             self._themes[theme.as_uri()] = meta["theme"]
@@ -98,8 +97,8 @@ class ThemeManager(QObject):
 
         if not current_theme_exist:
             self._currentTheme = Path(QML_PATH / "builtin").as_uri()
-            global_config["preferences"]["current_theme"] = self._currentTheme
-            global_config.save_config()
+            if self._app_central:
+                self._app_central.set_config(self._currentTheme, "preferences", "current_theme")
 
         logger.info(f"Themes loaded: {len(self._themes)} themes")
         return self._themes

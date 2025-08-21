@@ -1,57 +1,50 @@
 from pathlib import Path
 from PySide6.QtCore import QObject, Slot, Property, Signal
-from PySide6.QtQml import QQmlComponent, QQmlContext
 import RinUI
 from loguru import logger
 
-from src.core import QML_PATH, PathManager
-from src.core.plugin import PluginManager
-from src.core.themes import ThemeManager
-from .model import WidgetListModel
+from src.core import QML_PATH
 
 
 class WidgetsWindow(RinUI.RinUIWindow):
-    def __init__(self, plugin_manager: PluginManager, theme_manager: ThemeManager, app_central, widget_model: WidgetListModel):
+    def __init__(self, app_central):
         super().__init__()
-        self.plugin_manager = plugin_manager
-        self.theme_manager_ = theme_manager
         self.app_central = app_central
         self.display_mode_manager = WidgetDisplayModeManager()
-        self.path_manager = PathManager()
-
-        self.widget_model = widget_model
-        self.engine.addImportPath(QML_PATH)
-        self.engine.rootContext().setContextProperty("WidgetModel", self.widget_model)
-
-        self.engine.rootContext().setContextProperty("ThemeManager", self.theme_manager_)
-        self.engine.rootContext().setContextProperty("PluginManager", self.plugin_manager)
-        self.engine.rootContext().setContextProperty("AppCentral", self.app_central)
-        self.engine.rootContext().setContextProperty("DisplayModeManager", self.display_mode_manager)
-        self.engine.rootContext().setContextProperty("PathManager", self.path_manager)
-
+        
+        self._setup_qml_context()
         self.qml_main_path = Path(QML_PATH / "MainInterface.qml")
+    
+    def _setup_qml_context(self):
+        """设置QML上下文属性"""
+        self.engine.addImportPath(QML_PATH)
+        
+        # 从AppCentral获取所有需要的组件
+        context = self.engine.rootContext()
+        context.setContextProperty("WidgetModel", self.app_central.widget_model)
+        context.setContextProperty("ThemeManager", self.app_central.theme_manager)
+        context.setContextProperty("PluginManager", self.app_central.plugin_manager)
+        context.setContextProperty("AppCentral", self.app_central)
+        context.setContextProperty("DisplayModeManager", self.display_mode_manager)
+        context.setContextProperty("PathManager", self.app_central.path_manager)
 
     def run(self):
-        self.widget_model.load_config()
-        self.engine.addImportPath(str(self.theme_manager_.currentTheme))
+        """启动widgets窗口"""
+        self.app_central.widget_model.load_config()
+        self._load_with_theme()
+        self.app_central.theme_manager.themeChanged.connect(self.on_theme_changed)
+    
+    def _load_with_theme(self):
+        """加载QML并应用主题"""
+        current_theme = self.app_central.theme_manager.currentTheme
+        if current_theme:
+            self.engine.addImportPath(str(current_theme))
         self.load(self.qml_main_path)
-        self.theme_manager_.themeChanged.connect(self.on_theme_changed)
-
-    def register_widget(self, widget_id: str, name: str, qml_path: str, backend_obj: QObject = None, icon: str = None):
-        widget_data = {
-            "id": widget_id,
-            "name": name,
-            "icon": icon or "",
-            "qml_path": qml_path,
-            "backend_obj": backend_obj,
-        }
-
-        self.widget_model.add_widget(widget_data)
 
     def on_theme_changed(self):
+        """主题变更时重新加载界面"""
         self.engine.clearComponentCache()
-        self.engine.addImportPath(str(self.theme_manager_.currentTheme))
-        self.load(self.qml_main_path)
+        self._load_with_theme()
 
 
 class WidgetDisplayModeManager(QObject):

@@ -28,49 +28,54 @@ from PySide6.QtQml import qmlRegisterSingletonInstance
 class AppCentral(QObject):  # Class Widgets 的中枢
     updated = Signal()
     togglePanel = Signal(QPoint)
+    widgetRegistered = Signal(str)  # 新增：widget注册信号
 
     def __init__(self):  # 初始化
         super().__init__()
-        # variables
+        self._initialize_schedule_components()
+        self._initialize_cores()
+        self._initialize_ui_components()
+
+    def _initialize_cores(self):
+        """初始化核心"""
+        self.app_instance = QApplication.instance()
+        self.path_manager = PathManager()  # 统一路径管理
+        self.config_manager = global_config  # 统一配置管理
+        self.theme_manager = ThemeManager(self)
+        self.widget_model = WidgetListModel(self)
+        self.plugin_api = PluginAPI(self)
+        self.plugin_manager = PluginManager(self.plugin_api)
+        
+    def _initialize_schedule_components(self):
+        """初始化调度相关组件"""
         self.current_schedule_path = None
         self.current_schedule_filename = None
         self.current_schedule_parser = None
-
         self.schedule: Optional[ScheduleData] = None
-
-        # runtime
-        self.app_instance = QApplication.instance()
+        
         self.union_update_timer = UnionUpdateTimer()
         self.runtime = ScheduleRuntime(self.schedule)
         self._notification = Notification()
         self._schedule_editor = None
-        self.theme_manager = ThemeManager()
-        self.widget_model = WidgetListModel()
-
-        self.plugin_api = PluginAPI(self)
-        self.plugin_manager = PluginManager(self.plugin_api)
-
-        # app
+        
+    def _initialize_ui_components(self):
+        """初始化UI组件"""
         self.settings = Settings(self)
-
-        # widgets
-        self.widgets_window = WidgetsWindow(
-            theme_manager=self.theme_manager,
-            plugin_manager=self.plugin_manager,
-            app_central=self,
-            widget_model=self.widget_model,
-        )
+        self.widgets_window = WidgetsWindow(self)  # 简化参数传递
 
     def run(self):  # 运行
-        global_config.load_config(DEFAULT_CONFIG)  # 加载配置
-        verify_config()  # 验证配置
-
+        self._load_config()  # 加载配置
         self._load_schedule()  # 加载课程表
         self._load_runtime()  # 加载运行时
         self._init_tray_icon()  # 初始化托盘图标
 
         logger.info(f"Current schedule: {self.schedule.meta.id}")
         logger.info(f"Configs loaded.")
+    
+    def _load_config(self):
+        """加载和验证配置"""
+        self.config_manager.load_config(DEFAULT_CONFIG)
+        verify_config()
 
     def update(self):  # 更新
         self._load_schedule()
@@ -95,71 +100,147 @@ class AppCentral(QObject):  # Class Widgets 的中枢
     @Property(QObject, notify=updated)
     def scheduleEditor(self):  # 课程表编辑器
         if not self._schedule_editor:
-            schedule_path = Path(CONFIGS_PATH / "schedules" / global_config["schedule"]["current_schedule"]).with_suffix(".json")
+            current_schedule = self.get_config("schedule", "current_schedule") or "default"
+            schedule_path = Path(CONFIGS_PATH / "schedules" / current_schedule).with_suffix(".json")
             self._schedule_editor = ScheduleEditor(schedule_path)
             self._schedule_editor.updated.connect(self.update)
         return self._schedule_editor
 
     @Property(dict, notify=updated)
     def globalConfig(self):  # 全局配置
-        return global_config.config
+        return self.config_manager.config
 
     @Slot()
     def reloadSchedule(self):
         logger.info(f"Force Reload schedule: {self.current_schedule_filename}")
         self._load_schedule(force=True)
 
+    def register_widget(self, widget_id: str, name: str, qml_path: str, backend_obj: QObject = None, icon: str = None):
+        """统一的widget注册接口"""
+        widget_data = {
+            "id": widget_id,
+            "name": name,
+            "icon": icon or "",
+            "qml_path": qml_path,
+            "backend_obj": backend_obj,
+        }
+        self.widget_model.add_widget(widget_data)
+        self.widgetRegistered.emit(widget_id)
+        logger.debug(f"Widget registered: {widget_id}")
+    
+    def get_config(self, *keys):
+        """统一的配置获取接口"""
+        if not keys:
+            return self.config_manager.config
+        
+        result = self.config_manager.config
+        for key in keys:
+            if isinstance(result, dict) and key in result:
+                result = result[key]
+            else:
+                return None
+        return result
+    
+    def set_config(self, value, *keys):
+        """统一的配置设置接口"""
+        if not keys:
+            return False
+            
+        config = self.config_manager.config
+        for key in keys[:-1]:
+            if key not in config:
+                config[key] = {}
+            config = config[key]
+        
+        config[keys[-1]] = value
+        self.config_manager.save_config()
+        return True
 
     # private methods
     def _load_schedule(self, force=False):  # 加载课程表
-        path = Path(CONFIGS_PATH / "schedules" / global_config["schedule"]["current_schedule"]).with_suffix(".json")
+        path = self._get_schedule_path()
+        
+        if not self._should_reload_schedule(path, force):
+            return
+            
+        self._update_schedule_path(path)
+        self.schedule = self._parse_schedule_file()
 
-        if path != self.current_schedule_path or force:
-            self.current_schedule_path = path  # 获取路径
-            self.current_schedule_filename = self.current_schedule_path.name
-
-            self.current_schedule_parser = ScheduleParser(path=self.current_schedule_path)
-            # 试解析
-            try:
-                self.schedule = self.current_schedule_parser.load()
-                logger.info(f"Loaded schedule: {self.current_schedule_path}")
-            except FileNotFoundError:
-                logger.warning("Schedule file not found, creating a new one...")
-                self.schedule = ScheduleData(
-                    meta=MetaInfo(
-                        id=generate_id("meta"),
-                        version=1,
-                        maxWeekCycle=2,
-                        startDate=f"{datetime.now().year}-09-01"
-                    ),
-                    subjects=[],
-                    days=[]
-                )
-                # 保存到文件
-                self.current_schedule_path.parent.mkdir(parents=True, exist_ok=True)
-                try:
-                    with open(self.current_schedule_path, "w", encoding="utf-8") as f:
-                        json.dump(to_dict(self.schedule), f, ensure_ascii=False, indent=4)
-                    logger.info(f"Created new schedule file at {self.current_schedule_path}")
-                except Exception as e:
-                    logger.error(f"Failed to create new schedule file: {e}")
-            except Exception as e:
-                logger.error(f"Load schedule failed: {e}")
+    def _get_schedule_path(self) -> Path:
+        """获取当前调度文件路径"""
+        current_schedule = self.get_config("schedule", "current_schedule") or "default"
+        return Path(CONFIGS_PATH / "schedules" / current_schedule).with_suffix(".json")
+    
+    def _should_reload_schedule(self, path: Path, force: bool) -> bool:
+        """判断是否需要重新加载调度"""
+        return path != self.current_schedule_path or force
+    
+    def _update_schedule_path(self, path: Path):
+        """更新调度路径信息"""
+        self.current_schedule_path = path
+        self.current_schedule_filename = path.name
+        self.current_schedule_parser = ScheduleParser(path=path)
+    
+    def _parse_schedule_file(self) -> ScheduleData:
+        """解析调度文件"""
+        try:
+            schedule = self.current_schedule_parser.load()
+            logger.info(f"Loaded schedule: {self.current_schedule_path}")
+            return schedule
+        except FileNotFoundError:
+            return self._create_default_schedule()
+        except Exception as e:
+            logger.error(f"Load schedule failed: {e}")
+            return self._create_default_schedule()
+    
+    def _create_default_schedule(self) -> ScheduleData:
+        """创建默认调度数据"""
+        logger.warning("Schedule file not found, creating a new one...")
+        schedule = ScheduleData(
+            meta=MetaInfo(
+                id=generate_id("meta"),
+                version=1,
+                maxWeekCycle=2,
+                startDate=f"{datetime.now().year}-09-01"
+            ),
+            subjects=[],
+            days=[]
+        )
+        self._save_schedule_file(schedule)
+        return schedule
+    
+    def _save_schedule_file(self, schedule: ScheduleData):
+        """保存课表文件"""
+        self.current_schedule_path.parent.mkdir(parents=True, exist_ok=True)
+        try:
+            with open(self.current_schedule_path, "w", encoding="utf-8") as f:
+                json.dump(to_dict(schedule), f, ensure_ascii=False, indent=4)
+            logger.info(f"Created new schedule file at {self.current_schedule_path}")
+        except Exception as e:
+            logger.error(f"Failed to create new schedule file: {e}")
 
     def _load_runtime(self):
+        self._setup_runtime_connections()
+        self._load_theme_and_plugins()
+        self.widgets_window.run()
+    
+    def _setup_runtime_connections(self):
+        """设置runtime连接"""
         self.runtime.update(self.schedule)
         self.runtime.notify.connect(self._notification.push_activity)
         self.union_update_timer.tick.connect(self.update)
         self.union_update_timer.start()  # 启动定时器 (interval=1000)
-
+    
+    def _load_theme_and_plugins(self):
+        """主题和插件"""
         self.theme_manager.load()
-
-        # 添加外部插件路径
-        self.plugin_manager.enabled_plugins = global_config.get("plugins").get("enabled")
-
+        
+        # 获取启用的插件列表
+        enabled_plugins = self.get_config("plugins", "enabled") or []
+        self.plugin_manager.enabled_plugins = enabled_plugins
+        
         # 加载插件（内置+外部）
         self.plugin_manager.load_all()
-        self.widgets_window.run()
 
     def _init_tray_icon(self):
         self.tray_icon = TrayIcon(self)
@@ -181,11 +262,12 @@ class AppCentral(QObject):  # Class Widgets 的中枢
 
 
 class Settings(RinUIWindow):
-    def __init__(self, parent:AppCentral):
+    def __init__(self, parent: AppCentral):
         super().__init__()
-        self.path_manager = PathManager()
-
-        self.engine.rootContext().setContextProperty("PathManager", self.path_manager)
-
+        self.parent = parent
+        
+        # 使用AppCentral的统一路径管理器
+        self.engine.rootContext().setContextProperty("PathManager", parent.path_manager)
+        
         self.load(QML_PATH / "windows" / "Settings.qml")
 
