@@ -10,7 +10,7 @@ from loguru import logger
 
 from src.core import CONFIGS_PATH, QML_PATH
 from src.core.config import global_config, DEFAULT_CONFIG, verify_config
-from src.core.directories import PathManager
+from src.core.directories import PathManager, DEFAULT_THEME, CW_PATH
 from src.core.models import ScheduleData, MetaInfo
 from src.core.notification import Notification
 from src.core.parser import ScheduleParser
@@ -127,6 +127,21 @@ class AppCentral(QObject):  # Class Widgets 的中枢
         self.widget_model.add_widget(widget_data)
         self.widgetRegistered.emit(widget_id)
         logger.debug(f"Widget registered: {widget_id}")
+    
+    def setup_qml_context(self, window):
+        """
+        为窗口设置标准的QML上下文属性
+        
+        Args:
+            window: RinUIWindow实例
+        """
+        context = window.engine.rootContext()
+        window.engine.addImportPath(QML_PATH)
+        context.setContextProperty("WidgetModel", self.widget_model)
+        context.setContextProperty("ThemeManager", self.theme_manager)
+        context.setContextProperty("PluginManager", self.plugin_manager)
+        context.setContextProperty("AppCentral", self)
+        context.setContextProperty("PathManager", self.path_manager)
     
     def get_config(self, *keys):
         """统一的配置获取接口"""
@@ -264,10 +279,9 @@ class AppCentral(QObject):  # Class Widgets 的中枢
 class Settings(RinUIWindow):
     def __init__(self, parent: AppCentral):
         super().__init__()
-        self.parent = parent
+        self.central = parent
         
-        # 使用AppCentral的统一路径管理器
-        self.engine.rootContext().setContextProperty("PathManager", parent.path_manager)
-        
-        self.load(QML_PATH / "windows" / "Settings.qml")
+        self.engine.addImportPath(DEFAULT_THEME)
+        self.central.setup_qml_context(self)
+        self.load(CW_PATH / "windows" / "Settings.qml")
 

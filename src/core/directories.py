@@ -8,6 +8,8 @@ ROOT_PATH = SRC_PATH.parent
 
 ASSETS_PATH = SRC_PATH.parent / "assets"
 QML_PATH = SRC_PATH / "qml"
+CW_PATH = QML_PATH / "ClassWidgets"
+DEFAULT_THEME = QML_PATH / "builtin"
 
 CONFIGS_PATH = ROOT_PATH / "configs"
 THEMES_PATH = ROOT_PATH / "themes"
@@ -41,7 +43,7 @@ class PathManager(QObject):
 
     @Slot(str, result=str)
     def qml(self, path_name: str) -> str:
-        return QML_PATH.joinpath(path_name).resolve().as_uri()
+        return CW_PATH.joinpath(path_name).resolve().as_uri()
 
 
 if __name__ == "__main__":

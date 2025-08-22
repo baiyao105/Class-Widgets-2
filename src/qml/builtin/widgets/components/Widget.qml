@@ -12,6 +12,7 @@ Item {
     implicitWidth: Math.max(headerRow.implicitWidth, contentArea.childrenRect.width) + 48
     height: 100
     clip: true
+    opacity: widgetHoverHandler.hovered? 0.9 : 1
 
     // colors
     property color backgroundColor: Theme.isDark()
@@ -31,7 +32,7 @@ Item {
     default property alias content: contentArea.children
 
     // 背景
-    readonly property real borderWidth: 1.5
+    readonly property real borderWidth: 1.25
 
     // 动画
     Behavior on implicitWidth {
@@ -115,6 +116,17 @@ Item {
             id: contentArea
             Layout.fillWidth: true
             Layout.fillHeight: true
+        }
+    }
+
+    HoverHandler {
+        id: widgetHoverHandler
+    }
+
+    Behavior on opacity {
+        NumberAnimation {
+            duration: 200
+            easing.type: Easing.InOutQuad
         }
     }
 }

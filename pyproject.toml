@@ -1,0 +1,19 @@
+[project]
+name = "ClassWidgets-2"
+version = "0.0.1"
+description = "Class Widgets 2, The Next Class Schedule."
+authors = [
+    {name = "RinLit",email = "lintusup@foxmail.com"}
+]
+license = {text = "MIT"}
+readme = "README.md"
+requires-python = ">=3.12"
+dependencies = [
+    "PySide6",
+    "RinUI"
+]
+
+
+[build-system]
+requires = ["poetry-core>=2.0.0,<3.0.0"]
+build-backend = "poetry.core.masonry.api"

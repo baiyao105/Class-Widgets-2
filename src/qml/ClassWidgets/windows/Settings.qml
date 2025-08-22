@@ -17,6 +17,10 @@ FluentWindow {
         settingsWindow.visible = false
     }
 
+    Component.onCompleted: {
+        y = 700
+    }
+
     navigationItems: [
         {
             title: qsTr("Dashboard"),

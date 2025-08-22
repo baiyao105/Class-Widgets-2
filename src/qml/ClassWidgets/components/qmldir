@@ -1,0 +1,3 @@
+module ClassWidgets.Components
+
+WidgetsLoader 1.0 WidgetsLoader.qml

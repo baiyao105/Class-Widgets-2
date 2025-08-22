@@ -7,7 +7,9 @@ from pathlib import Path
 from loguru import logger
 
 from src.core import SRC_PATH, QML_PATH
-from src.core.directories import THEMES_PATH
+from src.core.directories import THEMES_PATH, DEFAULT_THEME
+
+
 # from src.core.config import global_config  # 不再直接使用global_config
 
 # @dataclass
@@ -63,7 +65,7 @@ class ThemeManager(QObject):
     def load(self):
         # 读取主题
         self._themes = {
-            Path(QML_PATH / "widgets"): {
+            Path(DEFAULT_THEME): {
                 "name": "Default",
                 "description": "Class Widgets Builtin Default Theme",
                 "author": "RinLit",
@@ -96,6 +98,7 @@ class ThemeManager(QObject):
                         logger.warning(f"Theme '{theme.name}' cannot load. (PermissionError)")
 
         if not current_theme_exist:
+            logger.warning(f"Current theme not found, use default theme.")
             self._currentTheme = Path(QML_PATH / "builtin").as_uri()
             if self._app_central:
                 self._app_central.set_config(self._currentTheme, "preferences", "current_theme")

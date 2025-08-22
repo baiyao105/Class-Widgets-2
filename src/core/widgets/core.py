@@ -17,16 +17,8 @@ class WidgetsWindow(RinUI.RinUIWindow):
     
     def _setup_qml_context(self):
         """设置QML上下文属性"""
-        self.engine.addImportPath(QML_PATH)
-        
-        # 从AppCentral获取所有需要的组件
-        context = self.engine.rootContext()
-        context.setContextProperty("WidgetModel", self.app_central.widget_model)
-        context.setContextProperty("ThemeManager", self.app_central.theme_manager)
-        context.setContextProperty("PluginManager", self.app_central.plugin_manager)
-        context.setContextProperty("AppCentral", self.app_central)
-        context.setContextProperty("DisplayModeManager", self.display_mode_manager)
-        context.setContextProperty("PathManager", self.app_central.path_manager)
+        self.app_central.setup_qml_context(self)
+        self.engine.rootContext().setContextProperty("DisplayModeManager", self.display_mode_manager)
 
     def run(self):
         """启动widgets窗口"""
