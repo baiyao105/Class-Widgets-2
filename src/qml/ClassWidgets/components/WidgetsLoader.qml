@@ -11,6 +11,7 @@ Flow {
     spacing: 8
 
     property bool editMode: widgetRepeater.count === 0 ? true : false
+    property bool menuVisible: false
 
     Repeater {
         id: widgetRepeater
@@ -80,7 +81,7 @@ Flow {
 
             // 右键菜单
             Menu {
-                id: menu
+                id: widgetMenu
                 MenuItem {
                     icon.name: "ic_fluent_column_edit_20_regular"
                     text: qsTr("Edit Widgets Screen")
@@ -90,6 +91,9 @@ Flow {
                     icon.name: "ic_fluent_delete_20_regular"
                     text: qsTr("Delete")
                     onTriggered: WidgetsModel.removeWidget(model.instanceId)
+                }
+                onVisibleChanged: {
+                    widgetsContainer.menuVisible = visible;
                 }
             }
 
@@ -101,7 +105,7 @@ Flow {
                         settingsLoader.source = model.settingsQml
                         settingsDialog.open()
                     } else {
-                        menu.open()
+                        widgetMenu.open()
                     }
                 }
             }

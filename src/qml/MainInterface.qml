@@ -14,27 +14,16 @@ QQW.Window {
     visible: true
     flags: Qt.FramelessWindowHint | Qt.Tool
     color: "transparent"
+    width: Screen.width
+    height: Screen.height
 
     property alias editMode: widgetsLoader.editMode
-
-    function updateSize() {
-        if (editMode) {
-            root.x = 0
-            root.y = 0
-            root.width = Screen.width
-            root.height = Screen.height
-        } else {
-            root.width = Math.min(widgetsLoader.implicitWidth, Screen.width)
-            root.height = widgetsLoader.implicitHeight
-            root.x = Math.max(0, (Screen.width - root.width) / 2)
-            root.y = Math.max(0, (Screen.height - root.height) / 2)
-        }
-    }
 
     //background
     Rectangle {
         id: background
         anchors.fill: parent
+        visible: opacity > 0
         color: "black"
         opacity: editMode? 0.25 : 0
         Behavior on opacity {
@@ -48,23 +37,28 @@ QQW.Window {
     Connections {
         target: AppCentral
         function onTogglePanel(pos) {
-            root.raise()
+            trayPanel.raise()
         }
     }
 
     WidgetsLoader {
         id: widgetsLoader
+        objectName: "widgetsLoader"
         anchors.centerIn: parent
-        onImplicitWidthChanged: if (!root.editMode) root.updateSize()
-        onImplicitHeightChanged: if (!root.editMode) root.updateSize()
+        // onImplicitWidthChanged: if (!root.editMode) root.updateSize()
+        // onImplicitHeightChanged: if (!root.editMode) root.updateSize()
+
+        signal geometryChanged()
+        onXChanged: geometryChanged()
+        onYChanged: geometryChanged()
+        onWidthChanged: geometryChanged()
+        onHeightChanged: geometryChanged()
+        onEditModeChanged: geometryChanged()
+        onMenuVisibleChanged: geometryChanged()
     }
 
     TrayPanel {
         id: trayPanel
     }
-
-    Component.onCompleted: updateSize()
-
-    onEditModeChanged: updateSize()
 }
 

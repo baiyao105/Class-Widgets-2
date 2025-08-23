@@ -19,13 +19,14 @@ Dialog {
         Layout.fillHeight: true
 
         ColumnLayout {
+            Layout.preferredWidth: 185
             Layout.maximumWidth: 185
             Layout.fillHeight: true
-            TextField {
-                id: searchField
-                placeholderText: qsTr("Search widgets...")
-                Layout.fillWidth: true
-            }
+            // TextField {
+            //     id: searchField
+            //     placeholderText: qsTr("Search widgets...")
+            //     Layout.fillWidth: true
+            // }
             ListView {
                 id: widgetsListView
                 clip: true
@@ -34,17 +35,25 @@ Dialog {
                 model: WidgetsModel.definitionsList
                 textRole: "name"
                 delegate: ListViewDelegate {
+                    Layout.fillWidth: true
                     leftArea: Icon {
                         icon: "ic_fluent_app_generic_20_regular"
                         size: 22
                     }
                     middleArea: [
                         Text {
+                            wrapMode: Text.NoWrap
                             text: modelData.name
                             elide: Text.ElideRight
                             Layout.fillWidth: true
+                            Layout.rightMargin: 12
                         }
                     ]
+                    ToolTip {
+                        text: modelData.name
+                        visible: parent.hovered
+                        delay: 500
+                    }
                 }
             }
         }
@@ -59,8 +68,13 @@ Dialog {
             }
 
             Text {
-                Layout.alignment: Qt.AlignHCenter | Qt.AlignTop
+                Layout.alignment: Qt.AlignTop
                 typography: Typography.Subtitle
+                horizontalAlignment: Text.AlignHCenter
+                Layout.fillWidth: true
+                Layout.leftMargin: 20
+                Layout.topMargin: 20
+                elide: Text.ElideMiddle
                 text: widgetInfoLayout.model.name || qsTr("No Widget Selected")
             }
 
@@ -75,6 +89,8 @@ Dialog {
                 source: widgetsListView.currentIndex >= 0
                 ? widgetInfoLayout.model.qml_path
                 : ""
+                enabled: false // 阻止事件传递
+
                 onItemChanged: {
                     if (item) {
                         if (widgetInfoLayout.model.backend_obj) {
