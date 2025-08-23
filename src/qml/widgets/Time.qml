@@ -7,7 +7,11 @@ import Widgets
 Widget {
     id: root
     text: qsTr("time")
-    property var dateTime
+    property var dateTime: {
+        "hour": 0,
+        "minute": 0,
+        "second": 0
+    }
 
     RowLayout {
         anchors.centerIn: parent

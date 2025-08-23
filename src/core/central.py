@@ -42,7 +42,7 @@ class AppCentral(QObject):  # Class Widgets 的中枢
         self.path_manager = PathManager()  # 统一路径管理
         self.config_manager = global_config  # 统一配置管理
         self.theme_manager = ThemeManager(self)
-        self.widget_model = WidgetListModel(self)
+        self.widgets_model = WidgetListModel(self)
         self.plugin_api = PluginAPI(self)
         self.plugin_manager = PluginManager(self.plugin_api)
         
@@ -124,7 +124,7 @@ class AppCentral(QObject):  # Class Widgets 的中枢
             "qml_path": qml_path,
             "backend_obj": backend_obj,
         }
-        self.widget_model.add_widget(widget_data)
+        self.widgets_model.add_widget(widget_data)
         self.widgetRegistered.emit(widget_id)
         logger.debug(f"Widget registered: {widget_id}")
     
@@ -137,7 +137,7 @@ class AppCentral(QObject):  # Class Widgets 的中枢
         """
         context = window.engine.rootContext()
         window.engine.addImportPath(QML_PATH)
-        context.setContextProperty("WidgetModel", self.widget_model)
+        context.setContextProperty("WidgetsModel", self.widgets_model)
         context.setContextProperty("ThemeManager", self.theme_manager)
         context.setContextProperty("PluginManager", self.plugin_manager)
         context.setContextProperty("AppCentral", self)

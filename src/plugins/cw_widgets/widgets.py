@@ -11,7 +11,7 @@ class Plugin(CW2Plugin):
         self.widgets_list = [
             {
                 "widget_id": "classwidgets.currentActivity",
-                "name": "Hello World",
+                "name": "Current Activity",
                 "qml_path": Path(QML_PATH / "widgets" / "currentActivity.qml").as_posix(),
                 "backend_obj": self,
             },

@@ -22,7 +22,7 @@ class WidgetsWindow(RinUI.RinUIWindow):
 
     def run(self):
         """启动widgets窗口"""
-        self.app_central.widget_model.load_config()
+        self.app_central.widgets_model.load_config()
         self._load_with_theme()
         self.app_central.theme_manager.themeChanged.connect(self.on_theme_changed)
     

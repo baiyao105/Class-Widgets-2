@@ -1,109 +1,185 @@
+import uuid
+from typing import List, Union, Dict
 from PySide6.QtCore import QAbstractListModel, Qt, QModelIndex, QUrl, Signal, Property, Slot
 from loguru import logger
-# from src.core.config import global_config  # 不再直接使用global_config
-
 
 class WidgetListModel(QAbstractListModel):
-    IdRole = Qt.UserRole + 1
-    NameRole = Qt.UserRole + 2
-    IconRole = Qt.UserRole + 3
-    QmlPathRole = Qt.UserRole + 4
-    BackendRole = Qt.UserRole + 5
+    InstanceIdRole = Qt.UserRole + 1
+    TypeIdRole = Qt.UserRole + 2
+    NameRole = Qt.UserRole + 3
+    IconRole = Qt.UserRole + 4
+    QmlPathRole = Qt.UserRole + 5
+    BackendRole = Qt.UserRole + 6
+    SettingsRole = Qt.UserRole + 7
+    SettingsQmlRole = Qt.UserRole + 8
 
-    # 合并信号：modelChanged，带一个str参数表示事件类型
     modelChanged = Signal(str)
+    definitonChanged = Signal(str)
 
     def __init__(self, app_central=None):
         super().__init__()
         self._app_central = app_central
-        self._widgets = []         # All registered widgets
-        self._widget_map = {}      # id -> widget_data quick lookup
-        self._enabled_ids: list[str] = []  # Currently enabled widget IDs
-        self._presets: dict = {}         # Presets: {preset_name: set_of_enabled_ids}
-        self._current_preset = ""  # Currently selected preset name
-
-    def load_config(self):
-        if self._app_central:
-            self._presets = self._app_central.get_config("preferences", "widgets_presets") or {}
-            current_preset = self._app_central.get_config("preferences", "current_preset") or ""
-            self.switchPreset(current_preset)
-        logger.info("WidgetListModel Config loaded")
+        self._definitions: Dict[str, dict] = {}
+        self._instances: List[dict] = []
+        self._presets: Dict[str, List[Union[str, dict]]] = {}
+        self._current_preset: str = ""
 
     def roleNames(self):
         return {
-            self.IdRole: b"id",
+            self.InstanceIdRole: b"instanceId",
+            self.TypeIdRole: b"typeId",
             self.NameRole: b"name",
             self.IconRole: b"icon",
             self.QmlPathRole: b"qmlPath",
             self.BackendRole: b"backendObj",
+            self.SettingsRole: b"settings",
+            self.SettingsQmlRole: b"settingsQml",
         }
 
     def rowCount(self, parent=QModelIndex()):
-        return len(self._enabled_ids)
+        return len(self._instances)
 
     def data(self, index, role):
-        if not index.isValid() or index.row() >= len(self._enabled_ids):
+        if not index.isValid() or index.row() >= len(self._instances):
             return None
-
-        widget_id = self._enabled_ids[index.row()]
-        widget = self._widget_map.get(widget_id)
-        if not widget:
-            return None
-
-        if role == self.IdRole:
-            return widget["id"]
+        w = self._instances[index.row()]
+        if role == self.InstanceIdRole:
+            return w.get("instance_id", "")
+        if role == self.TypeIdRole:
+            return w.get("type_id", "")
         if role == self.NameRole:
-            return widget["name"]
+            return w.get("name", "")
         if role == self.IconRole:
-            return widget["icon"]
+            return w.get("icon", "")
         if role == self.QmlPathRole:
-            return widget["qml_path"]
+            return w.get("qml_path", "")
         if role == self.BackendRole:
-            return widget["backend_obj"]
+            return w.get("backend_obj", None)
+        if role == self.SettingsRole:
+            return w.get("settings", {})
+        if role == self.SettingsQmlRole:
+            return w.get("settings_qml", self._definitions.get(w.get("type_id", ""), {}).get("settings_qml", ""))
         return None
 
-    def add_widget(self, widget_data: dict):
-        widget_id = widget_data.get("id")
-        if not widget_id:
-            raise ValueError("widget_data must contain an 'id' field")
+    def _normalize_preset_entries(self, entries: List[Union[str, dict]]) -> List[dict]:
+        normalized = []
+        for e in entries:
+            if isinstance(e, str):
+                normalized.append({"type_id": e, "instance_id": str(uuid.uuid4())})
+            elif isinstance(e, dict):
+                type_id = e.get("type_id")
+                if not type_id:
+                    continue
+                inst_id = e.get("instance_id", str(uuid.uuid4()))
+                normalized.append({"type_id": type_id, "instance_id": inst_id, "settings": e.get("settings", {})})
+        return normalized
 
-        qml_path = widget_data.get("qml_path", "")
-        if qml_path:
-            qurl = QUrl.fromLocalFile(qml_path)
-            widget_data["qml_path"] = qurl.toString()
-
-        if widget_id in self._widget_map:
-            logger.warning(f"Widget '{widget_id}' already registered, skipped.")
+    def load_config(self):
+        if not self._app_central:
             return
+        raw_presets = self._app_central.get_config("preferences", "widgets_presets") or {}
+        self._presets = {name: self._normalize_preset_entries(entries) for name, entries in raw_presets.items()}
+        current_preset = self._app_central.get_config("preferences", "current_preset") or ""
+        if current_preset:
+            self.load_preset(current_preset)
 
-        self.beginResetModel()
-        self._widgets.append(widget_data)
-        self._widget_map[widget_id] = widget_data
-        self.endResetModel()
-        logger.debug(f"Registered widget {widget_id}")
-        self.modelChanged.emit("widgets")  # 新增widget后通知
+    @Slot(str, list)
+    def updatePreset(self, preset_name: str, enabled_entries: list):
+        self._presets[preset_name] = self._normalize_preset_entries(enabled_entries)
+        if self._current_preset == preset_name:
+            self.load_preset(preset_name)
+        self.modelChanged.emit("preset")
 
-    def set_preset(self, preset_name: str, enabled_ids: set):
-        self._presets[preset_name] = enabled_ids
+    @Slot(str, list)
+    def set_preset(self, preset_name: str, entries: list):
+        self._presets[preset_name] = self._normalize_preset_entries(entries)
 
+    @Slot(str)
     def load_preset(self, preset_name: str):
         if preset_name not in self._presets:
-            logger.warning(f"Preset '{preset_name}' not found")
             return
+        entries = self._presets[preset_name]
+        new_instances: List[dict] = []
+        for entry in entries:
+            type_id = entry.get("type_id")
+            if not type_id or type_id not in self._definitions:
+                continue
+            definition = self._definitions[type_id]
+            instance = dict(definition)
+            instance["instance_id"] = entry.get("instance_id", str(uuid.uuid4()))
+            instance["type_id"] = type_id
+            instance["settings"] = entry.get("settings", definition.get("default_settings", {})) or {}
+            if "backend_obj" in entry:
+                instance["backend_obj"] = entry["backend_obj"]
+            new_instances.append(instance)
         self.beginResetModel()
-        self._enabled_ids = self._presets[preset_name].copy()
+        self._instances = new_instances
         self._current_preset = preset_name
         self.endResetModel()
         self.modelChanged.emit("preset")
 
-    def current_preset(self):
-        return self._current_preset
+    def add_widget(self, widget_def: dict):
+        type_id = widget_def.get("id")
+        if not type_id or type_id in self._definitions:
+            return
+        qml_path = widget_def.get("qml_path", "")
+        if qml_path:
+            widget_def["qml_path"] = QUrl.fromLocalFile(qml_path).toString()
+        settings_qml = widget_def.get("settings_qml", "")
+        if settings_qml:
+            widget_def["settings_qml"] = QUrl.fromLocalFile(settings_qml).toString()
+        widget_def.setdefault("default_settings", {})
+        self._definitions[type_id] = widget_def
+        self.definitonChanged.emit(type_id)
 
-    def get_all_widgets(self):
-        return self._widgets
+    @Slot(str)
+    def addInstance(self, type_id: str):
+        if type_id not in self._definitions:
+            return
+        definition = self._definitions[type_id]
+        instance = dict(definition)
+        instance["instance_id"] = str(uuid.uuid4())
+        instance["type_id"] = type_id
+        instance["settings"] = dict(definition.get("default_settings", {}))
+        if "backend_obj" in definition:
+            instance["backend_obj"] = definition["backend_obj"]
+        self.beginInsertRows(QModelIndex(), len(self._instances), len(self._instances))
+        self._instances.append(instance)
+        self.endInsertRows()
+        self.modelChanged.emit("add")
 
-    def get_enabled_widgets(self):
-        return [w for w in self._widgets if w["id"] in self._enabled_ids]
+    @Slot(int, int)
+    def moveWidget(self, from_index: int, to_index: int):
+        if from_index == to_index or from_index < 0 or to_index < 0 or from_index >= len(
+                self._instances) or to_index >= len(self._instances):
+            return
+        self.beginMoveRows(QModelIndex(), from_index, from_index, QModelIndex(),
+                           to_index if to_index < from_index else to_index + 1)
+        w = self._instances.pop(from_index)
+        self._instances.insert(to_index, w)
+        self.endMoveRows()
+        self.modelChanged.emit("reorder")
+
+    @Slot(str)
+    def removeWidget(self, instance_id: str):
+        for i, w in enumerate(self._instances):
+            if w.get("instance_id") == instance_id:
+                self.beginRemoveRows(QModelIndex(), i, i)
+                self._instances.pop(i)
+                self.endRemoveRows()
+                self.modelChanged.emit("remove")
+                return
+
+    @Slot(str, dict)
+    def updateSettings(self, instance_id: str, settings: dict):
+        for i, w in enumerate(self._instances):
+            if w.get("instance_id") == instance_id:
+                w_settings = w.get("settings", {})
+                w_settings.update(settings)
+                w["settings"] = w_settings
+                ix = self.index(i)
+                self.dataChanged.emit(ix, ix, [self.SettingsRole])
+                return
 
     @Property(str, notify=modelChanged)
     def currentPreset(self):
@@ -113,34 +189,10 @@ class WidgetListModel(QAbstractListModel):
     def presets(self):
         return self._presets
 
-    @Property(list, notify=modelChanged)
-    def enabledWidgets(self):
-        return list(self._enabled_ids)
+    @Property(dict, notify=definitonChanged)
+    def definitions(self):
+        return self._definitions
 
-    @Slot(str)
-    def switchPreset(self, preset_name: str):
-        """QML调用，切换预设"""
-        self.load_preset(preset_name)
-        self.modelChanged.emit(preset_name)
-
-    @Slot(str, list)
-    def updatePreset(self, preset_name: str, enabled_ids: list):
-        """
-        QML调用，覆盖指定预设的启用组件ID集合。
-        enabled_ids 可以是QML传入的list<string>，这里转换为set处理。
-        """
-        if not isinstance(enabled_ids, (list, tuple)):
-            logger.warning("update_preset: enabled_ids 参数类型错误，必须是列表或元组")
-            return
-
-        enabled_set = enabled_ids
-        self._presets[preset_name] = enabled_set
-
-        if self._current_preset == preset_name:
-            self.load_preset(preset_name)
-            # self.beginResetModel()
-            # self._enabled_ids = enabled_set.copy()
-            # self.endResetModel()
-            # self.modelChanged.emit("enabled")
-
-        logger.info(f"Preset '{preset_name}' updated with enabled widgets: {enabled_set}")
+    @Property('QVariantList', notify=definitonChanged)
+    def definitionsList(self):
+        return list(self._definitions.values())
