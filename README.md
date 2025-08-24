@@ -2,6 +2,7 @@
 
 > [!CAUTION]
 > 本项目不接受任何 PR (Pull Request)
+> 
 > This project does not accept any PR (Pull Request)
 
 <details>
@@ -18,9 +19,6 @@ This is Class Widgets.
 
 ## Overview
 Let's see our progress on the Class Widgets 2 project.
-
-### Schedule
-- [Schedule Format Template](docs/templates/schedule_file/index.md)
 
 ### What's next?
 I don't know yet.
