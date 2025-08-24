@@ -1,5 +1,8 @@
 # Class-Widgets-2
-Class Widgets™ 2 Project, Launch.
+
+> [!CAUTION]
+> 本项目不接受任何 PR (Pull Request)
+> This project does not accept any PR (Pull Request)
 
 <details>
 <summary>Introduction (Blank)</summary>
@@ -24,7 +27,7 @@ I don't know yet.
 
 ## Acknowledgements
 ### Contributors
-None yet. :cry:
+Me.
 
 ### Dependencies
 - PySide6
