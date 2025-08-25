@@ -24,6 +24,7 @@ Item {
 
     // backend
     property var backend: null
+    property var settings: null
 
     // properties
     property alias text: subtitleLabel.text

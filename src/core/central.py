@@ -1,4 +1,5 @@
 import json
+from dataclasses import asdict
 from datetime import datetime
 from pathlib import Path
 from typing import Optional
@@ -20,7 +21,7 @@ from src.core.schedule import ScheduleRuntime
 from src.core.schedule.editor import ScheduleEditor
 from src.core.themes import ThemeManager
 from src.core.timer import UnionUpdateTimer
-from src.core.utils import generate_id, to_dict, TrayIcon
+from src.core.utils import generate_id, TrayIcon
 from src.core.widgets import WidgetsWindow, WidgetListModel
 from PySide6.QtQml import qmlRegisterSingletonInstance
 
@@ -115,18 +116,18 @@ class AppCentral(QObject):  # Class Widgets 的中枢
         logger.info(f"Force Reload schedule: {self.current_schedule_filename}")
         self._load_schedule(force=True)
 
-    def register_widget(self, widget_id: str, name: str, qml_path: str, backend_obj: QObject = None, icon: str = None):
-        """统一的widget注册接口"""
-        widget_data = {
-            "id": widget_id,
-            "name": name,
-            "icon": icon or "",
-            "qml_path": qml_path,
-            "backend_obj": backend_obj,
-        }
-        self.widgets_model.add_widget(widget_data)
-        self.widgetRegistered.emit(widget_id)
-        logger.debug(f"Widget registered: {widget_id}")
+    # def register_widget(self, widget_id: str, name: str, qml_path: str, backend_obj: QObject = None, icon: str = None):
+    #     """统一的widget注册接口"""
+    #     widget_data = {
+    #         "id": widget_id,
+    #         "name": name,
+    #         "icon": icon or "",
+    #         "qml_path": qml_path,
+    #         "backend_obj": backend_obj,
+    #     }
+    #     self.widgets_model.add_widget(widget_data)
+    #     self.widgetRegistered.emit(widget_id)
+    #     logger.debug(f"Widget registered: {widget_id}")
     
     def setup_qml_context(self, window):
         """
@@ -229,7 +230,7 @@ class AppCentral(QObject):  # Class Widgets 的中枢
         self.current_schedule_path.parent.mkdir(parents=True, exist_ok=True)
         try:
             with open(self.current_schedule_path, "w", encoding="utf-8") as f:
-                json.dump(to_dict(schedule), f, ensure_ascii=False, indent=4)
+                json.dump(asdict(schedule), f, ensure_ascii=False, indent=4)
             logger.info(f"Created new schedule file at {self.current_schedule_path}")
         except Exception as e:
             logger.error(f"Failed to create new schedule file: {e}")

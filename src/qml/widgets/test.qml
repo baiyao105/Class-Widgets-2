@@ -7,7 +7,7 @@ import Widgets
 
 Widget {
     id: root
-    text: qsTr("Current Actfsdivity")
+    text: qsTr("测试组件")
 
     RowLayout {
         anchors.centerIn: parent
@@ -17,7 +17,7 @@ Widget {
         }
         Button {
             text: "Open"
-            onClicked: backend.sayHello()
+            onClicked: backend.sayHello(settings.name)
         }
     }
 }

@@ -7,10 +7,10 @@ authors = [
 ]
 license = {text = "MIT"}
 readme = "README.md"
-requires-python = ">=3.12"
+requires-python = ">=3.12,<3.14"
 dependencies = [
     "PySide6",
-    "RinUI"
+    "RinUI >= 0.1.7.2"
 ]
 
 

@@ -1,3 +1,4 @@
+from dataclasses import asdict
 from datetime import datetime, timedelta
 from typing import Optional, List
 
@@ -8,7 +9,7 @@ from src.core.config import global_config
 from src.core.models import DayEntry, Entry, MetaInfo, EntryType, Subject
 from src.core.models import ScheduleData
 from src.core.notification import NotificationLevel
-from src.core.utils import to_dict, get_cycle_week, get_week_number
+from src.core.utils import get_cycle_week, get_week_number
 
 
 class ScheduleRuntime(QObject):
@@ -64,7 +65,7 @@ class ScheduleRuntime(QObject):
     # SCHEDULE
     @Property(dict, notify=updated)
     def scheduleMeta(self) -> dict:
-        return to_dict(self.schedule_meta)
+        return asdict(self.schedule_meta)
 
     @Property(list, notify=updated)
     def currentDayEntries(self) -> list:  # 当前的进行的日程
@@ -72,12 +73,12 @@ class ScheduleRuntime(QObject):
         if not self.current_day:
             return result
         for i in range(len(self.current_day.entries)):
-            result.append(to_dict(self.current_day.entries[i]))
+            result.append(asdict(self.current_day.entries[i]))
         return result
 
     @Property(dict, notify=updated)
     def currentEntry(self) -> dict:
-        return to_dict(self.current_entry) if self.current_entry else None
+        return asdict(self.current_entry) if self.current_entry else None
 
     @Property(list, notify=updated)
     def nextEntries(self) -> list:  # 接下来的日程
@@ -85,7 +86,7 @@ class ScheduleRuntime(QObject):
         if not self.next_entries:
             return converted
         for i in range(len(self.next_entries)):
-            converted.append(to_dict(self.next_entries[i]))
+            converted.append(asdict(self.next_entries[i]))
         return converted
 
     @Property(dict, notify=updated)
@@ -110,7 +111,7 @@ class ScheduleRuntime(QObject):
     # SUBJECT
     @Property(dict, notify=updated)
     def currentSubject(self) -> dict:
-        return to_dict(self.current_subject) if self.current_subject else None
+        return asdict(self.current_subject) if self.current_subject else None
 
     @Property(str, notify=updated)
     def currentTitle(self) -> str:
@@ -166,6 +167,6 @@ class ScheduleRuntime(QObject):
                 logger.info(f"Notify: status changed to {EntryType.PREPARATION.value}; {next_entry}")
                 self.notify.emit(
                     EntryType.PREPARATION.value,
-                    to_dict(next_entry.get_subject(self.schedule.subjects) if self.schedule.subjects else None),
+                    asdict(next_entry.get_subject(self.schedule.subjects) if self.schedule.subjects else None),
                     next_entry.title if next_entry else None
                 )

@@ -1,9 +1,10 @@
 import json
+from dataclasses import asdict
 
 from loguru import logger
 
 from src.core.models import *
-from src.core.utils import generate_id, to_dict
+from src.core.utils import generate_id
 from src.core.utils.json_loader import JsonLoader
 from pathlib import Path
 from typing import Union, Optional
@@ -92,8 +93,8 @@ class ScheduleParser:
             )
             days.append(day_entry)
 
-        self.schedule_dict = to_dict(self.schedule)
         self.schedule = ScheduleData(meta=meta, subjects=subjects, days=days)
+        self.schedule_dict = asdict(self.schedule)
         return self.schedule
 
     # def get_meta(self) -> Optional[MetaInfo]:

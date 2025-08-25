@@ -1,7 +1,8 @@
 from datetime import datetime
 
-from PySide6.QtCore import QObject, Signal
-from typing import List, Optional
+from PySide6.QtCore import QObject, Signal, QUrl
+from typing import List, Optional, Union
+
 
 class PluginAPI(QObject):
     """
@@ -30,11 +31,16 @@ class PluginAPI(QObject):
     ### 控制
     # 注册小组件
     def register_widget(
-            self, widget_id: str, name: str, qml_path: str,
-            backend_obj: QObject = None, icon: str = None
+            self,
+            widget_id: str,
+            name: str,
+            qml_path: Union[str, QUrl],
+            backend_obj: QObject = None,
+            settings_qml: Optional[Union[str, QUrl]] = None,
+            default_settings: Optional[dict] = None
     ):
         """通过AppCentral统一注册widget"""
-        self._app.register_widget(widget_id, name, qml_path, backend_obj, icon)
+        self._app.widgets_model.add_widget(widget_id, name, qml_path, backend_obj, settings_qml, default_settings)
 
     # 发通知
     def push_notification(self, message: str):

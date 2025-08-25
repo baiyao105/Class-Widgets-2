@@ -4,3 +4,4 @@ WidgetsLoader 1.0 WidgetsLoader.qml
 
 #Dialogs
 AddWidgetsDialog 1.0 dialogs/AddWidgetsDialog.qml
+WidgetSettingsDialog 1.0 dialogs/WidgetSettingsDialog.qml

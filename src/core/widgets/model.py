@@ -1,6 +1,6 @@
 import uuid
 from typing import List, Union, Dict
-from PySide6.QtCore import QAbstractListModel, Qt, QModelIndex, QUrl, Signal, Property, Slot
+from PySide6.QtCore import QAbstractListModel, Qt, QModelIndex, QUrl, Signal, Property, Slot, QObject
 from loguru import logger
 
 class WidgetListModel(QAbstractListModel):
@@ -13,8 +13,8 @@ class WidgetListModel(QAbstractListModel):
     SettingsRole = Qt.UserRole + 7
     SettingsQmlRole = Qt.UserRole + 8
 
-    modelChanged = Signal(str)
-    definitonChanged = Signal(str)
+    modelChanged = Signal()
+    definitionChanged = Signal()
 
     def __init__(self, app_central=None):
         super().__init__()
@@ -76,6 +76,7 @@ class WidgetListModel(QAbstractListModel):
 
     def load_config(self):
         if not self._app_central:
+            logger.warning("Cannot load widget presets: AppCentral not available")
             return
         raw_presets = self._app_central.get_config("preferences", "widgets_presets") or {}
         self._presets = {name: self._normalize_preset_entries(entries) for name, entries in raw_presets.items()}
@@ -83,12 +84,34 @@ class WidgetListModel(QAbstractListModel):
         if current_preset:
             self.load_preset(current_preset)
 
+    def save_config(self):
+        if not self._app_central:
+            logger.warning("Cannot save widget presets: AppCentral not available")
+            return
+        self._app_central.set_config("preferences", "widgets_presets", self._presets)
+        self._app_central.set_config("preferences", "current_preset", self._current_preset)
+        logger.info("Widget presets saved")
+
+    def syncCurrentPreset(self):
+        """同步当前 _instances 到 _presets"""
+        if not self._current_preset:
+            return
+        self._presets[self._current_preset] = [
+            {
+                "type_id": w["type_id"],
+                "instance_id": w["instance_id"],
+                "settings": dict(w.get("settings", {})),
+                "backend_obj": w.get("backend_obj", None)
+            }
+            for w in self._instances
+        ]
+
     @Slot(str, list)
     def updatePreset(self, preset_name: str, enabled_entries: list):
         self._presets[preset_name] = self._normalize_preset_entries(enabled_entries)
         if self._current_preset == preset_name:
             self.load_preset(preset_name)
-        self.modelChanged.emit("preset")
+        self.modelChanged.emit()
 
     @Slot(str, list)
     def set_preset(self, preset_name: str, entries: list):
@@ -100,6 +123,7 @@ class WidgetListModel(QAbstractListModel):
             return
         entries = self._presets[preset_name]
         new_instances: List[dict] = []
+
         for entry in entries:
             type_id = entry.get("type_id")
             if not type_id or type_id not in self._definitions:
@@ -108,29 +132,45 @@ class WidgetListModel(QAbstractListModel):
             instance = dict(definition)
             instance["instance_id"] = entry.get("instance_id", str(uuid.uuid4()))
             instance["type_id"] = type_id
-            instance["settings"] = entry.get("settings", definition.get("default_settings", {})) or {}
+            base_settings = dict(definition.get("default_settings", {}))
+            entry_settings = entry.get("settings", {})
+            base_settings.update(entry_settings)
+            instance["settings"] = base_settings
             if "backend_obj" in entry:
                 instance["backend_obj"] = entry["backend_obj"]
             new_instances.append(instance)
+
         self.beginResetModel()
         self._instances = new_instances
         self._current_preset = preset_name
         self.endResetModel()
-        self.modelChanged.emit("preset")
+        self.modelChanged.emit()
 
-    def add_widget(self, widget_def: dict):
-        type_id = widget_def.get("id")
+    def add_widget(
+            self,
+            type_id: str,
+            name: str,
+            qml_path: str | QUrl,
+            backend_obj: QObject | None = None,
+            settings_qml: str | QUrl = None,
+            default_settings: dict | None = None
+    ):
         if not type_id or type_id in self._definitions:
+            logger.warning(f"Cannot register widget: Invalid type_id \"{type_id}\"")
             return
-        qml_path = widget_def.get("qml_path", "")
-        if qml_path:
-            widget_def["qml_path"] = QUrl.fromLocalFile(qml_path).toString()
-        settings_qml = widget_def.get("settings_qml", "")
-        if settings_qml:
-            widget_def["settings_qml"] = QUrl.fromLocalFile(settings_qml).toString()
-        widget_def.setdefault("default_settings", {})
-        self._definitions[type_id] = widget_def
-        self.definitonChanged.emit(type_id)
+
+        definition = {
+            "id": type_id,
+            "name": name,
+            "qml_path": QUrl.fromLocalFile(qml_path).toString() if qml_path else "",
+            "backend_obj": backend_obj,
+            "settings_qml": settings_qml if isinstance(settings_qml, QUrl) else (
+                QUrl.fromLocalFile(settings_qml).toString() if settings_qml else ""),
+            "default_settings": default_settings or {}
+        }
+
+        self._definitions[type_id] = definition
+        self.definitionChanged.emit()
 
     @Slot(str)
     def addInstance(self, type_id: str):
@@ -140,16 +180,18 @@ class WidgetListModel(QAbstractListModel):
         instance = dict(definition)
         instance["instance_id"] = str(uuid.uuid4())
         instance["type_id"] = type_id
-        instance["settings"] = dict(definition.get("default_settings", {}))
+        base_settings = dict(definition.get("default_settings", {}))
+        instance["settings"] = base_settings
         if "backend_obj" in definition:
             instance["backend_obj"] = definition["backend_obj"]
         self.beginInsertRows(QModelIndex(), len(self._instances), len(self._instances))
         self._instances.append(instance)
         self.endInsertRows()
-        self.modelChanged.emit("add")
+        self.syncCurrentPreset()
+        self.modelChanged.emit()
 
     @Slot(int, int)
-    def moveWidget(self, from_index: int, to_index: int):
+    def moveInstance(self, from_index: int, to_index: int):
         if from_index == to_index or from_index < 0 or to_index < 0 or from_index >= len(
                 self._instances) or to_index >= len(self._instances):
             return
@@ -158,16 +200,18 @@ class WidgetListModel(QAbstractListModel):
         w = self._instances.pop(from_index)
         self._instances.insert(to_index, w)
         self.endMoveRows()
-        self.modelChanged.emit("reorder")
+        self.syncCurrentPreset()
+        self.modelChanged.emit()
 
     @Slot(str)
-    def removeWidget(self, instance_id: str):
+    def removeInstance(self, instance_id: str):
         for i, w in enumerate(self._instances):
             if w.get("instance_id") == instance_id:
                 self.beginRemoveRows(QModelIndex(), i, i)
                 self._instances.pop(i)
                 self.endRemoveRows()
-                self.modelChanged.emit("remove")
+                self.syncCurrentPreset()
+                self.modelChanged.emit()
                 return
 
     @Slot(str, dict)
@@ -179,6 +223,8 @@ class WidgetListModel(QAbstractListModel):
                 w["settings"] = w_settings
                 ix = self.index(i)
                 self.dataChanged.emit(ix, ix, [self.SettingsRole])
+                self.syncCurrentPreset()
+                self.modelChanged.emit()
                 return
 
     @Property(str, notify=modelChanged)
@@ -189,10 +235,10 @@ class WidgetListModel(QAbstractListModel):
     def presets(self):
         return self._presets
 
-    @Property(dict, notify=definitonChanged)
+    @Property(dict, notify=definitionChanged)
     def definitions(self):
         return self._definitions
 
-    @Property('QVariantList', notify=definitonChanged)
+    @Property('QVariantList', notify=definitionChanged)
     def definitionsList(self):
         return list(self._definitions.values())

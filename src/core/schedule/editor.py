@@ -1,4 +1,5 @@
 import json
+from dataclasses import asdict
 from pathlib import Path
 from typing import Optional, List, Dict, Any, Union
 
@@ -8,7 +9,7 @@ from loguru import logger
 from src.core.models import ScheduleData, Subject, DayEntry, Entry, MetaInfo, EntryType
 from src.core.models.schedule import WeekType
 from src.core.parser import ScheduleParser
-from src.core.utils import generate_id, to_dict
+from src.core.utils import generate_id
 
 
 class ScheduleEditor(QObject):
@@ -52,7 +53,7 @@ class ScheduleEditor(QObject):
         if not self.schedule:
             return
         
-        schedule_dict = to_dict(self.schedule)
+        schedule_dict = asdict(self.schedule)
         print(schedule_dict)
         try:
             with open(self.schedule_path, "w", encoding="utf-8") as f:
@@ -229,14 +230,14 @@ class ScheduleEditor(QObject):
         """获取课程表元数据"""
         if not self.schedule or not self.schedule.meta:
             return {}
-        return to_dict(self.schedule.meta)
+        return asdict(self.schedule.meta)
 
     @Property("QVariant", notify=updated)
     def subjects(self) -> List[Dict]:
         """获取所有科目"""
         if not self.schedule:
             return []
-        return [to_dict(subject) for subject in self.schedule.subjects]
+        return [asdict(subject) for subject in self.schedule.subjects]
 
     @Property("QVariant", notify=updated)
     def days(self) -> List[Dict]:
@@ -247,7 +248,7 @@ class ScheduleEditor(QObject):
         # 按时间排序
         sorted_days = []
         for day in self.schedule.days:
-            day_dict = to_dict(day)
+            day_dict = asdict(day)
             if 'entries' in day_dict and day_dict['entries']:
                 day_dict['entries'].sort(key=lambda x: x.get('startTime', ''))
             sorted_days.append(day_dict)
@@ -259,4 +260,4 @@ class ScheduleEditor(QObject):
         """获取完整的课程表数据"""
         if not self.schedule:
             return {}
-        return to_dict(self.schedule)
+        return asdict(self.schedule)

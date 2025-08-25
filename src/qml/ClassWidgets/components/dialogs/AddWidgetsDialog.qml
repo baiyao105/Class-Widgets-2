@@ -96,6 +96,9 @@ Dialog {
                         if (widgetInfoLayout.model.backend_obj) {
                             item.backend = widgetInfoLayout.model.backend_obj
                         }
+                        if (widgetInfoLayout.model.settings) {
+                            item.settings = model.settings
+                        }
                         anim.start()
                     }
                 }

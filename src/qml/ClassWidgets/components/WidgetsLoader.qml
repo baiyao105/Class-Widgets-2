@@ -35,7 +35,19 @@ Flow {
                         if (item && model.backendObj) {
                             item.backend = model.backendObj
                         }
+                        if (item && model.settings) {
+                            item.settings = model.settings
+                        }
                         anim.start()
+                    }
+                }
+
+                Connections {
+                    target: WidgetsModel
+                    function onModelChanged() {
+                        if (loader.item && model.settings) {
+                            loader.item.settings = model.settings
+                        }
                     }
                 }
                 scale: scaleFactor
@@ -50,7 +62,7 @@ Flow {
                 height: 24
                 anchors.top: parent.top
                 anchors.left: parent.left
-                onClicked: WidgetsModel.removeWidget(model.instanceId)
+                onClicked: WidgetsModel.removeInstance(model.instanceId)
             }
 
             // 拖拽
@@ -70,7 +82,7 @@ Flow {
                         if (to < 0) to = 0
                         if (to >= widgetRepeater.count) to = widgetRepeater.count - 1
                         if (to !== from) {
-                            WidgetsModel.moveWidget(from, to)
+                            WidgetsModel.moveInstance(from, to)
                         } else {
                             x = originalX
                             y = originalY
@@ -82,18 +94,35 @@ Flow {
             // 右键菜单
             Menu {
                 id: widgetMenu
+                onVisibleChanged: widgetsContainer.menuVisible = visible;
                 MenuItem {
-                    icon.name: "ic_fluent_column_edit_20_regular"
-                    text: qsTr("Edit Widgets Screen")
-                    onTriggered: widgetsContainer.editMode = !widgetsContainer.editMode
+                    icon.name: "ic_fluent_info_20_regular"
+                    text: qsTr("Edit ") + "\"" + model.name + "\""
+                    onTriggered: {
+                        if (model.settingsQml) {
+                            widgetsContainer.editMode = true
+                            settingsDialog.setSource(model.settingsQml, {
+                                "settings": model.settings,
+                                "instanceId": model.instanceId
+                            })
+                            settingsDialog.open()
+                        }
+                    }
+                    enabled: model.settingsQml
                 }
                 MenuItem {
                     icon.name: "ic_fluent_delete_20_regular"
                     text: qsTr("Delete")
-                    onTriggered: WidgetsModel.removeWidget(model.instanceId)
+                    onTriggered: {
+                        widgetsContainer.editMode = true
+                        WidgetsModel.removeInstance(model.instanceId)
+                    }
                 }
-                onVisibleChanged: {
-                    widgetsContainer.menuVisible = visible;
+                MenuSeparator { visible: true }
+                MenuItem {
+                    icon.name: "ic_fluent_column_edit_20_regular"
+                    text: qsTr("Edit Widgets Screen")
+                    onTriggered: widgetsContainer.editMode = true
                 }
             }
 
@@ -101,12 +130,7 @@ Flow {
             TapHandler {
                 acceptedButtons: Qt.RightButton
                 onTapped: {
-                    if (model.settingsQml) {
-                        settingsLoader.source = model.settingsQml
-                        settingsDialog.open()
-                    } else {
-                        widgetMenu.open()
-                    }
+                    widgetMenu.open()
                 }
             }
 
@@ -186,16 +210,7 @@ Flow {
     }
 
     // 小组件设置窗口
-    Dialog {
+    WidgetSettingsDialog {
         id: settingsDialog
-        title: qsTr("Widget Settings")
-        modal: true
-        standardButtons: Dialog.Close
-
-        Item {
-            Layout.fillWidth: true
-            Layout.fillHeight: true
-            Loader { id: settingsLoader; }
-        }
     }
 }
