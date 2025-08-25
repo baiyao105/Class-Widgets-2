@@ -41,7 +41,7 @@ QQW.Window {
         }
     }
 
-    WidgetsLoader {
+    WidgetsContainer {
         id: widgetsLoader
         objectName: "widgetsLoader"
         anchors.centerIn: parent

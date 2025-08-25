@@ -1,6 +1,7 @@
 module ClassWidgets.Components
 
-WidgetsLoader 1.0 WidgetsLoader.qml
+WidgetsContainer 1.0 WidgetsContainer.qml
+WidgetLoader 1.0 WidgetLoader.qml
 
 #Dialogs
 AddWidgetsDialog 1.0 dialogs/AddWidgetsDialog.qml
