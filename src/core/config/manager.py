@@ -1,118 +1,94 @@
-import json
 from pathlib import Path
-from typing import Union, Optional, Dict, Any
 from loguru import logger
+from pydantic import BaseModel, Field, PrivateAttr, Extra
+from typing import Dict, List, Optional, Any
+from PySide6.QtCore import QObject, QTimer
+from src.core.directories import DEFAULT_THEME
 
 
-def merge_config(target: Dict[str, Any], source: Dict[str, Any]) -> bool:
-    """
-    合并修改
+class AppConfig(BaseModel):
+    dev_mode: bool = False
+    no_logs: bool = False
+    version: str = "0.0.1"
+    channel: str = "alpha"
 
-    :param target: 本地配置
-    :param source: 默认配置
-    :return:
-    """
-    modified = False
+class ScheduleConfig(BaseModel):
+    current_schedule: str = "default"
+    preparation_time: int = 2
 
-    for key, value in source.items():
-        if key not in target:
-            target[key] = value
-            modified = True
-        elif isinstance(value, dict) and isinstance(target[key], dict):
-            if merge_config(target[key], value):
-                modified = True
-    return modified
+class WidgetEntry(BaseModel):
+    type_id: str
+    instance_id: str
+    settings: Optional[Dict[str, Any]] = {}
+
+class PreferencesConfig(BaseModel):
+    current_theme: str = Field(default_factory=lambda: DEFAULT_THEME.as_uri())
+    widgets_presets: Dict[str, List[WidgetEntry]] = Field(
+        default_factory=lambda: {
+            "default": [
+                WidgetEntry(type_id="classwidgets.time", instance_id="8ee721ef-ab36-4c23-834d-2c666a6739a3"),
+                WidgetEntry(type_id="classwidgets.hello", instance_id="87985398-2844-4c9e-b27d-6ea81cd0a2c6"),
+            ]
+        }
+    )
+    current_preset: str = "default"
+
+    class Config:
+        extra = Extra.allow
+
+class PluginsConfig(BaseModel):
+    enabled: List[str] = ["builtin.classwidgets.widgets"]
+
+class RootConfig(BaseModel):
+    app: AppConfig = Field(default_factory=AppConfig)
+    schedule: ScheduleConfig = Field(default_factory=ScheduleConfig)
+    preferences: PreferencesConfig = Field(default_factory=PreferencesConfig)
+    plugins: PluginsConfig = Field(default_factory=PluginsConfig)
+
+    _on_change: callable = PrivateAttr(default=None)
+
+    def __setattr__(self, name, value):
+        super().__setattr__(name, value)
+        if self._on_change and name != "_on_change":
+            self._on_change()
 
 
-# 用了不知道多久的manager(?
-class ConfigManager:
-    def __init__(self, path: Union[str, Path], filename: str):
-        """
-        Json Config Manager
-
-        :param path: json config file directory path
-        :param filename: json config file name (e.g., rin_ui.json)
-        """
+# 配置管理器
+class ConfigManager(QObject):
+    def __init__(self, path: Path, filename: str):
+        super().__init__()
         self.path = Path(path)
         self.filename = filename
         self.full_path = self.path / filename
-        self.config = {}
 
-    def load_config(self, default_config: Optional[dict] = None) -> dict:
-        """
-        Load config from file or initialize with default.
+        self._config = RootConfig()
+        self._config._on_change = self.save
 
-        :param default_config: default dict if file not exists or error
-        :return: loaded or default config dict
-        """
-        if default_config is None:
-            default_config = {}
+        self.save_timer = QTimer(self)
+        self.save_timer.setInterval(1000 * 60)  # 1分钟保存一次
+        self.save_timer.timeout.connect(self.save)
+
+    def load_config(self):
         if self.full_path.exists():
             try:
-                with open(self.full_path, 'r', encoding='utf-8') as f:
-                    self.config = json.load(f)
-            except json.JSONDecodeError as e:
-                logger.warning(f"JSON解析错误: {e}. 使用默认配置.")
-                self.config = default_config
+                data = self.full_path.read_text(encoding="utf-8")
+                self._config = RootConfig.model_validate_json(data)
+                self._config._on_change = self.save
             except Exception as e:
-                logger.warning(f"读取配置文件时发生错误: {e}. 使用默认配置.")
-                self.config = default_config
-        else:
-            self.config = default_config
-            self.save_config()
+                logger.warning(f"配置文件读取失败: {e}, 使用默认配置")
+        self.save()
 
-        return self.config
-
-    def update_config(self):
-        """
-        Update config with new config.
-        :return:
-        """
+    def save(self):
         try:
-            with open(self.full_path, 'r', encoding='utf-8') as f:
-                self.config = json.load(f)
+            self.path.mkdir(parents=True, exist_ok=True)
+            self.full_path.write_text(self._config.model_dump_json(indent=4), encoding="utf-8")
+            logger.success(f"配置保存成功: {self.full_path}")
         except Exception as e:
-            print(f'更新配置失败: {e}')
-            self.config = {}
+            logger.error(f"保存配置失败: {e}")
 
-    def update_values(self, key: Union[str, list], value) -> None:
-        """
-        Update config with new value.
+    def __getattr__(self, name):
+        """代理属性获取"""
+        if name == '_config':
+            return self.__dict__['_config']
 
-        :param key: 单个键或键列表
-        :param value: 要赋的值
-        """
-        if isinstance(key, str):
-            self.config[key] = value
-        elif isinstance(key, list):
-            for k in key:
-                self.config[k] = value
-        else:
-            raise TypeError('key 必须是 str 或 list')
-        self.save_config()
-
-    def save_config(self):
-        """
-        Save config to file.
-        :return:
-        """
-        try:
-            if not self.path.exists():
-                self.path.mkdir(parents=True)
-            with open(self.full_path, 'w', encoding='utf-8') as f:
-                json.dump(self.config, f, ensure_ascii=False, indent=4)
-        except Exception as e:
-            print(f'保存配置失败: {e}')
-
-    def get(self, *args, **kwargs):
-        return self.config.get(*args, **kwargs)
-
-    def __getitem__(self, key):
-        return self.config.get(key)
-
-    def __setitem__(self, key, value):
-        self.config[key] = value
-        self.save_config()
-
-    def __repr__(self):
-        return json.dumps(self.config, ensure_ascii=False, indent=4)
+        return getattr(self._config, name)

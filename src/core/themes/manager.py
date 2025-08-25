@@ -101,7 +101,8 @@ class ThemeManager(QObject):
             logger.warning(f"Current theme not found, use default theme.")
             self._currentTheme = Path(QML_PATH / "builtin").as_uri()
             if self._app_central:
-                self._app_central.set_config(self._currentTheme, "preferences", "current_theme")
+                self._app_central.configs.preferences.current_theme = self._currentTheme
+                # self._app_central.set_config(self._currentTheme, "preferences", "current_theme")
 
         logger.info(f"Themes loaded: {len(self._themes)} themes")
         return self._themes

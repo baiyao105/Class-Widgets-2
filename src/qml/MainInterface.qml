@@ -34,6 +34,15 @@ QQW.Window {
         }
     }
 
+    MouseArea {
+        anchors.fill: parent
+        onClicked: {
+            if (widgetsLoader.menuVisible) {
+                widgetsLoader.menuVisible = false
+            }
+        }
+    }
+
     Connections {
         target: AppCentral
         function onTogglePanel(pos) {

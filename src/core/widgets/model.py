@@ -1,7 +1,10 @@
 import uuid
-from typing import List, Union, Dict
+from typing import List, Dict, Union
 from PySide6.QtCore import QAbstractListModel, Qt, QModelIndex, QUrl, Signal, Property, Slot, QObject
 from loguru import logger
+
+from src.core.config.manager import WidgetEntry
+
 
 class WidgetListModel(QAbstractListModel):
     InstanceIdRole = Qt.UserRole + 1
@@ -21,8 +24,10 @@ class WidgetListModel(QAbstractListModel):
         self._app_central = app_central
         self._definitions: Dict[str, dict] = {}
         self._instances: List[dict] = []
-        self._presets: Dict[str, List[Union[str, dict]]] = {}
+        self._presets: Dict[str, List[WidgetEntry]] = {}
         self._current_preset: str = ""
+
+        self.modelChanged.connect(self.save_config)
 
     def roleNames(self):
         return {
@@ -61,26 +66,31 @@ class WidgetListModel(QAbstractListModel):
             return w.get("settings_qml", self._definitions.get(w.get("type_id", ""), {}).get("settings_qml", ""))
         return None
 
-    def _normalize_preset_entries(self, entries: List[Union[str, dict]]) -> List[dict]:
+    def _normalize_preset_entries(self, entries: List[Union[str, dict, WidgetEntry]]) -> List[WidgetEntry]:
         normalized = []
         for e in entries:
-            if isinstance(e, str):
-                normalized.append({"type_id": e, "instance_id": str(uuid.uuid4())})
+            if isinstance(e, WidgetEntry):
+                normalized.append(e)
             elif isinstance(e, dict):
-                type_id = e.get("type_id")
-                if not type_id:
-                    continue
-                inst_id = e.get("instance_id", str(uuid.uuid4()))
-                normalized.append({"type_id": type_id, "instance_id": inst_id, "settings": e.get("settings", {})})
+                normalized.append(WidgetEntry(
+                    type_id=e["type_id"],
+                    instance_id=e.get("instance_id", str(uuid.uuid4())),
+                    settings=e.get("settings", {})
+                ))
+            elif isinstance(e, str):
+                normalized.append(WidgetEntry(
+                    type_id=e,
+                    instance_id=str(uuid.uuid4())
+                ))
         return normalized
 
     def load_config(self):
         if not self._app_central:
             logger.warning("Cannot load widget presets: AppCentral not available")
             return
-        raw_presets = self._app_central.get_config("preferences", "widgets_presets") or {}
+        raw_presets = self._app_central.configs.preferences.widgets_presets or {}
         self._presets = {name: self._normalize_preset_entries(entries) for name, entries in raw_presets.items()}
-        current_preset = self._app_central.get_config("preferences", "current_preset") or ""
+        current_preset = self._app_central.configs.preferences.current_preset or ""
         if current_preset:
             self.load_preset(current_preset)
 
@@ -88,8 +98,10 @@ class WidgetListModel(QAbstractListModel):
         if not self._app_central:
             logger.warning("Cannot save widget presets: AppCentral not available")
             return
-        self._app_central.set_config("preferences", "widgets_presets", self._presets)
-        self._app_central.set_config("preferences", "current_preset", self._current_preset)
+        # 保存时直接赋值 WidgetEntry 列表，Pydantic 可以处理
+        self._app_central.configs.preferences.widgets_presets = self.presets
+        self._app_central.configs.preferences.current_preset = self._current_preset
+        self._app_central.configs.save()
         logger.info("Widget presets saved")
 
     def syncCurrentPreset(self):
@@ -97,12 +109,11 @@ class WidgetListModel(QAbstractListModel):
         if not self._current_preset:
             return
         self._presets[self._current_preset] = [
-            {
-                "type_id": w["type_id"],
-                "instance_id": w["instance_id"],
-                "settings": dict(w.get("settings", {})),
-                "backend_obj": w.get("backend_obj", None)
-            }
+            WidgetEntry(
+                type_id=w["type_id"],
+                instance_id=w["instance_id"],
+                settings=dict(w.get("settings", {}))
+            )
             for w in self._instances
         ]
 
@@ -122,22 +133,21 @@ class WidgetListModel(QAbstractListModel):
         if preset_name not in self._presets:
             return
         entries = self._presets[preset_name]
-        new_instances: List[dict] = []
-
+        new_instances = []
         for entry in entries:
-            type_id = entry.get("type_id")
-            if not type_id or type_id not in self._definitions:
+            type_id = entry.type_id
+            if type_id not in self._definitions:
                 continue
             definition = self._definitions[type_id]
             instance = dict(definition)
-            instance["instance_id"] = entry.get("instance_id", str(uuid.uuid4()))
+            instance["instance_id"] = entry.instance_id or str(uuid.uuid4())
             instance["type_id"] = type_id
             base_settings = dict(definition.get("default_settings", {}))
-            entry_settings = entry.get("settings", {})
-            base_settings.update(entry_settings)
+            base_settings.update(entry.settings or {})
             instance["settings"] = base_settings
-            if "backend_obj" in entry:
-                instance["backend_obj"] = entry["backend_obj"]
+            # 保留 backend_obj 给 QML 使用
+            if "backend_obj" in definition:
+                instance["backend_obj"] = definition["backend_obj"]
             new_instances.append(instance)
 
         self.beginResetModel()

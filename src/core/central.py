@@ -10,7 +10,7 @@ from RinUI import RinUIWindow
 from loguru import logger
 
 from src.core import CONFIGS_PATH, QML_PATH
-from src.core.config import global_config, DEFAULT_CONFIG, verify_config
+from src.core.config import ConfigManager, RootConfig
 from src.core.directories import PathManager, DEFAULT_THEME, CW_PATH
 from src.core.models import ScheduleData, MetaInfo
 from src.core.notification import Notification
@@ -41,7 +41,7 @@ class AppCentral(QObject):  # Class Widgets 的中枢
         """初始化核心"""
         self.app_instance = QApplication.instance()
         self.path_manager = PathManager()  # 统一路径管理
-        self.config_manager = global_config  # 统一配置管理
+        self.configs = ConfigManager(path=CONFIGS_PATH, filename="configs.json")
         self.theme_manager = ThemeManager(self)
         self.widgets_model = WidgetListModel(self)
         self.plugin_api = PluginAPI(self)
@@ -55,7 +55,7 @@ class AppCentral(QObject):  # Class Widgets 的中枢
         self.schedule: Optional[ScheduleData] = None
         
         self.union_update_timer = UnionUpdateTimer()
-        self.runtime = ScheduleRuntime(self.schedule)
+        self.runtime = ScheduleRuntime(self.schedule, self)
         self._notification = Notification()
         self._schedule_editor = None
         
@@ -75,8 +75,8 @@ class AppCentral(QObject):  # Class Widgets 的中枢
     
     def _load_config(self):
         """加载和验证配置"""
-        self.config_manager.load_config(DEFAULT_CONFIG)
-        verify_config()
+        self.configs.load_config()
+        print(self.configs.app)
 
     def update(self):  # 更新
         self._load_schedule()
@@ -112,6 +112,12 @@ class AppCentral(QObject):  # Class Widgets 的中枢
         return self.config_manager.config
 
     @Slot()
+    def quit(self):
+        self.configs.save()
+        self.cleanup()
+        self.app_instance.quit()
+
+    @Slot()
     def reloadSchedule(self):
         logger.info(f"Force Reload schedule: {self.current_schedule_filename}")
         self._load_schedule(force=True)
@@ -143,34 +149,6 @@ class AppCentral(QObject):  # Class Widgets 的中枢
         context.setContextProperty("PluginManager", self.plugin_manager)
         context.setContextProperty("AppCentral", self)
         context.setContextProperty("PathManager", self.path_manager)
-    
-    def get_config(self, *keys):
-        """统一的配置获取接口"""
-        if not keys:
-            return self.config_manager.config
-        
-        result = self.config_manager.config
-        for key in keys:
-            if isinstance(result, dict) and key in result:
-                result = result[key]
-            else:
-                return None
-        return result
-    
-    def set_config(self, value, *keys):
-        """统一的配置设置接口"""
-        if not keys:
-            return False
-            
-        config = self.config_manager.config
-        for key in keys[:-1]:
-            if key not in config:
-                config[key] = {}
-            config = config[key]
-        
-        config[keys[-1]] = value
-        self.config_manager.save_config()
-        return True
 
     # private methods
     def _load_schedule(self, force=False):  # 加载课程表
@@ -184,7 +162,7 @@ class AppCentral(QObject):  # Class Widgets 的中枢
 
     def _get_schedule_path(self) -> Path:
         """获取当前调度文件路径"""
-        current_schedule = self.get_config("schedule", "current_schedule") or "default"
+        current_schedule = self.configs.schedule.current_schedule or "default"
         return Path(CONFIGS_PATH / "schedules" / current_schedule).with_suffix(".json")
     
     def _should_reload_schedule(self, path: Path, force: bool) -> bool:
@@ -252,7 +230,7 @@ class AppCentral(QObject):  # Class Widgets 的中枢
         self.theme_manager.load()
         
         # 获取启用的插件列表
-        enabled_plugins = self.get_config("plugins", "enabled") or []
+        enabled_plugins = self.configs.plugins.enabled or []
         self.plugin_manager.enabled_plugins = enabled_plugins
         
         # 加载插件（内置+外部）

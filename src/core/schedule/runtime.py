@@ -5,10 +5,8 @@ from typing import Optional, List
 from PySide6.QtCore import QObject, Property, Signal
 from loguru import logger
 
-from src.core.config import global_config
 from src.core.models import DayEntry, Entry, MetaInfo, EntryType, Subject
 from src.core.models import ScheduleData
-from src.core.notification import NotificationLevel
 from src.core.utils import get_cycle_week, get_week_number
 
 
@@ -16,8 +14,9 @@ class ScheduleRuntime(QObject):
     notify = Signal(str, dict, str)  # entry_type, subject, title
     updated = Signal()
 
-    def __init__(self, schedule: ScheduleData):
+    def __init__(self, schedule: ScheduleData, app_central):
         super().__init__()
+        self.app_central = app_central
         self.schedule = schedule
         self.current_time = datetime.now()
 
@@ -161,7 +160,8 @@ class ScheduleRuntime(QObject):
             next_entry = self.next_entries[0]
             next_start = datetime.strptime(next_entry.startTime, "%H:%M")
             next_start = datetime.combine(self.current_time.date(), next_start.time())
-            prep_min = global_config.config.get("schedule").get("preparation_time") or 2  # 准备时间
+            prep_min = self.app_central.configs.preferences.preparation_time or 2  # 准备时间
+            # prep_min = self.app_central.configs.get("schedule").get("preparation_time") or 2  # 准备时间
 
             if next_start - timedelta(minutes=prep_min) == self.current_time.replace(microsecond=0):  # 调整当前精度……
                 logger.info(f"Notify: status changed to {EntryType.PREPARATION.value}; {next_entry}")

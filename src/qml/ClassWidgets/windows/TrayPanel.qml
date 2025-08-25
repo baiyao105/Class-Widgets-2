@@ -116,6 +116,7 @@ Window {
                 text: qsTr("Exit")
                 visible: parent.hovered
             }
+            onClicked: AppCentral.quit()
         }
     }
 

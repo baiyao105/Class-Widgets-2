@@ -12,7 +12,7 @@ Item {
     implicitWidth: Math.max(headerRow.implicitWidth, contentArea.childrenRect.width) + 48
     height: 100
     clip: true
-    opacity: widgetHoverHandler.hovered? 0.9 : 1
+    opacity: widgetHoverHandler.hovered? 0.8 : 1
 
     // colors
     property color backgroundColor: Theme.isDark()
