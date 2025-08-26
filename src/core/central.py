@@ -10,7 +10,7 @@ from RinUI import RinUIWindow
 from loguru import logger
 
 from src.core import CONFIGS_PATH, QML_PATH
-from src.core.config import ConfigManager, RootConfig
+from src.core.config import ConfigManager
 from src.core.directories import PathManager, DEFAULT_THEME, CW_PATH
 from src.core.models import ScheduleData, MetaInfo
 from src.core.notification import Notification
@@ -22,13 +22,13 @@ from src.core.schedule.editor import ScheduleEditor
 from src.core.themes import ThemeManager
 from src.core.timer import UnionUpdateTimer
 from src.core.utils import generate_id, TrayIcon
+from src.core.utils.debugger import DebuggerCentral
 from src.core.widgets import WidgetsWindow, WidgetListModel
 
 
 class AppCentral(QObject):  # Class Widgets 的中枢
     updated = Signal()
     togglePanel = Signal(QPoint)
-    widgetRegistered = Signal(str)  # 新增：widget注册信号
 
     def __init__(self):  # 初始化
         super().__init__()
@@ -45,6 +45,9 @@ class AppCentral(QObject):  # Class Widgets 的中枢
         self.widgets_model = WidgetListModel(self)
         self.plugin_api = PluginAPI(self)
         self.plugin_manager = PluginManager(self.plugin_api)
+
+        # debugger
+        self.debugger = DebuggerCentral(self)
         
     def _initialize_schedule_components(self):
         """初始化调度相关组件"""
@@ -99,16 +102,11 @@ class AppCentral(QObject):  # Class Widgets 的中枢
 
     @Property(QObject, notify=updated)
     def scheduleEditor(self):  # 课程表编辑器
-        if not self._schedule_editor:
-            current_schedule = self.get_config("schedule", "current_schedule") or "default"
-            schedule_path = Path(CONFIGS_PATH / "schedules" / current_schedule).with_suffix(".json")
-            self._schedule_editor = ScheduleEditor(schedule_path)
-            self._schedule_editor.updated.connect(self.update)
         return self._schedule_editor
 
     @Property(dict, notify=updated)
-    def globalConfig(self):  # 全局配置
-        return self.config_manager.config
+    def globalConfig(self):  # 旧接口（仅 Debugger 使用）
+        return self.configs.data
 
     @Slot()
     def quit(self):
@@ -120,19 +118,6 @@ class AppCentral(QObject):  # Class Widgets 的中枢
     def reloadSchedule(self):
         logger.info(f"Force Reload schedule: {self.current_schedule_filename}")
         self._load_schedule(force=True)
-
-    # def register_widget(self, widget_id: str, name: str, qml_path: str, backend_obj: QObject = None, icon: str = None):
-    #     """统一的widget注册接口"""
-    #     widget_data = {
-    #         "id": widget_id,
-    #         "name": name,
-    #         "icon": icon or "",
-    #         "qml_path": qml_path,
-    #         "backend_obj": backend_obj,
-    #     }
-    #     self.widgets_model.add_widget(widget_data)
-    #     self.widgetRegistered.emit(widget_id)
-    #     logger.debug(f"Widget registered: {widget_id}")
     
     def setup_qml_context(self, window):
         """
@@ -213,7 +198,14 @@ class AppCentral(QObject):  # Class Widgets 的中枢
         except Exception as e:
             logger.error(f"Failed to create new schedule file: {e}")
 
+    def _load_schedule_editor(self):
+        """加载课程表编辑器"""
+        self.schedule_editor = ScheduleEditor(self.current_schedule_path)
+        self.schedule_editor.updated.connect(self.update)
+        print(self.schedule_editor, self.schedule_editor.schedule_path)
+
     def _load_runtime(self):
+        self._load_schedule_editor()
         self._setup_runtime_connections()
         self._load_theme_and_plugins()
         self.widgets_window.run()
@@ -253,6 +245,21 @@ class AppCentral(QObject):  # Class Widgets 的中枢
             self.settings.root_window.requestActivate()
         else:
             logger.error("Settings window not initialized correctly.")
+
+    @Slot()
+    def openDebugger(self):
+        """显示调试器"""
+        if not self.configs.app.debug_mode:
+            logger.error("Looks like you tried to open the debugger without debug mode enabled, zako~")
+            return
+
+        instance = self.debugger.debugger_window
+        if self.debugger and instance.root_window:
+            instance.root_window.show()
+            instance.root_window.raise_()
+            instance.root_window.requestActivate()
+        else:
+            logger.error("Debugger window not initialized correctly.")
 
     @Slot()
     def toggleWidgetsEditMode(self):
