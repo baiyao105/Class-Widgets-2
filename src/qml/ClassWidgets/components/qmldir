@@ -2,6 +2,7 @@ module ClassWidgets.Components
 
 WidgetsContainer 1.0 WidgetsContainer.qml
 WidgetLoader 1.0 WidgetLoader.qml
+Watermark 1.0 Watermark.qml
 
 #Dialogs
 AddWidgetsDialog 1.0 dialogs/AddWidgetsDialog.qml

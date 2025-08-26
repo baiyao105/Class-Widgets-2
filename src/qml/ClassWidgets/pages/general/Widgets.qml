@@ -118,7 +118,8 @@ FluentPage {
                 Rectangle {
                     // 屏幕边框
                     Layout.fillWidth: true
-                    Layout.preferredHeight: 200
+                    Layout.fillHeight: true
+                    Layout.preferredHeight: Math.min(width / 1.75, 350)
                     border.width: 8
                     radius: 12
                     color: "transparent"

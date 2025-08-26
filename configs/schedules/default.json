@@ -49,8 +49,8 @@
                     "type": "class",
                     "startTime": "04:30",
                     "endTime": "07:00",
-                    "subjectId": "chinese",
-                    "title": null
+                    "subjectId": "math",
+                    "title": ""
                 }
             ],
             "dayOfWeek": 5,
@@ -108,6 +108,22 @@
                 }
             ],
             "dayOfWeek": 5,
+            "weeks": "all",
+            "date": null
+        },
+        {
+            "id": "day_27211a69e25e4dd59ccb81a036d0a306",
+            "entries": [
+                {
+                    "id": "entry_14ea84ac78d94105b720ac533d9a2be0",
+                    "type": "class",
+                    "startTime": "01:24",
+                    "endTime": "05:00",
+                    "subjectId": "math",
+                    "title": ""
+                }
+            ],
+            "dayOfWeek": 3,
             "weeks": "all",
             "date": null
         }

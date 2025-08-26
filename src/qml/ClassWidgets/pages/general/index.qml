@@ -37,5 +37,34 @@ FluentPage {
                 }
             }
         }
+
+        SettingCard {
+            Layout.fillWidth: true
+            icon.name: "ic_fluent_layer_20_regular"
+            title: qsTr("Window Layer")
+            description: qsTr("Let your widgets floating on top, or tuck them neatly behind other windows")
+
+            ComboBox {
+                model: ListModel {
+                    ListElement {
+                        text: qsTr("Pin on Top"); value: "top"
+                    }
+                    ListElement {
+                        text: qsTr("Send to Back"); value: "bottom"
+                    }
+                }
+                textRole: "text"
+
+                onCurrentIndexChanged: if (focus) Configs.set("preferences.widgets_layer", model.get(currentIndex).value)
+                Component.onCompleted: {
+                    for (var i = 0; i < model.count; i++) {
+                        if (model.get(i).value === Configs.data.preferences.widgets_layer) {
+                            currentIndex = i
+                            break
+                        }
+                    }
+                }
+            }
+        }
     }
 }

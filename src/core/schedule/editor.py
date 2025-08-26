@@ -22,6 +22,11 @@ class ScheduleEditor(QObject):
         self.schedule: Optional[ScheduleData] = None
         self._load_schedule()
 
+    def set_schedule_path(self, schedule_path: Union[Path, str]) -> None:
+        self.schedule_path = Path(schedule_path)
+        self.parser = ScheduleParser(self.schedule_path)
+        self._load_schedule()
+
     def _load_schedule(self) -> None:
         """加载课程表"""
         try:
@@ -54,7 +59,7 @@ class ScheduleEditor(QObject):
             return
         
         schedule_dict = asdict(self.schedule)
-        print(schedule_dict)
+
         try:
             with open(self.schedule_path, "w", encoding="utf-8") as f:
                 json.dump(schedule_dict, f, ensure_ascii=False, indent=4)
@@ -203,8 +208,7 @@ class ScheduleEditor(QObject):
             entry.endTime = end_time
         if subject_id:
             entry.subjectId = subject_id
-        if title:
-            entry.title = title
+        entry.title = title
 
     @Slot(str)
     def removeEntry(self, entry_id: str) -> None:

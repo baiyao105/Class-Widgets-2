@@ -17,9 +17,9 @@ FluentPage {
         Image {
             id: banner
             anchors.fill: parent
-            source: PathManager.assets("images/banner/cw1.png")
+            source: PathManager.assets("images/banner/cw2.png")
             fillMode: Image.PreserveAspectCrop
-            verticalAlignment: Image.AlignTop
+            // verticalAlignment: Image.AlignTop
 
             layer.enabled: true
             layer.effect: OpacityMask {
@@ -48,13 +48,13 @@ FluentPage {
             Text {
                 color: "#fff"
                 typography: Typography.BodyLarge
-                text: qsTr("Alpha Version")
+                text: qsTr("[ALPHA]")
             }
 
             Text {
                 color: "#fff"
                 typography: Typography.Title
-                text: qsTr("Class Widgets 2")
+                text: qsTr("Dashboard")
             }
         }
     }

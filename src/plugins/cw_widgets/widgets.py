@@ -7,7 +7,8 @@ from src.core.plugin import CW2Plugin
 from src.core.directories import QML_PATH
 
 class Plugin(CW2Plugin):
-    def on_load(self):
+    def __init__(self, plugin_api):
+        super().__init__(plugin_api)
         self.widgets_list = [
             {
                 "widget_id": "classwidgets.currentActivity",
@@ -22,6 +23,8 @@ class Plugin(CW2Plugin):
                 "backend_obj": self,
             }
         ]
+
+    def on_load(self):
         self.register_widgets()
 
     def register_widgets(self):

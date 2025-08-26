@@ -94,8 +94,9 @@ Window {
         ToolButton {
             icon.name: "ic_fluent_developer_board_search_20_regular"
             flat: true
+            onClicked: AppCentral.openDebugger()
             ToolTip {
-                text: qsTr("Debuggers")
+                text: qsTr("Debugger")
                 visible: parent.hovered
             }
         }

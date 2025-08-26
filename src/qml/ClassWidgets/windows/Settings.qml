@@ -2,6 +2,7 @@ import QtQuick
 import QtQuick.Controls
 import QtQuick.Layouts
 import RinUI
+import ClassWidgets.Components
 
 
 FluentWindow {
@@ -11,15 +12,11 @@ FluentWindow {
     width: Screen.width * 0.5
     height: Screen.height * 0.6
     minimumWidth: 600
-    visible: true
+    // visible: true
 
     onClosing: function(event) {
         event.accepted = false
         settingsWindow.visible = false
-    }
-
-    Component.onCompleted: {
-        y = 700
     }
 
     navigationItems: [
@@ -46,4 +43,9 @@ FluentWindow {
             icon: "ic_fluent_info_20_regular",
         },
     ]
+
+    // 测试水印
+    Watermark {
+        anchors.centerIn: parent
+    }
 }

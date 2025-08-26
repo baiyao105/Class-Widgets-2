@@ -99,9 +99,10 @@ Dialog {
             Item { Layout.fillWidth: true }
             SpinBox {
                 id: weekCycleRound
-                visible: weekCycleType.checkedButton.text === "Round"
+                visible: weekCycleType.checkedButton ? weekCycleType.checkedButton.text === "Round" : false
                 from: 1
                 to: AppCentral.scheduleEditor.meta.maxWeekCycle
+                implicitWidth: 80
             }
         }
 

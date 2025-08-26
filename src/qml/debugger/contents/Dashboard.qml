@@ -7,6 +7,11 @@ import Debugger
 
 ColumnLayout {
     Layout.fillWidth: true
+
+    EditSchedule {
+        id: editScheduleWindow
+    }
+
     Text {
         typography: Typography.BodyStrong
         text: "Dashboard"
@@ -25,7 +30,8 @@ ColumnLayout {
                 // edit
                 Button {
                     text: "Edit Schedule"
-                    onClicked: DebuggerCentral.showEditor()
+                    // onClicked: DebuggerCentral.showEditor()
+                    onClicked: editScheduleWindow.show()
                 }
                 // reload
                 Button {

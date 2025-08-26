@@ -14,11 +14,11 @@ class DebuggerCentral(QObject):
         self.debugger_window = DebuggerWindow(self.instance, self)
 
 
-    @Slot()
-    def showEditor(self) -> None:
-        logger.debug(f"Show Schedule Editor: {self.editor}")
-        self.editor = ScheduleEditor(self.instance)
-        self.editor.root_window.show()
+    # @Slot()
+    # def showEditor(self) -> None:
+    #     logger.debug(f"Show Schedule Editor: {self.editor}")
+    #     self.editor = ScheduleEditor(self.instance)
+    #     self.editor.root_window.show()
 
 
 class DebuggerWindow(RinUIWindow):
@@ -32,14 +32,14 @@ class DebuggerWindow(RinUIWindow):
         self.load(QML_PATH / "debugger" / "MainWindow.qml")
 
 
-class ScheduleEditor(RinUIWindow):
-    def __init__(self, instance, parent=None):
-        super().__init__()
-
-        self.parent = parent
-        self.engine.rootContext().setContextProperty("AppCentral", instance)
-        self.engine.addImportPath(QML_PATH)
-        self.load(QML_PATH / "debugger" / "EditSchedule.qml")
+# class ScheduleEditor(RinUIWindow):
+#     def __init__(self, instance, parent=None):
+#         super().__init__()
+#
+#         self.parent = parent
+#         self.engine.rootContext().setContextProperty("AppCentral", instance)
+#         self.engine.addImportPath(QML_PATH)
+#         self.load(QML_PATH / "debugger" / "EditSchedule.qml")
 
 
 if __name__ == "__main__":

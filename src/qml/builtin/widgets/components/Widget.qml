@@ -30,6 +30,7 @@ Item {
     property alias text: subtitleLabel.text
     property alias subtitle: subtitleArea.children
     property alias actions: actionButtons.children
+    property alias backgroundArea: backgroundArea.children
     default property alias content: contentArea.children
 
     // 背景
@@ -37,7 +38,7 @@ Item {
 
     // 动画
     Behavior on implicitWidth {
-        NumberAnimation { duration: 500; easing.type: Easing.OutBack }
+        NumberAnimation { duration: 400; easing.type: Easing.OutBack }
     }
 
     // 渐变边框
@@ -80,6 +81,12 @@ Item {
         radius: 12
         color: backgroundColor
         opacity: Configs.data.preferences.opacity
+    }
+
+    // 背景布局
+    Item {
+        id: backgroundArea
+        anchors.fill: parent
     }
 
     // 主布局

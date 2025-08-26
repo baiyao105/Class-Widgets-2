@@ -14,8 +14,10 @@ QQW.Window {
     visible: true
     flags: Qt.FramelessWindowHint | Qt.Tool
     color: "transparent"
-    width: Screen.width
-    height: Screen.height
+    // width: Screen.width
+    // height: Screen.height
+    width: Screen.desktopAvailableWidth
+    height: Screen.desktopAvailableHeight
 
     property bool initialized: false
     property alias editMode: widgetsLoader.editMode
@@ -57,6 +59,14 @@ QQW.Window {
         function onTogglePanel(pos) {
             trayPanel.raise()
         }
+    }
+
+    Watermark {
+        x: widgetsLoader.x - widgetsLoader.width / 2
+        y: widgetsLoader.y - widgetsLoader.height / 2
+        opacity: 0.2
+        color: "gray"
+        z: 999
     }
 
     WidgetsContainer {
@@ -114,6 +124,29 @@ QQW.Window {
 
     TrayPanel {
         id: trayPanel
+    }
+
+    Component.onCompleted: updateLayer()
+
+
+    Connections {
+        target: Configs
+        function onDataChanged() {
+            updateLayer()
+        }
+    }
+
+    function updateLayer() {
+        switch (Configs.data.preferences.widgets_layer) {
+            case "top":
+                root.flags &= ~Qt.WindowStaysOnBottomHint
+                root.flags |= Qt.WindowStaysOnTopHint
+                break
+            case "bottom":
+                root.flags &= ~Qt.WindowStaysOnTopHint
+                root.flags |= Qt.WindowStaysOnBottomHint
+                break
+        }
     }
 }
 
