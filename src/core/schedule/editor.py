@@ -206,8 +206,7 @@ class ScheduleEditor(QObject):
             entry.startTime = start_time
         if end_time:
             entry.endTime = end_time
-        if subject_id:
-            entry.subjectId = subject_id
+        entry.subjectId = subject_id
         entry.title = title
 
     @Slot(str)

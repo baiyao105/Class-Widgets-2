@@ -4,6 +4,7 @@ import QtQuick.Layouts
 import Qt5Compat.GraphicalEffects
 import RinUI
 import Widgets
+import ClassWidgets.Easing
 
 
 Item {
@@ -31,14 +32,22 @@ Item {
     property alias subtitle: subtitleArea.children
     property alias actions: actionButtons.children
     property alias backgroundArea: backgroundArea.children
-    default property alias content: contentArea.children
+    default property alias content: contentArea.data
 
     // 背景
     readonly property real borderWidth: 1.25
 
+    // Component.onCompleted: {
+    //     console.log(BezierCurve.elegantBounce + BezierCudrve + "wssb ")
+    // }
+
     // 动画
     Behavior on implicitWidth {
-        NumberAnimation { duration: 400; easing.type: Easing.OutBack }
+        NumberAnimation {
+            duration: 400;
+            easing.type: Easing.Bezier
+            easing.bezierCurve: BezierCurve.liquidBack
+        }
     }
 
     // 渐变边框
@@ -103,7 +112,7 @@ Item {
         RowLayout {
             id: headerRow
             Layout.fillWidth: true
-            spacing: 12
+            spacing: actionsSeparator.visible ? 12 : 0
 
             RowLayout {
                 id: subtitleArea
@@ -113,7 +122,7 @@ Item {
                 }
             }
 
-            Item { Layout.fillWidth: true }
+            Item { id: actionsSeparator; Layout.fillWidth: actionButtons.children.length > 0 }
 
             RowLayout {
                 id: actionButtons

@@ -6,11 +6,37 @@ import Widgets
 
 Widget {
     id: root
-    text: qsTr("time")
+    // text: qsTr("time")
     property var dateTime: {
+        "year": 1900,
+        "month": 1,
+        "day": 1,
+        "weekday": 0,
         "hour": 0,
         "minute": 0,
         "second": 0
+    }
+
+    property int titleMode: 0
+
+    text: {
+        var jsDate = new Date(dateTime.year, dateTime.month - 1, dateTime.day)
+
+        if (titleMode === 0) {
+            var localDate = Qt.formatDate(jsDate, "MMMM d")
+            return localDate
+        } else {
+            var localDay = Qt.locale().dayName(dateTime.weekday, Locale.LongFormat)
+            return localDay
+        }
+    }
+
+    Timer {
+        id: titleTimer
+        interval: 3000   // 每 3 秒切换一次
+        running: true
+        repeat: true
+        onTriggered: root.titleMode = (root.titleMode + 1) % 2
     }
 
     RowLayout {
@@ -21,7 +47,7 @@ Widget {
             value: dateTime.hour || "00"
         }
         Title {
-            y: -5
+            Layout.bottomMargin: font.pixelSize * 0.1
             text: ":"
         }
         AnimatedDigits {
@@ -29,7 +55,7 @@ Widget {
             value: dateTime.minute || "00"
         }
         Title {
-            y: -5
+            Layout.bottomMargin: font.pixelSize * 0.1
             text: ":"
         }
         AnimatedDigits {

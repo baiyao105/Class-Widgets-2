@@ -11,6 +11,8 @@ Rectangle {
     property string oldValue: ""
     property double progress: 1  // 0-1
     property int duration: 650
+
+    property alias font: oldDigit.font
     implicitWidth: Math.max(oldDigit.width, newDigit.width)
     implicitHeight: Math.max(oldDigit.height, newDigit.height)
 
@@ -40,6 +42,7 @@ Rectangle {
         text: root.value
         anchors.centerIn: parent
         opacity: 0
+        font: oldDigit.font
     }
 
     LinearGradient  {

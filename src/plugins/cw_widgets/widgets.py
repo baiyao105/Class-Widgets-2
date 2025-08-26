@@ -21,6 +21,12 @@ class Plugin(CW2Plugin):
                 "name": "Time",
                 "qml_path": Path(QML_PATH / "widgets" / "Time.qml").as_posix(),
                 "backend_obj": self,
+            },
+            {
+                "widget_id": "classwidgets.eventCountdown",
+                "name": "Event Countdown",
+                "qml_path": Path(QML_PATH / "widgets" / "eventCountdown.qml").as_posix(),
+                "backend_obj": self,
             }
         ]
 

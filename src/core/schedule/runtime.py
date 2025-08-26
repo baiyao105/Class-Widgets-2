@@ -32,6 +32,7 @@ class ScheduleRuntime(QObject):
         self.current_entry: Optional[Entry] = None  # 当前正在进行的日程
         self.next_entries: Optional[List[Entry]] = None  # 接下来的日程
         self.remaining_time: Optional[timedelta] = None  # 剩余时间
+        self._progress: Optional[float] = None  # 进度
         self.current_status: Optional[EntryType] = None  # 当前状态
 
         # SUBJECT
@@ -64,6 +65,8 @@ class ScheduleRuntime(QObject):
     # SCHEDULE
     @Property(dict, notify=updated)
     def scheduleMeta(self) -> dict:
+        if self.schedule_meta is None:
+            return {}
         return asdict(self.schedule_meta)
 
     @Property(list, notify=updated)
@@ -92,14 +95,20 @@ class ScheduleRuntime(QObject):
     def remainingTime(self) -> dict:
         if not self.remaining_time:
             return {
-                "minutes": 0,
-                "seconds": 0
+                "minute": 0,
+                "second": 0
             }
         result = {
-            "minutes": self.remaining_time.seconds // 60,
-            "seconds": self.remaining_time.seconds % 60
+            "minute": self.remaining_time.seconds // 60,
+            "second": self.remaining_time.seconds % 60
         }
         return result
+
+    @Property(float, notify=updated)
+    def progress(self) -> float:
+        if not self._progress:
+            return 0.0
+        return self._progress
 
     @Property(str, notify=updated)
     def currentStatus(self):
@@ -139,11 +148,24 @@ class ScheduleRuntime(QObject):
         self.current_status = self.current_day.get_current_status(self.current_time) if self.current_day else None
         self.current_subject = self.current_day.get_current_subject(self.schedule.subjects, self.current_time) if self.current_day else None
         self.current_title = getattr(self.current_entry, "title", None)
+        self._progress = self.get_progress_percent()
 
     def _update_time(self):  # 更新时间
         self.current_day_of_week = self.current_time.isoweekday()
         self.current_week = get_week_number(self.schedule.meta.startDate, self.current_time)
         self.current_week_of_cycle = get_cycle_week(self.current_week, self.schedule.meta.maxWeekCycle)
+
+    def get_progress_percent(self) -> float:
+        if not self.current_entry:  # 空
+            return 1
+
+        now = self.current_time
+        start = datetime.combine(now.date(), datetime.strptime(self.current_entry.startTime, "%H:%M").time())
+        end = datetime.combine(now.date(), datetime.strptime(self.current_entry.endTime, "%H:%M").time())
+
+        if now <= start: return 0
+        if now >= end: return 1
+        return round((now - start).total_seconds() / (end - start).total_seconds(), 2)
 
     def _update_notify(self):
         # 活动变更节点

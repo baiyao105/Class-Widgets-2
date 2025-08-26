@@ -18,6 +18,7 @@ class PluginAPI(QObject):
     def __init__(self, app_central):
         super().__init__()
         self._app = app_central
+        self._runtime = app_central.runtime
 
         # 转接 AppCentral 的信号
         self._app.updated.connect(self.scheduleUpdated.emit)
