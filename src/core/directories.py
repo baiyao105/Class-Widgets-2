@@ -45,6 +45,10 @@ class PathManager(QObject):
     def qml(self, path_name: str) -> str:
         return CW_PATH.joinpath(path_name).resolve().as_uri()
 
+    @Slot(str, result=str)
+    def images(self, path_name: str) -> str:
+        return ASSETS_PATH.joinpath("images", path_name).resolve().as_uri()
+
 
 if __name__ == "__main__":
     for path in PATHS:

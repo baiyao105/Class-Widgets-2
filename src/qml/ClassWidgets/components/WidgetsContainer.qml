@@ -7,11 +7,20 @@ import Widgets
 
 Flow {
     id: widgetsContainer
-    property real scaleFactor: 1
+    property real scaleFactor: Configs.data.preferences.scale_factor || 1.0
     spacing: 8
 
     property bool editMode: widgetRepeater.count === 0 ? true : false
     property bool menuVisible: false
+
+    move: Transition {
+        enabled: editMode
+        NumberAnimation {
+            properties: "x,y"
+            duration: 300
+            easing.type: Easing.OutQuint
+        }
+    }
 
     Repeater {
         id: widgetRepeater
@@ -113,10 +122,19 @@ Flow {
 
             // 动画
             SequentialAnimation on rotation {
-                running: widgetsContainer.editMode
+                id: rotationAnim
+                property real angle1: 2.0
+                property real angle2: -2.0
+                running: editMode
                 loops: Animation.Infinite
-                NumberAnimation { to: 2; duration: 240; easing.type: Easing.InOutQuad }
-                NumberAnimation { to: -2; duration: 240; easing.type: Easing.InOutQuad }
+
+                NumberAnimation { to: rotationAnim.angle1; duration: 125; easing.type: Easing.InOutQuad }
+                NumberAnimation { to: rotationAnim.angle2; duration: 125; easing.type: Easing.InOutQuad }
+
+                onRunningChanged: {
+                    rotationAnim.angle1 = Math.random() * 2.0
+                    rotationAnim.angle2 = -(Math.random() * 2.0)
+                }
             }
 
             SequentialAnimation {

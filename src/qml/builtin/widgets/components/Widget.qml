@@ -69,6 +69,7 @@ Item {
                 border.width: borderWidth
             }
         }
+        opacity: Configs.data.preferences.opacity * 2
         z: 1
     }
 
@@ -78,6 +79,7 @@ Item {
         anchors.fill: parent
         radius: 12
         color: backgroundColor
+        opacity: Configs.data.preferences.opacity
     }
 
     // 主布局
@@ -122,6 +124,21 @@ Item {
 
     HoverHandler {
         id: widgetHoverHandler
+    }
+
+    // 动画
+
+    Behavior on backgroundColor {
+        ColorAnimation {
+            duration: 350
+            easing.type: Easing.OutQuint
+        }
+    }
+    Behavior on borderColor {
+        ColorAnimation {
+            duration: 250
+            easing.type: Easing.OutQuint
+        }
     }
 
     Behavior on opacity {

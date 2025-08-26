@@ -1,43 +1,10 @@
 from pathlib import Path
 from loguru import logger
-from pydantic import BaseModel, Field, PrivateAttr, Extra
-from typing import Dict, List, Optional, Any
-from PySide6.QtCore import QObject, QTimer
-from src.core.directories import DEFAULT_THEME
+from pydantic import BaseModel, Field, PrivateAttr
+from PySide6.QtCore import QObject, QTimer, Signal, Property, Slot
 
+from .model import AppConfig, ScheduleConfig, PreferencesConfig, PluginsConfig
 
-class AppConfig(BaseModel):
-    dev_mode: bool = False
-    no_logs: bool = False
-    version: str = "0.0.1"
-    channel: str = "alpha"
-
-class ScheduleConfig(BaseModel):
-    current_schedule: str = "default"
-    preparation_time: int = 2
-
-class WidgetEntry(BaseModel):
-    type_id: str
-    instance_id: str
-    settings: Optional[Dict[str, Any]] = {}
-
-class PreferencesConfig(BaseModel):
-    current_theme: str = Field(default_factory=lambda: DEFAULT_THEME.as_uri())
-    widgets_presets: Dict[str, List[WidgetEntry]] = Field(
-        default_factory=lambda: {
-            "default": [
-                WidgetEntry(type_id="classwidgets.time", instance_id="8ee721ef-ab36-4c23-834d-2c666a6739a3"),
-                WidgetEntry(type_id="classwidgets.hello", instance_id="87985398-2844-4c9e-b27d-6ea81cd0a2c6"),
-            ]
-        }
-    )
-    current_preset: str = "default"
-
-    class Config:
-        extra = Extra.allow
-
-class PluginsConfig(BaseModel):
-    enabled: List[str] = ["builtin.classwidgets.widgets"]
 
 class RootConfig(BaseModel):
     app: AppConfig = Field(default_factory=AppConfig)
@@ -55,6 +22,8 @@ class RootConfig(BaseModel):
 
 # 配置管理器
 class ConfigManager(QObject):
+    configChanged = Signal()
+
     def __init__(self, path: Path, filename: str):
         super().__init__()
         self.path = Path(path)
@@ -62,7 +31,7 @@ class ConfigManager(QObject):
         self.full_path = self.path / filename
 
         self._config = RootConfig()
-        self._config._on_change = self.save
+        self._config._on_change = lambda: self.save(silent=True)
 
         self.save_timer = QTimer(self)
         self.save_timer.setInterval(1000 * 60)  # 1分钟保存一次
@@ -73,16 +42,17 @@ class ConfigManager(QObject):
             try:
                 data = self.full_path.read_text(encoding="utf-8")
                 self._config = RootConfig.model_validate_json(data)
-                self._config._on_change = self.save
+                self._config._on_change = lambda: self.save(silent=True)
             except Exception as e:
                 logger.warning(f"配置文件读取失败: {e}, 使用默认配置")
         self.save()
 
-    def save(self):
+    def save(self, silent=False):
         try:
             self.path.mkdir(parents=True, exist_ok=True)
             self.full_path.write_text(self._config.model_dump_json(indent=4), encoding="utf-8")
-            logger.success(f"配置保存成功: {self.full_path}")
+            if not silent:
+                logger.success(f"配置保存成功: {self.full_path}")
         except Exception as e:
             logger.error(f"保存配置失败: {e}")
 
@@ -92,3 +62,17 @@ class ConfigManager(QObject):
             return self.__dict__['_config']
 
         return getattr(self._config, name)
+
+    @Property('QVariant', notify=configChanged)
+    def data(self):
+        return self._config.model_dump()  # 整个配置转 dict
+
+    @Slot(str, 'QVariant')
+    def set(self, key: str, value):
+        keys = key.split('.')  # 支持点分层，如 "preferences.current_theme"
+        cfg = self._config
+        for k in keys[:-1]:
+            cfg = getattr(cfg, k)
+        setattr(cfg, keys[-1], value)
+        self._config._on_change()
+        self.configChanged.emit()

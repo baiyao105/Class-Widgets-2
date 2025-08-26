@@ -23,7 +23,6 @@ from src.core.themes import ThemeManager
 from src.core.timer import UnionUpdateTimer
 from src.core.utils import generate_id, TrayIcon
 from src.core.widgets import WidgetsWindow, WidgetListModel
-from PySide6.QtQml import qmlRegisterSingletonInstance
 
 
 class AppCentral(QObject):  # Class Widgets 的中枢
@@ -62,7 +61,7 @@ class AppCentral(QObject):  # Class Widgets 的中枢
     def _initialize_ui_components(self):
         """初始化UI组件"""
         self.settings = Settings(self)
-        self.widgets_window = WidgetsWindow(self)  # 简化参数传递
+        self.widgets_window: WidgetsWindow = WidgetsWindow(self)  # 简化参数传递
 
     def run(self):  # 运行
         self._load_config()  # 加载配置
@@ -145,6 +144,7 @@ class AppCentral(QObject):  # Class Widgets 的中枢
         context = window.engine.rootContext()
         window.engine.addImportPath(QML_PATH)
         context.setContextProperty("WidgetsModel", self.widgets_model)
+        context.setContextProperty("Configs", self.configs)
         context.setContextProperty("ThemeManager", self.theme_manager)
         context.setContextProperty("PluginManager", self.plugin_manager)
         context.setContextProperty("AppCentral", self)
@@ -252,7 +252,20 @@ class AppCentral(QObject):  # Class Widgets 的中枢
             self.settings.root_window.raise_()
             self.settings.root_window.requestActivate()
         else:
-            logger.warning("Settings window not initialized correctly.")
+            logger.error("Settings window not initialized correctly.")
+
+    @Slot()
+    def toggleWidgetsEditMode(self):
+        """切换小组件编辑模式"""
+        if not self.widgets_window:
+            return
+
+        root = self.widgets_window.root_window
+        widgets_loader = root.findChild(QObject, "widgetsLoader")
+        if widgets_loader:
+            root.raise_()
+            current = widgets_loader.property("editMode")
+            widgets_loader.setProperty("editMode", not current)
 
 
 class Settings(RinUIWindow):

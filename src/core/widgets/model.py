@@ -3,7 +3,7 @@ from typing import List, Dict, Union
 from PySide6.QtCore import QAbstractListModel, Qt, QModelIndex, QUrl, Signal, Property, Slot, QObject
 from loguru import logger
 
-from src.core.config.manager import WidgetEntry
+from src.core.config.model import WidgetEntry
 
 
 class WidgetListModel(QAbstractListModel):
