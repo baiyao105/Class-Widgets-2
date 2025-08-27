@@ -10,7 +10,7 @@ Rectangle {
     property string value: ""
     property string oldValue: ""
     property double progress: 1  // 0-1
-    property int duration: 650
+    property int duration: 700
 
     property alias font: oldDigit.font
     implicitWidth: Math.max(oldDigit.width, newDigit.width)
@@ -33,6 +33,7 @@ Rectangle {
                 position: 0.8 - progress;
                 color: Qt.alpha(oldDigit.color, Math.max(0, 1 - progress * 2))
             }
+            GradientStop { position: 0.9 - progress; color: Qt.alpha(oldDigit.color, 0) }
             GradientStop { position: 1 - progress; color: Qt.alpha(oldDigit.color, 0) }
         }
     }
@@ -51,7 +52,7 @@ Rectangle {
         opacity: progress * 3
         source: newDigit
         gradient: Gradient {
-            GradientStop { position: 0.8 - progress; color: Qt.alpha(newDigit.color, 0) }
+            GradientStop { position: 0.85 - progress; color: Qt.alpha(newDigit.color, 0) }
             GradientStop {
                 position: 1 - progress;
                 color: Qt.alpha(newDigit.color, Math.min(1, Math.max(0, progress * 2 - 0.5)))
@@ -76,7 +77,7 @@ Rectangle {
             duration: root.duration
             // easing.type: Easing.OutQuart
             easing.type: Easing.Bezier
-            easing.bezierCurve: [ .12,.81,.35,.39, 1, 1 ]
+            easing.bezierCurve: [ .51,.2,0,.44, 1, 1 ]
         }
         ScriptAction {
             script: {
