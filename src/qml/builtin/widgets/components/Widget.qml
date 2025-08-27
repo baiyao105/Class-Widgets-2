@@ -17,7 +17,7 @@ Item {
 
     // colors
     property color backgroundColor: Theme.isDark()
-        ? Qt.alpha("#1E1D22", 0.7)
+        ? Qt.alpha("#1E1D22", 0.65)
         : Qt.alpha("#FBFAFF", 0.7)
     property color borderColor: Theme.isDark()
         ? Qt.alpha("#fff", 0.4)
@@ -35,7 +35,7 @@ Item {
     default property alias content: contentArea.data
 
     // 背景
-    readonly property real borderWidth: 1.25
+    readonly property real borderWidth: 1.5
 
     // Component.onCompleted: {
     //     console.log(BezierCurve.elegantBounce + BezierCudrve + "wssb ")

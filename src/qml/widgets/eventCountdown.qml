@@ -36,11 +36,12 @@ Widget {
         ProgressBar {
             id: progressBar
             Layout.fillWidth: true
+            Layout.preferredHeight: 4
             value: AppCentral.scheduleRuntime.progress
             primaryColor: {
                 switch (AppCentral.scheduleRuntime.currentStatus) {
-                    case "free": case "break": return "#46CEA3"
-                    case "class": return "#e4a274"
+                    case "free": case "break": return Theme.isDark()? "#46CEA3" : "#2eaa76"
+                    case "class": return Theme.isDark()? "#e4a274" : "#dd986f"
                     default: return "#605ed2"
                 }
             }
