@@ -63,7 +63,10 @@ Window {
                 description: qsTr("Adjust the settings of Class Widgets")
                 Hyperlink {
                     text: "Open"
-                    onClicked: AppCentral.openSettings()
+                    onClicked: {
+                        panel.hide()
+                        AppCentral.openSettings()
+                    }
                 }
             }
 
@@ -94,7 +97,10 @@ Window {
         ToolButton {
             icon.name: "ic_fluent_developer_board_search_20_regular"
             flat: true
-            onClicked: AppCentral.openDebugger()
+            onClicked: {
+                panel.hide()
+                AppCentral.openDebugger()
+            }
             ToolTip {
                 text: qsTr("Debugger")
                 visible: parent.hovered

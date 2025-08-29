@@ -27,7 +27,19 @@ class Plugin(CW2Plugin):
                 "name": "Event Countdown",
                 "qml_path": Path(QML_PATH / "widgets" / "eventCountdown.qml").as_posix(),
                 "backend_obj": self,
-            }
+            },
+            {
+                "widget_id": "classwidgets.upcomingActivities",
+                "name": "Upcoming Activities",
+                "qml_path": Path(QML_PATH / "widgets" / "upcomingActivities.qml").as_posix(),
+                "backend_obj": self,
+                "settings_qml": Path(QML_PATH / "widgets" / "settings" / "upcomingActivities.qml").as_posix(),
+                "default_settings": {
+                    "marquee": True,
+                    "max_activities": 5,
+                    "full_name": False
+                }
+            },
         ]
 
     def on_load(self):
@@ -40,6 +52,8 @@ class Plugin(CW2Plugin):
                 name=widget["name"],
                 qml_path=widget["qml_path"],
                 backend_obj=widget["backend_obj"],
+                settings_qml=widget.get("settings_qml"),
+                default_settings=widget.get("default_settings"),
             )
 
     @Slot(result=dict)

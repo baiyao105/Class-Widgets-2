@@ -37,10 +37,6 @@ Item {
     // 背景
     readonly property real borderWidth: 1.5
 
-    // Component.onCompleted: {
-    //     console.log(BezierCurve.elegantBounce + BezierCudrve + "wssb ")
-    // }
-
     // 动画
     Behavior on implicitWidth {
         NumberAnimation {
@@ -87,7 +83,8 @@ Item {
     Rectangle {
         id: background
         anchors.fill: parent
-        radius: 12
+        // radius: 12
+        radius: height * 0.22
         color: backgroundColor
         opacity: Configs.data.preferences.opacity
     }
@@ -112,7 +109,6 @@ Item {
         RowLayout {
             id: headerRow
             Layout.fillWidth: true
-            spacing: actionsSeparator.visible ? 12 : 0
 
             RowLayout {
                 id: subtitleArea

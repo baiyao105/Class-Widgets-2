@@ -7,3 +7,4 @@ Subtitle 1.0 components/Subtitle.qml
 Title 1.0 components/Title.qml
 Icon 1.0 components/Icon.qml
 AnimatedDigits 1.0 components/AnimatedDigits.qml
+MarqueeTitle 1.0 components/MarqueeTitle.qml
