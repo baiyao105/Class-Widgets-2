@@ -233,14 +233,14 @@ class ScheduleEditor(QObject):
         """获取课程表元数据"""
         if not self.schedule or not self.schedule.meta:
             return {}
-        return asdict(self.schedule.meta)
+        return self.schedule.meta.model_dump()
 
     @Property("QVariant", notify=updated)
     def subjects(self) -> List[Dict]:
         """获取所有科目"""
         if not self.schedule:
             return []
-        return [asdict(subject) for subject in self.schedule.subjects]
+        return [subject.model_dump() for subject in self.schedule.subjects]
 
     @Property("QVariant", notify=updated)
     def days(self) -> List[Dict]:
@@ -251,7 +251,7 @@ class ScheduleEditor(QObject):
         # 按时间排序
         sorted_days = []
         for day in self.schedule.days:
-            day_dict = asdict(day)
+            day_dict = day.model_dump()
             if 'entries' in day_dict and day_dict['entries']:
                 day_dict['entries'].sort(key=lambda x: x.get('startTime', ''))
             sorted_days.append(day_dict)
@@ -263,4 +263,4 @@ class ScheduleEditor(QObject):
         """获取完整的课程表数据"""
         if not self.schedule:
             return {}
-        return asdict(self.schedule)
+        return self.schedule.model_dump()

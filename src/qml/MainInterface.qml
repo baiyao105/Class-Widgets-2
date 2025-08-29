@@ -62,8 +62,8 @@ QQW.Window {
     }
 
     Watermark {
-        x: widgetsLoader.x - widgetsLoader.width / 2
-        y: widgetsLoader.y - widgetsLoader.height / 2
+        x: widgetsLoader.x
+        y: widgetsLoader.y + widgetsLoader.height / 3
         opacity: 0.2
         color: "gray"
         z: 999
@@ -98,6 +98,9 @@ QQW.Window {
             case "top_left":
             case "top_center":
             case "top_right":
+                if (root.editMode) {
+                    return ( Screen.height - height ) / 2;
+                }
                 return preferences.widgets_offset_y;
             case "bottom_left":
             case "bottom_center":
@@ -111,7 +114,7 @@ QQW.Window {
         y: calcY()
 
         Behavior on x { NumberAnimation { duration: 300 * root.initialized; easing.type: Easing.OutQuint } }
-        Behavior on y { NumberAnimation { duration: 300 * root.initialized; easing.type: Easing.OutQuint } }
+        Behavior on y { NumberAnimation { duration: 500 * root.initialized; easing.type: Easing.OutQuint } }
 
         signal geometryChanged()
         onXChanged: geometryChanged()

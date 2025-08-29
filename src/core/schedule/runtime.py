@@ -5,13 +5,13 @@ from typing import Optional, List
 from PySide6.QtCore import QObject, Property, Signal
 from loguru import logger
 
-from src.core.models import DayEntry, Entry, MetaInfo, EntryType, Subject
-from src.core.models import ScheduleData
+from src.core.models.schedule import ScheduleData, MetaInfo, DayEntry, Entry, EntryType, Subject
+from src.core.schedule.service import ScheduleServices
 from src.core.utils import get_cycle_week, get_week_number
 
 
 class ScheduleRuntime(QObject):
-    notify = Signal(str, dict, str)  # entry_type, subject, title
+    notify = Signal(str, dict, str)
     updated = Signal()
 
     def __init__(self, schedule: ScheduleData, app_central):
@@ -20,24 +20,21 @@ class ScheduleRuntime(QObject):
         self.schedule = schedule
         self.current_time = datetime.now()
 
-        # TIME
-        self.current_day_of_week: int = 0  # 当前星期
-        self.current_week = 0  # 当前周
-        self.current_week_of_cycle: int = 0  # 当前周的周期
+        self.current_day_of_week: int = 0
+        self.current_week = 0
+        self.current_week_of_cycle: int = 0
 
-        # SCHEDULE
-        self.schedule_meta: Optional[MetaInfo] = None  # 日程元数据
-        self.current_day: Optional[DayEntry] = None  # 当前天的所有日程
-        self.previous_entry: Optional[Entry] = None  # 上一个日程(检测日程变更)
-        self.current_entry: Optional[Entry] = None  # 当前正在进行的日程
-        self.next_entries: Optional[List[Entry]] = None  # 接下来的日程
-        self.remaining_time: Optional[timedelta] = None  # 剩余时间
-        self._progress: Optional[float] = None  # 进度
-        self.current_status: Optional[EntryType] = None  # 当前状态
+        self.schedule_meta: Optional[MetaInfo] = None
+        self.current_day: Optional[DayEntry] = None
+        self.previous_entry: Optional[Entry] = None
+        self.current_entry: Optional[Entry] = None
+        self.next_entries: Optional[List[Entry]] = None
+        self.remaining_time: Optional[timedelta] = None
+        self._progress: Optional[float] = None
+        self.current_status: Optional[EntryType] = None
 
-        # SUBJECT
-        self.current_subject: Optional[Subject] = None  # 当前科目
-        self.current_title: Optional[str] = None  # 当前标题
+        self.current_subject: Optional[Subject] = None
+        self.current_title: Optional[str] = None
 
         logger.info("Schedule runtime initialized.")
 
@@ -63,33 +60,31 @@ class ScheduleRuntime(QObject):
         return self.current_week_of_cycle
 
     # SCHEDULE
+    @Property(list, notify=updated)
+    def subjects(self) -> list:
+        return [s.model_dump() for s in self.schedule.subjects]
+
     @Property(dict, notify=updated)
     def scheduleMeta(self) -> dict:
         if self.schedule_meta is None:
             return {}
-        return asdict(self.schedule_meta)
+        return self.schedule_meta.model_dump()
 
     @Property(list, notify=updated)
-    def currentDayEntries(self) -> list:  # 当前的进行的日程
-        result = []
+    def currentDayEntries(self) -> list:  # 当前的日程
         if not self.current_day:
-            return result
-        for i in range(len(self.current_day.entries)):
-            result.append(asdict(self.current_day.entries[i]))
-        return result
+            return []
+        return [entry.model_dump() for entry in self.current_day.entries]
 
     @Property(dict, notify=updated)
     def currentEntry(self) -> dict:
-        return asdict(self.current_entry) if self.current_entry else None
+        return self.current_entry.model_dump() if self.current_entry else {}
 
     @Property(list, notify=updated)
     def nextEntries(self) -> list:  # 接下来的日程
-        converted = []
         if not self.next_entries:
-            return converted
-        for i in range(len(self.next_entries)):
-            converted.append(asdict(self.next_entries[i]))
-        return converted
+            return []
+        return [entry.model_dump() for entry in self.next_entries]
 
     @Property(dict, notify=updated)
     def remainingTime(self) -> dict:
@@ -138,16 +133,18 @@ class ScheduleRuntime(QObject):
         :return:
         """
         self.current_time = datetime.now()
-
-        self.schedule = schedule
+        self.schedule = schedule or self.schedule
         self.schedule_meta = self.schedule.meta
-        self.current_day = self.schedule.get_day_entries(self.current_time)
-        self.current_entry = self.current_day.get_current_entry(self.current_time) if self.current_day else None
-        self.next_entries = self.current_day.get_next_entries(self.current_time) if self.current_day else None
-        self.remaining_time = self.current_day.get_remaining_time(self.current_time) if self.current_day else None
-        self.current_status = self.current_day.get_current_status(self.current_time) if self.current_day else None
-        self.current_subject = self.current_day.get_current_subject(self.schedule.subjects, self.current_time) if self.current_day else None
-        self.current_title = getattr(self.current_entry, "title", None)
+        self.current_day = ScheduleServices.get_day_entries(self.schedule, self.current_time)
+
+        if self.current_day:
+            self.current_entry = ScheduleServices.get_current_entry(self.current_day, self.current_time)
+            self.next_entries = ScheduleServices.get_next_entries(self.current_day, self.current_time)
+            self.remaining_time = ScheduleServices.get_remaining_time(self.current_day, self.current_time)
+            self.current_status = ScheduleServices.get_current_status(self.current_day, self.current_time)
+            self.current_subject = ScheduleServices.get_current_subject(self.current_day, self.schedule.subjects, self.current_time)
+            self.current_title = getattr(self.current_entry, "title", None)
+
         self._progress = self.get_progress_percent()
 
     def _update_time(self):  # 更新时间
@@ -182,7 +179,7 @@ class ScheduleRuntime(QObject):
             next_entry = self.next_entries[0]
             next_start = datetime.strptime(next_entry.startTime, "%H:%M")
             next_start = datetime.combine(self.current_time.date(), next_start.time())
-            prep_min = self.app_central.configs.preferences.preparation_time or 2  # 准备时间
+            prep_min = self.app_central.configs.schedule.preparation_time or 2  # 准备时间
             # prep_min = self.app_central.configs.get("schedule").get("preparation_time") or 2  # 准备时间
 
             if next_start - timedelta(minutes=prep_min) == self.current_time.replace(microsecond=0):  # 调整当前精度……

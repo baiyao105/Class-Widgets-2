@@ -63,7 +63,10 @@ Widget {
         }
         Title {
             text: AppCentral.scheduleRuntime.currentEntry.title
-                || AppCentral.scheduleRuntime.currentSubject.name || qsTr("Not Set")
+                || AppCentral.scheduleRuntime.currentSubject.name
+                || (AppCentral.scheduleRuntime.currentStatus === "free"
+                  ? qsTr("Take a break")
+                  : qsTr("Nothing right now"))
         }
     }
 
