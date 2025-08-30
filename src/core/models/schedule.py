@@ -1,5 +1,5 @@
 from pydantic import BaseModel
-from typing import Optional, List, Union
+from typing import Optional, List, Dict, Union
 from enum import Enum
 
 
@@ -38,8 +38,8 @@ class Entry(BaseModel):
 class DayEntry(BaseModel):
     id: str
     entries: List[Entry]
-    dayOfWeek: Optional[int] = 1  # 1~7
-    weeks: Union[WeekType, List[int], int, None] = None
+    dayOfWeek: Union[List[int], int, None] = None  # 1~7
+    weeks: Union[WeekType, List[int], int, None] = None  # all, 多选周期数，单选周期数
     date: Optional[str] = None
 
 
@@ -50,7 +50,15 @@ class MetaInfo(BaseModel):
     startDate: str
 
 
+class EntryOverride(BaseModel):
+    dayOfWeek: Union[List[int], int, None] = None  # 1~7
+    weeks: Union[WeekType, List[int], int, None] = None  # all, 多选周期数，单选周期数
+    subjectId: Optional[str] = None
+    title: Optional[str] = None
+
+
 class ScheduleData(BaseModel):
     meta: MetaInfo
     subjects: List[Subject]
     days: List[DayEntry]
+    entries: Dict[str, EntryOverride] = {}

@@ -1,17 +1,26 @@
 from datetime import datetime, timedelta
-from typing import Optional, List
+from typing import Optional, List, Union
 
 from src.core.models.schedule import Entry, EntryType, DayEntry, Subject, ScheduleData
 
 
 class ScheduleServices:
 
-    @staticmethod
-    def get_day_entries(schedule: ScheduleData, now: datetime) -> DayEntry | None:
+
+    def get_day_entries(self, schedule: ScheduleData, now: datetime) -> Optional[DayEntry]:
+        """
+        返回当前日期对应的 DayEntry（已考虑 weeks 周数限制）
+        """
+        current_week = self._get_week_number(schedule, now)
         weekday = now.isoweekday()  # 1-7
+
         for day in schedule.days:
-            if day.dayOfWeek == weekday:
-                return day
+            day_of_week_list = (
+                [day.dayOfWeek] if isinstance(day.dayOfWeek, int) else day.dayOfWeek
+            )
+            if day_of_week_list and weekday in day_of_week_list:
+                if self._is_in_week(day.weeks, current_week):
+                    return day
         return None
 
     @staticmethod
@@ -66,3 +75,39 @@ class ScheduleServices:
                 if s.id == current.subjectId:
                     return s
         return None
+
+    @staticmethod
+    def _get_week_number(schedule: ScheduleData, now: datetime) -> int:
+        """
+        根据 schedule.meta.startDate 算出当前是第几周
+        """
+        if not schedule.meta or not schedule.meta.startDate:
+            return 1  # fallback 默认第1周
+
+        start_date = datetime.fromisoformat(schedule.meta.startDate)
+        delta = (now.date() - start_date.date()).days
+        return delta // 7 + 1
+
+    @staticmethod
+    def _is_in_week(weeks: Union[str, int, list[int], None], current_week: int) -> bool:
+        """
+        判断某个 weeks 字段是否包含当前周
+        - "all" 或 WeekType.ALL → 永远 True
+        - None → 永远 True（等于没限制）
+        - int → 当前周 == int
+        - list[int] → 当前周 in list
+        """
+        if weeks is None:
+            return True
+
+        if isinstance(weeks, str):
+            return weeks == "all"  # 或者用 WeekType.ALL.value
+
+        if isinstance(weeks, int):
+            return current_week == weeks
+
+        if isinstance(weeks, list):
+            return current_week in weeks
+
+        return False
+

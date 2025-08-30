@@ -18,6 +18,7 @@ class ScheduleRuntime(QObject):
         super().__init__()
         self.app_central = app_central
         self.schedule = schedule
+        self.services = ScheduleServices()
         self.current_time = datetime.now()
 
         self.current_day_of_week: int = 0
@@ -135,14 +136,14 @@ class ScheduleRuntime(QObject):
         self.current_time = datetime.now()
         self.schedule = schedule or self.schedule
         self.schedule_meta = self.schedule.meta
-        self.current_day = ScheduleServices.get_day_entries(self.schedule, self.current_time)
+        self.current_day = self.services.get_day_entries(self.schedule, self.current_time)
 
         if self.current_day:
-            self.current_entry = ScheduleServices.get_current_entry(self.current_day, self.current_time)
-            self.next_entries = ScheduleServices.get_next_entries(self.current_day, self.current_time)
-            self.remaining_time = ScheduleServices.get_remaining_time(self.current_day, self.current_time)
-            self.current_status = ScheduleServices.get_current_status(self.current_day, self.current_time)
-            self.current_subject = ScheduleServices.get_current_subject(self.current_day, self.schedule.subjects, self.current_time)
+            self.current_entry = self.services.get_current_entry(self.current_day, self.current_time)
+            self.next_entries = self.services.get_next_entries(self.current_day, self.current_time)
+            self.remaining_time = self.services.get_remaining_time(self.current_day, self.current_time)
+            self.current_status = self.services.get_current_status(self.current_day, self.current_time)
+            self.current_subject = self.services.get_current_subject(self.current_day, self.schedule.subjects, self.current_time)
             self.current_title = getattr(self.current_entry, "title", None)
 
         self._progress = self.get_progress_percent()

@@ -1,5 +1,4 @@
 import json
-from dataclasses import asdict
 from pathlib import Path
 from typing import Optional, List, Dict, Any, Union
 
@@ -57,8 +56,8 @@ class ScheduleEditor(QObject):
         """保存课程表到文件"""
         if not self.schedule:
             return
-        
-        schedule_dict = asdict(self.schedule)
+
+        schedule_dict = self.schedule.model_dump()
 
         try:
             with open(self.schedule_path, "w", encoding="utf-8") as f:

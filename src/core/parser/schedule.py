@@ -39,11 +39,11 @@ class ScheduleParser:
         if not self.validate(data):
             raise ValueError("Invalid Schedule File")
 
-        schedule = ScheduleData.parse_obj(data)
+        schedule = ScheduleData.model_validate(data)
 
         if schedule.meta.version != SCHEMA_VERSION:
             raise ValueError(f"Unsupported schema version: {schedule.meta.version}")
 
         self.schedule = schedule
-        self.schedule_dict = schedule.dict()
+        self.schedule_dict = schedule.model_dump()
         return self.schedule

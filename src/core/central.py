@@ -1,5 +1,4 @@
 import json
-from dataclasses import asdict
 from datetime import datetime
 from pathlib import Path
 from typing import Optional
@@ -198,7 +197,7 @@ class AppCentral(QObject):  # Class Widgets 的中枢
         path.parent.mkdir(parents=True, exist_ok=True)
         try:
             with open(path, "w", encoding="utf-8") as f:
-                json.dump(asdict(schedule), f, ensure_ascii=False, indent=4)
+                json.dump(schedule.model_dump(), f, ensure_ascii=False, indent=4)
             logger.info(f"Created new schedule file at {path}")
         except Exception as e:
             logger.error(f"Failed to create new schedule file: {e}")

@@ -15,9 +15,15 @@ class JsonLoader:
 
         try:
             with open(self.path, "r", encoding="utf-8") as f:
-                self.data = json.load(f)
+                content = f.read().strip()
+                if not content:  # 文件是空的
+                    self.data = {}
+                    return self.data
+                self.data = json.loads(content)
         except json.JSONDecodeError as e:
-            raise ValueError(f"Config file is not a valid JSON format: {self.path}\n详情: {e}")
+            raise ValueError(
+                f"Config file is not a valid JSON format: {self.path}\n详情: {e}"
+            )
         except Exception as e:
             raise RuntimeError(f"Load config file failed: {e}")
 
