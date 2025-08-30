@@ -1,7 +1,7 @@
 from datetime import datetime, timedelta
 from typing import Optional, List, Union
 
-from src.core.models.schedule import Entry, EntryType, DayEntry, Subject, ScheduleData
+from src.core.models.schedule import Entry, EntryType, DayEntry, Subject, ScheduleData, EntryOverride
 
 
 class ScheduleServices:
@@ -9,19 +9,43 @@ class ScheduleServices:
 
     def get_day_entries(self, schedule: ScheduleData, now: datetime) -> Optional[DayEntry]:
         """
-        返回当前日期对应的 DayEntry（已考虑 weeks 周数限制）
+        返回当前日期对应的 DayEntry
         """
         current_week = self._get_week_number(schedule, now)
         weekday = now.isoweekday()  # 1-7
+        current_date_str = now.date().isoformat()
 
         for day in schedule.days:
-            day_of_week_list = (
-                [day.dayOfWeek] if isinstance(day.dayOfWeek, int) else day.dayOfWeek
-            )
+            # 判断 weekday 和周数
+            day_of_week_list = [day.dayOfWeek] if isinstance(day.dayOfWeek, int) else day.dayOfWeek
             if day_of_week_list and weekday in day_of_week_list:
                 if self._is_in_week(day.weeks, current_week):
-                    return day
+                    day_copy = day.model_copy()  # 复制一份以便不改原数据
+                    # 应用 EntryOverride
+                    for override_id, override in schedule.entries.items():
+                        if self._override_applies(override, weekday, current_week, current_date_str):
+                            entry = Entry(
+                                id=override_id,
+                                type=EntryType.CLASS if override.subjectId else EntryType.ACTIVITY,
+                                startTime="00:00",  # 可以自定义
+                                endTime="23:59",
+                                subjectId=override.subjectId,
+                                title=override.title,
+                            )
+                            day_copy.entries.append(entry)
+                    return day_copy
         return None
+
+    def _override_applies(self, override: EntryOverride, weekday: int, current_week: int, date_str: str) -> bool:
+        if override.dayOfWeek:
+            days = [override.dayOfWeek] if isinstance(override.dayOfWeek, int) else override.dayOfWeek
+            if weekday not in days:
+                return False
+        if override.weeks:
+            if not self._is_in_week(override.weeks, current_week):
+                return False
+        # 暂时不考虑支持日期覆盖（容易冲突.png）
+        return True
 
     @staticmethod
     def get_current_entry(day: DayEntry, now: Optional[datetime] = None) -> Optional[Entry]:
@@ -68,7 +92,8 @@ class ScheduleServices:
         return ScheduleServices.get_current_entry(day, now).type if ScheduleServices.get_current_entry(day, now) else EntryType.FREE
 
     @staticmethod
-    def get_current_subject(day: DayEntry, subjects: List[Subject], now: Optional[datetime] = None) -> Optional[Subject]:
+    def get_current_subject(day: DayEntry, subjects: List[Subject], now: Optional[datetime] = None) -> Optional[
+        Subject]:
         current = ScheduleServices.get_current_entry(day, now)
         if current and current.subjectId:
             for s in subjects:

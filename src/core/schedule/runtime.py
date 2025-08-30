@@ -143,7 +143,8 @@ class ScheduleRuntime(QObject):
             self.next_entries = self.services.get_next_entries(self.current_day, self.current_time)
             self.remaining_time = self.services.get_remaining_time(self.current_day, self.current_time)
             self.current_status = self.services.get_current_status(self.current_day, self.current_time)
-            self.current_subject = self.services.get_current_subject(self.current_day, self.schedule.subjects, self.current_time)
+            self.current_subject = self.services.get_current_subject(self.current_day, self.schedule.subjects,
+                                                                     self.current_time)
             self.current_title = getattr(self.current_entry, "title", None)
 
         self._progress = self.get_progress_percent()
@@ -183,10 +184,16 @@ class ScheduleRuntime(QObject):
             prep_min = self.app_central.configs.schedule.preparation_time or 2  # 准备时间
             # prep_min = self.app_central.configs.get("schedule").get("preparation_time") or 2  # 准备时间
 
-            if next_start - timedelta(minutes=prep_min) == self.current_time.replace(microsecond=0):  # 调整当前精度……
+            if next_start - timedelta(minutes=prep_min) == self.current_time.replace(microsecond=0):
                 logger.info(f"Notify: status changed to {EntryType.PREPARATION.value}; {next_entry}")
+                subject_dict = None
+                if self.schedule.subjects:
+                    sub = next_entry.get_subject(self.schedule.subjects)
+                    if sub:
+                        subject_dict = sub.model_dump()
                 self.notify.emit(
                     EntryType.PREPARATION.value,
-                    asdict(next_entry.get_subject(self.schedule.subjects) if self.schedule.subjects else None),
+                    subject_dict,
                     next_entry.title if next_entry else None
                 )
+

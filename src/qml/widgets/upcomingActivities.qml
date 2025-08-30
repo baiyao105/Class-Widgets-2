@@ -8,17 +8,19 @@ import Qt5Compat.GraphicalEffects
 Widget {
     id: root
     text: qsTr("Upcoming")
-    width: Math.max(Math.min(implicitWidth, 275), 200)
 
     property var entries: AppCentral.scheduleRuntime.nextEntries || []
     property var subjects: AppCentral.scheduleRuntime.subjects || []
     property int entriesLength: entries.length < settings.max_activities ? entries.length : settings.max_activities
     property string title: {
-        let result = qsTr("Nothing ahead")
+        let result = ""
         for (let i = 0; i < entriesLength; i++) {
             let entry = entries[i]
             let entryText = entry.title || subjectNameById(entry.subjectId) || qsTr("Unknown")
             result += entryText + (i === entries.length - 1 ? "" : "  ")
+        }
+        if (!result) {
+            result = qsTr("Nothing ahead")
         }
         return result
     }
@@ -33,11 +35,13 @@ Widget {
 
     MarqueeTitle {
         visible: settings.marquee
-        anchors.fill: parent
+        anchors.centerIn: parent
+        width: 275
         text: root.title
     }
 
     Title {
+        width: !settings.marquee ? implicitWidth : 0
         visible: !settings.marquee
         anchors.centerIn: parent
         text: root.title
