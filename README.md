@@ -1,10 +1,5 @@
 # Class-Widgets-2
 
-> [!CAUTION]
-> 本项目不接受任何 PR (Pull Request)
-> 
-> This project does not accept any PR (Pull Request)
-
 <details>
 <summary>Introduction (Blank)</summary>
 
@@ -30,6 +25,7 @@ Me.
 ### Dependencies
 - PySide6
 - RinUI
+- Pydantic
 
 ## License
 This project is licensed under the GNU General Public License v3.0 (GPL-3.0) License, 
