@@ -27,6 +27,7 @@ from src.core.widgets import WidgetsWindow, WidgetListModel
 
 class AppCentral(QObject):  # Class Widgets 的中枢
     updated = Signal()
+    initialized = Signal()
     togglePanel = Signal(QPoint)
     widgetRegistered = Signal(str)  # 新增：widget注册信号
 
@@ -62,6 +63,7 @@ class AppCentral(QObject):  # Class Widgets 的中枢
     def _initialize_ui_components(self):
         """初始化UI组件"""
         self.settings = Settings(self)
+        self.editor = Editor(self)
         self.widgets_window: WidgetsWindow = WidgetsWindow(self)  # 简化参数传递
 
     def run(self):  # 运行
@@ -69,6 +71,7 @@ class AppCentral(QObject):  # Class Widgets 的中枢
         self._load_schedule(force=True)  # 加载课程表
         self._load_runtime()  # 加载运行时
         self._init_tray_icon()  # 初始化托盘图标
+        self.initialized.emit()  # 发送信号
 
         logger.info(f"Current schedule: {self.schedule.meta.id}")
         logger.info(f"Configs loaded.")
@@ -90,19 +93,19 @@ class AppCentral(QObject):  # Class Widgets 的中枢
         logger.info("Clean up.")
 
     # for qml
-    @Property(QObject, notify=updated)
+    @Property(QObject, notify=initialized)
     def scheduleRuntime(self):  # 运行时
         return self.runtime
 
-    @Property(QObject, notify=updated)
+    @Property(QObject)
     def notification(self):
         return self._notification
 
-    @Property(QObject, notify=updated)
+    @Property(QObject, notify=initialized)
     def scheduleEditor(self):  # 课程表编辑器
         return self._schedule_editor
 
-    @Property(dict, notify=updated)
+    @Property(dict, notify=initialized)
     def globalConfig(self):  # 旧接口（仅 Debugger 使用）
         return self.configs.data
 
@@ -205,8 +208,6 @@ class AppCentral(QObject):  # Class Widgets 的中枢
     def _load_schedule_editor(self):
         """加载课程表编辑器"""
         self._schedule_editor = ScheduleEditor(self.current_schedule_path)
-        self._schedule_editor.updated.connect(lambda: self.update(force=True))
-        print(self._schedule_editor, self._schedule_editor.schedule_path)
 
     def _load_runtime(self):
         self._load_schedule_editor()
@@ -251,6 +252,16 @@ class AppCentral(QObject):  # Class Widgets 的中枢
             logger.error("Settings window not initialized correctly.")
 
     @Slot()
+    def openEditor(self):
+        """显示课程表编辑器"""
+        if self.editor and self.editor.root_window:
+            self.editor.root_window.show()
+            self.editor.root_window.raise_()
+            self.editor.root_window.requestActivate()
+        else:
+            logger.error("Editor window not initialized correctly.")
+
+    @Slot()
     def openDebugger(self):
         """显示调试器"""
         if not self.configs.app.debug_mode:
@@ -287,3 +298,12 @@ class Settings(RinUIWindow):
         self.engine.addImportPath(DEFAULT_THEME)
         self.central.setup_qml_context(self)
         self.load(CW_PATH / "windows" / "Settings.qml")
+
+
+class Editor(RinUIWindow):
+    def __init__(self, parent: AppCentral):
+        super().__init__()
+        self.central = parent
+
+        self.central.setup_qml_context(self)
+        self.load(CW_PATH / "windows" / "Editor.qml")

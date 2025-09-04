@@ -11,7 +11,13 @@ Widget {
 
     property var entries: AppCentral.scheduleRuntime.nextEntries || []
     property var subjects: AppCentral.scheduleRuntime.subjects || []
-    property int entriesLength: entries.length < settings.max_activities ? entries.length : settings.max_activities
+    property int entriesLength: {
+        if (entries.length !== 0 && settings.max_activities !== null) {
+            return entries.length < settings.max_activities ? entries.length : settings.max_activities
+        } else {
+            return 0
+        }
+    }
     property string title: {
         let result = ""
         for (let i = 0; i < entriesLength; i++) {

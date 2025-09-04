@@ -77,6 +77,10 @@ Window {
                 description: qsTr("Edit your schedule profile")
                 Hyperlink {
                     text: "Open"
+                    onClicked: {
+                        panel.hide()
+                        AppCentral.openEditor()
+                    }
                 }
             }
         }

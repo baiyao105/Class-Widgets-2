@@ -5,7 +5,7 @@ from typing import Optional, List
 from PySide6.QtCore import QObject, Property, Signal
 from loguru import logger
 
-from src.core.models.schedule import ScheduleData, MetaInfo, DayEntry, Entry, EntryType, Subject
+from src.core.models.schedule import ScheduleData, MetaInfo, Timeline, Entry, EntryType, Subject
 from src.core.schedule.service import ScheduleServices
 from src.core.utils import get_cycle_week, get_week_number
 
@@ -26,7 +26,7 @@ class ScheduleRuntime(QObject):
         self.current_week_of_cycle: int = 0
 
         self.schedule_meta: Optional[MetaInfo] = None
-        self.current_day: Optional[DayEntry] = None
+        self.current_day: Optional[Timeline] = None
         self.previous_entry: Optional[Entry] = None
         self.current_entry: Optional[Entry] = None
         self.next_entries: Optional[List[Entry]] = None
@@ -115,7 +115,7 @@ class ScheduleRuntime(QObject):
     # SUBJECT
     @Property(dict, notify=updated)
     def currentSubject(self) -> dict:
-        return asdict(self.current_subject) if self.current_subject else None
+        return self.current_subject.model_dump() if self.current_subject else None
 
     @Property(str, notify=updated)
     def currentTitle(self) -> str:

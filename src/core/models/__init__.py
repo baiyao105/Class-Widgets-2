@@ -1,4 +1,4 @@
-from .schedule import Subject, ScheduleData, DayEntry, Entry, EntryType, MetaInfo
+from .schedule import Subject, ScheduleData, Timeline, Entry, EntryType, MetaInfo
 
 
 # Schedule Version

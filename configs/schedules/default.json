@@ -1,6 +1,6 @@
 {
     "meta": {
-        "id": "meta_6668c480019a4ca38598ecdf3dcf6707",
+        "id": "meta_a0134697ec294305ad983bc063899334",
         "version": 1,
         "maxWeekCycle": 2,
         "startDate": "2026-09-01"
@@ -11,6 +11,15 @@
             "name": "Mathematics",
             "teacher": "Prof. Smith",
             "icon": "ic_fluent_ruler_24_regular",
+            "color": "#3574f0",
+            "location": "Room 9101",
+            "isLocalClassroom": true
+        },
+        {
+            "id": "english",
+            "name": "English",
+            "teacher": "Prof. Smith",
+            "icon": "ic_fluent_text_list_abc_uppercase_ltr_20_regular",
             "color": "#3574f0",
             "location": "Room 9101",
             "isLocalClassroom": true
@@ -53,14 +62,14 @@
                     "title": ""
                 }
             ],
-            "dayOfWeek": 5,
+            "dayOfWeek": [5],
             "weeks": "all",
             "date": null
         },
         {
             "id": "Tuesday-Even",
             "entries": [],
-            "dayOfWeek": 2,
+            "dayOfWeek": [2],
             "weeks": 1,
             "date": null
         },
@@ -107,7 +116,7 @@
                     "title": "Study"
                 }
             ],
-            "dayOfWeek": 5,
+            "dayOfWeek": [5],
             "weeks": "all",
             "date": null
         },
@@ -123,7 +132,7 @@
                     "title": ""
                 }
             ],
-            "dayOfWeek": 3,
+            "dayOfWeek": [3],
             "weeks": "all",
             "date": null
         }

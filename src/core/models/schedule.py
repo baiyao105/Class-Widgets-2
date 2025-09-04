@@ -35,11 +35,11 @@ class Entry(BaseModel):
     title: Optional[str] = None
 
 
-class DayEntry(BaseModel):
+class Timeline(BaseModel):
     id: str
     entries: List[Entry]
-    dayOfWeek: Union[List[int], int, None] = None  # 1~7
-    weeks: Union[WeekType, List[int], int, None] = None  # all, 多选周期数，单选周期数
+    dayOfWeek: Optional[List[int]] = None  # 1~7
+    weeks: Union[WeekType, List[int], int, None] = None  # all, custom, round
     date: Optional[str] = None
 
 
@@ -50,9 +50,9 @@ class MetaInfo(BaseModel):
     startDate: str
 
 
-class EntryOverride(BaseModel):
-    dayOfWeek: Union[List[int], int, None] = None  # 1~7
-    weeks: Union[WeekType, List[int], int, None] = None  # all, 多选周期数，单选周期数
+class Timetable(BaseModel):  # 覆盖Entry信息以方便设置课表
+    dayOfWeek: Optional[List[int]] = None  # 1~7
+    weeks: Union[WeekType, List[int], int, None] = None  # all, custom, round
     subjectId: Optional[str] = None
     title: Optional[str] = None
 
@@ -60,5 +60,5 @@ class EntryOverride(BaseModel):
 class ScheduleData(BaseModel):
     meta: MetaInfo
     subjects: List[Subject]
-    days: List[DayEntry]
-    entries: Dict[str, EntryOverride] = {}
+    days: List[Timeline]
+    entries: Dict[str, Timetable] = {}

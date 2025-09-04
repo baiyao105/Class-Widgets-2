@@ -1,13 +1,12 @@
 from datetime import datetime, timedelta
 from typing import Optional, List, Union
 
-from src.core.models.schedule import Entry, EntryType, DayEntry, Subject, ScheduleData, EntryOverride
+from src.core.models.schedule import Entry, EntryType, Timeline, Subject, ScheduleData, Timetable, WeekType
 
 
 class ScheduleServices:
 
-
-    def get_day_entries(self, schedule: ScheduleData, now: datetime) -> Optional[DayEntry]:
+    def get_day_entries(self, schedule: ScheduleData, now: datetime) -> Optional[Timeline]:
         """
         返回当前日期对应的 DayEntry
         """
@@ -16,27 +15,24 @@ class ScheduleServices:
         current_date_str = now.date().isoformat()
 
         for day in schedule.days:
-            # 判断 weekday 和周数
             day_of_week_list = [day.dayOfWeek] if isinstance(day.dayOfWeek, int) else day.dayOfWeek
             if day_of_week_list and weekday in day_of_week_list:
                 if self._is_in_week(day.weeks, current_week):
-                    day_copy = day.model_copy()  # 复制一份以便不改原数据
-                    # 应用 EntryOverride
-                    for override_id, override in schedule.entries.items():
-                        if self._override_applies(override, weekday, current_week, current_date_str):
-                            entry = Entry(
-                                id=override_id,
-                                type=EntryType.CLASS if override.subjectId else EntryType.ACTIVITY,
-                                startTime="00:00",  # 可以自定义
-                                endTime="23:59",
-                                subjectId=override.subjectId,
-                                title=override.title,
-                            )
-                            day_copy.entries.append(entry)
+                    day_copy = day.model_copy()
+
+                    # 应用 override
+                    for entry in day_copy.entries:
+                        override = schedule.entries.get(entry.id)
+                        if override and self._override_applies(override, weekday, current_week, current_date_str):
+                            if override.subjectId:
+                                entry.subjectId = override.subjectId
+                            if override.title:
+                                entry.title = override.title
+
                     return day_copy
         return None
 
-    def _override_applies(self, override: EntryOverride, weekday: int, current_week: int, date_str: str) -> bool:
+    def _override_applies(self, override: Timetable, weekday: int, current_week: int, date_str: str) -> bool:
         if override.dayOfWeek:
             days = [override.dayOfWeek] if isinstance(override.dayOfWeek, int) else override.dayOfWeek
             if weekday not in days:
@@ -48,7 +44,7 @@ class ScheduleServices:
         return True
 
     @staticmethod
-    def get_current_entry(day: DayEntry, now: Optional[datetime] = None) -> Optional[Entry]:
+    def get_current_entry(day: Timeline, now: Optional[datetime] = None) -> Optional[Entry]:
         now = now or datetime.now()
         time = now.time()
         for entry in day.entries:
@@ -62,7 +58,7 @@ class ScheduleServices:
         return None
 
     @staticmethod
-    def get_next_entries(day: DayEntry, now: Optional[datetime] = None) -> List[Entry]:
+    def get_next_entries(day: Timeline, now: Optional[datetime] = None) -> List[Entry]:
         now = now or datetime.now()
         now_time = now.time()
         next_entries = [
@@ -73,7 +69,7 @@ class ScheduleServices:
         return sorted(next_entries, key=lambda e: datetime.strptime(e.startTime, "%H:%M").time())
 
     @staticmethod
-    def get_remaining_time(day: DayEntry, now: Optional[datetime] = None) -> timedelta:
+    def get_remaining_time(day: Timeline, now: Optional[datetime] = None) -> timedelta:
         now = now or datetime.now()
         current = ScheduleServices.get_current_entry(day, now)
         if current:
@@ -88,11 +84,11 @@ class ScheduleServices:
         return timedelta(0)
 
     @staticmethod
-    def get_current_status(day: DayEntry, now: Optional[datetime] = None) -> EntryType:
+    def get_current_status(day: Timeline, now: Optional[datetime] = None) -> EntryType:
         return ScheduleServices.get_current_entry(day, now).type if ScheduleServices.get_current_entry(day, now) else EntryType.FREE
 
     @staticmethod
-    def get_current_subject(day: DayEntry, subjects: List[Subject], now: Optional[datetime] = None) -> Optional[
+    def get_current_subject(day: Timeline, subjects: List[Subject], now: Optional[datetime] = None) -> Optional[
         Subject]:
         current = ScheduleServices.get_current_entry(day, now)
         if current and current.subjectId:
@@ -126,11 +122,9 @@ class ScheduleServices:
             return True
 
         if isinstance(weeks, str):
-            return weeks == "all"  # 或者用 WeekType.ALL.value
-
+            return weeks == WeekType.ALL.value
         if isinstance(weeks, int):
             return current_week == weeks
-
         if isinstance(weeks, list):
             return current_week in weeks
 

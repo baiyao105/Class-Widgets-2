@@ -32,7 +32,7 @@ FluentWindow {
             subItems: [
                 {
                     title: qsTr("Widgets"),
-                    page: PathManager.qml("pages/general/Widgets.qml"),
+                    page: PathManager.qml("pages/general/widgets.qml"),
                     icon: "ic_fluent_apps_20_regular"
                 }
             ]

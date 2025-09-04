@@ -4,6 +4,14 @@ WidgetsContainer 1.0 WidgetsContainer.qml
 WidgetLoader 1.0 WidgetLoader.qml
 Watermark 1.0 Watermark.qml
 
-#Dialogs
+# Dialogs
 AddWidgetsDialog 1.0 dialogs/AddWidgetsDialog.qml
 WidgetSettingsDialog 1.0 dialogs/WidgetSettingsDialog.qml
+
+# Settings
+DayListView 1.0 settings/DayListView.qml
+EntryDetailView 1.0 settings/EntryDetailView.qml
+EntryListView 1.0 settings/EntryListView.qml
+EntryDelegate 1.0 settings/EntryDelegate.qml
+## dialogs
+DayEditor 1.0 settings/dialogs/DayEditor.qml

@@ -19,6 +19,7 @@ Widget {
         switch (AppCentral.scheduleRuntime.currentStatus) {
             case "free": case "break": return "#46CEA3"
             case "class": return "#D28B59"
+            case "preparation": return "#9151d8"
             default: return "#605ed2"
         }
     }
@@ -55,10 +56,23 @@ Widget {
         anchors.centerIn: parent
         spacing: 10
         Icon {
-            icon: AppCentral.scheduleRuntime.currentSubject.icon
-                || AppCentral.scheduleRuntime.currentStatus === "free" ? "ic_fluent_accessibility_checkmark_20_regular"
-                : "ic_fluent_shifts_activity_20_filled"
-            // icon: "ic_fluent_symbols_20_regular"
+            // icon: AppCentral.scheduleRuntime.currentSubject.icon
+            //     || AppCentral.scheduleRuntime.currentStatus === "free" ?
+            //     "ic_fluent_accessibility_20_regular"
+            //     : "ic_fluent_shifts_activity_20_filled"
+            icon: {
+                if (AppCentral.scheduleRuntime.currentSubject.icon) {
+                    return AppCentral.scheduleRuntime.currentSubject.icon
+                }
+                switch (AppCentral.scheduleRuntime.currentStatus) {
+                    case "free": return "ic_fluent_accessibility_20_regular"
+                    case "break": return "ic_fluent_shifts_activity_20_filled"
+                    case "class": return "ic_fluent_class_20_regular"
+                    case "preparation": return "ic_fluent_hourglass_half_20_regular"
+                    case "activity": return "ic_fluent_alert_20_regular"
+                    default: return "ic_fluent_clock_dismiss_20_regular"
+                }
+            }
             size: 32
         }
         Title {
