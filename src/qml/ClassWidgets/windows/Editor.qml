@@ -30,8 +30,13 @@ FluentWindow {
         {
             title: qsTr("Timeline"),
             icon: "ic_fluent_timeline_20_regular",
-            page: PathManager.qml("pages/editor/timeline.qml"),
+            page: PathManager.qml("pages/editor/Timeline.qml"),
         },
+        {
+            title: qsTr("Schedule"),
+            icon: "ic_fluent_calendar_20_regular",
+            page: PathManager.qml("pages/editor/Schedule.qml"),
+        }
     ]
 
     // 测试水印

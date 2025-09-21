@@ -6,5 +6,6 @@ import RinUI
 
 Icon {
     id: text
-    size: 28
+    readonly property bool miniMode: Configs.data.preferences.mini_mode
+    size: miniMode? 22 : 28
 }

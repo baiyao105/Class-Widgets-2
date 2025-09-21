@@ -10,14 +10,6 @@ Clip {
     property real pxPerMin
     checked: currentIndex === model.index
     clip: true
-    // opacity: checked ? 1 : 0.3
-
-    function subjectNameById(id) {
-        for (let i = 0; i < subjects.length; i++) {
-            if (subjects[i].id === id) return subjects[i].name
-        }
-        return qsTr("Unknown")
-    }
 
 
     radius: 6
@@ -75,14 +67,14 @@ Clip {
     // 上拖拽调整
     Item {
         anchors.top: parent.top
-        width: parent.width
+        anchors.horizontalCenter: parent.horizontalCenter
+        width: parent.width / 6
         height: 8
 
         Rectangle {
             anchors.top: parent.top
-            anchors.horizontalCenter: parent.horizontalCenter
             anchors.margins: 3
-            width: parent.width / 6
+            width: parent.width
             height: 3
             radius: height / 2
             color: Qt.alpha("white", 0.4)
@@ -109,15 +101,15 @@ Clip {
 
     // 下拖拽调整时间
     Item {
-        width: parent.width
+        width: parent.width / 6
         height: 8
         anchors.bottom: parent.bottom
+        anchors.horizontalCenter: parent.horizontalCenter
 
         Rectangle {
             anchors.bottom: parent.bottom
-            anchors.horizontalCenter: parent.horizontalCenter
             anchors.margins: 3
-            width: parent.width / 6
+            width: parent.width
             height: 3
             radius: height / 2
             color: Qt.alpha("white", 0.4)
@@ -199,7 +191,7 @@ Clip {
                         return modelData.title
                     }
                     if (modelData.subjectId) {
-                        return subjectNameById(modelData.subjectId)
+                        return AppCentral.scheduleEditor.subjectNameById(modelData.subjectId)
                     }
                     switch (modelData.type) {
                         case "class": return qsTr("Class")

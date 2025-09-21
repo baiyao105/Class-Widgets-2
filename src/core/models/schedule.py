@@ -51,6 +51,8 @@ class MetaInfo(BaseModel):
 
 
 class Timetable(BaseModel):  # 覆盖Entry信息以方便设置课表
+    id: str
+    entryId: str
     dayOfWeek: Optional[List[int]] = None  # 1~7
     weeks: Union[WeekType, List[int], int, None] = None  # all, custom, round
     subjectId: Optional[str] = None
@@ -59,6 +61,6 @@ class Timetable(BaseModel):  # 覆盖Entry信息以方便设置课表
 
 class ScheduleData(BaseModel):
     meta: MetaInfo
-    subjects: List[Subject]
-    days: List[Timeline]
-    entries: Dict[str, Timetable] = {}
+    subjects: List[Subject] = []
+    days: List[Timeline] = []
+    overrides: List[Timetable] = []

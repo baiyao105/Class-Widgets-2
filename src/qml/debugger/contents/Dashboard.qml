@@ -7,10 +7,10 @@ import Debugger
 
 ColumnLayout {
     Layout.fillWidth: true
-
-    EditSchedule {
-        id: editScheduleWindow
-    }
+    //
+    // EditSchedule {
+    //     id: editScheduleWindow
+    // }
 
     Text {
         typography: Typography.BodyStrong
@@ -28,11 +28,11 @@ ColumnLayout {
                     Layout.fillWidth: true
                 }
                 // edit
-                Button {
-                    text: "Edit Schedule"
-                    // onClicked: DebuggerCentral.showEditor()
-                    onClicked: editScheduleWindow.show()
-                }
+                // Button {
+                //     text: "Edit Schedule"
+                //     // onClicked: DebuggerCentral.showEditor()
+                //     onClicked: editScheduleWindow.show()
+                // }
                 // reload
                 Button {
                     text: "Reload Schedule File"

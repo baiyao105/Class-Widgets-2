@@ -12,8 +12,8 @@ Widget {
     property var countdown: AppCentral.scheduleRuntime.remainingTime || { "minutes": 0, "seconds": 0 }
 
     ColumnLayout {
-        anchors.fill: parent
-        spacing: 4
+        anchors.centerIn: parent
+        spacing: 2
 
         RowLayout {
             spacing: 0
@@ -35,7 +35,7 @@ Widget {
 
         ProgressBar {
             id: progressBar
-            Layout.fillWidth: true
+            Layout.preferredWidth: miniMode ? 75 : 100
             Layout.preferredHeight: 4
             value: AppCentral.scheduleRuntime.progress
             primaryColor: {

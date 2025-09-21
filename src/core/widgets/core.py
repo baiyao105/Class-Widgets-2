@@ -11,7 +11,6 @@ class WidgetsWindow(RinUI.RinUIWindow):
     def __init__(self, app_central):
         super().__init__()
         self.app_central = app_central
-        self.display_mode_manager = WidgetDisplayModeManager()
 
         self._setup_qml_context()
         self.qml_main_path = Path(QML_PATH / "MainInterface.qml")
@@ -21,7 +20,6 @@ class WidgetsWindow(RinUI.RinUIWindow):
     def _setup_qml_context(self):
         """设置QML上下文属性"""
         self.app_central.setup_qml_context(self)
-        self.engine.rootContext().setContextProperty("DisplayModeManager", self.display_mode_manager)
 
     def run(self):
         """启动widgets窗口"""
@@ -76,28 +74,3 @@ class WidgetsWindow(RinUI.RinUIWindow):
             mask = mask.united(QRegion(rect))
 
         self.root_window.setMask(mask)
-
-class WidgetDisplayModeManager(QObject):
-    modeChanged = Signal()  # full -> mini 或 mini -> full
-
-    def __init__(self):
-        super().__init__()
-        self._mode = "full"  # 默认完整模式
-
-    @Property(str, notify=modeChanged)
-    def mode(self):
-        return self._mode
-
-    @Slot(str)
-    def setMode(self, new_mode):
-        """设置模式（'full' 或 'mini'）"""
-        if new_mode not in ("full", "mini"):
-            return
-        if self._mode != new_mode:
-            self._mode = new_mode
-            self.modeChanged.emit()
-
-    @Slot()
-    def toggleMode(self):
-        """切换模式"""
-        self.setMode("mini" if self._mode == "full" else "full")

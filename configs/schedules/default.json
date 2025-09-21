@@ -9,8 +9,9 @@
         {
             "id": "math",
             "name": "Mathematics",
+            "simplifiedName": null,
             "teacher": "Prof. Smith",
-            "icon": "ic_fluent_ruler_24_regular",
+            "icon": "ic_fluent_ruler_20_regular",
             "color": "#3574f0",
             "location": "Room 9101",
             "isLocalClassroom": true
@@ -18,6 +19,7 @@
         {
             "id": "english",
             "name": "English",
+            "simplifiedName": null,
             "teacher": "Prof. Smith",
             "icon": "ic_fluent_text_list_abc_uppercase_ltr_20_regular",
             "color": "#3574f0",
@@ -27,114 +29,522 @@
     ],
     "days": [
         {
-            "id": "Monday-All",
+            "id": "day_76f0bd8794384d8684966aef0de265c5",
             "entries": [
                 {
-                    "id": "entry_5646b41e93f9433f9c990d1f012586f1",
+                    "id": "entry_9da4ad16a7c44c2ba4d53aaf6ad7dd0c",
                     "type": "class",
-                    "startTime": "10:00",
-                    "endTime": "12:00",
-                    "subjectId": "math",
+                    "startTime": "08:00",
+                    "endTime": "08:40",
+                    "subjectId": "",
                     "title": null
                 },
                 {
-                    "id": "entry_96d191ff598c420abac023b873d1a4bd",
+                    "id": "entry_34f650ecff1f416d9917235d6108ae50",
                     "type": "break",
-                    "startTime": "10:00",
-                    "endTime": "12:00",
-                    "subjectId": null,
-                    "title": "Break 1"
+                    "startTime": "08:40",
+                    "endTime": "08:55",
+                    "subjectId": "",
+                    "title": ""
                 },
                 {
-                    "id": "entry_05a471559d7c4b93a152905a5d2a51ca",
-                    "type": "activity",
-                    "startTime": "16:21",
-                    "endTime": "22:30",
-                    "subjectId": null,
-                    "title": "Meeting"
-                },
-                {
-                    "id": "entry_74213d8c983d418285582733d17f5cbf",
+                    "id": "entry_ea6eef212fb048f58fbb6f6a3e444d63",
                     "type": "class",
-                    "startTime": "04:30",
-                    "endTime": "07:00",
-                    "subjectId": "math",
+                    "startTime": "08:55",
+                    "endTime": "09:35",
+                    "subjectId": "",
+                    "title": ""
+                },
+                {
+                    "id": "entry_5646069ba42d4235b3da1ab779d2986b",
+                    "type": "break",
+                    "startTime": "09:35",
+                    "endTime": "09:50",
+                    "subjectId": "",
+                    "title": ""
+                },
+                {
+                    "id": "entry_f786e9f251ec4363bc7d42744c27e5d6",
+                    "type": "class",
+                    "startTime": "09:50",
+                    "endTime": "10:30",
+                    "subjectId": "",
+                    "title": ""
+                },
+                {
+                    "id": "entry_7f7328e22de14d2c9bd83e6fa1da203c",
+                    "type": "break",
+                    "startTime": "10:30",
+                    "endTime": "10:45",
+                    "subjectId": "",
+                    "title": ""
+                },
+                {
+                    "id": "entry_99d6f4f4c7134bc5adf6925a0b0d3148",
+                    "type": "class",
+                    "startTime": "10:45",
+                    "endTime": "11:25",
+                    "subjectId": "",
+                    "title": ""
+                },
+                {
+                    "id": "entry_24229d9292e946e099cce01d8f9b6bb7",
+                    "type": "class",
+                    "startTime": "14:00",
+                    "endTime": "14:40",
+                    "subjectId": "",
+                    "title": ""
+                },
+                {
+                    "id": "entry_0041d688e3814097b1ade164c29733e0",
+                    "type": "break",
+                    "startTime": "14:40",
+                    "endTime": "14:55",
+                    "subjectId": "",
+                    "title": ""
+                },
+                {
+                    "id": "entry_42f2f513d1c5458b9afea10d9eb786e0",
+                    "type": "class",
+                    "startTime": "14:55",
+                    "endTime": "15:35",
+                    "subjectId": "",
+                    "title": ""
+                },
+                {
+                    "id": "entry_affdbd5a6b53455bb8704cacfdc80fd6",
+                    "type": "break",
+                    "startTime": "15:35",
+                    "endTime": "15:50",
+                    "subjectId": "",
+                    "title": ""
+                },
+                {
+                    "id": "entry_49e2ae3e90ae4f888df36360a497e40b",
+                    "type": "class",
+                    "startTime": "15:50",
+                    "endTime": "16:30",
+                    "subjectId": "",
+                    "title": ""
+                },
+                {
+                    "id": "entry_3339635c834047f7842fc7bf6efafa9d",
+                    "type": "break",
+                    "startTime": "16:30",
+                    "endTime": "16:45",
+                    "subjectId": "",
+                    "title": ""
+                },
+                {
+                    "id": "entry_3ae4d4b8a250459d9e48d0c0815b9eb2",
+                    "type": "class",
+                    "startTime": "16:45",
+                    "endTime": "17:25",
+                    "subjectId": "",
                     "title": ""
                 }
             ],
-            "dayOfWeek": [5],
-            "weeks": "all",
-            "date": null
-        },
-        {
-            "id": "Tuesday-Even",
-            "entries": [],
-            "dayOfWeek": [2],
-            "weeks": 1,
-            "date": null
-        },
-        {
-            "id": "2026-09-01",
-            "entries": [],
-            "dayOfWeek": null,
-            "weeks": null,
-            "date": "2026-09-01"
-        },
-        {
-            "id": "Friday-All",
-            "entries": [
-                {
-                    "id": "entry_e7f4f1196bac4d9bb8e45bb642b96751",
-                    "type": "class",
-                    "startTime": "9:45",
-                    "endTime": "12:00",
-                    "subjectId": "math",
-                    "title": null
-                },
-                {
-                    "id": "entry_76b23bae59384d01aa27776b80da062d",
-                    "type": "break",
-                    "startTime": "12:00",
-                    "endTime": "12:10",
-                    "subjectId": null,
-                    "title": "Break 1"
-                },
-                {
-                    "id": "entry_d85c25f899c3451380c9e45c1d53245a",
-                    "type": "activity",
-                    "startTime": "12:50",
-                    "endTime": "15:30",
-                    "subjectId": null,
-                    "title": "Meeting"
-                },
-                {
-                    "id": "entry_125865e655314484ba5b617f6697bd91",
-                    "type": "activity",
-                    "startTime": "16:19",
-                    "endTime": "22:30",
-                    "subjectId": null,
-                    "title": "Study"
-                }
+            "dayOfWeek": [
+                1,
+                2,
+                3,
+                4,
+                5
             ],
-            "dayOfWeek": [5],
             "weeks": "all",
             "date": null
+        }
+    ],
+    "overrides": [
+        {
+            "id": "override_a29d2b71412f4e32942d09c72b360301",
+            "entryId": "entry_9da4ad16a7c44c2ba4d53aaf6ad7dd0c",
+            "dayOfWeek": [
+                1
+            ],
+            "weeks": "all",
+            "subjectId": "math",
+            "title": ""
         },
         {
-            "id": "day_27211a69e25e4dd59ccb81a036d0a306",
-            "entries": [
-                {
-                    "id": "entry_14ea84ac78d94105b720ac533d9a2be0",
-                    "type": "class",
-                    "startTime": "05:24",
-                    "endTime": "06:30",
-                    "subjectId": "math",
-                    "title": ""
-                }
+            "id": "override_7f2fa7908e274bcf8d564f0f964066da",
+            "entryId": "entry_ea6eef212fb048f58fbb6f6a3e444d63",
+            "dayOfWeek": [
+                1
             ],
-            "dayOfWeek": [3],
             "weeks": "all",
-            "date": null
+            "subjectId": "english",
+            "title": null
+        },
+        {
+            "id": "override_77b44de0f45d4347897e84f3e6416ce0",
+            "entryId": "entry_f786e9f251ec4363bc7d42744c27e5d6",
+            "dayOfWeek": [
+                1
+            ],
+            "weeks": "all",
+            "subjectId": "english",
+            "title": null
+        },
+        {
+            "id": "override_5950dceb4bbd4f599cfef8c8d46caec3",
+            "entryId": "entry_99d6f4f4c7134bc5adf6925a0b0d3148",
+            "dayOfWeek": [
+                1
+            ],
+            "weeks": "all",
+            "subjectId": "math",
+            "title": null
+        },
+        {
+            "id": "override_dc3e42cb1eeb4b88beddc11aedd17a44",
+            "entryId": "entry_24229d9292e946e099cce01d8f9b6bb7",
+            "dayOfWeek": [
+                1
+            ],
+            "weeks": "all",
+            "subjectId": "math",
+            "title": null
+        },
+        {
+            "id": "override_dd25983d7dfa4ed3ade12d639f730655",
+            "entryId": "entry_42f2f513d1c5458b9afea10d9eb786e0",
+            "dayOfWeek": [
+                1
+            ],
+            "weeks": "all",
+            "subjectId": "math",
+            "title": null
+        },
+        {
+            "id": "override_d05086c67880409eadca038a4ce11f32",
+            "entryId": "entry_49e2ae3e90ae4f888df36360a497e40b",
+            "dayOfWeek": [
+                1
+            ],
+            "weeks": "all",
+            "subjectId": "english",
+            "title": null
+        },
+        {
+            "id": "override_35427f77d45e4268b4e2e734632065ee",
+            "entryId": "entry_3ae4d4b8a250459d9e48d0c0815b9eb2",
+            "dayOfWeek": [
+                1
+            ],
+            "weeks": "all",
+            "subjectId": "english",
+            "title": null
+        },
+        {
+            "id": "override_e1b0e417ace1404cb344a4852cbec996",
+            "entryId": "entry_9da4ad16a7c44c2ba4d53aaf6ad7dd0c",
+            "dayOfWeek": [
+                2
+            ],
+            "weeks": "all",
+            "subjectId": "english",
+            "title": null
+        },
+        {
+            "id": "override_db99460a5e304fe694f0d1d683f1a28e",
+            "entryId": "entry_ea6eef212fb048f58fbb6f6a3e444d63",
+            "dayOfWeek": [
+                2
+            ],
+            "weeks": "all",
+            "subjectId": "english",
+            "title": ""
+        },
+        {
+            "id": "override_3860f1927aba428281c745e8e4e3e94d",
+            "entryId": "entry_f786e9f251ec4363bc7d42744c27e5d6",
+            "dayOfWeek": [
+                2
+            ],
+            "weeks": "all",
+            "subjectId": "math",
+            "title": null
+        },
+        {
+            "id": "override_9363f77dce394dbf95b97388ef0d13d5",
+            "entryId": "entry_99d6f4f4c7134bc5adf6925a0b0d3148",
+            "dayOfWeek": [
+                2
+            ],
+            "weeks": "all",
+            "subjectId": "english",
+            "title": null
+        },
+        {
+            "id": "override_3b35ab005fb74e9ea54276e99a978ea5",
+            "entryId": "entry_24229d9292e946e099cce01d8f9b6bb7",
+            "dayOfWeek": [
+                2
+            ],
+            "weeks": "all",
+            "subjectId": "english",
+            "title": null
+        },
+        {
+            "id": "override_7fee1222e85549fcbc69807004de3f18",
+            "entryId": "entry_42f2f513d1c5458b9afea10d9eb786e0",
+            "dayOfWeek": [
+                2
+            ],
+            "weeks": "all",
+            "subjectId": "english",
+            "title": null
+        },
+        {
+            "id": "override_797de4bb8e3446b4beaa70403eea38d1",
+            "entryId": "entry_49e2ae3e90ae4f888df36360a497e40b",
+            "dayOfWeek": [
+                2
+            ],
+            "weeks": "all",
+            "subjectId": "english",
+            "title": null
+        },
+        {
+            "id": "override_3a7431a9ddf7438ea736ce4f6b29f0ff",
+            "entryId": "entry_3ae4d4b8a250459d9e48d0c0815b9eb2",
+            "dayOfWeek": [
+                2
+            ],
+            "weeks": "all",
+            "subjectId": "english",
+            "title": null
+        },
+        {
+            "id": "override_e9c37c3f399b4362942b22477ec11d3e",
+            "entryId": "entry_9da4ad16a7c44c2ba4d53aaf6ad7dd0c",
+            "dayOfWeek": [
+                3
+            ],
+            "weeks": "all",
+            "subjectId": "english",
+            "title": null
+        },
+        {
+            "id": "override_6c09707d86b64da388c98a449e63522b",
+            "entryId": "entry_ea6eef212fb048f58fbb6f6a3e444d63",
+            "dayOfWeek": [
+                3
+            ],
+            "weeks": "all",
+            "subjectId": "english",
+            "title": null
+        },
+        {
+            "id": "override_4099b3015a8d42b4947b2e8f8c85d3d6",
+            "entryId": "entry_99d6f4f4c7134bc5adf6925a0b0d3148",
+            "dayOfWeek": [
+                3
+            ],
+            "weeks": "all",
+            "subjectId": "math",
+            "title": null
+        },
+        {
+            "id": "override_5dce470927d64a1b944c81e67168dacc",
+            "entryId": "entry_24229d9292e946e099cce01d8f9b6bb7",
+            "dayOfWeek": [
+                3
+            ],
+            "weeks": "all",
+            "subjectId": "math",
+            "title": null
+        },
+        {
+            "id": "override_dd6d8b1498d24a2d99b0acf352780233",
+            "entryId": "entry_42f2f513d1c5458b9afea10d9eb786e0",
+            "dayOfWeek": [
+                3
+            ],
+            "weeks": "all",
+            "subjectId": "math",
+            "title": null
+        },
+        {
+            "id": "override_3fd13590bee947a5a852e944504c70b2",
+            "entryId": "entry_49e2ae3e90ae4f888df36360a497e40b",
+            "dayOfWeek": [
+                3
+            ],
+            "weeks": "all",
+            "subjectId": "english",
+            "title": null
+        },
+        {
+            "id": "override_dbad3849727845b38aa9fd534d14c381",
+            "entryId": "entry_3ae4d4b8a250459d9e48d0c0815b9eb2",
+            "dayOfWeek": [
+                3
+            ],
+            "weeks": "all",
+            "subjectId": "math",
+            "title": null
+        },
+        {
+            "id": "override_c8e7795791124f27839510e25dadd689",
+            "entryId": "entry_9da4ad16a7c44c2ba4d53aaf6ad7dd0c",
+            "dayOfWeek": [
+                4
+            ],
+            "weeks": "all",
+            "subjectId": "english",
+            "title": null
+        },
+        {
+            "id": "override_3e49c4e810794e6abea9d4864a2ceead",
+            "entryId": "entry_ea6eef212fb048f58fbb6f6a3e444d63",
+            "dayOfWeek": [
+                4
+            ],
+            "weeks": "all",
+            "subjectId": "english",
+            "title": null
+        },
+        {
+            "id": "override_8ac41706c9d440daaa3ebbe1079670c1",
+            "entryId": "entry_f786e9f251ec4363bc7d42744c27e5d6",
+            "dayOfWeek": [
+                4
+            ],
+            "weeks": "all",
+            "subjectId": "math",
+            "title": null
+        },
+        {
+            "id": "override_f68b9097270c41069a97998b5196974f",
+            "entryId": "entry_99d6f4f4c7134bc5adf6925a0b0d3148",
+            "dayOfWeek": [
+                4
+            ],
+            "weeks": "all",
+            "subjectId": "math",
+            "title": ""
+        },
+        {
+            "id": "override_2ad7ac853a8b4e7a8457003f80ac04ba",
+            "entryId": "entry_24229d9292e946e099cce01d8f9b6bb7",
+            "dayOfWeek": [
+                4
+            ],
+            "weeks": "all",
+            "subjectId": "math",
+            "title": null
+        },
+        {
+            "id": "override_94bdea4db2f04cd2bbd243fde33e1147",
+            "entryId": "entry_42f2f513d1c5458b9afea10d9eb786e0",
+            "dayOfWeek": [
+                4
+            ],
+            "weeks": "all",
+            "subjectId": "math",
+            "title": null
+        },
+        {
+            "id": "override_07f42f3f31d0406eb685a51477bcf967",
+            "entryId": "entry_49e2ae3e90ae4f888df36360a497e40b",
+            "dayOfWeek": [
+                4
+            ],
+            "weeks": "all",
+            "subjectId": "english",
+            "title": null
+        },
+        {
+            "id": "override_4edfdd5cc83649aba6cf85736e942ba5",
+            "entryId": "entry_3ae4d4b8a250459d9e48d0c0815b9eb2",
+            "dayOfWeek": [
+                4
+            ],
+            "weeks": "all",
+            "subjectId": "math",
+            "title": null
+        },
+        {
+            "id": "override_e6afbe6bda8c4124928f4962351433ee",
+            "entryId": "entry_9da4ad16a7c44c2ba4d53aaf6ad7dd0c",
+            "dayOfWeek": [
+                5
+            ],
+            "weeks": "all",
+            "subjectId": "english",
+            "title": null
+        },
+        {
+            "id": "override_2175d72ac8934ec180e52ac53a7a3c64",
+            "entryId": "entry_ea6eef212fb048f58fbb6f6a3e444d63",
+            "dayOfWeek": [
+                5
+            ],
+            "weeks": "all",
+            "subjectId": "math",
+            "title": null
+        },
+        {
+            "id": "override_c8de078dd2f6438bad2800198f99e2cb",
+            "entryId": "entry_f786e9f251ec4363bc7d42744c27e5d6",
+            "dayOfWeek": [
+                5
+            ],
+            "weeks": "all",
+            "subjectId": "english",
+            "title": null
+        },
+        {
+            "id": "override_797ee7ff24624007a5b42f63370ab3ec",
+            "entryId": "entry_99d6f4f4c7134bc5adf6925a0b0d3148",
+            "dayOfWeek": [
+                5
+            ],
+            "weeks": "all",
+            "subjectId": "math",
+            "title": null
+        },
+        {
+            "id": "override_1ef1709dd67b496b96d945dd32f1d022",
+            "entryId": "entry_24229d9292e946e099cce01d8f9b6bb7",
+            "dayOfWeek": [
+                5
+            ],
+            "weeks": "all",
+            "subjectId": "english",
+            "title": null
+        },
+        {
+            "id": "override_60cead23627348cf8e1f5b7c62a08de4",
+            "entryId": "entry_42f2f513d1c5458b9afea10d9eb786e0",
+            "dayOfWeek": [
+                5
+            ],
+            "weeks": "all",
+            "subjectId": "math",
+            "title": null
+        },
+        {
+            "id": "override_f8c685b41c8047888845d968cc08bac4",
+            "entryId": "entry_49e2ae3e90ae4f888df36360a497e40b",
+            "dayOfWeek": [
+                5
+            ],
+            "weeks": "all",
+            "subjectId": "english",
+            "title": null
+        },
+        {
+            "id": "override_40125b2af75142528a0e54962b0f68b3",
+            "entryId": "entry_3ae4d4b8a250459d9e48d0c0815b9eb2",
+            "dayOfWeek": [
+                5
+            ],
+            "weeks": "all",
+            "subjectId": "math",
+            "title": null
         }
     ]
 }

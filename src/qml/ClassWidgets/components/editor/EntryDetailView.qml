@@ -8,13 +8,6 @@ ColumnLayout {
     property var currentEntry: null
     property var subjects: AppCentral.scheduleRuntime.subjects || []
 
-    function subjectNameById(id) {
-        for (let i = 0; i < subjects.length; i++) {
-            if (subjects[i].id === id) return subjects[i].name
-        }
-        return qsTr("Unknown")
-    }
-
     function subjectIdByName(name) {
         for (let i = 0; i < subjects.length; i++) {
             if (subjects[i].name === name) return subjects[i].id
@@ -33,7 +26,7 @@ ColumnLayout {
             entryId.text = currentEntry.id || ""
             entrySubject.checkedId = currentEntry.subjectId || null
             entryTitle.text = currentEntry.title || ""
-            
+
             Qt.callLater(function() {
                 startTimePicker.setTime(currentEntry.startTime || "08:00")
                 endTimePicker.setTime(currentEntry.endTime || "09:00")
@@ -74,6 +67,16 @@ ColumnLayout {
     Layout.fillWidth: true
     Layout.fillHeight: true
 
+    Button {
+        Layout.alignment: Qt.AlignRight
+        icon.name: "ic_fluent_dismiss_20_regular"
+        flat: true
+        onClicked: {
+            currentEntry = null
+            entryList.currentIndex = -1
+        }
+    }
+
     Text {
         typography: Typography.Subtitle
         text: {
@@ -83,7 +86,7 @@ ColumnLayout {
                 return result
             }
             if (entrySubject.checkedId) {
-                result += subjectNameById(entrySubject.text)
+                result += entrySubject.text
                 return result
             }
             switch (typeSegmented.currentIndex) {
@@ -125,7 +128,7 @@ ColumnLayout {
 
         DropDownButton {
             id: entrySubject
-            text: checkedId ? subjectNameById(checkedId) : qsTr("Select Subject")
+            text: checkedId ? AppCentral.scheduleEditor.subjectNameById(checkedId) : qsTr("Select Subject")
             property string checkedId: ""
             onClicked: subjectsFlyout.open()
 

@@ -52,6 +52,8 @@ class PreferencesConfig(BaseModel):
     widgets_offset_y: int = 24  # 垂直偏移
     widgets_layer: ZOrder = ZOrder.TOP  # 小组件置顶/置底
 
+    mini_mode: bool = False  # 迷你
+
     widgets_presets: Dict[str, List[WidgetEntry]] = Field(
         default_factory=lambda: {
             "default": [

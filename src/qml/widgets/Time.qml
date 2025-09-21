@@ -20,13 +20,13 @@ Widget {
     property int titleMode: 0
 
     text: {
-        var jsDate = new Date(dateTime.year, dateTime.month - 1, dateTime.day)
+        let jsDate = new Date(dateTime.year, dateTime.month - 1, dateTime.day)
 
         if (titleMode === 0) {
-            var localDate = Qt.formatDate(jsDate, "MMMM d")
-            return localDate
+            let localDate = Qt.formatDate(jsDate, "MMMM d")
+            return enabled ? localDate : dateTime.month + "/" + dateTime.day
         } else {
-            var localDay = Qt.locale().dayName(dateTime.weekday, Locale.LongFormat)
+            let localDay = Qt.locale().dayName(dateTime.weekday, Locale.LongFormat)
             return localDay
         }
     }

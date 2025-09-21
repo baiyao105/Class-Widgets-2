@@ -2,5 +2,5 @@ pragma Singleton
 import QtQuick 2.15
 
 QtObject {
-    property var liquidBack: [.25,.13,.34,1.56, 1, 1]
+    property var liquidBack: [0.175, 0.885, 0.32, 1.2, 1, 1]
 }

@@ -66,5 +66,20 @@ FluentPage {
                 }
             }
         }
+
+        SettingCard {
+            Layout.fillWidth: true
+            title: qsTr("Mini Mode")
+            description: qsTr("Use a more compact layout for smaller widgets")
+            icon.name: "ic_fluent_resize_20_regular"
+
+            Switch {
+                id: miniModeSwitch
+                onCheckedChanged: Configs.set("preferences.mini_mode", checked)
+                Component.onCompleted: {
+                    checked = Configs.data.preferences.mini_mode
+                }
+            }
+        }
     }
 }

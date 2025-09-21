@@ -118,7 +118,8 @@ ColumnLayout {
                     }
                     MenuItem {
                         icon.name: "ic_fluent_delete_20_regular"
-                        text: qsTr("Delete")
+                        text: qsTr("Remove")
+                        onTriggered: AppCentral.scheduleEditor.removeDay(modelData.id)  // 删除日程
                     }
                 }
             }

@@ -80,10 +80,6 @@ ColumnLayout {
         }
     }
 
-    // onCurrentIndexChanged: {
-    //     refreshTimer.restart()
-    // }
-
     // 顶(huadiao 底部工具栏
     RowLayout {
         Layout.fillWidth: true

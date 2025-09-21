@@ -8,7 +8,7 @@ class ScheduleServices:
 
     def get_day_entries(self, schedule: ScheduleData, now: datetime) -> Optional[Timeline]:
         """
-        返回当前日期对应的 DayEntry
+        返回当前日期对应的 DayEntry（深拷贝，应用 override，不修改原始数据）
         """
         current_week = self._get_week_number(schedule, now)
         weekday = now.isoweekday()  # 1-7
@@ -18,29 +18,31 @@ class ScheduleServices:
             day_of_week_list = [day.dayOfWeek] if isinstance(day.dayOfWeek, int) else day.dayOfWeek
             if day_of_week_list and weekday in day_of_week_list:
                 if self._is_in_week(day.weeks, current_week):
+                    # 深拷贝 day 和 entries
                     day_copy = day.model_copy()
+                    day_copy.entries = [entry.model_copy() for entry in day.entries]
 
-                    # 应用 override
+                    # 应用 override 到副本
                     for entry in day_copy.entries:
-                        override = schedule.entries.get(entry.id)
-                        if override and self._override_applies(override, weekday, current_week, current_date_str):
-                            if override.subjectId:
-                                entry.subjectId = override.subjectId
-                            if override.title:
-                                entry.title = override.title
+                        for override in schedule.overrides:
+                            if override.entryId != entry.id:
+                                continue
+                            if self._override_applies(override, weekday, current_week):
+                                if override.subjectId:
+                                    entry.subjectId = override.subjectId
+                                if override.title:
+                                    entry.title = override.title
 
                     return day_copy
         return None
 
-    def _override_applies(self, override: Timetable, weekday: int, current_week: int, date_str: str) -> bool:
+    def _override_applies(self, override: Timetable, weekday: int, current_week: int) -> bool:
         if override.dayOfWeek:
-            days = [override.dayOfWeek] if isinstance(override.dayOfWeek, int) else override.dayOfWeek
-            if weekday not in days:
+            if weekday not in override.dayOfWeek:
                 return False
         if override.weeks:
             if not self._is_in_week(override.weeks, current_week):
                 return False
-        # 暂时不考虑支持日期覆盖（容易冲突.png）
         return True
 
     @staticmethod

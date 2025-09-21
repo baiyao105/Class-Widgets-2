@@ -73,14 +73,18 @@ Widget {
                     default: return "ic_fluent_clock_dismiss_20_regular"
                 }
             }
-            size: 32
+            size: miniMode ? 24 : 32
         }
         Title {
             text: AppCentral.scheduleRuntime.currentEntry.title
                 || AppCentral.scheduleRuntime.currentSubject.name
-                || (AppCentral.scheduleRuntime.currentStatus === "free"
+                || (AppCentral.scheduleRuntime.currentStatus === "class"
+                  ? qsTr("Class")
+                    : AppCentral.scheduleRuntime.currentStatus === "activity"
+                  ? qsTr("Activity")
+                    : AppCentral.scheduleRuntime.currentStatus === "break"
                   ? qsTr("Take a break")
-                  : qsTr("Nothing right now"))
+                    : qsTr("Nothing right now"))
         }
     }
 

@@ -113,7 +113,7 @@ QQW.Window {
         x: calcX()
         y: calcY()
 
-        Behavior on x { NumberAnimation { duration: 300 * root.initialized; easing.type: Easing.OutQuint } }
+        Behavior on x { NumberAnimation { duration: 400 * root.initialized; easing.type: Easing.OutQuint } }
         Behavior on y { NumberAnimation { duration: 500 * root.initialized; easing.type: Easing.OutQuint } }
 
         signal geometryChanged()

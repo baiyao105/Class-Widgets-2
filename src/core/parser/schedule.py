@@ -12,7 +12,8 @@ SCHEMA_VERSION = 1
 
 class ScheduleParser:
     def __init__(self, path: Union[Path, str]):
-        self.loader = JsonLoader(path)
+        self.path = path
+        self.loader = JsonLoader(self.path)
         self.schedule: Optional[ScheduleData] = None
         self.schedule_dict: Optional[dict] = None
 
@@ -32,7 +33,7 @@ class ScheduleParser:
         except FileNotFoundError:
             raise FileNotFoundError("Schedule File not found")
         except json.decoder.JSONDecodeError as e:
-            raise json.decoder.JSONDecodeError(f"JSON解析错误: {e}", e.doc, e.pos)
+            raise json.decoder.JSONDecodeError(f"JSON Decode Error: {e}", e.doc, e.pos)
         except Exception as e:
             raise ValueError(f"Unexpected error: {e}")
 

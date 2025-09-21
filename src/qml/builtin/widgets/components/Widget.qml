@@ -10,8 +10,10 @@ import ClassWidgets.Easing
 Item {
     id: widgetBase
     // 最小宽度 = 内容 + 边距，默认可以被拉伸
+    readonly property bool miniMode: Configs.data.preferences.mini_mode
+
     implicitWidth: Math.max(headerRow.implicitWidth, contentArea.childrenRect.width) + 48
-    height: 100
+    height: miniMode ? 60 : 100
     clip: true
     opacity: widgetHoverHandler.hovered? 0.8 : 1
 
@@ -33,12 +35,21 @@ Item {
     property alias actions: actionButtons.children
     property alias backgroundArea: backgroundArea.children
     default property alias content: contentArea.data
+    property real padding: 24
 
     // 背景
     readonly property real borderWidth: 1.5
 
     // 动画
     Behavior on implicitWidth {
+        NumberAnimation {
+                duration: 400;
+            easing.type: Easing.Bezier
+            easing.bezierCurve: BezierCurve.liquidBack
+        }
+    }
+
+    Behavior on height {
         NumberAnimation {
             duration: 400;
             easing.type: Easing.Bezier
@@ -101,8 +112,8 @@ Item {
         anchors.fill: parent
         anchors.topMargin: 16
         anchors.bottomMargin: 18
-        anchors.leftMargin: 24
-        anchors.rightMargin: 24
+        anchors.leftMargin: padding
+        anchors.rightMargin: padding
         spacing: 8
 
         // 顶部 subtitle + actions
@@ -113,9 +124,14 @@ Item {
             RowLayout {
                 id: subtitleArea
                 Layout.fillHeight: true
+                visible: opacity > 0
+                opacity: !miniMode
+
                 Subtitle {
                     id: subtitleLabel
                 }
+
+                Behavior on opacity { NumberAnimation { duration: 100; easing.type: Easing.OutQuint } }
             }
 
             Item { id: actionsSeparator; Layout.fillWidth: actionButtons.children.length > 0 }

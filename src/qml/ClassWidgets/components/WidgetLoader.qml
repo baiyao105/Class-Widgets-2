@@ -2,7 +2,6 @@ import QtQuick
 import RinUI
 
 
-// 小组件加载器 -> model: WidgetsModel
 Loader {
     id: loader
     source: model.qmlPath

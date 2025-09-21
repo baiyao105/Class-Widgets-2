@@ -99,7 +99,9 @@ Dialog {
                         if (widgetInfoLayout.model.settings) {
                             item.settings = model.settings
                         }
-                        anim.start()
+                        Qt.callLater(function() {
+                            anim.start()
+                        })
                     }
                 }
 

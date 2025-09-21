@@ -1,5 +1,3 @@
-import json
-from datetime import datetime
 from pathlib import Path
 from typing import Optional
 
@@ -52,13 +50,12 @@ class AppCentral(QObject):  # Class Widgets 的中枢
 
     def _initialize_schedule_components(self):
         """初始化调度相关组件"""
-        self.current_schedule_path: Optional[Path] = None
-        self.schedule: Optional[ScheduleData] = None
-
         self.union_update_timer = UnionUpdateTimer()
-        self.runtime = ScheduleRuntime(self.schedule, self)
         self._notification = Notification()
-        self._schedule_editor: Optional[ScheduleEditor] = None
+
+        schedule_path = Path(CONFIGS_PATH / "schedules" / "default.json")
+        self.runtime = ScheduleRuntime(schedule_path, self)
+        self._schedule_editor: ScheduleEditor = ScheduleEditor(self.runtime)
 
     def _initialize_ui_components(self):
         """初始化UI组件"""
@@ -68,12 +65,9 @@ class AppCentral(QObject):  # Class Widgets 的中枢
 
     def run(self):  # 运行
         self._load_config()  # 加载配置
-        self._load_schedule(force=True)  # 加载课程表
         self._load_runtime()  # 加载运行时
         self._init_tray_icon()  # 初始化托盘图标
         self.initialized.emit()  # 发送信号
-
-        logger.info(f"Current schedule: {self.schedule.meta.id}")
         logger.info(f"Configs loaded.")
 
     def _load_config(self):
@@ -81,11 +75,8 @@ class AppCentral(QObject):  # Class Widgets 的中枢
         self.configs.load_config()
         print(self.configs.app)
 
-    def update(self, force=False):  # 更新
-        self._load_schedule(force=force)
-
-        # 更新数据
-        self.runtime.update(self.schedule)
+    def update(self):  # 更新
+        self.runtime.refresh()
         self.updated.emit()  # 发送信号
 
     def cleanup(self):
@@ -115,13 +106,6 @@ class AppCentral(QObject):  # Class Widgets 的中枢
         self.cleanup()
         self.app_instance.quit()
 
-    @Slot()
-    def reloadSchedule(self):
-        logger.info(
-            f"Force Reload schedule: {self.current_schedule_path.name if self.current_schedule_path else 'unknown'}"
-        )
-        self._load_schedule(force=True)
-
     def setup_qml_context(self, window):
         """
         为窗口设置标准的QML上下文属性
@@ -138,89 +122,22 @@ class AppCentral(QObject):  # Class Widgets 的中枢
         context.setContextProperty("AppCentral", self)
         context.setContextProperty("PathManager", self.path_manager)
 
-    # private methods
-    def _load_schedule(self, force=False):  # 加载课程表
-        path = self._get_schedule_path()
-
-        if not self._should_reload_schedule(path, force):
-            return
-
-        self.current_schedule_path = path
-        self.schedule = self._load_or_create_schedule(path)
-        if self._schedule_editor:
-            self._schedule_editor.set_schedule_path(path)
-
-    def _get_schedule_path(self) -> Path:
-        """获取当前调度文件路径"""
-        current_schedule = self.configs.schedule.current_schedule or "default"
-        return Path(CONFIGS_PATH / "schedules" / current_schedule).with_suffix(".json")
-
-    def _should_reload_schedule(self, path: Path, force: bool) -> bool:
-        """判断是否需要重新加载调度"""
-        return path != self.current_schedule_path or force
-
-    def _load_or_create_schedule(self, path: Path) -> ScheduleData:
-        """解析或创建调度文件"""
-        parser = ScheduleParser(path=path)
-        try:
-            schedule = parser.load()
-            logger.info(f"Loaded schedule: {path}")
-            return schedule
-        except FileNotFoundError:
-            logger.warning("Schedule file not found, creating a new one...")
-            schedule = ScheduleData(
-                meta=MetaInfo(
-                    id=generate_id("meta"),
-                    version=1,
-                    maxWeekCycle=2,
-                    startDate=f"{datetime.now().year}-09-01"
-                ),
-                subjects=[],
-                days=[]
-            )
-            self._save_schedule_file(schedule, path)
-            return schedule
-        except Exception as e:
-            logger.error(f"Load schedule failed: {e}")
-            schedule = ScheduleData(
-                meta=MetaInfo(
-                    id=generate_id("meta"),
-                    version=1,
-                    maxWeekCycle=2,
-                    startDate=f"{datetime.now().year}-09-01"
-                ),
-                subjects=[],
-                days=[]
-            )
-            self._save_schedule_file(schedule, path)
-            return schedule
-
-    def _save_schedule_file(self, schedule: ScheduleData, path: Path):
-        """保存课表文件"""
-        path.parent.mkdir(parents=True, exist_ok=True)
-        try:
-            with open(path, "w", encoding="utf-8") as f:
-                json.dump(schedule.model_dump(), f, ensure_ascii=False, indent=4)
-            logger.info(f"Created new schedule file at {path}")
-        except Exception as e:
-            logger.error(f"Failed to create new schedule file: {e}")
-
-    def _load_schedule_editor(self):
-        """加载课程表编辑器"""
-        self._schedule_editor = ScheduleEditor(self.current_schedule_path)
-
     def _load_runtime(self):
-        self._load_schedule_editor()
+        # Runtime 初始化时已经加载 schedule 文件
         self._setup_runtime_connections()
         self._load_theme_and_plugins()
         self.widgets_window.run()
 
     def _setup_runtime_connections(self):
         """设置runtime连接"""
-        self.runtime.update(self.schedule)
         self.runtime.notify.connect(self._notification.push_activity)
         self.union_update_timer.tick.connect(self.update)
-        self.union_update_timer.start()  # 启动定时器 (interval=1000)
+
+        self._schedule_editor.updated.connect(
+            lambda: self.runtime.refresh(self._schedule_editor.schedule)
+        )
+
+        self.union_update_timer.start()
 
     def _load_theme_and_plugins(self):
         """主题和插件"""

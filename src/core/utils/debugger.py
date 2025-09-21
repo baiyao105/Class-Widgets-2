@@ -10,7 +10,6 @@ class DebuggerCentral(QObject):
     def __init__(self, instance):
         super().__init__()
         self.instance = instance
-        self.editor = None
         self.debugger_window = DebuggerWindow(self.instance, self)
 
 

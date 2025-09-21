@@ -1,72 +1,30 @@
-import json
-from pathlib import Path
-from typing import Optional, List, Dict, Any, Union
+from typing import Optional, List, Dict, Union
 
 from PySide6.QtCore import QObject, Property, Signal, Slot
 from loguru import logger
 
-from src.core.models import ScheduleData, Subject, Timeline, Entry, MetaInfo, EntryType
-from src.core.models.schedule import WeekType
-from src.core.parser import ScheduleParser
+from src.core.models import ScheduleData, Subject, Timeline, Entry, EntryType
+from src.core.models.schedule import WeekType, Timetable
+from src.core.schedule import ScheduleRuntime
 from src.core.utils import generate_id
 
 
 class ScheduleEditor(QObject):
     updated = Signal()
 
-    def __init__(self, schedule_path: Union[Path, str]):
+    def __init__(self, runtime: ScheduleRuntime):
         super().__init__()
-        self.schedule_path = Path(schedule_path)
-        self.parser = ScheduleParser(self.schedule_path)
-        self.schedule: Optional[ScheduleData] = None
-        self._load_schedule()
+        self.runtime = runtime  # 直接引用 Runtime
+        self._filename = runtime.schedule_path.stem
+        self.schedule: ScheduleData = self.runtime.schedule
+        self.updated.connect(self.refresh_runtime)
 
-    def set_schedule_path(self, schedule_path: Union[Path, str]) -> None:
-        if schedule_path == self.schedule_path:
-            return
-        self.schedule_path = Path(schedule_path)
-        self.parser = ScheduleParser(self.schedule_path)
-        self._load_schedule()
+    def refresh_runtime(self):
+        self.runtime.refresh(self.schedule)  # 提交给 Runtime
 
-    def _load_schedule(self) -> None:
-        """加载课程表"""
-        try:
-            self.schedule = self.parser.load()
-        except FileNotFoundError:
-            logger.warning("Schedule file not found, creating a new one...")
-            self._create_empty_schedule()
-        except Exception as e:
-            logger.error(f"Load schedule failed: {e}")
-            raise
-
-    def _create_empty_schedule(self) -> None:
-        """创建空的课程表"""
-        self.schedule = ScheduleData(
-            meta=MetaInfo(
-                id=generate_id("meta"),
-                version=1,
-                maxWeekCycle=2,
-                startDate="2026-09-01"
-            ),
-            subjects=[],
-            days=[]
-        )
-        self.save()
-
-    @Slot()
-    def save(self) -> None:
-        """保存课程表到文件"""
-        if not self.schedule:
-            return
-
-        schedule_dict = self.schedule.model_dump()
-
-        try:
-            with open(self.schedule_path, "w", encoding="utf-8") as f:
-                json.dump(schedule_dict, f, ensure_ascii=False, indent=4)
-            logger.info(f"Schedule saved to {self.schedule_path}")
-        except Exception as e:
-            logger.error(f"Save schedule failed: {e}")
+    @Slot(result=bool)
+    def save(self) -> bool:
+        return self.runtime.save()
 
     # Subject 操作
     @Slot(str, str, str, str, str, bool, result=str)
@@ -127,7 +85,7 @@ class ScheduleEditor(QObject):
         return next((s for s in self.schedule.subjects if s.id == subject_id), None)
 
     # Day 操作
-    @Slot("QVariant", "QVariant", str, result=str)
+    @Slot(list, "QVariant", str, result=str)
     def addDay(self, day_of_week: list = None, weeks = None, date: str = "") -> str:
         """添加日程"""
         day = Timeline(
@@ -154,7 +112,7 @@ class ScheduleEditor(QObject):
         if weeks is not None:
             if isinstance(weeks, int):
                 day.weeks = weeks
-            elif isinstance(weeks, str) and weeks == "all":
+            elif isinstance(weeks, str) and weeks == WeekType.ALL.value:
                 day.weeks = WeekType.ALL
             elif isinstance(weeks, list):
                 day.weeks = weeks
@@ -169,9 +127,11 @@ class ScheduleEditor(QObject):
         """删除日程"""
         day = self.getDay(day_id)
         if not day:
+            logger.warning(f"Day: {day_id} not found")
             return
 
         self.schedule.days.remove(day)
+        self.updated.emit()
 
     @Slot(str, result="QVariant")
     def getDay(self, day_id: str) -> Optional[Timeline]:
@@ -197,6 +157,7 @@ class ScheduleEditor(QObject):
             title=title or None
         )
         day.entries.append(entry)
+        day.entries.sort(key=lambda e: e.startTime)  # 排序
         self.updated.emit()
         return entry.id
 
@@ -219,6 +180,11 @@ class ScheduleEditor(QObject):
             entry.endTime = end_time
         entry.subjectId = subject_id
         entry.title = title
+
+        for day in self.schedule.days:  # 排序
+            if entry in day.entries:
+                day.entries.sort(key=lambda e: e.startTime)
+                break
         self.updated.emit()
 
     @Slot(str)
@@ -240,6 +206,108 @@ class ScheduleEditor(QObject):
                 return entry
         return None
 
+    # Override
+    @Slot(str, list, "QVariant", result=str)
+    def findOverride(self, entry_id: str, day_of_week, weeks) -> Optional[str]:
+        """
+        查找已有 override，返回其 id，如不存在返回空字符串
+        """
+        day_of_week_list = day_of_week or None
+        for o in self.schedule.overrides:
+            if o.entryId != entry_id:
+                continue
+            if o.dayOfWeek != day_of_week_list:
+                continue
+            if o.weeks != weeks:
+                continue
+            return o.id
+        return None
+
+    @Slot(str, list, "QVariant", str, str, result=bool)
+    def addOverride(self, entry_id: str, day_of_week, weeks, subject_id="", title=""):
+
+        override = Timetable(
+            id=generate_id("override"),
+            entryId=entry_id,
+            dayOfWeek=day_of_week,
+            weeks=weeks,
+            subjectId=subject_id or None,
+            title=title or None
+        )
+        self.schedule.overrides.append(override)
+        self.updated.emit()
+        return True
+
+    @Slot(str, str, str, result=bool)
+    def updateOverride(self, override_id: str, subject_id=None, title=None):
+        for o in self.schedule.overrides:
+            if o.id == override_id:
+                if subject_id is not None:
+                    o.subjectId = subject_id
+                if title is not None:
+                    o.title = title
+                self.updated.emit()
+                return True
+        return False
+
+    @Slot(str, result=bool)
+    def removeOverride(self, override_id: str):
+        for override in self.schedule.overrides:
+            if override.id == override_id:
+                self.schedule.overrides.remove(override)
+                self.updated.emit()
+                return True
+        return False
+
+    @Slot(str, result=str)
+    def subjectNameById(self, subject_id: str) -> Optional[str]:
+        """根据 ID 获取科目名称"""
+        subject = self.getSubject(subject_id)
+        if subject:
+            return subject.name
+        return None
+
+    @Slot(str, int, int, result="QVariant")
+    def getEntryOverride(self, entry_id: str, week: int, weekday: int):
+        """
+        返回套用 overrides 的 entry 对象
+        """
+        entry = self.getEntry(entry_id)
+        if not entry:
+            return None
+
+        # 先转 dict
+        data = entry.model_dump()
+        applicable = None
+
+        for o in self.schedule.overrides:
+            if o.entryId != entry_id:
+                continue
+
+            valid_day = not o.dayOfWeek or weekday in o.dayOfWeek
+            valid_week = (
+                    week == -1
+                    or not o.weeks
+                    or o.weeks == "all"
+                    or (isinstance(o.weeks, list) and week in o.weeks)
+                    or (isinstance(o.weeks, int) and o.weeks == week)
+            )
+
+            if valid_day and valid_week:
+                if o.weeks != "all":
+                    applicable = o
+                    break  # 优先具体周
+                elif applicable is None:
+                    applicable = o  # 没有具体周才用 all
+
+        if applicable:
+            if applicable.subjectId:
+                data["subjectId"] = applicable.subjectId
+            if applicable.title:
+                data["title"] = applicable.title
+
+        return data
+
     # 数据访问
     @Property("QVariant", notify=updated)
     def meta(self) -> Dict:
@@ -248,14 +316,14 @@ class ScheduleEditor(QObject):
             return {}
         return self.schedule.meta.model_dump()
 
-    @Property("QVariant", notify=updated)
+    @Property(list, notify=updated)
     def subjects(self) -> List[Dict]:
         """获取所有科目"""
         if not self.schedule:
             return []
         return [subject.model_dump() for subject in self.schedule.subjects]
 
-    @Property("QVariant", notify=updated)
+    @Property(list, notify=updated)
     def days(self) -> List[Dict]:
         """获取所有日程"""
         if not self.schedule:
@@ -263,9 +331,27 @@ class ScheduleEditor(QObject):
 
         return [day.model_dump() for day in self.schedule.days]
 
+    @Property(list, notify=updated)
+    def overrides(self) -> List[Timetable]:
+        """获取所有条目"""
+        if not self.schedule:
+            return []
+
+        return [override.model_dump() for override in self.schedule.overrides]
+
     @Property("QVariant", notify=updated)
     def scheduleData(self) -> Dict:
         """获取完整的课程表数据"""
         if not self.schedule:
             return {}
         return self.schedule.model_dump()
+
+    @Property("QVariant", notify=updated)
+    def path(self) -> str:
+        """获取课程表文件路径"""
+        return self.runtime.schedule_path.as_uri()
+
+    @Property("QVariant", notify=updated)
+    def filename(self) -> str:
+        """获取课程表文件名"""
+        return self._filename
