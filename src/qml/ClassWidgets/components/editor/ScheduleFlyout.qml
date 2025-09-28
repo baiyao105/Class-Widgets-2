@@ -33,6 +33,26 @@ Flyout {
         spacing: 12
         Layout.fillWidth: true
 
+        ColumnLayout {
+            spacing: 4
+            Layout.fillWidth: true
+            Text {
+                text: qsTr("Edit")
+                typography: Typography.BodyLarge
+            }
+            Text {
+                text: {
+                    if (entry) {
+                        return entry.startTime + " - " + entry.endTime;
+                    }
+                    return "";
+                }
+                opacity: 0.5
+                typography: Typography.Caption
+                visible: entry
+            }
+        }
+
         RowLayout {
             Layout.fillWidth: true
             Text { text: qsTr("Subject") }
@@ -56,6 +76,7 @@ Flyout {
                             model: AppCentral.scheduleRuntime.subjects
                             ToggleButton {
                                 property string sid: modelData.id
+                                icon.name: modelData.icon
                                 text: modelData.name
                                 flat: true
                                 ButtonGroup.group: subjectsGroup

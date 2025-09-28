@@ -18,7 +18,7 @@ from src.core.schedule import ScheduleRuntime
 from src.core.schedule.editor import ScheduleEditor
 from src.core.themes import ThemeManager
 from src.core.timer import UnionUpdateTimer
-from src.core.utils import generate_id, TrayIcon
+from src.core.utils import generate_id, TrayIcon, AppTranslator
 from src.core.utils.debugger import DebuggerCentral
 from src.core.widgets import WidgetsWindow, WidgetListModel
 
@@ -28,6 +28,7 @@ class AppCentral(QObject):  # Class Widgets 的中枢
     initialized = Signal()
     togglePanel = Signal(QPoint)
     widgetRegistered = Signal(str)  # 新增：widget注册信号
+    retranslate = Signal()  # 新增：翻译信号
 
     def __init__(self):  # 初始化
         super().__init__()
@@ -44,6 +45,7 @@ class AppCentral(QObject):  # Class Widgets 的中枢
         self.widgets_model = WidgetListModel(self)
         self.plugin_api = PluginAPI(self)
         self.plugin_manager = PluginManager(self.plugin_api)
+        self.app_translator = AppTranslator(self)
 
         # debugger
         self.debugger = DebuggerCentral(self)
@@ -96,6 +98,10 @@ class AppCentral(QObject):  # Class Widgets 的中枢
     def scheduleEditor(self):  # 课程表编辑器
         return self._schedule_editor
 
+    @Property(QObject, notify=initialized)
+    def translator(self):
+        return self.app_translator
+
     @Property(dict, notify=initialized)
     def globalConfig(self):  # 旧接口（仅 Debugger 使用）
         return self.configs.data
@@ -121,15 +127,19 @@ class AppCentral(QObject):  # Class Widgets 的中枢
         context.setContextProperty("PluginManager", self.plugin_manager)
         context.setContextProperty("AppCentral", self)
         context.setContextProperty("PathManager", self.path_manager)
+        # context.setContextProperty("Translator", self.translator)
 
     def _load_runtime(self):
         # Runtime 初始化时已经加载 schedule 文件
+        self.app_translator.setLanguage(self.configs.locale.language)
+
         self._setup_runtime_connections()
         self._load_theme_and_plugins()
         self.widgets_window.run()
 
     def _setup_runtime_connections(self):
         """设置runtime连接"""
+        self.app_translator.languageChanged.connect(lambda: self.retranslate.emit())
         self.runtime.notify.connect(self._notification.push_activity)
         self.union_update_timer.tick.connect(self.update)
 
@@ -216,6 +226,8 @@ class Settings(RinUIWindow):
         self.central.setup_qml_context(self)
         self.load(CW_PATH / "windows" / "Settings.qml")
 
+        self.central.retranslate.connect(self.engine.retranslate)
+
 
 class Editor(RinUIWindow):
     def __init__(self, parent: AppCentral):
@@ -224,3 +236,5 @@ class Editor(RinUIWindow):
 
         self.central.setup_qml_context(self)
         self.load(CW_PATH / "windows" / "Editor.qml")
+
+        self.central.retranslate.connect(self.engine.retranslate)

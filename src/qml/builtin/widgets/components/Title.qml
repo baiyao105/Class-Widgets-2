@@ -12,5 +12,5 @@ Text {
     font.bold: true
     font.pixelSize: px
 
-    Behavior on px { NumberAnimation { duration: 300; easing.type: Easing.OutQuint } }
+    Behavior on px { NumberAnimation { duration: 400; easing.type: Easing.OutQuint } }
 }

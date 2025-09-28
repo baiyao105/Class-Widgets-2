@@ -7,6 +7,7 @@ import ClassWidgets.Components
 import QtQuick.Effects  // shadow
 
 Item {
+    id: root
     width: saveBackground.width
     height: saveBackground.height
     RectangularShadow {
@@ -22,6 +23,8 @@ Item {
     anchors.margins: 8
     z: 99
 
+    property bool collapsed: parent.width < 500
+
     Frame {
         id: saveBackground
         color: Colors.proxy.backgroundAcrylicColor
@@ -29,6 +32,7 @@ Item {
         RowLayout {
             spacing: 24
             RowLayout {
+                visible: !collapsed
                 spacing: 8
                 Icon {
                     Layout.alignment: Qt.AlignCenter

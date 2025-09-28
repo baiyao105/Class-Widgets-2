@@ -7,23 +7,203 @@
     },
     "subjects": [
         {
+            "id": "chinese",
+            "name": "Chinese",
+            "simplifiedName": "CHN",
+            "teacher": "",
+            "icon": "ic_fluent_book_20_regular",
+            "color": "#FF5722",
+            "location": "",
+            "isLocalClassroom": true
+        },
+        {
             "id": "math",
             "name": "Mathematics",
-            "simplifiedName": null,
-            "teacher": "Prof. Smith",
+            "simplifiedName": "Math",
+            "teacher": "",
             "icon": "ic_fluent_ruler_20_regular",
-            "color": "#3574f0",
-            "location": "Room 9101",
+            "color": "#3F51B5",
+            "location": "",
             "isLocalClassroom": true
         },
         {
             "id": "english",
             "name": "English",
-            "simplifiedName": null,
-            "teacher": "Prof. Smith",
-            "icon": "ic_fluent_text_list_abc_uppercase_ltr_20_regular",
-            "color": "#3574f0",
-            "location": "Room 9101",
+            "simplifiedName": "Eng",
+            "teacher": "",
+            "icon": "ic_fluent_text_list_abc_uppercase_ltr_20_filled",
+            "color": "#2196F3",
+            "location": "",
+            "isLocalClassroom": true
+        },
+        {
+            "id": "politics",
+            "name": "Politics",
+            "simplifiedName": "Civics",
+            "teacher": "",
+            "icon": "ic_fluent_book_globe_20_regular",
+            "color": "#9C27B0",
+            "location": "",
+            "isLocalClassroom": true
+        },
+        {
+            "id": "history",
+            "name": "History",
+            "simplifiedName": "Hist",
+            "teacher": "",
+            "icon": "ic_fluent_clock_20_regular",
+            "color": "#795548",
+            "location": "",
+            "isLocalClassroom": true
+        },
+        {
+            "id": "physics",
+            "name": "Physics",
+            "simplifiedName": "Phys",
+            "teacher": "",
+            "icon": "ic_fluent_lightbulb_filament_20_regular",
+            "color": "#00BCD4",
+            "location": "",
+            "isLocalClassroom": true
+        },
+        {
+            "id": "chemistry",
+            "name": "Chemistry",
+            "simplifiedName": "Chem",
+            "teacher": "",
+            "icon": "ic_fluent_hexagon_three_20_regular",
+            "color": "#4CAF50",
+            "location": "",
+            "isLocalClassroom": true
+        },
+        {
+            "id": "biology",
+            "name": "Biology",
+            "simplifiedName": "Bio",
+            "teacher": "",
+            "icon": "ic_fluent_leaf_three_20_regular",
+            "color": "#8BC34A",
+            "location": "",
+            "isLocalClassroom": true
+        },
+        {
+            "id": "geography",
+            "name": "Geography",
+            "simplifiedName": "Geo",
+            "teacher": "",
+            "icon": "ic_fluent_earth_20_regular",
+            "color": "#009688",
+            "location": "",
+            "isLocalClassroom": true
+        },
+        {
+            "id": "music",
+            "name": "Music",
+            "simplifiedName": "Mus",
+            "teacher": "",
+            "icon": "ic_fluent_music_note_2_20_regular",
+            "color": "#E91E63",
+            "location": "",
+            "isLocalClassroom": true
+        },
+        {
+            "id": "art",
+            "name": "Art",
+            "simplifiedName": "Art",
+            "teacher": "",
+            "icon": "ic_fluent_draw_shape_20_regular",
+            "color": "#F44336",
+            "location": "",
+            "isLocalClassroom": true
+        },
+        {
+            "id": "psychology",
+            "name": "Psychology",
+            "simplifiedName": "Psy",
+            "teacher": "",
+            "icon": "ic_fluent_brain_sparkle_20_regular",
+            "color": "#FF9800",
+            "location": "",
+            "isLocalClassroom": true
+        },
+        {
+            "id": "pe",
+            "name": "Physical Education",
+            "simplifiedName": "PE",
+            "teacher": "",
+            "icon": "ic_fluent_person_running_20_regular",
+            "color": "#CDDC39",
+            "location": "",
+            "isLocalClassroom": false
+        },
+        {
+            "id": "it",
+            "name": "Information Technology",
+            "simplifiedName": "IT",
+            "teacher": "",
+            "icon": "ic_fluent_laptop_20_regular",
+            "color": "#607D8B",
+            "location": "",
+            "isLocalClassroom": true
+        },
+        {
+            "id": "generaltech",
+            "name": "General Technology",
+            "simplifiedName": "GenTech",
+            "teacher": "",
+            "icon": "ic_fluent_wrench_settings_20_regular",
+            "color": "#FF9800",
+            "location": "",
+            "isLocalClassroom": true
+        },
+        {
+            "id": "elective",
+            "name": "Elective",
+            "simplifiedName": "Elective",
+            "teacher": "",
+            "icon": "ic_fluent_sign_out_20_regular",
+            "color": "#9E9E9E",
+            "location": "",
+            "isLocalClassroom": false
+        },
+        {
+            "id": "selfstudy",
+            "name": "Self Study",
+            "simplifiedName": "Study",
+            "teacher": "",
+            "icon": "ic_fluent_notebook_20_regular",
+            "color": "#607D8B",
+            "location": "",
+            "isLocalClassroom": true
+        },
+        {
+            "id": "club",
+            "name": "Club",
+            "simplifiedName": "Club",
+            "teacher": "",
+            "icon": "ic_fluent_people_team_20_regular",
+            "color": "#673AB7",
+            "location": "",
+            "isLocalClassroom": true
+        },
+        {
+            "id": "classmeeting",
+            "name": "Class Meeting",
+            "simplifiedName": "Meeting",
+            "teacher": "",
+            "icon": "ic_fluent_chat_20_regular",
+            "color": "#3F51B5",
+            "location": "",
+            "isLocalClassroom": true
+        },
+        {
+            "id": "weeklytest",
+            "name": "Weekly Test",
+            "simplifiedName": "Test",
+            "teacher": "",
+            "icon": "ic_fluent_clipboard_20_regular",
+            "color": "#FF5722",
+            "location": "",
             "isLocalClassroom": true
         }
     ],
@@ -157,16 +337,6 @@
     ],
     "overrides": [
         {
-            "id": "override_a29d2b71412f4e32942d09c72b360301",
-            "entryId": "entry_9da4ad16a7c44c2ba4d53aaf6ad7dd0c",
-            "dayOfWeek": [
-                1
-            ],
-            "weeks": "all",
-            "subjectId": "math",
-            "title": ""
-        },
-        {
             "id": "override_7f2fa7908e274bcf8d564f0f964066da",
             "entryId": "entry_ea6eef212fb048f58fbb6f6a3e444d63",
             "dayOfWeek": [
@@ -174,7 +344,7 @@
             ],
             "weeks": "all",
             "subjectId": "english",
-            "title": null
+            "title": ""
         },
         {
             "id": "override_77b44de0f45d4347897e84f3e6416ce0",
@@ -183,8 +353,8 @@
                 1
             ],
             "weeks": "all",
-            "subjectId": "english",
-            "title": null
+            "subjectId": "politics",
+            "title": ""
         },
         {
             "id": "override_5950dceb4bbd4f599cfef8c8d46caec3",
@@ -193,8 +363,8 @@
                 1
             ],
             "weeks": "all",
-            "subjectId": "math",
-            "title": null
+            "subjectId": "generaltech",
+            "title": ""
         },
         {
             "id": "override_dc3e42cb1eeb4b88beddc11aedd17a44",
@@ -203,8 +373,8 @@
                 1
             ],
             "weeks": "all",
-            "subjectId": "math",
-            "title": null
+            "subjectId": "geography",
+            "title": ""
         },
         {
             "id": "override_dd25983d7dfa4ed3ade12d639f730655",
@@ -213,8 +383,8 @@
                 1
             ],
             "weeks": "all",
-            "subjectId": "math",
-            "title": null
+            "subjectId": "psychology",
+            "title": ""
         },
         {
             "id": "override_d05086c67880409eadca038a4ce11f32",
@@ -223,8 +393,8 @@
                 1
             ],
             "weeks": "all",
-            "subjectId": "english",
-            "title": null
+            "subjectId": "chinese",
+            "title": ""
         },
         {
             "id": "override_35427f77d45e4268b4e2e734632065ee",
@@ -233,8 +403,8 @@
                 1
             ],
             "weeks": "all",
-            "subjectId": "english",
-            "title": null
+            "subjectId": "physics",
+            "title": ""
         },
         {
             "id": "override_e1b0e417ace1404cb344a4852cbec996",
@@ -243,8 +413,8 @@
                 2
             ],
             "weeks": "all",
-            "subjectId": "english",
-            "title": null
+            "subjectId": "elective",
+            "title": ""
         },
         {
             "id": "override_db99460a5e304fe694f0d1d683f1a28e",
@@ -253,7 +423,7 @@
                 2
             ],
             "weeks": "all",
-            "subjectId": "english",
+            "subjectId": "pe",
             "title": ""
         },
         {
@@ -263,8 +433,8 @@
                 2
             ],
             "weeks": "all",
-            "subjectId": "math",
-            "title": null
+            "subjectId": "it",
+            "title": ""
         },
         {
             "id": "override_9363f77dce394dbf95b97388ef0d13d5",
@@ -273,8 +443,8 @@
                 2
             ],
             "weeks": "all",
-            "subjectId": "english",
-            "title": null
+            "subjectId": "selfstudy",
+            "title": ""
         },
         {
             "id": "override_3b35ab005fb74e9ea54276e99a978ea5",
@@ -283,8 +453,8 @@
                 2
             ],
             "weeks": "all",
-            "subjectId": "english",
-            "title": null
+            "subjectId": "elective",
+            "title": ""
         },
         {
             "id": "override_7fee1222e85549fcbc69807004de3f18",
@@ -293,8 +463,8 @@
                 2
             ],
             "weeks": "all",
-            "subjectId": "english",
-            "title": null
+            "subjectId": "selfstudy",
+            "title": ""
         },
         {
             "id": "override_797de4bb8e3446b4beaa70403eea38d1",
@@ -303,8 +473,8 @@
                 2
             ],
             "weeks": "all",
-            "subjectId": "english",
-            "title": null
+            "subjectId": "it",
+            "title": ""
         },
         {
             "id": "override_3a7431a9ddf7438ea736ce4f6b29f0ff",
@@ -314,7 +484,7 @@
             ],
             "weeks": "all",
             "subjectId": "english",
-            "title": null
+            "title": ""
         },
         {
             "id": "override_e9c37c3f399b4362942b22477ec11d3e",
@@ -323,8 +493,8 @@
                 3
             ],
             "weeks": "all",
-            "subjectId": "english",
-            "title": null
+            "subjectId": "math",
+            "title": ""
         },
         {
             "id": "override_6c09707d86b64da388c98a449e63522b",
@@ -333,8 +503,8 @@
                 3
             ],
             "weeks": "all",
-            "subjectId": "english",
-            "title": null
+            "subjectId": "politics",
+            "title": ""
         },
         {
             "id": "override_4099b3015a8d42b4947b2e8f8c85d3d6",
@@ -343,8 +513,8 @@
                 3
             ],
             "weeks": "all",
-            "subjectId": "math",
-            "title": null
+            "subjectId": "biology",
+            "title": ""
         },
         {
             "id": "override_5dce470927d64a1b944c81e67168dacc",
@@ -353,8 +523,8 @@
                 3
             ],
             "weeks": "all",
-            "subjectId": "math",
-            "title": null
+            "subjectId": "english",
+            "title": ""
         },
         {
             "id": "override_dd6d8b1498d24a2d99b0acf352780233",
@@ -373,8 +543,8 @@
                 3
             ],
             "weeks": "all",
-            "subjectId": "english",
-            "title": null
+            "subjectId": "club",
+            "title": ""
         },
         {
             "id": "override_dbad3849727845b38aa9fd534d14c381",
@@ -383,8 +553,8 @@
                 3
             ],
             "weeks": "all",
-            "subjectId": "math",
-            "title": null
+            "subjectId": "club",
+            "title": ""
         },
         {
             "id": "override_c8e7795791124f27839510e25dadd689",
@@ -393,8 +563,8 @@
                 4
             ],
             "weeks": "all",
-            "subjectId": "english",
-            "title": null
+            "subjectId": "geography",
+            "title": ""
         },
         {
             "id": "override_3e49c4e810794e6abea9d4864a2ceead",
@@ -403,8 +573,8 @@
                 4
             ],
             "weeks": "all",
-            "subjectId": "english",
-            "title": null
+            "subjectId": "politics",
+            "title": ""
         },
         {
             "id": "override_8ac41706c9d440daaa3ebbe1079670c1",
@@ -423,7 +593,7 @@
                 4
             ],
             "weeks": "all",
-            "subjectId": "math",
+            "subjectId": "art",
             "title": ""
         },
         {
@@ -473,8 +643,8 @@
                 5
             ],
             "weeks": "all",
-            "subjectId": "english",
-            "title": null
+            "subjectId": "math",
+            "title": ""
         },
         {
             "id": "override_2175d72ac8934ec180e52ac53a7a3c64",
@@ -523,8 +693,8 @@
                 5
             ],
             "weeks": "all",
-            "subjectId": "math",
-            "title": null
+            "subjectId": "generaltech",
+            "title": ""
         },
         {
             "id": "override_f8c685b41c8047888845d968cc08bac4",
@@ -537,14 +707,24 @@
             "title": null
         },
         {
-            "id": "override_40125b2af75142528a0e54962b0f68b3",
-            "entryId": "entry_3ae4d4b8a250459d9e48d0c0815b9eb2",
+            "id": "override_1256c447ae1c444faf88f645874eb012",
+            "entryId": "entry_f786e9f251ec4363bc7d42744c27e5d6",
             "dayOfWeek": [
-                5
+                3
             ],
             "weeks": "all",
             "subjectId": "math",
             "title": null
+        },
+        {
+            "id": "override_df109b861acd4a4e982b6d4466a1ce7a",
+            "entryId": "entry_9da4ad16a7c44c2ba4d53aaf6ad7dd0c",
+            "dayOfWeek": [
+                1
+            ],
+            "weeks": "all",
+            "subjectId": "classmeeting",
+            "title": ""
         }
     ]
 }

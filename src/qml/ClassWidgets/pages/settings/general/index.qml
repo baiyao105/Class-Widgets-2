@@ -15,7 +15,44 @@ FluentPage {
         spacing: 4
         Text {
             typography: Typography.BodyStrong
-            text: qsTr("Appearances")
+            text: qsTr("Locale")
+        }
+
+        SettingCard {
+            Layout.fillWidth: true
+            title: qsTr("Language")
+            description: qsTr("Set the language of Class Widgets")
+            icon.name: "ic_fluent_globe_20_regular"
+
+            ComboBox {
+                property var data: [AppCentral.translator.getSystemLanguage(), "en_US", "zh_CN"]
+                property bool initialized: false
+                model: ListModel {
+                    ListElement { text: qsTr("Use System Language") }
+                    ListElement { text: "English (US)" }
+                    ListElement { text: "简体中文" }
+                }
+
+                Component.onCompleted: {
+                    currentIndex = data.indexOf(AppCentral.translator.getLanguage())
+                    console.log("Language: " + AppCentral.translator.getLanguage())
+                    initialized = true
+                }
+
+                onCurrentIndexChanged: {
+                    if (!initialized) return
+                    AppCentral.translator.setLanguage(data[currentIndex])
+                }
+            }
+        }
+    }
+
+    ColumnLayout {
+        Layout.fillWidth: true
+        spacing: 4
+        Text {
+            typography: Typography.BodyStrong
+            text: qsTr("Customize")
         }
 
         SettingCard {

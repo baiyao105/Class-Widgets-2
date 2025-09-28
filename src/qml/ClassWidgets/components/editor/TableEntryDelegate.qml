@@ -12,7 +12,14 @@ Button {
 
     property var day: {}
     property var entry: {}
-    text: entry ? entry.title || AppCentral.scheduleEditor.subjectNameById(entry.subjectId) || qsTr("Unset") : undefined
+    // text: entry ? entry.title || AppCentral.scheduleEditor.subjectNameById(entry.subjectId) || qsTr("Unset") : undefined
+    Text {
+        color: highlighted? Colors.proxy.primaryColor : Colors.proxy.textColor
+        anchors.centerIn: parent
+        width: parent.width - 20
+        horizontalAlignment: Text.AlignHCenter
+        text: entry ? entry.title || AppCentral.scheduleEditor.subjectNameById(entry.subjectId) || qsTr("Unset") : undefined
+    }
     opacity: entry ? (entry.title || AppCentral.scheduleEditor.subjectNameById(entry.subjectId)) ? 1 : 0.5 : 1
     enabled: entry
 }

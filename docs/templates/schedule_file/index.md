@@ -14,7 +14,6 @@ more readable and easier to maintain:
     "maxWeekCycle": 2,
     "startDate": "2026-09-01"
   },
-  
   "subjects": [
     {
       "id": "math",
@@ -22,10 +21,10 @@ more readable and easier to maintain:
       "teacher": "Prof. Smith",
       "icon": "ic_fluent_ruler_24_regular",
       "location": "Room 9101",
+      "color": "#0000FF",
       "isLocalClassRoom": true
     }
   ],
-  
   "days": [
     {
       "id": "Monday-All",
@@ -58,7 +57,9 @@ more readable and easier to maintain:
     {
       "id": "Tuesday-Even",
       "dayOfWeek": 2,
-      "weeks": [2],
+      "weeks": [
+        2
+      ],
       "entries": []
     },
     {

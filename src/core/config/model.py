@@ -1,7 +1,8 @@
 from enum import Enum
 
-from pydantic import BaseModel, Field, Extra, validator
+from pydantic import BaseModel, Field, Extra
 from typing import Dict, List, Optional, Any
+from PySide6.QtCore import QLocale
 
 from ..directories import DEFAULT_THEME
 
@@ -38,6 +39,12 @@ class WidgetEntry(BaseModel):
     type_id: str
     instance_id: str
     settings: Optional[Dict[str, Any]] = {}
+
+class LocaleConfig(BaseModel):
+    """
+    语言设置
+    """
+    language: str = QLocale.system().name()
 
 
 class PreferencesConfig(BaseModel):

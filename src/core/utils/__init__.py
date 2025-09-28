@@ -3,6 +3,8 @@ from PySide6.QtWidgets import QApplication
 from .json_loader import JsonLoader
 from .calculator import get_cycle_week, get_week_number
 from .tray import TrayIcon
+from .subjects import DEFAULT_SUBJECTS, get_default_subjects, translate_sources
+from .translator import AppTranslator
 from uuid import uuid4
 
 

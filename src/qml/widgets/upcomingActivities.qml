@@ -33,10 +33,14 @@ Widget {
 
     function subjectNameById(id) {
         for (let i = 0; i < subjects.length; i++) {
-            if (subjects[i].id === id)
+            if (subjects[i].id === id) {
+                if (!settings.full_name) {
+                    return subjects[i].simplifiedName || subjects[i].name.substring(0, 3)
+                }
                 return subjects[i].name
+            }
         }
-        return qsTr("Unknown")
+        return qsTr("Unset")
     }
 
     MarqueeTitle {

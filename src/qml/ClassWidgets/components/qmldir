@@ -18,8 +18,10 @@ ScheduleTableView 1.0 editor/ScheduleTableView.qml
 TableEntryDelegate 1.0 editor/TableEntryDelegate.qml
 WeekSelector 1.0 editor/WeekSelector.qml
 ScheduleFlyout 1.0 editor/ScheduleFlyout.qml
+SubjectClip 1.0 editor/SubjectClip.qml
 
-FileHud 1.0 editor/FileHud.qml
+SaveFlyout 1.0 editor/SaveFlyout.qml
 
 ## dialogs
 DayEditor 1.0 editor/dialogs/DayEditor.qml
+    IconPicker 1.0 editor/dialogs/IconPicker.qml

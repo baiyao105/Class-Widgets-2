@@ -22,24 +22,24 @@ FluentWindow {
     navigationItems: [
         {
             title: qsTr("Dashboard"),
-            page: PathManager.qml("pages/Dashboard.qml"),
+            page: PathManager.qml("pages/settings/Dashboard.qml"),
             icon: "ic_fluent_board_20_regular",
         },
         {
             title: qsTr("General"),
             icon: "ic_fluent_apps_settings_20_regular",
-            page: PathManager.qml("pages/general/index.qml"),
+            page: PathManager.qml("pages/settings/general/index.qml"),
             subItems: [
                 {
                     title: qsTr("Widgets"),
-                    page: PathManager.qml("pages/general/widgets.qml"),
+                    page: PathManager.qml("pages/settings/general/widgets.qml"),
                     icon: "ic_fluent_apps_20_regular"
                 }
             ]
         },
         {
             title: qsTr("About"),
-            page: PathManager.qml("pages/About.qml"),
+            page: PathManager.qml("pages/settings/About.qml"),
             icon: "ic_fluent_info_20_regular",
         },
     ]

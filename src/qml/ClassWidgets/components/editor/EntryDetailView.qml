@@ -147,6 +147,7 @@ ColumnLayout {
                         model: root.subjects
                         ToggleButton {
                             property string checkedId: modelData.id
+                            icon.name: modelData.icon
                             text: modelData.name
                             flat: true
                             ButtonGroup.group: subjectsGroup

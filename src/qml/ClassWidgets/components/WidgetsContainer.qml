@@ -165,6 +165,7 @@ Flow {
 
     // 添加小组件&完成
     ColumnLayout {
+        objectName: "addWidgetsContainer"
         visible: widgetsContainer.editMode || widgetRepeater.count === 0
         width: height
         height: widgetRepeater.count > 0 ? widgetRepeater.itemAt(0).height: 100 * scaleFactor

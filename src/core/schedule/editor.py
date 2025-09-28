@@ -1,12 +1,12 @@
 from typing import Optional, List, Dict, Union
 
-from PySide6.QtCore import QObject, Property, Signal, Slot
+from PySide6.QtCore import QObject, Property, Signal, Slot, QCoreApplication
 from loguru import logger
 
 from src.core.models import ScheduleData, Subject, Timeline, Entry, EntryType
 from src.core.models.schedule import WeekType, Timetable
 from src.core.schedule import ScheduleRuntime
-from src.core.utils import generate_id
+from src.core.utils import generate_id, get_default_subjects
 
 
 class ScheduleEditor(QObject):
@@ -44,8 +44,8 @@ class ScheduleEditor(QObject):
         self.updated.emit()
         return subject.id
 
-    @Slot(str, str, str, str, str, str, bool)
-    def updateSubject(self, subject_id: str, name: str = "", teacher: str = "",
+    @Slot(str, str, str, str, str, str, str, bool)
+    def updateSubject(self, subject_id: str, name: str = "", simplified_name = "", teacher: str = "",
                       icon: str = "", color: str = "", location: str = "", is_local_classroom: bool = True) -> None:
         """更新科目"""
         subject = self.getSubject(subject_id)
@@ -54,6 +54,8 @@ class ScheduleEditor(QObject):
 
         if name:
             subject.name = name
+        if simplified_name:
+            subject.simplifiedName = simplified_name
         if teacher:
             subject.teacher = teacher
         if icon:
@@ -74,7 +76,7 @@ class ScheduleEditor(QObject):
 
         # 删除相关的课程条目
         for day in self.schedule.days:
-            day.entries = [e for e in day.entries if e.subject_id != subject_id]
+            day.entries = [e for e in day.entries if e.subjectId != subject_id]
 
         self.schedule.subjects.remove(subject)
         self.updated.emit()
@@ -307,6 +309,15 @@ class ScheduleEditor(QObject):
                 data["title"] = applicable.title
 
         return data
+
+    @Slot(result=bool)
+    def restoreDefaultSubjects(self):
+        """加载默认学科"""
+        default_subjects = get_default_subjects()
+        self.schedule.subjects.clear()
+        for subj in default_subjects:
+            self.schedule.subjects.append(subj)
+        self.updated.emit()
 
     # 数据访问
     @Property("QVariant", notify=updated)

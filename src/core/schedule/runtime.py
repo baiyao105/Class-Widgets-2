@@ -9,7 +9,7 @@ from loguru import logger
 from src.core.models.schedule import ScheduleData, MetaInfo, Timeline, Entry, EntryType, Subject
 from src.core.parser import ScheduleParser
 from src.core.schedule.service import ScheduleServices
-from src.core.utils import get_cycle_week, get_week_number, generate_id
+from src.core.utils import get_cycle_week, get_week_number, generate_id, get_default_subjects
 
 
 class ScheduleRuntime(QObject):
@@ -67,7 +67,7 @@ class ScheduleRuntime(QObject):
                 maxWeekCycle=2,
                 startDate=f"{datetime.now().year}-09-01"
             ),
-            subjects=[],
+            subjects=get_default_subjects(),
             days=[]
         )
 

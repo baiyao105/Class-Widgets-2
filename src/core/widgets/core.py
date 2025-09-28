@@ -26,6 +26,7 @@ class WidgetsWindow(RinUI.RinUIWindow):
         self.app_central.widgets_model.load_config()
         self._load_with_theme()
         self.app_central.theme_manager.themeChanged.connect(self.on_theme_changed)
+        self.app_central.retranslate.connect(self.engine.retranslate)
 
     def _load_with_theme(self):
         """加载QML并应用主题"""
@@ -65,6 +66,8 @@ class WidgetsWindow(RinUI.RinUIWindow):
             return
 
         for w in widgets_loader.childItems():
+            if w.objectName() == "addWidgetsContainer":
+                continue
             rect = QRect(
                 int(w.x() + widgets_loader.x()),
                 int(w.y() + widgets_loader.y()),

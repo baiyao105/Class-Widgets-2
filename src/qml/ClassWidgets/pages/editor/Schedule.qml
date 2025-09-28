@@ -7,13 +7,13 @@ import ClassWidgets.Components
 import QtQuick.Effects  // shadow
 
 Item {
-    FileHud { id: fileHud }
+    SaveFlyout { id: saveFlyout }
 
     RowLayout {
         id: rowLayout
         anchors.fill: parent
         anchors.margins: 24
-        anchors.topMargin: 24 + fileHud.height
+        anchors.topMargin: 24 + saveFlyout.height
         spacing: 10
 
         ScheduleTableView {
@@ -68,17 +68,26 @@ Item {
                         text: qsTr("Quick Add Subject")
                     }
 
-                    Flow {
+                    Flickable {
                         Layout.fillWidth: true
                         Layout.fillHeight: true
-                        Repeater {
-                            model: AppCentral.scheduleRuntime.subjects
-                            Button {
-                                flat: true
-                                icon.name: modelData.icon
-                                text: modelData.name
-                                onClicked: {
-                                    quickAddSubject(modelData.id)
+                        contentHeight: subjectsFlow.height
+                        clip: true
+
+                        ScrollBar.vertical: ScrollBar {}
+
+                        Flow {
+                            id: subjectsFlow
+                            width: parent.width
+                            Repeater {
+                                model: AppCentral.scheduleRuntime.subjects
+                                Button {
+                                    flat: true
+                                    icon.name: modelData.icon
+                                    text: modelData.name
+                                    onClicked: {
+                                        quickAddSubject(modelData.id)
+                                    }
                                 }
                             }
                         }

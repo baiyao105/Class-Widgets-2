@@ -7,7 +7,7 @@ import ClassWidgets.Components
 import QtQuick.Effects  // shadow
 
 Item {
-    FileHud {}
+    SaveFlyout {}
 
     RowLayout {
         anchors.fill: parent

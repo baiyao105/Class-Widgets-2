@@ -37,6 +37,12 @@ FluentWindow {
             icon: "ic_fluent_calendar_20_regular",
             page: PathManager.qml("pages/editor/Schedule.qml"),
         }
+        ,
+        {
+            title: qsTr("Subjects"),
+            icon: "ic_fluent_book_20_regular",
+            page: PathManager.qml("pages/editor/Subjects.qml"),
+        }
     ]
 
     // 测试水印

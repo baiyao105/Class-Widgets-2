@@ -3,11 +3,12 @@ from loguru import logger
 from pydantic import BaseModel, Field, PrivateAttr
 from PySide6.QtCore import QObject, QTimer, Signal, Property, Slot
 
-from .model import AppConfig, ScheduleConfig, PreferencesConfig, PluginsConfig
+from .model import AppConfig, ScheduleConfig, PreferencesConfig, PluginsConfig, LocaleConfig
 
 
 class RootConfig(BaseModel):
     app: AppConfig = Field(default_factory=AppConfig)
+    locale: LocaleConfig = Field(default_factory=LocaleConfig)
     schedule: ScheduleConfig = Field(default_factory=ScheduleConfig)
     preferences: PreferencesConfig = Field(default_factory=PreferencesConfig)
     plugins: PluginsConfig = Field(default_factory=PluginsConfig)
