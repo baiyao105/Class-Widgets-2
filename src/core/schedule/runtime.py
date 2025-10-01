@@ -16,14 +16,14 @@ class ScheduleRuntime(QObject):
     notify = Signal(str, dict, str)
     updated = Signal()
 
-    def __init__(self, schedule_path: Union[Path, str], app_central):
+    def __init__(self, app_central):
         super().__init__()
         self.app_central = app_central
-        self.schedule_path = Path(schedule_path)
+        # self.schedule_path = Path(schedule_path)
         self.schedule: Optional[ScheduleData] = None
         self.services = ScheduleServices()
         self.current_time = datetime.now()
-        self._load_schedule_file()  # 初始化时加载文件
+        # self._load_schedule_file()  # 初始化时加载文件
 
         self.current_day_of_week: int = 0
         self.current_week = 0
@@ -43,49 +43,49 @@ class ScheduleRuntime(QObject):
 
         logger.info("Schedule runtime initialized.")
 
-    def _load_schedule_file(self):
-        """从文件加载课程表"""
-        parser = ScheduleParser(self.schedule_path)
-        try:
-            self.schedule = parser.load()
-            logger.info(f"Schedule loaded from {self.schedule_path}")
-        except FileNotFoundError:
-            logger.warning("Schedule file not found, creating a new one...")
-            self._create_empty_schedule()
-            self.save()
-        except Exception as e:
-            logger.error(f"Failed to load schedule: {e}")
-            self._create_empty_schedule()
-            self.save()
+    # def _load_schedule_file(self):
+    #     """从文件加载课程表"""
+    #     parser = ScheduleParser(self.schedule_path)
+    #     try:
+    #         self.schedule = parser.load()
+    #         logger.info(f"Schedule loaded from {self.schedule_path}")
+    #     except FileNotFoundError:
+    #         logger.warning("Schedule file not found, creating a new one...")
+    #         self._create_empty_schedule()
+    #         self.save()
+    #     except Exception as e:
+    #         logger.error(f"Failed to load schedule: {e}")
+    #         self._create_empty_schedule()
+    #         self.save()
 
-    def _create_empty_schedule(self):
-        """创建空课程表"""
-        self.schedule = ScheduleData(
-            meta=MetaInfo(
-                id=generate_id("meta"),
-                version=1,
-                maxWeekCycle=2,
-                startDate=f"{datetime.now().year}-09-01"
-            ),
-            subjects=get_default_subjects(),
-            days=[]
-        )
+    # def _create_empty_schedule(self):
+    #     """创建空课程表"""
+    #     self.schedule = ScheduleData(
+    #         meta=MetaInfo(
+    #             id=generate_id("meta"),
+    #             version=1,
+    #             maxWeekCycle=2,
+    #             startDate=f"{datetime.now().year}-09-01"
+    #         ),
+    #         subjects=get_default_subjects(),
+    #         days=[]
+    #     )
 
-    @Slot(result=bool)
-    def save(self) -> bool:
-        """保存课程表到文件"""
-        if not self.schedule:
-            logger.warning("No schedule data to save")
-            return False
-
-        try:
-            with open(self.schedule_path, "w", encoding="utf-8") as f:
-                json.dump(self.schedule.model_dump(), f, ensure_ascii=False, indent=4)
-            logger.info(f"Schedule saved to {self.schedule_path}")
-            return True
-        except Exception as e:
-            logger.error(f"Save schedule failed: {e}")
-            return False
+    # @Slot(result=bool)
+    # def save(self) -> bool:
+    #     """保存课程表到文件"""
+    #     if not self.schedule:
+    #         logger.warning("No schedule data to save")
+    #         return False
+    #
+    #     try:
+    #         with open(self.schedule_path, "w", encoding="utf-8") as f:
+    #             json.dump(self.schedule.model_dump(), f, ensure_ascii=False, indent=4)
+    #         logger.info(f"Schedule saved to {self.schedule_path}")
+    #         return True
+    #     except Exception as e:
+    #         logger.error(f"Save schedule failed: {e}")
+    #         return False
 
     # TIME
     @Property(str, notify=updated)
@@ -111,6 +111,8 @@ class ScheduleRuntime(QObject):
     # SCHEDULE
     @Property(list, notify=updated)
     def subjects(self) -> list:
+        if not self.schedule:
+            return []
         return [s.model_dump() for s in self.schedule.subjects]
 
     @Property(dict, notify=updated)
@@ -196,6 +198,13 @@ class ScheduleRuntime(QObject):
             self.current_subject = self.services.get_current_subject(self.current_day, self.schedule.subjects,
                                                                      self.current_time)
             self.current_title = getattr(self.current_entry, "title", None)
+        else:
+            self.current_entry = None
+            self.next_entries = None
+            self.remaining_time = None
+            self.current_status = None
+            self.current_subject = None
+            self.current_title = None
 
         self._progress = self.get_progress_percent()
 

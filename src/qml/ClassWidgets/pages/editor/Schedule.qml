@@ -7,6 +7,7 @@ import ClassWidgets.Components
 import QtQuick.Effects  // shadow
 
 Item {
+    id: root
     SaveFlyout { id: saveFlyout }
 
     RowLayout {
@@ -36,7 +37,7 @@ Item {
         }
 
         ColumnLayout {
-            Layout.maximumWidth: 275
+            Layout.maximumWidth: Math.max(root.width * 0.32, 275)
             spacing: 12
             SettingExpander {
                 Layout.fillWidth: true

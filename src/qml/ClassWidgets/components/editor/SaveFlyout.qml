@@ -50,7 +50,7 @@ Item {
                 icon.name: "ic_fluent_save_20_regular"
                 text: "Save"
                 onClicked: {
-                    let result = AppCentral.scheduleEditor.save()
+                    let result = AppCentral.scheduleManager.save()
                     if (result) {
                         floatLayer.createInfoBar({
                             title: qsTr("Saved"),

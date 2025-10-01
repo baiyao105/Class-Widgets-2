@@ -9,50 +9,68 @@ import ClassWidgets.Components
 FluentPage {
     title: qsTr("Widgets")
 
-    Frame {
-        Layout.fillWidth: true
-        padding: 24
-
-        RowLayout {
-            anchors.fill: parent
-            spacing: 24
-
-            Image {
-                Layout.alignment: Qt.AlignCenter
-                Layout.maximumWidth: 200
-                Layout.maximumHeight: 150
-                fillMode: Image.PreserveAspectFit
-                source: PathManager.images(
-                    "settings/widgets/new_editor_widgets-" + (Theme.isDark()? "dark" : "light") + ".png"
-                )
-            }
-
-            ColumnLayout {
-                Layout.fillWidth: true
-                Layout.alignment: Qt.AlignHCenter
-                spacing: 12
-
-                Text {
-                    Layout.fillWidth: true
-                    typography: Typography.BodyLarge
-                    text: qsTr("The new way to edit widgets")
-                }
-                Text {
-                    Layout.fillWidth: true
-                    text: qsTr(
-                        "Right-click or long press any widget, \n" +
-                        "then tap \"Edit Widget Screen\" in the menu to experience it."
-                    )
-                }
-                Button {
-                    flat: true
-                    highlighted: true
-                    Layout.alignment: Qt.AlignRight
-                    icon.name: "ic_fluent_arrow_right_20_regular"
-                    text: qsTr("Edit Widgets Screen")
-                    onClicked: AppCentral.toggleWidgetsEditMode()
-                }
-            }
+    // Frame {
+    //     Layout.fillWidth: true
+    //     padding: 24
+    //
+    //     RowLayout {
+    //         anchors.fill: parent
+    //         spacing: 24
+    //
+    //         Image {
+    //             Layout.alignment: Qt.AlignCenter
+    //             Layout.maximumWidth: 200
+    //             Layout.maximumHeight: 150
+    //             fillMode: Image.PreserveAspectFit
+    //             source: PathManager.images(
+    //                 "settings/widgets/new_editor_widgets-" + (Theme.isDark()? "dark" : "light") + ".png"
+    //             )
+    //         }
+    //
+    //         ColumnLayout {
+    //             Layout.fillWidth: true
+    //             Layout.alignment: Qt.AlignHCenter
+    //             spacing: 12
+    //
+    //             Text {
+    //                 Layout.fillWidth: true
+    //                 typography: Typography.BodyLarge
+    //                 text: qsTr("The new way to edit widgets")
+    //             }
+    //             Text {
+    //                 Layout.fillWidth: true
+    //                 text: qsTr(
+    //                     "Right-click or long press any widget, \n" +
+    //                     "then tap \"Edit Widget Screen\" in the menu to experience it."
+    //                 )
+    //             }
+    //             Button {
+    //                 flat: true
+    //                 highlighted: true
+    //                 Layout.alignment: Qt.AlignRight
+    //                 icon.name: "ic_fluent_arrow_right_20_regular"
+    //                 text: qsTr("Edit Widgets Screen")
+    //                 onClicked: AppCentral.toggleWidgetsEditMode()
+    //             }
+    //         }
+    //     }
+    // }
+    Introduction {
+        source:PathManager.images(
+            "settings/widgets/new_editor_widgets-" + (Theme.isDark()? "dark" : "light") + ".png"
+        )
+        title: qsTr("The new way to edit widgets")
+        description: qsTr(
+            "Right-click or long press any widget, \n" +
+            "then tap \"Edit Widget Screen\" in the menu to experience it."
+        )
+        Button {
+            flat: true
+            highlighted: true
+            Layout.alignment: Qt.AlignRight
+            icon.name: "ic_fluent_arrow_right_20_regular"
+            text: qsTr("Edit Widgets Screen")
+            onClicked: AppCentral.toggleWidgetsEditMode()
         }
     }
 

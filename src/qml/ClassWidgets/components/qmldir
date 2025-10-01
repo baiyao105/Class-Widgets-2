@@ -3,6 +3,7 @@ module ClassWidgets.Components
 WidgetsContainer 1.0 WidgetsContainer.qml
 WidgetLoader 1.0 WidgetLoader.qml
 Watermark 1.0 Watermark.qml
+Introduction 1.0 Introduction.qml
 
 # Dialogs
 AddWidgetsDialog 1.0 dialogs/AddWidgetsDialog.qml
@@ -21,7 +22,8 @@ ScheduleFlyout 1.0 editor/ScheduleFlyout.qml
 SubjectClip 1.0 editor/SubjectClip.qml
 
 SaveFlyout 1.0 editor/SaveFlyout.qml
+ScheduleClip 1.0 editor/ScheduleClip.qml
 
 ## dialogs
 DayEditor 1.0 editor/dialogs/DayEditor.qml
-    IconPicker 1.0 editor/dialogs/IconPicker.qml
+IconPicker 1.0 editor/dialogs/IconPicker.qml

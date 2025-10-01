@@ -14,7 +14,7 @@ from src.core.notification import Notification
 from src.core.parser import ScheduleParser
 from src.core.plugin.api import PluginAPI
 from src.core.plugin.manager import PluginManager
-from src.core.schedule import ScheduleRuntime
+from src.core.schedule import ScheduleRuntime, ScheduleManager
 from src.core.schedule.editor import ScheduleEditor
 from src.core.themes import ThemeManager
 from src.core.timer import UnionUpdateTimer
@@ -54,10 +54,10 @@ class AppCentral(QObject):  # Class Widgets 的中枢
         """初始化调度相关组件"""
         self.union_update_timer = UnionUpdateTimer()
         self._notification = Notification()
+        self.schedule_manager = ScheduleManager(Path(CONFIGS_PATH / "schedules"), self)
 
-        schedule_path = Path(CONFIGS_PATH / "schedules" / "default.json")
-        self.runtime = ScheduleRuntime(schedule_path, self)
-        self._schedule_editor: ScheduleEditor = ScheduleEditor(self.runtime)
+        self.runtime = ScheduleRuntime(self)
+        self._schedule_editor: ScheduleEditor = ScheduleEditor(self.schedule_manager)
 
     def _initialize_ui_components(self):
         """初始化UI组件"""
@@ -67,6 +67,7 @@ class AppCentral(QObject):  # Class Widgets 的中枢
 
     def run(self):  # 运行
         self._load_config()  # 加载配置
+        self._load_schedule()  # 加载课程表
         self._load_runtime()  # 加载运行时
         self._init_tray_icon()  # 初始化托盘图标
         self.initialized.emit()  # 发送信号
@@ -75,7 +76,6 @@ class AppCentral(QObject):  # Class Widgets 的中枢
     def _load_config(self):
         """加载和验证配置"""
         self.configs.load_config()
-        print(self.configs.app)
 
     def update(self):  # 更新
         self.runtime.refresh()
@@ -97,6 +97,10 @@ class AppCentral(QObject):  # Class Widgets 的中枢
     @Property(QObject, notify=initialized)
     def scheduleEditor(self):  # 课程表编辑器
         return self._schedule_editor
+
+    @Property(QObject, notify=updated)
+    def scheduleManager(self):  # 课程表管理器
+        return self.schedule_manager
 
     @Property(QObject, notify=initialized)
     def translator(self):
@@ -129,10 +133,15 @@ class AppCentral(QObject):  # Class Widgets 的中枢
         context.setContextProperty("PathManager", self.path_manager)
         # context.setContextProperty("Translator", self.translator)
 
+    def _load_schedule(self):
+        """加载课程表"""
+        self.schedule_manager.load(self.configs.schedule.current_schedule)
+
     def _load_runtime(self):
         # Runtime 初始化时已经加载 schedule 文件
         self.app_translator.setLanguage(self.configs.locale.language)
 
+        self.runtime.refresh(self.schedule_manager.schedule)
         self._setup_runtime_connections()
         self._load_theme_and_plugins()
         self.widgets_window.run()
@@ -142,10 +151,7 @@ class AppCentral(QObject):  # Class Widgets 的中枢
         self.app_translator.languageChanged.connect(lambda: self.retranslate.emit())
         self.runtime.notify.connect(self._notification.push_activity)
         self.union_update_timer.tick.connect(self.update)
-
-        self._schedule_editor.updated.connect(
-            lambda: self.runtime.refresh(self._schedule_editor.schedule)
-        )
+        self.schedule_manager.scheduleModified.connect(self.runtime.refresh)
 
         self.union_update_timer.start()
 

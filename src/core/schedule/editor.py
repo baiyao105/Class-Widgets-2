@@ -5,26 +5,27 @@ from loguru import logger
 
 from src.core.models import ScheduleData, Subject, Timeline, Entry, EntryType
 from src.core.models.schedule import WeekType, Timetable
-from src.core.schedule import ScheduleRuntime
+from src.core.schedule import ScheduleRuntime, ScheduleManager
 from src.core.utils import generate_id, get_default_subjects
 
 
 class ScheduleEditor(QObject):
     updated = Signal()
 
-    def __init__(self, runtime: ScheduleRuntime):
+    def __init__(self, manager: ScheduleManager):
         super().__init__()
-        self.runtime = runtime  # 直接引用 Runtime
-        self._filename = runtime.schedule_path.stem
-        self.schedule: ScheduleData = self.runtime.schedule
-        self.updated.connect(self.refresh_runtime)
+        self.manager = manager
+        self._filename = manager.schedule_path.stem
+        self.schedule: ScheduleData = self.manager.schedule
+        self.updated.connect(self.refresh_manager)
+        self.manager.scheduleSwitched.connect(self.refresh)
 
-    def refresh_runtime(self):
-        self.runtime.refresh(self.schedule)  # 提交给 Runtime
+    def refresh(self, schedule: ScheduleData):  # 接受来自 manager 的更新
+        self.schedule = schedule
+        self._filename = self.manager.schedule_path.stem
 
-    @Slot(result=bool)
-    def save(self) -> bool:
-        return self.runtime.save()
+    def refresh_manager(self):
+        self.manager.modify(self.schedule)  # 提交给 manager
 
     # Subject 操作
     @Slot(str, str, str, str, str, bool, result=str)
@@ -360,7 +361,7 @@ class ScheduleEditor(QObject):
     @Property("QVariant", notify=updated)
     def path(self) -> str:
         """获取课程表文件路径"""
-        return self.runtime.schedule_path.as_uri()
+        return self.manager.schedule_path.as_uri()
 
     @Property("QVariant", notify=updated)
     def filename(self) -> str:

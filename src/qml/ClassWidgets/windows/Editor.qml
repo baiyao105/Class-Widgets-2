@@ -28,6 +28,11 @@ FluentWindow {
         //     icon: "ic_fluent_board_20_regular",
         // },
         {
+            title: qsTr("Home"),
+            icon: "ic_fluent_home_20_regular",
+            page: PathManager.qml("pages/editor/Home.qml"),
+        },
+        {
             title: qsTr("Timeline"),
             icon: "ic_fluent_timeline_20_regular",
             page: PathManager.qml("pages/editor/Timeline.qml"),
