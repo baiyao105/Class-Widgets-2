@@ -3,6 +3,7 @@ import QtQuick.Controls
 import QtQuick.Layouts
 import RinUI
 import Qt5Compat.GraphicalEffects
+import ClassWidgets.Components
 
 
 FluentPage {
@@ -48,7 +49,7 @@ FluentPage {
             Text {
                 color: "#fff"
                 typography: Typography.BodyLarge
-                text: qsTr("[ALPHA]")
+                text: qsTr("ww")
             }
 
             Text {
@@ -59,15 +60,17 @@ FluentPage {
         }
     }
 
-    ColumnLayout {
-        Layout.fillWidth: true
-        Layout.alignment: Qt.AlignCenter
-        Text {
-            text: qsTr("Under Construction...")
-        }
-        Button {
-            Layout.alignment: Qt.AlignCenter
-            text: qsTr("OK")
-        }
-    }
+    // ColumnLayout {
+    //     Layout.fillWidth: true
+    //     Layout.alignment: Qt.AlignCenter
+    //     Text {
+    //         text: qsTr("Under Construction...")
+    //     }
+    //     Button {
+    //         Layout.alignment: Qt.AlignCenter
+    //         text: qsTr("OK")
+    //     }
+    // }
+
+
 }

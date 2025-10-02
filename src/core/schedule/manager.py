@@ -37,9 +37,9 @@ class ScheduleManager(QObject):
         self.current_schedule_name: str | None = None  # 当前选中的课程表
 
     @Slot(str, result=bool)
-    def load(self, name: str) -> bool:
+    def load(self, name: str, force: bool = False) -> bool:
         """加载课程表"""
-        if name == self.current_schedule_name:
+        if name == self.current_schedule_name and not force:
             return True
 
         logger.info(f"Loading schedule: {name}")
@@ -70,6 +70,13 @@ class ScheduleManager(QObject):
         self.scheduleSwitched.emit(self.schedule)
         self.scheduleModified.emit(self.schedule)
         return True
+
+    @Slot(result=bool)
+    def reload(self):
+        """重新加载当前课表"""
+        if self.current_schedule_name is None:
+            return False
+        return self.load(self.current_schedule_name, force=True)
 
     def modify(self, schedule: ScheduleData):
         """ 接受外部修改（如编辑器）"""

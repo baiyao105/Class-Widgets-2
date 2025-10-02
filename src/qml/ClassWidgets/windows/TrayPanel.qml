@@ -2,12 +2,13 @@ import QtQuick
 import QtQuick.Controls
 import QtQuick.Layouts
 import RinUI
+import ClassWidgets.Components
 
 
 Window {
     id: panel
     title: "Control Panel"
-    width: 350
+    width: 375
     height: 500
     x: Screen.width / 2 - width / 2
     y: Screen.height / 2 - height / 2
@@ -85,6 +86,43 @@ Window {
             }
         }
 
+        ColumnLayout {
+            Layout.fillWidth: true
+
+            Text {
+                typography: Typography.BodyStrong
+                text: qsTr("Switch your schedule")
+            }
+
+            ListView {
+                id: scheduleList
+                Layout.fillWidth: true
+                Layout.preferredHeight: 72
+                spacing: 8
+                orientation: ListView.Horizontal
+                model: AppCentral.scheduleManager.schedules()
+
+                delegate: ScheduleClip {
+                    width: 200
+                    filename: modelData.name
+                    selected: AppCentral.scheduleManager.currentScheduleName === modelData.name
+                    iconVisible: false
+                    actionEnabled: false
+                    onClicked: {
+                        AppCentral.scheduleManager.load(modelData.name)
+                    }
+                    onSelectedChanged: {
+                        if (selected) {
+                            // 让选中的 item 滚动到视图中心
+                            scheduleList.positionViewAtIndex(index, ListView.Center)
+                        }
+                    }
+                }
+
+                ScrollBar.horizontal: ScrollBar { }
+            }
+        }
+
         Item {
             Layout.fillHeight: true
         }
@@ -108,6 +146,10 @@ Window {
             ToolTip {
                 text: qsTr("Debugger")
                 visible: parent.hovered
+            }
+
+            Component.onCompleted: {
+                enabled = Configs.data.app.debug_mode
             }
         }
 

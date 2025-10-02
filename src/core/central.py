@@ -8,7 +8,7 @@ from loguru import logger
 
 from src.core import CONFIGS_PATH, QML_PATH
 from src.core.config import ConfigManager
-from src.core.directories import PathManager, DEFAULT_THEME, CW_PATH
+from src.core.directories import PathManager, DEFAULT_THEME, CW_PATH, ROOT_PATH, LOGS_PATH
 from src.core.models import ScheduleData, MetaInfo
 from src.core.notification import Notification
 from src.core.parser import ScheduleParser
@@ -18,8 +18,8 @@ from src.core.schedule import ScheduleRuntime, ScheduleManager
 from src.core.schedule.editor import ScheduleEditor
 from src.core.themes import ThemeManager
 from src.core.timer import UnionUpdateTimer
-from src.core.utils import generate_id, TrayIcon, AppTranslator
-from src.core.utils.debugger import DebuggerCentral
+from src.core.utils import generate_id, TrayIcon, AppTranslator, UtilsBackend
+from src.core.utils.debugger import DebuggerWindow
 from src.core.widgets import WidgetsWindow, WidgetListModel
 
 
@@ -46,9 +46,10 @@ class AppCentral(QObject):  # Class Widgets 的中枢
         self.plugin_api = PluginAPI(self)
         self.plugin_manager = PluginManager(self.plugin_api)
         self.app_translator = AppTranslator(self)
+        self.utils_backend = UtilsBackend()
 
         # debugger
-        self.debugger = DebuggerCentral(self)
+        self.debugger = None
 
     def _initialize_schedule_components(self):
         """初始化调度相关组件"""
@@ -67,6 +68,7 @@ class AppCentral(QObject):  # Class Widgets 的中枢
 
     def run(self):  # 运行
         self._load_config()  # 加载配置
+        self._setup_logging()  # 设置日志
         self._load_schedule()  # 加载课程表
         self._load_runtime()  # 加载运行时
         self._init_tray_icon()  # 初始化托盘图标
@@ -141,6 +143,9 @@ class AppCentral(QObject):  # Class Widgets 的中枢
         # Runtime 初始化时已经加载 schedule 文件
         self.app_translator.setLanguage(self.configs.locale.language)
 
+        if self.configs.app.debug_mode:  # 调试模式
+            self.debugger = DebuggerWindow(self)
+
         self.runtime.refresh(self.schedule_manager.schedule)
         self._setup_runtime_connections()
         self._load_theme_and_plugins()
@@ -169,6 +174,25 @@ class AppCentral(QObject):  # Class Widgets 的中枢
     def _init_tray_icon(self):
         self.tray_icon = TrayIcon(self)
         self.tray_icon.togglePanel.connect(self._on_tray_toggle)
+
+    def _setup_logging(self):
+        """根据 Configs.app.no_logs 决定是否写日志到文件"""
+        no_logs = getattr(self.configs.app, "no_logs", False)
+
+        if not no_logs:
+            log_path = LOGS_PATH / "ClassWidgets-{time}.log"
+            logger.add(
+                log_path,
+                rotation="1 MB",
+                retention="7 days", # save for 7 days
+                encoding="utf-8",
+                enqueue=True,
+                backtrace=True,
+                diagnose=True
+            )
+            logger.info(f"File logging enabled at {log_path}")
+        else:
+            logger.info("File logging disabled by configuration")
 
     def _on_tray_toggle(self, pos: QPoint):
         self.togglePanel.emit(pos)
@@ -201,7 +225,7 @@ class AppCentral(QObject):  # Class Widgets 的中枢
             logger.error("Looks like you tried to open the debugger without debug mode enabled, zako~")
             return
 
-        instance = self.debugger.debugger_window
+        instance = self.debugger
         if self.debugger and instance.root_window:
             instance.root_window.show()
             instance.root_window.raise_()
@@ -230,6 +254,7 @@ class Settings(RinUIWindow):
 
         self.engine.addImportPath(DEFAULT_THEME)
         self.central.setup_qml_context(self)
+        self.engine.rootContext().setContextProperty("UtilsBackend", self.central.utils_backend)
         self.load(CW_PATH / "windows" / "Settings.qml")
 
         self.central.retranslate.connect(self.engine.retranslate)

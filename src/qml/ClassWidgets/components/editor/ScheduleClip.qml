@@ -4,6 +4,7 @@ import QtQuick.Layouts 2.15
 import RinUI
 
 Clip {
+    id: clip
     width: 278
     height: 72
     radius: 6
@@ -11,12 +12,14 @@ Clip {
     property alias filename: title.text
     property alias description: description.text
     property alias selected: indicator.visible
+    property alias iconVisible: icon.visible
+    property alias actionEnabled: editButton.visible
 
     Rectangle {
         id: indicator
         anchors.verticalCenter: parent.verticalCenter
         anchors.left: parent.left
-        anchors.leftMargin: 8
+        anchors.leftMargin: 12
         color: Colors.proxy.primaryColor
         property int currentItemHeight: parent.height * 0.75
 
@@ -61,8 +64,8 @@ Clip {
             PropertyAnimation {
                 target: indicator
                 property: "y"
-                from: parent.height / 2
-                to: (parent.height - indicator.implicitHeight) / 2
+                from: clip.height / 2
+                to: (clip.height - indicator.implicitHeight) / 2
                 duration: Utils.animationSpeedMiddle
                 easing.type: Easing.OutQuint
             }
@@ -71,11 +74,12 @@ Clip {
 
     RowLayout {
         anchors.fill: parent
-        anchors.leftMargin: 14
+        anchors.leftMargin: 28
         anchors.rightMargin: 14
         spacing: 16
 
         Icon {
+            id: icon
             Layout.alignment: Qt.AlignVCenter
             name: "ic_fluent_calendar_clock_20_regular"
             // layout内部宽高

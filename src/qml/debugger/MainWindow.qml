@@ -9,8 +9,8 @@ ApplicationWindow {
     title: "Class Widgets Debugger"
     // x: Screen.width/2 - width/2
     // y:600
-    width: 800
-    height: 600
+    width: 900
+    height: 800
     minimumWidth: 425
     minimumHeight: 400
     // visible: true

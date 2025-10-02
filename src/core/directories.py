@@ -15,6 +15,7 @@ CONFIGS_PATH = ROOT_PATH / "configs"
 THEMES_PATH = ROOT_PATH / "themes"
 PLUGINS_PATH = ROOT_PATH / "plugins"
 BUILTIN_PLUGINS_PATH = SRC_PATH / "plugins"
+LOGS_PATH = ROOT_PATH / "logs"
 
 EXAMPLES_PATH = ROOT_PATH / "examples"
 

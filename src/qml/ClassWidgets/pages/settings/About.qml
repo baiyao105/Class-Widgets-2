@@ -6,6 +6,7 @@ import Qt5Compat.GraphicalEffects
 
 
 FluentPage {
+    id: root
     horizontalPadding: 0
     wrapperWidth: width - 42*2
 
@@ -64,7 +65,122 @@ FluentPage {
         spacing: 4
         Text {
             typography: Typography.BodyStrong
+            text: qsTr("About")
+        }
+
+        SettingExpander {
+            Layout.fillWidth: true
+            title: qsTr("Class Widgets 2")
+            description: qsTr("© 2024-2025 RinLit. All rights reserved. \nLicensed under the GPL-3 license.")
+            icon.source: PathManager.images("logo.png")
+            icon.size: 28
+
+            content: RowLayout {
+                spacing: 8
+                InfoBadge {
+                    text: Configs.data.app.channel
+                }
+                Text {
+                    color: Theme.currentTheme.colors.textSecondaryColor
+                    text: Configs.data.app.version
+                }
+            }
+
+            SettingItem {
+                id: repo
+                title: qsTr("To view this repository")
+
+                TextInput {
+                    id: repoUrl
+                    readOnly: true
+                    text: "https://github.com/RinLit-233-shiroko/Class-Widgets-2"
+                    wrapMode: TextInput.Wrap
+                }
+                ToolButton {
+                    flat: true
+                    icon.name: "ic_fluent_open_20_regular"
+                    onClicked: {
+                        Qt.openUrlExternally(repoUrl.text)
+                    }
+                }
+            }
+            SettingItem {
+                title: qsTr("File a bug or request new sample")
+
+                Hyperlink {
+                    text: qsTr("Create an issue on GitHub")
+                    openUrl: "https://github.com/RinLit-233-shiroko/Rin-UI/issues/new/choose"
+                }
+            }
+            SettingItem {
+                Column {
+                    Layout.fillWidth: true
+                    Text {
+                        text: qsTr("Dependencies & references")
+                    }
+                    Hyperlink {
+                        text: qsTr("Qt & Qt Quick")
+                        openUrl: "https://www.qt.io/"
+                    }
+                    Hyperlink {
+                        text: qsTr("Fluent Design System")
+                        openUrl: "https://fluent2.microsoft.design/"
+                    }
+                    Hyperlink {
+                        text: qsTr("RinUI")
+                        openUrl: "https://ui.rinlit.cn/"
+                    }
+                    Hyperlink {
+                        text: qsTr("Loguru")
+                        openUrl: "https://github.com/Delgan/loguru"
+                    }
+                    Hyperlink {
+                        text: qsTr("Pydantic")
+                        openUrl: "https://docs.pydantic.dev/latest/"
+                    }
+                }
+            }
+            SettingItem {
+                title: qsTr("License")
+                description: qsTr("This project is licensed under the GPL-3 license")
+
+                Hyperlink {
+                    text: qsTr("GPL-3 License")
+                    onClicked: {
+                        licenseDialog.open()
+                    }
+                }
+            }
+        }
+    }
+
+    ColumnLayout {
+        Layout.fillWidth: true
+        spacing: 4
+        Text {
+            typography: Typography.BodyStrong
             text: qsTr("Advances")
+        }
+
+        SettingExpander {
+            Layout.fillWidth: true
+            icon.name: "ic_fluent_text_bullet_list_square_warning_20_regular"
+            title: qsTr("Log Storage Disabled")
+            description: qsTr("When enabled, the app will <b>not</b> save logs.")
+
+            action: Switch {
+                onCheckedChanged: Configs.set("app.no_logs", checked)
+                Component.onCompleted: checked = Configs.data.app.no_logs
+            }
+
+            SettingItem {
+                title: qsTr("Clear Logs")
+
+                Button {
+                    icon.name: "ic_fluent_broom_20_regular"
+                    text: qsTr("Clear")
+                }
+            }
         }
 
         SettingCard {
@@ -72,35 +188,46 @@ FluentPage {
             icon.name: "ic_fluent_developer_board_search_20_regular"
             title: qsTr("Debug Mode")
             description: qsTr(
-                "Enable Debug Mode to , access core widget information, " +
-                "and debugging tools. Use with caution—unexpected behavior may occur"
+                "Enable Debug Mode to access core widget information, " +
+                "and debugging tools. \n" +
+                "* Requires restart."
             )
 
             Switch {
                 onCheckedChanged: Configs.set("app.debug_mode", checked)
                 Component.onCompleted: checked = Configs.data.app.debug_mode
             }
-            // ComboBox {
-            //     model: ListModel {
-            //         ListElement {
-            //             text: qsTr("Pin on Top"); value: "top"
-            //         }
-            //         ListElement {
-            //             text: qsTr("Send to Back"); value: "bottom"
-            //         }
-            //     }
-            //     textRole: "text"
-            //
-            //     onCurrentIndexChanged: if (focus) Configs.set("preferences.widgets_layer", model.get(currentIndex).value)
-            //     Component.onCompleted: {
-            //         for (var i = 0; i < model.count; i++) {
-            //             if (model.get(i).value === Configs.data.preferences.widgets_layer) {
-            //                 currentIndex = i
-            //                 break
-            //             }
-            //         }
-            //     }
-            // }
         }
+    }
+
+    Dialog {
+        id: licenseDialog
+        title: qsTr("License Agreement")
+        width: root.width * 0.8
+        height: root.height * 0.8
+        modal: true
+
+        Text {
+            Layout.fillWidth: true
+            text: qsTr("This project (Class Widgets 2) is licensed under the GPL-3 license. For details, see:")
+        }
+
+        Flickable {
+            clip: true
+            Layout.fillWidth: true
+            Layout.fillHeight: true
+            contentHeight: licenseText.height
+
+            ScrollBar.vertical: ScrollBar {}
+
+            Text {
+                id: licenseText
+                width: parent.width
+                // textFormat: Text.RichText
+                text: UtilsBackend.licenseText
+            }
+        }
+
+        standardButtons: Dialog.Close
     }
 }

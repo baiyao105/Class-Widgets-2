@@ -202,7 +202,7 @@ class ScheduleRuntime(QObject):
             self.current_entry = None
             self.next_entries = None
             self.remaining_time = None
-            self.current_status = None
+            self.current_status = EntryType.FREE
             self.current_subject = None
             self.current_title = None
 

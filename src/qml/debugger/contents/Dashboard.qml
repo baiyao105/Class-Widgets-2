@@ -16,10 +16,105 @@ ColumnLayout {
         typography: Typography.BodyStrong
         text: "Dashboard"
     }
+
     Frame {
         Layout.fillWidth: true
         ColumnLayout {
-            width: parent.width
+            anchors.fill: parent
+            Layout.topMargin: 12
+            Layout.bottomMargin: 12
+            Text {
+                text: "Logs"
+                typography: Typography.BodyStrong
+            }
+            ListView {
+                id: logsList
+                Layout.fillWidth: true
+                Layout.preferredHeight: 300
+                clip: true
+                model: UtilsBackend.logs
+                spacing: 0
+
+                property bool autoScroll: true
+
+                // onContentYChanged: {
+                //     autoScroll = (contentY + height >= contentHeight - 2);
+                // }
+
+                onCountChanged: {
+                    if (autoScroll) {
+                        positionViewAtEnd();
+                    }
+                }
+
+                delegate: Frame {
+                    width: logsList.width
+                    HoverHandler { id: logHoverHandler }
+                    frameless: !logHoverHandler.hovered
+                    leftPadding: 12
+                    padding: 4
+
+                    RowLayout {
+                        width: parent.width
+                        spacing: 10
+                        Text {
+                            Layout.preferredWidth: 90
+                            text: modelData.time; color: Colors.proxy.textSecondaryColor
+                        }
+                        Text {
+                            Layout.preferredWidth: 80
+                            text: modelData.level
+                            color: {
+                                switch (modelData.level) {
+                                    case "DEBUG": return Colors.proxy.systemNeutralColor
+                                    case "INFO": return Colors.proxy.textColor
+                                    case "WARNING": return Colors.proxy.systemCautionColor
+                                    case "ERROR": return Colors.proxy.systemCriticalColor
+                                    case "SUCCESS": return Colors.proxy.systemSuccessColor
+                                    default: return Colors.proxy.textColor
+                                }
+                            }
+                        }
+                        Text {
+                            Layout.fillWidth: true
+                            text: modelData.message
+                            color: {
+                                switch (modelData.level) {
+                                    case "DEBUG": return Colors.proxy.systemNeutralColor
+                                    case "INFO": return Colors.proxy.textColor
+                                    case "WARNING": return Colors.proxy.systemCautionColor
+                                    case "ERROR": return Colors.proxy.systemCriticalColor
+                                    case "SUCCESS": return Colors.proxy.systemSuccessColor
+                                    default: return Colors.proxy.textColor
+                                }
+                            }
+                        }
+                        ToolButton {
+                            flat: true
+                            onClicked: {
+                                if (UtilsBackend.copyToClipboard(JSON.stringify(modelData))) {
+                                    floatLayer.createInfoBar({
+                                        severity: Severity.Success,
+                                        text: "Copied to clipboard!",
+                                    })
+                                }
+                            }
+                            icon.name: "ic_fluent_copy_20_regular"
+                            size: 18
+                        }
+                    }
+                }
+            }
+
+        }
+    }
+
+    Expander {
+        text: "Runtime Variables"
+        Layout.fillWidth: true
+        ColumnLayout {
+            Layout.fillWidth: true
+            Layout.margins: 12
 
             // Footer
             RowLayout {
@@ -36,7 +131,7 @@ ColumnLayout {
                 // reload
                 Button {
                     text: "Reload Schedule File"
-                    onClicked: AppCentral.reloadSchedule()
+                    onClicked: AppCentral.scheduleManager.reload()
                 }
             }
 
