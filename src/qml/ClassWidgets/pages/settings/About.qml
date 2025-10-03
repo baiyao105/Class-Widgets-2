@@ -179,6 +179,23 @@ FluentPage {
                 Button {
                     icon.name: "ic_fluent_broom_20_regular"
                     text: qsTr("Clear")
+                    onClicked: {
+                        if (UtilsBackend.clearLogs()) {
+                            floatLayer.createInfoBar({
+                                title: qsTr("Cleared"),
+                                text: qsTr("All logs have been cleared."),
+                                severity: Severity.Success,
+                                duration: 2000,
+                            })
+                        } else {
+                            floatLayer.createInfoBar({
+                                title: qsTr("Failed"),
+                                text: qsTr("Failed to clear logs."),
+                                severity: Severity.Error,
+                                duration: 2000,
+                            })
+                        }
+                    }
                 }
             }
         }

@@ -44,7 +44,7 @@ class AppCentral(QObject):  # Class Widgets 的中枢
         self.theme_manager = ThemeManager(self)
         self.widgets_model = WidgetListModel(self)
         self.plugin_api = PluginAPI(self)
-        self.plugin_manager = PluginManager(self.plugin_api)
+        self.plugin_manager = PluginManager(self.plugin_api, self)
         self.app_translator = AppTranslator(self)
         self.utils_backend = UtilsBackend()
 
@@ -164,12 +164,9 @@ class AppCentral(QObject):  # Class Widgets 的中枢
         """主题和插件"""
         self.theme_manager.load()
 
-        # 获取启用的插件列表
-        enabled_plugins = self.configs.plugins.enabled or []
-        self.plugin_manager.enabled_plugins = enabled_plugins
-
+        self.plugin_manager.set_enabled_plugins(self.configs.plugins.enabled)
         # 加载插件（内置+外部）
-        self.plugin_manager.load_all()
+        self.plugin_manager.load_plugins()
 
     def _init_tray_icon(self):
         self.tray_icon = TrayIcon(self)

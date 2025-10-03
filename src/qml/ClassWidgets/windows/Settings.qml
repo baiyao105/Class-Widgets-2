@@ -27,7 +27,7 @@ FluentWindow {
         },
         {
             title: qsTr("General"),
-            icon: "ic_fluent_apps_settings_20_regular",
+            icon: "ic_fluent_settings_20_regular",
             page: PathManager.qml("pages/settings/general/index.qml"),
             subItems: [
                 {
@@ -36,6 +36,11 @@ FluentWindow {
                     icon: "ic_fluent_apps_20_regular"
                 }
             ]
+        },
+        {
+            title: qsTr("Plugins"),
+            page: PathManager.qml("pages/settings/Plugins.qml"),
+            icon: "ic_fluent_apps_add_in_20_regular",
         },
         {
             title: qsTr("About"),

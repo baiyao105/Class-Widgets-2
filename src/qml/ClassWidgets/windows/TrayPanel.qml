@@ -84,6 +84,21 @@ Window {
                     }
                 }
             }
+
+            SettingCard {
+                Layout.fillWidth: true
+                icon.name: "ic_fluent_apps_add_in_20_regular"
+                title: qsTr("Plugin Plaza")
+                description: qsTr("Discover and download plugins")
+                Hyperlink {
+                    text: "Open"
+                    enabled: false
+                    onClicked: {
+                        panel.hide()
+                        // AppCentral.openSettings()
+                    }
+                }
+            }
         }
 
         ColumnLayout {

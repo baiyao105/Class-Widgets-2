@@ -1,6 +1,8 @@
 {
     "id": "builtin.classwidgets.widgets",
     "name": "Built-in Widgets",
-    "version": "*",
+    "author": "Class Widgets Official",
+    "version": "1.0.0",
+    "api_version": "*",
     "entry": "widgets.py"
 }

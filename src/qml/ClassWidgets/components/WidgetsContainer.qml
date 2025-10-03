@@ -10,8 +10,12 @@ Flow {
     property real scaleFactor: Configs.data.preferences.scale_factor || 1.0
     spacing: 8
 
-    property bool editMode: widgetRepeater.count === 0 ? true : false
+    property bool editMode: false
     property bool menuVisible: false
+
+    Component.onCompleted: {
+        editMode = widgetRepeater.count === 0
+    }
 
     move: Transition {
         enabled: editMode

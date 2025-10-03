@@ -1,30 +1,59 @@
 import importlib
 import importlib.util
 import json
+import shutil
 import sys
+import zipfile
 from pathlib import Path
-from typing import List, Dict, Set
+from typing import List, Dict
+
+from PySide6.QtCore import Slot, QObject, Signal, Property
+from PySide6.QtWidgets import QFileDialog
 from loguru import logger
 
 from src.core.directories import PLUGINS_PATH, BUILTIN_PLUGINS_PATH
 from src.core.plugin import CW2Plugin
+from src.core.utils import check_api_version
 
 
-class PluginManager:
-    def __init__(self, plugin_api):
+REQUIRED_FIELDS = ["id", "name", "version", "api_version", "entry", "author"]
+
+
+def validate_meta(meta: dict, plugin_dir: Path) -> bool:
+    """
+    校验插件 meta 字段完整性
+    """
+    # 检查必填字段
+    for field in REQUIRED_FIELDS:
+        if field not in meta or not meta[field]:
+            logger.warning(f"Plugin meta missing required field '{field}' in {plugin_dir}")
+            return False
+
+    return True
+
+
+
+class PluginManager(QObject):
+    initialized = Signal()
+    pluginListChanged = Signal()
+
+    def __init__(self, plugin_api, app_central):
+        super().__init__()
         self.api = plugin_api
-        self.plugins: Dict[str, CW2Plugin] = {}
-        self.enabled_plugins = None
+        self.app_central = app_central
+        self._plugins: Dict[str, CW2Plugin] = {}
+        self.metas: List[dict] = []  # 所有找到的插件
+        self.enabled_plugins = set(self.app_central.configs.plugins.enabled)
 
         self.external_path = PLUGINS_PATH
         self.builtin_path = BUILTIN_PLUGINS_PATH
 
-    def set_enabled_plugins(self, enabled_plugins: List[str]):
-        self.enabled_plugins = set(enabled_plugins)
-        logger.debug(f"Enabled plugins: {enabled_plugins}")
+        self.scan()
+        logger.info(f"Found {len(self.metas)} plugins.")
+        logger.info(f"Plugin Manager initialized.")
+        self.initialized.emit()
 
     def discover_plugins_in_dir(self, base_dir: Path) -> List[Path]:
-        """扫描指定目录下所有包含 cwplugin.json 的插件"""
         found = []
         if base_dir.exists() and base_dir.is_dir():
             for plugin_dir in base_dir.iterdir():
@@ -32,27 +61,59 @@ class PluginManager:
                     found.append(plugin_dir)
         return found
 
-    def load_plugin_from_path(self, plugin_dir: Path, force=False):
-        """
-        Load Plugin from Path (Builtin / external)
-        :param plugin_dir:
-        :param force:
-        :return:
-        """
+    def scan(self):
+        """扫描内置和外部插件目录，收集所有插件的元数据"""
+        self.metas.clear()
+
+        for plugin_dir in self.discover_plugins_in_dir(self.builtin_path):
+            self._load_meta(plugin_dir, "builtin")
+
+        for plugin_dir in self.discover_plugins_in_dir(self.external_path):
+            self._load_meta(plugin_dir, "external")
+
+        logger.info(f"Found {len(self.metas)} plugins.")
+
+    def _load_meta(self, plugin_dir: Path, type="external"):
         try:
             meta_path = plugin_dir / "cwplugin.json"
             meta = json.loads(meta_path.read_text(encoding="utf-8"))
+            meta["_path"] = plugin_dir
+            meta["_type"] = type
 
-            # 检查是否启用
-            if meta["id"] not in self.enabled_plugins and not force:
-                logger.info(f"Skipping disabled plugin {meta['id']}")
+            if not validate_meta(meta, plugin_dir):
+                logger.warning(f"Plugin meta invalid, skipped: {plugin_dir}")
                 return
+
+            self.metas.append(meta)
+        except Exception as e:
+            logger.exception(f"Failed to read plugin meta from {plugin_dir}: {e}")
+
+    # 加载启用插件
+    def load_plugins(self):
+        """加载插件实例"""
+        for pid in self.enabled_plugins:
+            meta = next((m for m in self.metas if m["id"] == pid), None)
+            if meta:
+                try:
+                    self._initialized_plugin(meta)
+                except Exception as e:
+                    logger.exception(f"Failed to initialize plugin {meta['id']}: {e}")
+            else:
+                logger.warning(f"Enabled plugin {pid} not found in metas")
+
+    def _initialized_plugin(self, meta: dict):
+        plugin_dir = meta["_path"]
+        try:
+            if not check_api_version(meta["api_version"], self.app_central.configs.app.version):
+                raise RuntimeError(
+                    f"Plugin {meta['id']} (api_version {meta.get('api_version')}) "
+                    f"is not compatible with app version {self.app_central.configs.app.version}"
+                )
 
             entry_file = plugin_dir / meta["entry"]
             if not entry_file.exists():
                 raise FileNotFoundError(f"Entry file not found: {entry_file}")
 
-            # 确保插件的目录在 sys.path 中（让插件内部 import 正常）
             sys.path.insert(0, str(plugin_dir))
 
             spec = importlib.util.spec_from_file_location(meta["id"], entry_file)
@@ -62,32 +123,106 @@ class PluginManager:
             if not hasattr(module, "Plugin"):
                 raise AttributeError("Plugin entry file does not define a 'Plugin' class")
 
-            plugin_class = getattr(module, "Plugin")
-            plugin_instance = plugin_class(self.api)
+            plugin_instance = getattr(module, "Plugin")(self.api)
 
             if not isinstance(plugin_instance, CW2Plugin):
                 raise TypeError("Plugin class must inherit from CW2Plugin")
 
             plugin_instance.on_load()
-            self.plugins[meta["id"]] = plugin_instance
+            self._plugins[meta["id"]] = plugin_instance
 
             logger.info(f"Loaded plugin {meta['name']} ({meta['id']}) v{meta['version']}")
         except Exception as e:
-            logger.exception(f"Failed to load plugin from {plugin_dir}: {e}")
+            logger.exception(f"Failed to load plugin {meta['id']}: {e}")
 
-    def load_all(self, force=False):
-        """扫描两个目录并加载所有启用的插件"""
-        for plugin_dir in self.discover_plugins_in_dir(self.builtin_path):
-            self.load_plugin_from_path(plugin_dir, force=force)
+    def set_enabled_plugins(self, enabled_plugins: List[str]):
+        if not enabled_plugins:
+            return
+        self.enabled_plugins = set(enabled_plugins)
 
-        for plugin_dir in self.discover_plugins_in_dir(self.external_path):
-            self.load_plugin_from_path(plugin_dir, force=force)
-
-    def unload_all(self):
-        """卸载所有插件"""
-        for name, plugin in list(self.plugins.items()):
+    # 卸载全部
+    def cleanup(self):
+        for name, plugin in list(self._plugins.items()):
             try:
                 plugin.on_unload()
             except Exception as e:
                 logger.error(f"Failed to unload plugin {name}: {e}")
-        self.plugins.clear()
+        self._plugins.clear()
+
+    @Slot(result=bool)
+    def importPlugin(self) -> bool:
+        """从 ZIP 导入插件（带校验）"""
+        zip_path, _ = QFileDialog.getOpenFileName(
+            None, "Import Plugin", "", "Plugin ZIP (*.zip)"
+        )
+        if not zip_path:
+            return False
+
+        old_ids = {m["id"] for m in self.metas}  # 导入前已有的插件ID
+        try:
+            with zipfile.ZipFile(zip_path, 'r') as zip_ref:
+                # 在插件目录下解压
+                zip_ref.extractall(self.external_path)
+
+            self.scan()  # 扫描新插件
+            new_ids = {m["id"] for m in self.metas}
+            diff = new_ids - old_ids
+
+            if not diff:
+                name_guess = Path(zip_path).stem
+                candidate_dir = self.external_path / name_guess
+                if candidate_dir.exists():
+                    shutil.rmtree(candidate_dir)
+
+                logger.warning(f"Plugin import failed: {zip_path} is not a valid plugin.")
+                return False
+            else:
+                self.pluginListChanged.emit()
+                logger.info(f"Imported plugin(s): {', '.join(diff)}")
+                return True
+        except Exception as e:
+            logger.exception(f"Failed to import plugin: {e}")
+            return False
+
+    @Property('QVariant', notify=pluginListChanged)
+    def plugins(self):
+        """QML调用此函数获取插件列表"""
+        return self.metas
+
+    @Slot(result="QVariantList")
+    def getPlugins(self):
+        """QML调用此函数获取插件列表"""
+        data = []
+        for pid, meta in self.metas.items():
+            data.append({
+                "id": pid,
+                "name": meta["name"],
+                "version": meta["version"],
+                "description": meta.get("description", ""),
+                "icon": meta.get("icon", ""),
+                "tags": meta.get("tags", [])
+            })
+        return data
+
+    @Slot(str, result=bool)
+    def isPluginEnabled(self, pid: str) -> bool:
+        return pid in self.enabled_plugins
+
+    @Slot(str, result=bool)
+    def isPluginCompatible(self, pid: str) -> bool:
+        meta = next((m for m in self.metas if m["id"] == pid), None)
+        if not meta:
+            return False
+        return check_api_version(meta["api_version"], self.app_central.configs.app.version)
+
+    @Slot(str, bool)
+    def setPluginEnabled(self, pid: str, enabled: bool):
+        if enabled:
+            logger.info(f"Enabled plugin {pid}")
+            self.enabled_plugins.add(pid)
+        else:
+            logger.info(f"Disabled plugin {pid}")
+            self.enabled_plugins.discard(pid)
+        self.app_central.configs.plugins.enabled = list(self.enabled_plugins)
+        self.pluginListChanged.emit()
+
