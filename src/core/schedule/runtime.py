@@ -1,15 +1,12 @@
-import json
 from datetime import datetime, timedelta
-from pathlib import Path
-from typing import Optional, List, Union
+from typing import Optional, List
 
-from PySide6.QtCore import QObject, Property, Signal, Slot
+from PySide6.QtCore import QObject, Property, Signal
 from loguru import logger
 
-from src.core.models.schedule import ScheduleData, MetaInfo, Timeline, Entry, EntryType, Subject
-from src.core.parser import ScheduleParser
+from src.core.schedule.model import ScheduleData, MetaInfo, Timeline, Entry, EntryType, Subject
 from src.core.schedule.service import ScheduleServices
-from src.core.utils import get_cycle_week, get_week_number, generate_id, get_default_subjects
+from src.core.utils import get_cycle_week, get_week_number
 
 
 class ScheduleRuntime(QObject):

@@ -7,7 +7,8 @@ import zipfile
 from pathlib import Path
 from typing import List, Dict
 
-from PySide6.QtCore import Slot, QObject, Signal, Property
+from PySide6.QtCore import Slot, QObject, Signal, Property, QUrl
+from PySide6.QtGui import QDesktopServices
 from PySide6.QtWidgets import QFileDialog
 from loguru import logger
 
@@ -198,21 +199,6 @@ class PluginManager(QObject):
         """QML调用此函数获取插件列表"""
         return self.metas
 
-    @Slot(result="QVariantList")
-    def getPlugins(self):
-        """QML调用此函数获取插件列表"""
-        data = []
-        for pid, meta in self.metas.items():
-            data.append({
-                "id": pid,
-                "name": meta["name"],
-                "version": meta["version"],
-                "description": meta.get("description", ""),
-                "icon": meta.get("icon", ""),
-                "tags": meta.get("tags", [])
-            })
-        return data
-
     @Slot(str, result=bool)
     def isPluginEnabled(self, pid: str) -> bool:
         return pid in self.enabled_plugins
@@ -234,6 +220,28 @@ class PluginManager(QObject):
             self.enabled_plugins.discard(pid)
         self.app_central.configs.plugins.enabled = list(self.enabled_plugins)
         self.pluginListChanged.emit()
+
+    @Slot(str, result=bool)
+    def openPluginFolder(self, pid: str) -> bool:
+        """
+        打开指定插件的本地文件夹
+        """
+        meta = next((m for m in self.metas if m["id"] == pid), None)
+        if not meta:
+            logger.warning(f"Plugin {pid} not found, cannot open folder.")
+            return False
+
+        folder_path = meta.get("_path")
+        if not folder_path or not Path(folder_path).exists():
+            logger.warning(f"Plugin folder {folder_path} does not exist.")
+            return False
+
+        # 打开文件夹
+        url = QUrl.fromLocalFile(str(folder_path))
+        success = QDesktopServices.openUrl(url)
+        if not success:
+            logger.error(f"Failed to open plugin folder: {folder_path}")
+        return success
 
     @Slot(str, result=bool)
     def uninstallPlugin(self, pid: str) -> bool:

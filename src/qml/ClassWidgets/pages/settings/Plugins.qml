@@ -266,6 +266,16 @@ FluentPage {
                                             icon.name: "ic_fluent_folder_open_20_regular"
                                             text: Qt.platform.os === "osx" ? qsTr("Finder") : qsTr("File Explorer")
                                             enabled: modelData._type !== "builtin"
+                                            onTriggered: {
+                                                if (!PluginManager.openPluginFolder(modelData.id)) {
+                                                    floatLayer.createInfoBar({
+                                                        title: qsTr("Open Failed"),
+                                                        text: qsTr("Failed to open the plugin folder."),
+                                                        severity: Severity.Error,
+                                                        timeout: 5000,
+                                                    })
+                                                }
+                                            }
                                         }
                                         MenuItem {
                                             icon.name: "ic_fluent_link_20_regular"

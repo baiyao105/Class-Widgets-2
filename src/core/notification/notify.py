@@ -3,7 +3,7 @@ from typing import Union
 from pathlib import Path
 from PySide6.QtCore import QObject, Signal, Slot
 
-from src.core.models import EntryType
+from src.core.schedule.model import EntryType
 
 
 class NotificationLevel(Enum):

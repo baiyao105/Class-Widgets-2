@@ -75,5 +75,13 @@ class PreferencesConfig(BaseModel):
         use_enum_values = True
         extra = Extra.allow
 
+
+class InteractionsConfig(BaseModel):
+    """
+    交互配置
+    """
+    hover_fade: bool = False  # 鼠标悬停时淡出
+
+
 class PluginsConfig(BaseModel):
     enabled: List[str] = ["builtin.classwidgets.widgets"]

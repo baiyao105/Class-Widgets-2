@@ -21,6 +21,13 @@ QQW.Window {
 
     property bool initialized: false
     property alias editMode: widgetsLoader.editMode
+    property bool mouseHovered: false
+
+    onMouseHoveredChanged: {
+        root.flags = mouseHovered
+            ? root.flags | Qt.WindowTransparentForInput
+            : root.flags & ~Qt.WindowTransparentForInput
+    }
 
     //background
     Rectangle {
@@ -75,43 +82,17 @@ QQW.Window {
         // anchors.centerIn: parent
         // x: (parent.width - width) / 2
         // y: (parent.height - height) / 2
-        property var preferences: Configs.data.preferences
 
-        // 计算位置
-        function calcX() {
-            switch (preferences.widgets_anchor) {
-            case "top_left":
-            case "bottom_left":
-                return preferences.widgets_offset_x;
-            case "top_center":
-            case "bottom_center":
-                return (parent.width - width) / 2 + preferences.widgets_offset_x;
-            case "top_right":
-            case "bottom_right":
-                return parent.width - width - preferences.widgets_offset_x;
+        // 坐标控制迁移到WidgetsContainer
+
+        // 鼠标悬浮隐藏
+        opacity: mouseHovered ? 0.2 : 1
+        Behavior on opacity {
+            NumberAnimation {
+                duration: 200
+                easing.type: Easing.InOutQuad
             }
-            return 0;
         }
-
-        function calcY() {
-            switch (preferences.widgets_anchor) {
-            case "top_left":
-            case "top_center":
-            case "top_right":
-                if (root.editMode) {
-                    return ( Screen.height - height ) / 2;
-                }
-                return preferences.widgets_offset_y;
-            case "bottom_left":
-            case "bottom_center":
-            case "bottom_right":
-                return parent.height - height - preferences.widgets_offset_y;
-            }
-            return (parent.height - height) / 2 + preferences.widgets_offset_y;
-        }
-
-        x: calcX()
-        y: calcY()
 
         Behavior on x { NumberAnimation { duration: 400 * root.initialized; easing.type: Easing.OutQuint } }
         Behavior on y { NumberAnimation { duration: 500 * root.initialized; easing.type: Easing.OutQuint } }

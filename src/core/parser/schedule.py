@@ -1,10 +1,8 @@
 import json
-from loguru import logger
 from pathlib import Path
 from typing import Union, Optional
 
-from src.core.models.schedule import ScheduleData, MetaInfo, Subject, Entry, EntryType, Timeline
-from src.core.utils import generate_id
+from src.core.schedule.model import ScheduleData
 from src.core.utils.json_loader import JsonLoader
 
 SCHEMA_VERSION = 1

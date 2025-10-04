@@ -4,6 +4,8 @@ import QtQuick.Layouts
 import QtQuick.Window
 import RinUI
 import Widgets
+import ClassWidgets.Easing
+
 
 Flow {
     id: widgetsContainer
@@ -12,9 +14,70 @@ Flow {
 
     property bool editMode: false
     property bool menuVisible: false
+    property var preferences: Configs.data.preferences
+    property real dragOffsetX: 0
+    property real dragOffsetY: 0
 
     Component.onCompleted: {
         editMode = widgetRepeater.count === 0
+    }
+
+    // 计算位置
+    function calcX() {
+        switch (preferences.widgets_anchor) {
+        case "top_left":
+        case "bottom_left":
+            return preferences.widgets_offset_x;
+        case "top_center":
+        case "bottom_center":
+            return (parent.width - width) / 2 + preferences.widgets_offset_x;
+        case "top_right":
+        case "bottom_right":
+            return parent.width - width - preferences.widgets_offset_x;
+        }
+        return 0;
+    }
+
+    function calcY() {
+        switch (preferences.widgets_anchor) {
+        case "top_left":
+        case "top_center":
+        case "top_right":
+            if (root.editMode) {
+                return ( Screen.height - height ) / 2;
+            }
+            return preferences.widgets_offset_y;
+        case "bottom_left":
+        case "bottom_center":
+        case "bottom_right":
+            return parent.height - height - preferences.widgets_offset_y;
+        }
+        return (parent.height - height) / 2 + preferences.widgets_offset_y;
+    }
+
+    x: calcX() + dragOffsetX
+    y: calcY() + dragOffsetY
+
+    DragHandler {
+        id: dragHandler
+        enabled: !editMode
+        target: null
+        onActiveChanged: {
+            if (!active) {
+                dragOffsetX = 0
+                dragOffsetY = 0
+            }
+        }
+        onTranslationChanged: {
+            if (active) {
+                function damped(value, max, factor) {
+                    return max * (1 - Math.exp(-Math.abs(value)/factor)) * Math.sign(value)
+                }
+
+                dragOffsetX = damped(translation.x, 8, 100)  // factor
+                dragOffsetY = damped(translation.y, 6, 100)
+            }
+        }
     }
 
     move: Transition {
@@ -25,6 +88,7 @@ Flow {
             easing.type: Easing.OutQuint
         }
     }
+
 
     Repeater {
         id: widgetRepeater
@@ -40,7 +104,19 @@ Flow {
 
             WidgetLoader {
                 id: loader
-                scale: scaleFactor
+                scale: tapHandler.pressed ? scaleFactor * 0.975 : scaleFactor
+
+                TapHandler {
+                    id: tapHandler
+                }
+
+                Behavior on scale {
+                    NumberAnimation {
+                        duration: 400;
+                        easing.type: Easing.Bezier
+                        easing.bezierCurve: BezierCurve.liquidBack
+                    }
+                }
             }
 
             ToolButton {

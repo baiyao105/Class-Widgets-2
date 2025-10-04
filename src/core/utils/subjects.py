@@ -1,5 +1,5 @@
 from PySide6.QtCore import QCoreApplication
-from src.core.models import Subject
+from src.core.schedule.model import Subject
 
 DEFAULT_SUBJECTS = [
     {"id": "chinese", "name": "Chinese", "simplifiedName": "CHN", "icon": "ic_fluent_book_20_regular", "color": "#FF5722", "isLocalClassRoom": True},

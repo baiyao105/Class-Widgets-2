@@ -1,7 +1,7 @@
 from datetime import datetime, timedelta
 from typing import Optional, List, Union
 
-from src.core.models.schedule import Entry, EntryType, Timeline, Subject, ScheduleData, Timetable, WeekType
+from src.core.schedule.model import Entry, EntryType, Timeline, Subject, ScheduleData, Timetable, WeekType
 
 
 class ScheduleServices:

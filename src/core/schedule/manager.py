@@ -5,7 +5,7 @@ from pathlib import Path
 from PySide6.QtCore import QObject, Signal, Slot, Property
 from loguru import logger
 
-from src.core.models import ScheduleData, MetaInfo
+from src.core.schedule.model import ScheduleData, MetaInfo
 from src.core.parser import ScheduleParser
 from src.core.utils import generate_id, get_default_subjects
 

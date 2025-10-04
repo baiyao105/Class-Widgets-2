@@ -8,10 +8,8 @@ from loguru import logger
 
 from src.core import CONFIGS_PATH, QML_PATH
 from src.core.config import ConfigManager
-from src.core.directories import PathManager, DEFAULT_THEME, CW_PATH, ROOT_PATH, LOGS_PATH
-from src.core.models import ScheduleData, MetaInfo
+from src.core.directories import PathManager, DEFAULT_THEME, CW_PATH, LOGS_PATH
 from src.core.notification import Notification
-from src.core.parser import ScheduleParser
 from src.core.plugin.api import PluginAPI
 from src.core.plugin.manager import PluginManager
 from src.core.schedule import ScheduleRuntime, ScheduleManager

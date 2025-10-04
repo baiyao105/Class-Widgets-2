@@ -217,7 +217,7 @@
                     "startTime": "08:00",
                     "endTime": "08:40",
                     "subjectId": "",
-                    "title": null
+                    "title": ""
                 },
                 {
                     "id": "entry_34f650ecff1f416d9917235d6108ae50",
@@ -329,7 +329,9 @@
                 2,
                 3,
                 4,
-                5
+                5,
+                6,
+                7
             ],
             "weeks": "all",
             "date": null
@@ -725,6 +727,166 @@
             "weeks": "all",
             "subjectId": "classmeeting",
             "title": ""
+        },
+        {
+            "id": "override_6ba282612925419db8488d3b43bdf0b6",
+            "entryId": "entry_9da4ad16a7c44c2ba4d53aaf6ad7dd0c",
+            "dayOfWeek": [
+                6
+            ],
+            "weeks": "all",
+            "subjectId": "chinese",
+            "title": null
+        },
+        {
+            "id": "override_c9c048f404fe4bb0ae3661ada97813a8",
+            "entryId": "entry_ea6eef212fb048f58fbb6f6a3e444d63",
+            "dayOfWeek": [
+                6
+            ],
+            "weeks": "all",
+            "subjectId": "english",
+            "title": null
+        },
+        {
+            "id": "override_3a9e769311de4c5e9f0d0d3284cec1d7",
+            "entryId": "entry_f786e9f251ec4363bc7d42744c27e5d6",
+            "dayOfWeek": [
+                6
+            ],
+            "weeks": "all",
+            "subjectId": "politics",
+            "title": null
+        },
+        {
+            "id": "override_82edc64b22744f9dbc4554c236f3ce4a",
+            "entryId": "entry_99d6f4f4c7134bc5adf6925a0b0d3148",
+            "dayOfWeek": [
+                6
+            ],
+            "weeks": "all",
+            "subjectId": "physics",
+            "title": null
+        },
+        {
+            "id": "override_2841a5e61d69469e9329e5405526a54e",
+            "entryId": "entry_24229d9292e946e099cce01d8f9b6bb7",
+            "dayOfWeek": [
+                6
+            ],
+            "weeks": "all",
+            "subjectId": "biology",
+            "title": null
+        },
+        {
+            "id": "override_cdbf94d7c5f34165910c0128de138ba1",
+            "entryId": "entry_42f2f513d1c5458b9afea10d9eb786e0",
+            "dayOfWeek": [
+                6
+            ],
+            "weeks": "all",
+            "subjectId": "music",
+            "title": null
+        },
+        {
+            "id": "override_f14ebab2c7424640a7389a75f1f9b965",
+            "entryId": "entry_49e2ae3e90ae4f888df36360a497e40b",
+            "dayOfWeek": [
+                6
+            ],
+            "weeks": "all",
+            "subjectId": "pe",
+            "title": null
+        },
+        {
+            "id": "override_5e2c1ffb73e1473a9193d50aad5fd5a2",
+            "entryId": "entry_3ae4d4b8a250459d9e48d0c0815b9eb2",
+            "dayOfWeek": [
+                6
+            ],
+            "weeks": "all",
+            "subjectId": "pe",
+            "title": null
+        },
+        {
+            "id": "override_3c49d641c2c7454b95c83056ad80132b",
+            "entryId": "entry_9da4ad16a7c44c2ba4d53aaf6ad7dd0c",
+            "dayOfWeek": [
+                7
+            ],
+            "weeks": "all",
+            "subjectId": "chinese",
+            "title": ""
+        },
+        {
+            "id": "override_2576f5c886b54a84a5da7806dc930a11",
+            "entryId": "entry_ea6eef212fb048f58fbb6f6a3e444d63",
+            "dayOfWeek": [
+                7
+            ],
+            "weeks": "all",
+            "subjectId": "english",
+            "title": null
+        },
+        {
+            "id": "override_5043b800df544c5a8637df453bd8ffa1",
+            "entryId": "entry_f786e9f251ec4363bc7d42744c27e5d6",
+            "dayOfWeek": [
+                7
+            ],
+            "weeks": "all",
+            "subjectId": "physics",
+            "title": null
+        },
+        {
+            "id": "override_6200aa2b0dd54e40a52a44ddd3d174e1",
+            "entryId": "entry_99d6f4f4c7134bc5adf6925a0b0d3148",
+            "dayOfWeek": [
+                7
+            ],
+            "weeks": "all",
+            "subjectId": "biology",
+            "title": null
+        },
+        {
+            "id": "override_cf2a285009144815b897c208c458d454",
+            "entryId": "entry_24229d9292e946e099cce01d8f9b6bb7",
+            "dayOfWeek": [
+                7
+            ],
+            "weeks": "all",
+            "subjectId": "geography",
+            "title": null
+        },
+        {
+            "id": "override_ace6d820412445708ecb712cb738a0fc",
+            "entryId": "entry_42f2f513d1c5458b9afea10d9eb786e0",
+            "dayOfWeek": [
+                7
+            ],
+            "weeks": "all",
+            "subjectId": "music",
+            "title": null
+        },
+        {
+            "id": "override_25c3b9a9de884c64930a3d9ba04d8950",
+            "entryId": "entry_49e2ae3e90ae4f888df36360a497e40b",
+            "dayOfWeek": [
+                7
+            ],
+            "weeks": "all",
+            "subjectId": "pe",
+            "title": null
+        },
+        {
+            "id": "override_1cf271ef8d0d44599232ce75d6b8c1c4",
+            "entryId": "entry_3ae4d4b8a250459d9e48d0c0815b9eb2",
+            "dayOfWeek": [
+                7
+            ],
+            "weeks": "all",
+            "subjectId": "it",
+            "title": null
         }
     ]
 }

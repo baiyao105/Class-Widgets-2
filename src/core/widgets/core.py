@@ -1,25 +1,32 @@
 from pathlib import Path
-from PySide6.QtCore import QObject, Slot, Property, Signal, QRect, Qt
+from PySide6.QtCore import QObject, Slot, Property, Signal, QRect, Qt, QTimer
 import RinUI
-from PySide6.QtGui import QRegion
+from PySide6.QtGui import QRegion, QCursor
 from loguru import logger
 
 from src.core import QML_PATH
 
 
-class WidgetsWindow(RinUI.RinUIWindow):
+class WidgetsWindow(RinUI.RinUIWindow, QObject):
     def __init__(self, app_central):
         super().__init__()
         self.app_central = app_central
+        self.accepts_input = True
 
         self._setup_qml_context()
         self.qml_main_path = Path(QML_PATH / "MainInterface.qml")
+        self.interactive_rect = QRegion()
 
         self.engine.objectCreated.connect(self.on_qml_ready, type=Qt.ConnectionType.QueuedConnection)
 
     def _setup_qml_context(self):
         """设置QML上下文属性"""
         self.app_central.setup_qml_context(self)
+
+    def _start_listening(self):
+        self.timer = QTimer(self)
+        self.timer.timeout.connect(self.update_mouse_state)
+        self.timer.start(33)  # 大约每秒30帧检测一次
 
     def run(self):
         """启动widgets窗口"""
@@ -34,6 +41,8 @@ class WidgetsWindow(RinUI.RinUIWindow):
         if current_theme:
             self.engine.addImportPath(str(current_theme))
         self.load(self.qml_main_path)
+
+        self._start_listening()
 
     def on_theme_changed(self):
         """主题变更时重新加载界面"""
@@ -51,7 +60,7 @@ class WidgetsWindow(RinUI.RinUIWindow):
             return
         logger.error("'widgetsLoader' object has not found'")
 
-    # 鼠标穿透
+    # 裁剪窗口
     def update_mask(self):
         mask = QRegion()
         widgets_loader = self.root_window.findChild(QObject, "widgetsLoader")
@@ -76,4 +85,34 @@ class WidgetsWindow(RinUI.RinUIWindow):
             )
             mask = mask.united(QRegion(rect))
 
+        self.interactive_rect = mask
         self.root_window.setMask(mask)
+
+    def update_mouse_state(self):
+        if not self.interactive_rect:
+            return  # 没有 mask 就不处理
+        if not self.app_central.configs.interactions.hover_fade:
+            return  # 配置文件
+
+        global_pos = QCursor.pos()
+        # local_pos = self.widgets_loader.mapFromGlobal(global_pos)
+        local_pos = global_pos
+
+        in_mask = self.interactive_rect.contains(local_pos)
+
+        if in_mask and not self.accepts_input:
+            self.root_window.setProperty(
+                "mouseHovered",
+                True
+            )
+            self.root_window.show()
+            self.accepts_input = True
+
+            # 鼠标不在有效区域
+        elif not in_mask and self.accepts_input:
+            self.root_window.setProperty(
+                "mouseHovered",
+                False
+            )
+            self.root_window.show()
+            self.accepts_input = False

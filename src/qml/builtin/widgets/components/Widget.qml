@@ -43,7 +43,7 @@ Item {
     // 动画
     Behavior on implicitWidth {
         NumberAnimation {
-                duration: 400;
+            duration: 400;
             easing.type: Easing.Bezier
             easing.bezierCurve: BezierCurve.liquidBack
         }

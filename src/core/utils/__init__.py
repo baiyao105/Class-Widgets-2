@@ -1,4 +1,3 @@
-from PySide6.QtWidgets import QApplication
 from loguru import logger
 
 from .json_loader import JsonLoader
@@ -8,7 +7,6 @@ from .subjects import DEFAULT_SUBJECTS, get_default_subjects, translate_sources
 from .translator import AppTranslator
 from .backend import UtilsBackend
 from uuid import uuid4
-from packaging import version
 
 
 # Parser
