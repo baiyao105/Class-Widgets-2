@@ -7,7 +7,7 @@ import RinUI
 Text {
     id: title
     readonly property bool miniMode: Configs.data.preferences.mini_mode
-    property int px: miniMode? 22 : 28
+    property int px: miniMode? 20 : 28
 
     font.bold: true
     font.pixelSize: px

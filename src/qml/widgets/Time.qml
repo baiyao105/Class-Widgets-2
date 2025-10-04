@@ -23,7 +23,7 @@ Widget {
         let jsDate = new Date(dateTime.year, dateTime.month - 1, dateTime.day)
 
         if (titleMode === 0) {
-            let localDate = Qt.formatDate(jsDate, "MMMM d")
+            let localDate = Qt.locale().toString(jsDate, "MMMM d")
             return enabled ? localDate : dateTime.month + "/" + dateTime.day
         } else {
             let localDay = Qt.locale().dayName(dateTime.weekday, Locale.LongFormat)

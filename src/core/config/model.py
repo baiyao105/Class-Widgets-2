@@ -2,7 +2,7 @@ from enum import Enum
 
 from pydantic import BaseModel, Field, Extra
 from typing import Dict, List, Optional, Any
-from PySide6.QtCore import QLocale
+from PySide6.QtCore import QLocale, QCoreApplication
 
 from ..directories import DEFAULT_THEME
 
@@ -32,7 +32,7 @@ class AppConfig(BaseModel):
     channel: str = "alpha"
 
 class ScheduleConfig(BaseModel):
-    current_schedule: str = "default"
+    current_schedule: str = QCoreApplication.translate("Configs", "default")
     preparation_time: int = 2
 
 class WidgetEntry(BaseModel):

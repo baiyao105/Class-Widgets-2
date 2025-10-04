@@ -13,7 +13,7 @@ Item {
     readonly property bool miniMode: Configs.data.preferences.mini_mode
 
     implicitWidth: Math.max(headerRow.implicitWidth, contentArea.childrenRect.width) + 48
-    height: miniMode ? 60 : 100
+    height: miniMode ? 56 : 100
     clip: true
     opacity: widgetHoverHandler.hovered? 0.8 : 1
 
@@ -35,7 +35,7 @@ Item {
     property alias actions: actionButtons.children
     property alias backgroundArea: backgroundArea.children
     default property alias content: contentArea.data
-    property real padding: 24
+    property real padding: miniMode ? 16 : 24
 
     // 背景
     readonly property real borderWidth: 1.5
@@ -110,8 +110,8 @@ Item {
     ColumnLayout {
         id: mainLayout
         anchors.fill: parent
-        anchors.topMargin: 16
-        anchors.bottomMargin: 18
+        anchors.topMargin: miniMode ? 8 : 16
+        anchors.bottomMargin: miniMode ? 10 : 18
         anchors.leftMargin: padding
         anchors.rightMargin: padding
         spacing: 8

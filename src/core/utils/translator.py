@@ -38,6 +38,7 @@ class AppTranslator(QObject):
         self.rinui_translator = RinUITranslator(QLocale(locale_name))
         self.translator = QTranslator()
         self.translator.load(lang_path.as_posix())
+        QLocale.setDefault(QLocale(locale_name))
 
         self.app.removeTranslator(self.translator)
         self.app.removeTranslator(self.rinui_translator)

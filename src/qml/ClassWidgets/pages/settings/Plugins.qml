@@ -19,6 +19,27 @@ FluentPage {
         severity: Severity.Warning
     }
 
+    function uninstallPlugin(pluginId) {
+        if (PluginManager.uninstallPlugin(pluginId)) {
+            floatLayer.createInfoBar({
+                title: qsTr("Success"),
+                text: qsTr(
+                    "The plugin has been uninstalled successfully. " +
+                    "Restart to take effect."
+                ),
+                severity: Severity.Success,
+                timeout: 5000,
+            })
+        } else {
+            floatLayer.createInfoBar({
+                title: qsTr("Uninstall Failed"),
+                text: qsTr("Failed to uninstall the plugin. Please try again later."),
+                severity: Severity.Error,
+                timeout: 5000,
+            })
+        }
+    }
+
     ColumnLayout {
         Layout.fillWidth: true
         spacing: 4
@@ -237,6 +258,7 @@ FluentPage {
 
                                 Menu {
                                     id: actionMenu
+
                                     Menu {
                                         icon.name: "ic_fluent_open_20_regular"
                                         title: qsTr("Open In")
@@ -257,6 +279,9 @@ FluentPage {
                                         icon.name: "ic_fluent_delete_20_regular"
                                         text: qsTr("Uninstall")
                                         enabled: modelData._type !== "builtin"
+                                        onTriggered: {
+                                            uninstallPlugin(modelData.id)     // 卸载插件
+                                        }
                                     }
                                 }
                             }

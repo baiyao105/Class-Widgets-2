@@ -161,8 +161,17 @@ class PluginManager(QObject):
         old_ids = {m["id"] for m in self.metas}  # 导入前已有的插件ID
         try:
             with zipfile.ZipFile(zip_path, 'r') as zip_ref:
-                # 在插件目录下解压
-                zip_ref.extractall(self.external_path)
+                members = zip_ref.namelist()
+                top_dirs = {Path(m).parts[0] for m in members if not m.endswith('/')}
+
+                if len(top_dirs) == 1:  # 检测目录层级
+                    zip_ref.extractall(self.external_path)
+                    target_dir = self.external_path / list(top_dirs)[0]
+                else:
+                    target_dir = self.external_path / Path(zip_path).stem
+                    if target_dir.exists():
+                        shutil.rmtree(target_dir)
+                    zip_ref.extractall(target_dir)
 
             self.scan()  # 扫描新插件
             new_ids = {m["id"] for m in self.metas}
@@ -225,4 +234,47 @@ class PluginManager(QObject):
             self.enabled_plugins.discard(pid)
         self.app_central.configs.plugins.enabled = list(self.enabled_plugins)
         self.pluginListChanged.emit()
+
+    @Slot(str, result=bool)
+    def uninstallPlugin(self, pid: str) -> bool:
+        """
+        卸载指定外部插件
+        """
+        meta = next((m for m in self.metas if m["id"] == pid), None)
+        if not meta:
+            logger.warning(f"Plugin {pid} not found, cannot uninstall.")
+            return False
+
+        # 内置插件卸载不了
+        if meta.get("_type") == "builtin":
+            logger.warning(f"Plugin {pid} is builtin and cannot be uninstalled.")
+            return False
+
+        try:
+            # 终止插件运行
+            if pid in self._plugins:
+                try:
+                    self._plugins[pid].on_unload()
+                except Exception as e:
+                    logger.error(f"Error while unloading plugin {pid}: {e}")
+                self._plugins.pop(pid, None)
+
+            # 删除插件目录
+            plugin_dir = Path(meta["_path"])
+            if plugin_dir.exists():
+                shutil.rmtree(plugin_dir)
+                logger.info(f"Uninstalled plugin {pid}, removed {plugin_dir}")
+
+            # 移除 enabled
+            self.enabled_plugins.discard(pid)
+            self.app_central.configs.plugins.enabled = list(self.enabled_plugins)
+
+            # 重新扫描插件列表
+            self.scan()
+            self.pluginListChanged.emit()
+            return True
+        except Exception as e:
+            logger.exception(f"Failed to uninstall plugin {pid}: {e}")
+            return False
+
 
