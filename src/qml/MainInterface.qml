@@ -79,23 +79,24 @@ QQW.Window {
     WidgetsContainer {
         id: widgetsLoader
         objectName: "widgetsLoader"
-        // anchors.centerIn: parent
-        // x: (parent.width - width) / 2
-        // y: (parent.height - height) / 2
 
         // 坐标控制迁移到WidgetsContainer
 
         // 鼠标悬浮隐藏
-        opacity: mouseHovered ? 0.2 : 1
-        Behavior on opacity {
-            NumberAnimation {
-                duration: 200
-                easing.type: Easing.InOutQuad
-            }
-        }
+        opacity: mouseHovered ? 0.25
+            : hide ? 0.75 : 1
 
         Behavior on x { NumberAnimation { duration: 400 * root.initialized; easing.type: Easing.OutQuint } }
         Behavior on y { NumberAnimation { duration: 500 * root.initialized; easing.type: Easing.OutQuint } }
+
+        TapHandler {
+            id: hideTapHandler
+            onTapped: {
+                if (Configs.data.interactions.hide.clicked) {
+                    Configs.set("interactions.hide.state", !Configs.data.interactions.hide.state)
+                }
+            }
+        }
 
         signal geometryChanged()
         onXChanged: geometryChanged()

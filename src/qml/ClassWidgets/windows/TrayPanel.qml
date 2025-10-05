@@ -20,15 +20,22 @@ Window {
     minimizeVisible: false
     maximizeVisible: false
 
+    onActiveChanged: {
+        if (!active) {
+            hide()  // 脱离焦点隐藏
+        }
+    }
+
     // background
     Rectangle {
         id: appLayer
-        width: parent.width
+        anchors.horizontalCenter: parent.horizontalCenter
+        width: 375
         height: parent.height - bottomRow.height - 10
         color: Theme.currentTheme.colors.layerColor
         border.color: Theme.currentTheme.colors.cardBorderColor
         border.width: 1
-        radius: Theme.currentTheme.appearance.windowRadius
+        // radius: Theme.currentTheme.appearance.windowRadius
     }
 
     ColumnLayout {
@@ -65,7 +72,7 @@ Window {
                 Hyperlink {
                     text: "Open"
                     onClicked: {
-                        panel.hide()
+                        // panel.hide()
                         AppCentral.openSettings()
                     }
                 }
@@ -79,7 +86,7 @@ Window {
                 Hyperlink {
                     text: "Open"
                     onClicked: {
-                        panel.hide()
+                        // panel.hide()
                         AppCentral.openEditor()
                     }
                 }
@@ -169,10 +176,10 @@ Window {
         }
 
         ToolButton {
-            icon.name: "ic_fluent_info_20_regular"
+            icon.name: "ic_fluent_arrow_counterclockwise_20_regular"
             flat: true
             ToolTip {
-                text: qsTr("About")
+                text: qsTr("Restart")
                 visible: parent.hovered
             }
         }

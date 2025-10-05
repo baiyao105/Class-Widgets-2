@@ -1,10 +1,26 @@
 from enum import Enum
 
-from pydantic import BaseModel, Field, Extra
+from pydantic import BaseModel, Field, Extra, PrivateAttr
 from typing import Dict, List, Optional, Any
 from PySide6.QtCore import QLocale, QCoreApplication
 
 from ..directories import DEFAULT_THEME
+
+class ConfigBaseModel(BaseModel):
+    _on_change: callable = PrivateAttr(default=None)
+
+    def __init__(self, **data):
+        super().__init__(**data)
+        for name, value in self.__dict__.items():
+            if isinstance(value, ConfigBaseModel):
+                value._on_change = self._on_change
+
+    def __setattr__(self, name, value):
+        super().__setattr__(name, value)
+        if isinstance(value, ConfigBaseModel):
+            value._on_change = self._on_change
+        if self._on_change and name != "_on_change":
+            self._on_change()
 
 
 class LayoutAnchor(str, Enum):
@@ -22,7 +38,35 @@ class ZOrder(str, Enum):
     NORMAL = "normal"
 
 
-class AppConfig(BaseModel):
+# w
+class ScheduleConfig(ConfigBaseModel):
+    current_schedule: str = QCoreApplication.translate("Configs", "default")
+    preparation_time: int = 2
+
+class WidgetEntry(ConfigBaseModel):
+    type_id: str
+    instance_id: str
+    settings: Optional[Dict[str, Any]] = {}
+
+class LocaleConfig(ConfigBaseModel):
+    """
+    语言设置
+    """
+    language: str = QLocale.system().name()
+
+
+class HideInteractionsConfig(ConfigBaseModel):
+    """
+    隐藏交互配置
+    """
+    state: bool = False  # 状态
+    in_class: bool = False  # 上课时
+    clicked: bool = False  # 点击时
+    maximized: bool = False  # 窗口最大化
+    fullscreen: bool = False   # 窗口全屏
+
+
+class AppConfig(ConfigBaseModel):
     """
     应用程序配置
     """
@@ -31,23 +75,8 @@ class AppConfig(BaseModel):
     version: str = "0.0.1"
     channel: str = "alpha"
 
-class ScheduleConfig(BaseModel):
-    current_schedule: str = QCoreApplication.translate("Configs", "default")
-    preparation_time: int = 2
 
-class WidgetEntry(BaseModel):
-    type_id: str
-    instance_id: str
-    settings: Optional[Dict[str, Any]] = {}
-
-class LocaleConfig(BaseModel):
-    """
-    语言设置
-    """
-    language: str = QLocale.system().name()
-
-
-class PreferencesConfig(BaseModel):
+class PreferencesConfig(ConfigBaseModel):
     """
     偏好设置
     """
@@ -76,12 +105,13 @@ class PreferencesConfig(BaseModel):
         extra = Extra.allow
 
 
-class InteractionsConfig(BaseModel):
+class InteractionsConfig(ConfigBaseModel):
     """
     交互配置
     """
     hover_fade: bool = False  # 鼠标悬停时淡出
+    hide: HideInteractionsConfig = Field(default_factory=HideInteractionsConfig)  # 隐藏配置
 
 
-class PluginsConfig(BaseModel):
+class PluginsConfig(ConfigBaseModel):
     enabled: List[str] = ["builtin.classwidgets.widgets"]

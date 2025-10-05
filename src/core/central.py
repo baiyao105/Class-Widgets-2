@@ -16,9 +16,10 @@ from src.core.schedule import ScheduleRuntime, ScheduleManager
 from src.core.schedule.editor import ScheduleEditor
 from src.core.themes import ThemeManager
 from src.core.timer import UnionUpdateTimer
-from src.core.utils import generate_id, TrayIcon, AppTranslator, UtilsBackend
+from src.core.utils import TrayIcon, AppTranslator, UtilsBackend
 from src.core.utils.debugger import DebuggerWindow
 from src.core.widgets import WidgetsWindow, WidgetListModel
+from src.core.automations.manager import AutomationManager
 
 
 class AppCentral(QObject):  # Class Widgets 的中枢
@@ -45,6 +46,9 @@ class AppCentral(QObject):  # Class Widgets 的中枢
         self.plugin_manager = PluginManager(self.plugin_api, self)
         self.app_translator = AppTranslator(self)
         self.utils_backend = UtilsBackend()
+        
+        # 交互管理器
+        self.automations_manager = AutomationManager(self)
 
         # debugger
         self.debugger = None
@@ -77,7 +81,7 @@ class AppCentral(QObject):  # Class Widgets 的中枢
         """加载和验证配置"""
         self.configs.load_config()
 
-    def update(self):  # 更新
+    def update(self):
         self.runtime.refresh()
         self.updated.emit()  # 发送信号
 
@@ -137,6 +141,9 @@ class AppCentral(QObject):  # Class Widgets 的中枢
         """加载课程表"""
         self.schedule_manager.load(self.configs.schedule.current_schedule)
 
+    def _load_interactions(self):
+        """加载交互"""
+
     def _load_runtime(self):
         # Runtime 初始化时已经加载 schedule 文件
         self.app_translator.setLanguage(self.configs.locale.language)
@@ -153,7 +160,9 @@ class AppCentral(QObject):  # Class Widgets 的中枢
         """设置runtime连接"""
         self.app_translator.languageChanged.connect(lambda: self.retranslate.emit())
         self.runtime.notify.connect(self._notification.push_activity)
+
         self.union_update_timer.tick.connect(self.update)
+        self.union_update_timer.tick.connect(self.automations_manager.update)
         self.schedule_manager.scheduleModified.connect(self.runtime.refresh)
 
         self.union_update_timer.start()

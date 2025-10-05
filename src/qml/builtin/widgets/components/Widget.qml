@@ -110,7 +110,7 @@ Item {
     ColumnLayout {
         id: mainLayout
         anchors.fill: parent
-        anchors.topMargin: miniMode ? 8 : 16
+        anchors.topMargin: miniMode ? 12 : 16
         anchors.bottomMargin: miniMode ? 10 : 18
         anchors.leftMargin: padding
         anchors.rightMargin: padding
@@ -120,18 +120,17 @@ Item {
         RowLayout {
             id: headerRow
             Layout.fillWidth: true
+            visible: opacity > 0
+            opacity: !miniMode
+            Behavior on opacity { NumberAnimation { duration: 100; easing.type: Easing.OutQuint } }
 
             RowLayout {
                 id: subtitleArea
                 Layout.fillHeight: true
-                visible: opacity > 0
-                opacity: !miniMode
 
                 Subtitle {
                     id: subtitleLabel
                 }
-
-                Behavior on opacity { NumberAnimation { duration: 100; easing.type: Easing.OutQuint } }
             }
 
             Item { id: actionsSeparator; Layout.fillWidth: actionButtons.children.length > 0 }

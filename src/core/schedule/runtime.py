@@ -11,7 +11,8 @@ from src.core.utils import get_cycle_week, get_week_number
 
 class ScheduleRuntime(QObject):
     notify = Signal(str, dict, str)
-    updated = Signal()
+    updated = Signal()  # 文件更新
+    currentsChanged = Signal()  # 日程更新
 
     def __init__(self, app_central):
         super().__init__()
@@ -39,50 +40,6 @@ class ScheduleRuntime(QObject):
         self.current_title: Optional[str] = None
 
         logger.info("Schedule runtime initialized.")
-
-    # def _load_schedule_file(self):
-    #     """从文件加载课程表"""
-    #     parser = ScheduleParser(self.schedule_path)
-    #     try:
-    #         self.schedule = parser.load()
-    #         logger.info(f"Schedule loaded from {self.schedule_path}")
-    #     except FileNotFoundError:
-    #         logger.warning("Schedule file not found, creating a new one...")
-    #         self._create_empty_schedule()
-    #         self.save()
-    #     except Exception as e:
-    #         logger.error(f"Failed to load schedule: {e}")
-    #         self._create_empty_schedule()
-    #         self.save()
-
-    # def _create_empty_schedule(self):
-    #     """创建空课程表"""
-    #     self.schedule = ScheduleData(
-    #         meta=MetaInfo(
-    #             id=generate_id("meta"),
-    #             version=1,
-    #             maxWeekCycle=2,
-    #             startDate=f"{datetime.now().year}-09-01"
-    #         ),
-    #         subjects=get_default_subjects(),
-    #         days=[]
-    #     )
-
-    # @Slot(result=bool)
-    # def save(self) -> bool:
-    #     """保存课程表到文件"""
-    #     if not self.schedule:
-    #         logger.warning("No schedule data to save")
-    #         return False
-    #
-    #     try:
-    #         with open(self.schedule_path, "w", encoding="utf-8") as f:
-    #             json.dump(self.schedule.model_dump(), f, ensure_ascii=False, indent=4)
-    #         logger.info(f"Schedule saved to {self.schedule_path}")
-    #         return True
-    #     except Exception as e:
-    #         logger.error(f"Save schedule failed: {e}")
-    #         return False
 
     # TIME
     @Property(str, notify=updated)
@@ -204,6 +161,8 @@ class ScheduleRuntime(QObject):
             self.current_title = None
 
         self._progress = self.get_progress_percent()
+        if self.previous_entry != self.current_entry:
+            self.currentsChanged.emit()
 
     def _update_time(self):  # 更新时间
         self.current_day_of_week = self.current_time.isoweekday()
@@ -244,7 +203,7 @@ class ScheduleRuntime(QObject):
                 logger.info(f"Notify: status changed to {EntryType.PREPARATION.value}; {next_entry}")
                 subject_dict = None
                 if self.schedule.subjects:
-                    sub = next_entry.get_subject(self.schedule.subjects)
+                    sub = self.services.get_subject(next_entry.subjectId, self.schedule.subjects)
                     if sub:
                         subject_dict = sub.model_dump()
                 self.notify.emit(

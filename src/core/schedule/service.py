@@ -100,6 +100,15 @@ class ScheduleServices:
         return None
 
     @staticmethod
+    def get_subject(subject_id: str, subjects: List[Subject]) -> Optional[Subject]:
+        if not subject_id and subjects:
+            return None
+        for s in subjects:
+            if s.id == subject_id:
+                return s
+        return None
+
+    @staticmethod
     def _get_week_number(schedule: ScheduleData, now: datetime) -> int:
         """
         根据 schedule.meta.startDate 算出当前是第几周

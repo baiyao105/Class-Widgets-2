@@ -1,12 +1,13 @@
 from pathlib import Path
 from loguru import logger
-from pydantic import BaseModel, Field, PrivateAttr
+from pydantic import Field, PrivateAttr
 from PySide6.QtCore import QObject, QTimer, Signal, Property, Slot
 
-from .model import AppConfig, ScheduleConfig, PreferencesConfig, PluginsConfig, LocaleConfig, InteractionsConfig
+from .model import AppConfig, ScheduleConfig, PreferencesConfig, PluginsConfig, LocaleConfig, InteractionsConfig, \
+    ConfigBaseModel
 
 
-class RootConfig(BaseModel):
+class RootConfig(ConfigBaseModel):
     app: AppConfig = Field(default_factory=AppConfig)
     locale: LocaleConfig = Field(default_factory=LocaleConfig)
     schedule: ScheduleConfig = Field(default_factory=ScheduleConfig)
@@ -33,18 +34,28 @@ class ConfigManager(QObject):
         self.full_path = self.path / filename
 
         self._config = RootConfig()
-        self._config._on_change = lambda: self.save(silent=True)
+        self._bind_nested_on_change(self._config)
 
         self.save_timer = QTimer(self)
         self.save_timer.setInterval(1000 * 60)  # 1分钟保存一次
         self.save_timer.timeout.connect(self.save)
+
+    def _bind_nested_on_change(self, obj):
+        """
+        递归绑定 _on_change 给所有嵌套的 ConfigBaseModel
+        """
+        obj._on_change = lambda: (self.configChanged.emit())
+        for field_name, field in obj.__fields__.items():
+            value = getattr(obj, field_name)
+            if isinstance(value, ConfigBaseModel):
+                self._bind_nested_on_change(value)
 
     def load_config(self):
         if self.full_path.exists():
             try:
                 data = self.full_path.read_text(encoding="utf-8")
                 self._config = RootConfig.model_validate_json(data)
-                self._config._on_change = lambda: self.save(silent=True)
+                self._bind_nested_on_change(self._config)
             except Exception as e:
                 logger.warning(f"配置文件读取失败: {e}, 使用默认配置")
         self.save()

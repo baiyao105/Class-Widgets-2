@@ -14,45 +14,74 @@ Flow {
 
     property bool editMode: false
     property bool menuVisible: false
+    property bool hide: {
+        return Configs.data.interactions.hide.state
+    }
     property var preferences: Configs.data.preferences
+
     property real dragOffsetX: 0
     property real dragOffsetY: 0
+    property real hideMargin: 24  // 隐藏时保留的可点击空间
 
     Component.onCompleted: {
         editMode = widgetRepeater.count === 0
     }
 
-    // 计算位置
+    // 计算 X 坐标
     function calcX() {
+        let x = 0
         switch (preferences.widgets_anchor) {
         case "top_left":
         case "bottom_left":
-            return preferences.widgets_offset_x;
+            x = preferences.widgets_offset_x
+            if (hide) x = - width + hideMargin
+            break
         case "top_center":
         case "bottom_center":
-            return (parent.width - width) / 2 + preferences.widgets_offset_x;
+            x = (parent.width - width) / 2 + preferences.widgets_offset_x
+            break
         case "top_right":
         case "bottom_right":
-            return parent.width - width - preferences.widgets_offset_x;
+            x = parent.width - width - preferences.widgets_offset_x
+            if (hide) x = parent.width - hideMargin
+            break
         }
-        return 0;
+        return x
     }
 
+    // 计算 Y 坐标
     function calcY() {
+        let y = 0
         switch (preferences.widgets_anchor) {
         case "top_left":
-        case "top_center":
         case "top_right":
-            if (root.editMode) {
-                return ( Screen.height - height ) / 2;
+            if (editMode) {
+                y = (Screen.height - height) / 2
+            } else {
+                y = preferences.widgets_offset_y
+                // 左/右不受 hide 影响
             }
-            return preferences.widgets_offset_y;
+            break
+        case "top_center":
+            if (editMode) {
+                y = (Screen.height - height) / 2
+            } else {
+                y = preferences.widgets_offset_y
+                if (hide) y = -height + hideMargin  // 仅 center 生效
+            }
+            break
         case "bottom_left":
-        case "bottom_center":
         case "bottom_right":
-            return parent.height - height - preferences.widgets_offset_y;
+            y = parent.height - height - preferences.widgets_offset_y
+            // 左/右不受 hide 影响
+            break
+        case "bottom_center":
+            y = parent.height - height - preferences.widgets_offset_y
+            if (hide) y = parent.height - hideMargin // 仅 center 生效
+            break
         }
-        return (parent.height - height) / 2 + preferences.widgets_offset_y;
+
+        return y
     }
 
     x: calcX() + dragOffsetX
@@ -86,6 +115,13 @@ Flow {
             properties: "x,y"
             duration: 300
             easing.type: Easing.OutQuint
+        }
+    }
+
+    Behavior on opacity {
+        NumberAnimation {
+            duration: 200
+            easing.type: Easing.InOutQuad
         }
     }
 
