@@ -47,7 +47,7 @@ Clip {
     Menu {
         id: contextMenu
 
-        MenuItem {
+        Action {
             icon.name: "ic_fluent_delete_20_regular"
             text: qsTr("Remove")
             onTriggered: {

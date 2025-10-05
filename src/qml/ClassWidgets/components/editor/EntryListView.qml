@@ -82,14 +82,40 @@ ColumnLayout {
 
     // 顶(huadiao 底部工具栏
     RowLayout {
+        id: toolBar
         Layout.fillWidth: true
         spacing: 4
+        property bool expanded: toolBar.width > 600
+
+        Button {
+            flat: true
+            icon.name: "ic_fluent_class_20_regular"
+            text: qsTr("Class")
+            onClicked: addEntry("class")
+            visible: parent.expanded
+        }
+
+        Button {
+            flat: true
+            icon.name: "ic_fluent_drink_coffee_20_regular"
+            text: qsTr("Break")
+            onClicked: addEntry("break")
+            visible: parent.expanded
+        }
+
+        Button {
+            flat: true
+            icon.name: "ic_fluent_alert_20_regular"
+            text: qsTr("Activity")
+            onClicked: addEntry("activity")
+            visible: parent.expanded
+        }
+
         DropDownButton {
             flat: true
             icon.name: "ic_fluent_add_20_regular"
             text: qsTr("New Schedule")
-
-
+            visible: !parent.expanded
 
             MenuItem {
                 icon.name: "ic_fluent_class_20_regular"

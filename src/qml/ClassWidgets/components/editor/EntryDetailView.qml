@@ -215,4 +215,13 @@ ColumnLayout {
     Item {
         Layout.fillHeight: true
     }
+
+    Button {
+        Layout.alignment: Qt.AlignRight
+        icon.name: "ic_fluent_delete_20_regular"
+        text: qsTr("Remove")
+        onClicked: {
+            AppCentral.scheduleEditor.removeEntry(currentEntry.id)
+        }
+    }
 }
