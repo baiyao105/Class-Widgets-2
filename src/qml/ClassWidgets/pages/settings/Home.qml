@@ -46,16 +46,16 @@ FluentPage {
             }
             spacing: 8
 
-            Text {
-                color: "#fff"
-                typography: Typography.BodyLarge
-                text: qsTr("ww")
-            }
+            // Text {
+            //     color: "#fff"
+            //     typography: Typography.BodyLarge
+            //     text: qsTr("ww")
+            // }
 
             Text {
                 color: "#fff"
                 typography: Typography.Title
-                text: qsTr("Dashboard")
+                text: qsTr("Home")
             }
         }
     }

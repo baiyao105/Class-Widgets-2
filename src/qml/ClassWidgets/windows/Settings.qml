@@ -21,8 +21,8 @@ FluentWindow {
 
     navigationItems: [
         {
-            title: qsTr("Dashboard"),
-            page: PathManager.qml("pages/settings/Dashboard.qml"),
+            title: qsTr("Home"),
+            page: PathManager.qml("pages/settings/Home.qml"),
             icon: "ic_fluent_board_20_regular",
         },
         {

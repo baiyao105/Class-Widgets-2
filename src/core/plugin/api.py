@@ -43,6 +43,9 @@ class PluginAPI(QObject):
         """通过AppCentral统一注册widget"""
         self._app.widgets_model.add_widget(widget_id, name, qml_path, backend_obj, settings_qml, default_settings)
 
+    def register_task(self, task_instance):
+        self._app.automation_manager.add_task(task_instance)
+
     # 发通知
     def push_notification(self, message: str):
         self._app.notification.push_activity(message)

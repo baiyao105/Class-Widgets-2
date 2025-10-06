@@ -29,13 +29,21 @@ def is_window_fullscreen(hwnd) -> bool:
 class AutoHideTask(AutomationTask):
     def __init__(self, app_central):
         super().__init__(app_central)
+
+        self.runtime = app_central.runtime
+        self.runtime.currentsChanged.connect(self.on_schedule_changed)
+
         self._window_states = {}
         self.previous_state = False
 
     def update(self):
+        """主循环"""
         if (not self.app_central.configs.interactions.hide.maximized
                 and not self.app_central.configs.interactions.hide.fullscreen):
             return
+
+        if self.app_central.configs.interactions.hide.in_class:
+            return  # 课堂内隐藏优先级
 
         # 遍历全部窗口，检查最大化/全屏
         self._window_states.clear()
@@ -74,3 +82,10 @@ class AutoHideTask(AutomationTask):
         except Exception as e:
             logger.debug(f"Check window {hwnd} failed: {e}")
         return True
+
+    def on_schedule_changed(self):
+        """课程发生变化触发"""
+        if not self.app_central.configs.interactions.hide.in_class:  # 未开启设置
+            return
+
+        self.app_central.configs.interactions.hide.state = True

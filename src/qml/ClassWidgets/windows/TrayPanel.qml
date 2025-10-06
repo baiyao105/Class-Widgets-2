@@ -20,11 +20,11 @@ Window {
     minimizeVisible: false
     maximizeVisible: false
 
-    onActiveChanged: {
-        if (!active) {
-            hide()  // 脱离焦点隐藏
-        }
-    }
+    // onActiveChanged: {
+    //     if (!active) {
+    //         hide()  // 脱离焦点隐藏
+    //     }
+    // }
 
     // background
     Rectangle {

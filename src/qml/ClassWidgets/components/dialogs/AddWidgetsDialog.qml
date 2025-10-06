@@ -96,9 +96,8 @@ Dialog {
                         if (widgetInfoLayout.model.backend_obj) {
                             item.backend = widgetInfoLayout.model.backend_obj
                         }
-                        console.log(JSON.stringify(widgetInfoLayout.model))
-                        if (widgetInfoLayout.model.settings) {
-                            item.settings = widgetInfoLayout.model.settings
+                        if (widgetInfoLayout.model.default_settings) {
+                            item.settings = widgetInfoLayout.model.default_settings
                         }
                         Qt.callLater(function() {
                             anim.start()

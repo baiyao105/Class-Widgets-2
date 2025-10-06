@@ -20,9 +20,9 @@ class TrayIcon(QObject):
         self.tray.show()
 
     def on_click(self, reason):
-        if reason == QSystemTrayIcon.ActivationReason.Trigger:
-            pos = QCursor.pos()
-            self.togglePanel.emit(pos)
+        # if reason == QSystemTrayIcon.ActivationReason.Trigger:
+        pos = QCursor.pos()
+        self.togglePanel.emit(pos)
 
     @Slot()
     def quitApp(self):

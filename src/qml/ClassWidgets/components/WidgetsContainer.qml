@@ -216,7 +216,7 @@ Flow {
                     icon.name: "ic_fluent_delete_20_regular"
                     text: qsTr("Delete")
                     onTriggered: {
-                        widgetsContainer.editMode = true
+                        // widgetsContainer.editMode = true
                         WidgetsModel.removeInstance(model.instanceId)
                     }
                 }

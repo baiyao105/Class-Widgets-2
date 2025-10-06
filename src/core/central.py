@@ -48,7 +48,7 @@ class AppCentral(QObject):  # Class Widgets 的中枢
         self.utils_backend = UtilsBackend()
         
         # 交互管理器
-        self.automations_manager = AutomationManager(self)
+        self.automation_manager = AutomationManager(self)
 
         # debugger
         self.debugger = None
@@ -162,7 +162,7 @@ class AppCentral(QObject):  # Class Widgets 的中枢
         self.runtime.notify.connect(self._notification.push_activity)
 
         self.union_update_timer.tick.connect(self.update)
-        self.union_update_timer.tick.connect(self.automations_manager.update)
+        self.union_update_timer.tick.connect(self.automation_manager.update)
         self.schedule_manager.scheduleModified.connect(self.runtime.refresh)
 
         self.union_update_timer.start()
