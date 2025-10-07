@@ -71,6 +71,7 @@ class AppCentral(QObject):  # Class Widgets 的中枢
 
     def run(self):  # 运行
         self._load_config()  # 加载配置
+        self._load_translator()  # 加载翻译
 
         # 如果教程未完成，先显示引导窗口
         if not getattr(self.configs.app, "tutorial_completed", False):
@@ -159,10 +160,12 @@ class AppCentral(QObject):  # Class Widgets 的中枢
     def _load_interactions(self):
         """加载交互"""
 
-    def _load_runtime(self):
-        # Runtime 初始化时已经加载 schedule 文件
+    def _load_translator(self):
+        """加载翻译"""
+        self.app_translator.languageChanged.connect(lambda: self.retranslate.emit())
         self.app_translator.setLanguage(self.configs.locale.language)
 
+    def _load_runtime(self):
         if self.configs.app.debug_mode:  # 调试模式
             self.debugger = DebuggerWindow(self)
 
@@ -173,7 +176,6 @@ class AppCentral(QObject):  # Class Widgets 的中枢
 
     def _setup_runtime_connections(self):
         """设置runtime连接"""
-        self.app_translator.languageChanged.connect(lambda: self.retranslate.emit())
         self.runtime.notify.connect(self._notification.push_activity)
 
         self.union_update_timer.tick.connect(self.update)
@@ -274,9 +276,9 @@ class Settings(RinUIWindow):
         self.engine.addImportPath(DEFAULT_THEME)
         self.central.setup_qml_context(self)
         self.engine.rootContext().setContextProperty("UtilsBackend", self.central.utils_backend)
-        self.load(CW_PATH / "windows" / "Settings.qml")
-
         self.central.retranslate.connect(self.engine.retranslate)
+
+        self.load(CW_PATH / "windows" / "Settings.qml")
 
 
 class Editor(RinUIWindow):
@@ -285,9 +287,9 @@ class Editor(RinUIWindow):
         self.central = parent
 
         self.central.setup_qml_context(self)
-        self.load(CW_PATH / "windows" / "Editor.qml")
-
         self.central.retranslate.connect(self.engine.retranslate)
+
+        self.load(CW_PATH / "windows" / "Editor.qml")
 
 
 class Tutorial(RinUIWindow):
@@ -296,6 +298,6 @@ class Tutorial(RinUIWindow):
         self.central = parent
 
         self.central.setup_qml_context(self)
-        self.load(CW_PATH / "windows" / "Tutorial.qml")
-
         self.central.retranslate.connect(self.engine.retranslate)
+
+        self.load(CW_PATH / "windows" / "Tutorial.qml")
