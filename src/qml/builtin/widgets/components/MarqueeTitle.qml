@@ -13,6 +13,7 @@ Item {
     property alias font: label.font
     property int speed: 50
     property bool running: true
+    signal finished()
 
     Title {
         id: label
@@ -41,6 +42,7 @@ Item {
 
     function restart() {
         scrollAnim.stop()
+        finished()
         if (!running) return
 
         if (label.implicitWidth <= marquee.width) {

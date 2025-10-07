@@ -19,22 +19,6 @@ class AutomationManager(QObject):
 
         self._init_builtin_tasks()
 
-    # def _load_builtin_tasks(self):
-    #     """Automatically import and register all AutomationTask subclasses in this package"""
-    #     package_name = __package__  # e.g. "src.core.automations"
-    #     package_path = Path(__file__).parent
-    #
-    #     for _, module_name, is_pkg in pkgutil.iter_modules([str(package_path)]):
-    #         if is_pkg or module_name in ("__init__", "base", "manager"):
-    #             continue
-    #         try:
-    #             module = importlib.import_module(f"{package_name}.{module_name}")
-    #             for _, obj in inspect.getmembers(module, inspect.isclass):
-    #                 if issubclass(obj, AutomationTask) and obj is not AutomationTask:
-    #                     task = obj(self.app_central)
-    #                     self.add_task(task)
-    #         except Exception as e:
-    #             logger.error(f"Failed to import automation task '{module_name}': {e}")
     def _init_builtin_tasks(self):
         """Instantiate and register all built-in tasks"""
         builtin_tasks = [

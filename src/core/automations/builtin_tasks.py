@@ -4,6 +4,7 @@ import ctypes
 from loguru import logger
 
 from .base import AutomationTask
+from ..schedule import EntryType
 
 SYSTEM_WINDOW_CLASSES = {
     "Progman",          # 桌面
@@ -36,13 +37,22 @@ class AutoHideTask(AutomationTask):
         self._window_states = {}
         self.previous_state = False
 
+    def _hide(self, state: bool):
+        """隐藏窗口"""
+        if self.app_central.configs.interactions.hide.mini_mode:  # mini模式
+            self.app_central.configs.preferences.mini_mode = state
+        else:
+            self.app_central.configs.interactions.hide.state = state
+
     def update(self):
         """主循环"""
         if (not self.app_central.configs.interactions.hide.maximized
                 and not self.app_central.configs.interactions.hide.fullscreen):
             return
 
-        if self.app_central.configs.interactions.hide.in_class:
+        if (self.app_central.configs.interactions.hide.in_class
+                and self.app_central.runtime.current_status == EntryType.CLASS
+                or self.app_central.runtime.current_status == EntryType.ACTIVITY):
             return  # 课堂内隐藏优先级
 
         # 遍历全部窗口，检查最大化/全屏
@@ -61,7 +71,7 @@ class AutoHideTask(AutomationTask):
         new_state = any_maximized or any_fullscreen
 
         if new_state != self.previous_state:
-            self.app_central.configs.interactions.hide.state = new_state
+            self._hide(new_state)
         self.previous_state = new_state
 
     def _enum_windows_callback(self, hwnd, _):
@@ -83,9 +93,9 @@ class AutoHideTask(AutomationTask):
             logger.debug(f"Check window {hwnd} failed: {e}")
         return True
 
-    def on_schedule_changed(self):
+    def on_schedule_changed(self, current_type: EntryType):
         """课程发生变化触发"""
         if not self.app_central.configs.interactions.hide.in_class:  # 未开启设置
             return
 
-        self.app_central.configs.interactions.hide.state = True
+        self._hide(current_type == EntryType.CLASS or current_type == EntryType.ACTIVITY)

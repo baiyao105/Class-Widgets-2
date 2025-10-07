@@ -252,17 +252,9 @@
                     "title": ""
                 },
                 {
-                    "id": "entry_7f7328e22de14d2c9bd83e6fa1da203c",
-                    "type": "break",
-                    "startTime": "10:30",
-                    "endTime": "10:45",
-                    "subjectId": "",
-                    "title": ""
-                },
-                {
                     "id": "entry_99d6f4f4c7134bc5adf6925a0b0d3148",
                     "type": "class",
-                    "startTime": "10:45",
+                    "startTime": "10:30",
                     "endTime": "11:25",
                     "subjectId": "",
                     "title": ""
@@ -445,7 +437,7 @@
                 2
             ],
             "weeks": "all",
-            "subjectId": "selfstudy",
+            "subjectId": "pe",
             "title": ""
         },
         {

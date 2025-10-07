@@ -20,11 +20,11 @@ Window {
     minimizeVisible: false
     maximizeVisible: false
 
-    // onActiveChanged: {
-    //     if (!active) {
-    //         hide()  // 脱离焦点隐藏
-    //     }
-    // }
+    onActiveChanged: {
+        if (!active && Qt.application.active !== true) {
+            hide()  // 脱离焦点隐藏
+        }
+    }
 
     // background
     Rectangle {
@@ -47,16 +47,16 @@ Window {
 
         RowLayout {
             Layout.margins: 4
-            spacing: 10
+            spacing: 8
             Image {
                 id: logo
                 mipmap: true
                 source: PathManager.assets("images/logo.png")
-                Layout.preferredWidth: 36
-                Layout.preferredHeight: 36
+                Layout.preferredWidth: 32
+                Layout.preferredHeight: 32
             }
             Text {
-                typography: Typography.Subtitle
+                typography: Typography.BodyLarge
                 text: "Class Widgets"
             }
         }
@@ -72,7 +72,7 @@ Window {
                 Hyperlink {
                     text: "Open"
                     onClicked: {
-                        // panel.hide()
+                        panel.hide()
                         AppCentral.openSettings()
                     }
                 }
@@ -86,7 +86,7 @@ Window {
                 Hyperlink {
                     text: "Open"
                     onClicked: {
-                        // panel.hide()
+                        panel.hide()
                         AppCentral.openEditor()
                     }
                 }
@@ -182,6 +182,7 @@ Window {
                 text: qsTr("Restart")
                 visible: parent.hovered
             }
+            onClicked: AppCentral.restart()
         }
 
         ToolButton {

@@ -12,7 +12,7 @@ from src.core.utils import get_cycle_week, get_week_number
 class ScheduleRuntime(QObject):
     notify = Signal(str, dict, str)
     updated = Signal()  # 文件更新
-    currentsChanged = Signal()  # 日程更新
+    currentsChanged = Signal(EntryType)  # 日程更新
 
     def __init__(self, app_central):
         super().__init__()
@@ -162,7 +162,7 @@ class ScheduleRuntime(QObject):
 
         self._progress = self.get_progress_percent()
         if self.previous_entry != self.current_entry:
-            self.currentsChanged.emit()
+            self.currentsChanged.emit(self.current_status)
 
     def _update_time(self):  # 更新时间
         self.current_day_of_week = self.current_time.isoweekday()

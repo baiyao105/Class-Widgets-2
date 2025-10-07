@@ -15,7 +15,7 @@ class ConfigBaseModel(BaseModel):
             if isinstance(value, ConfigBaseModel):
                 value._on_change = self._on_change
 
-    def __setattr__(self, name, value):
+    def __setattr__(self, name, value):  # 实时发送更新信号
         super().__setattr__(name, value)
         if isinstance(value, ConfigBaseModel):
             value._on_change = self._on_change
@@ -61,9 +61,11 @@ class HideInteractionsConfig(ConfigBaseModel):
     """
     state: bool = False  # 状态
     in_class: bool = False  # 上课时
-    clicked: bool = False  # 点击时
+    clicked: bool = True  # 点击时
     maximized: bool = False  # 窗口最大化
     fullscreen: bool = False   # 窗口全屏
+
+    mini_mode: bool = False  # 切换迷你模式
 
 
 class AppConfig(ConfigBaseModel):
@@ -74,6 +76,7 @@ class AppConfig(ConfigBaseModel):
     no_logs: bool = False
     version: str = "0.0.1"
     channel: str = "alpha"
+    initialization: bool = False  # 是否完成初始化
 
 
 class PreferencesConfig(ConfigBaseModel):

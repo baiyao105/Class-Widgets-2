@@ -1,5 +1,6 @@
+import os
+import sys
 from pathlib import Path
-from typing import Optional
 
 from PySide6.QtCore import QObject, Property, Signal, Slot, QPoint
 from PySide6.QtWidgets import QApplication
@@ -119,6 +120,12 @@ class AppCentral(QObject):  # Class Widgets 的中枢
         self.configs.save()
         self.cleanup()
         self.app_instance.quit()
+
+    @Slot()
+    def restart(self):
+        self.configs.save()
+        self.cleanup()
+        os.execl(sys.executable, sys.executable, *sys.argv)
 
     def setup_qml_context(self, window):
         """

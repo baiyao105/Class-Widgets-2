@@ -145,7 +145,11 @@ ColumnLayout {
             text: qsTr("New Timeline")
             onClicked: dayEditor.openFor(null)  // 新建
         }
-        Button { flat: true; icon.name: "ic_fluent_document_copy_20_regular"; text: qsTr("Duplicate") }  // 复制（后端暂无接口）
+        Button {
+            flat: true; icon.name: "ic_fluent_document_copy_20_regular"; text: qsTr("Duplicate")
+            enabled: false
+        }
+        // 复制（后端暂无接口）
     }
 
     DayEditor {

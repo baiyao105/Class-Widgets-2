@@ -20,7 +20,7 @@ FluentPage {
 
         SettingCard {
             Layout.fillWidth: true
-            title: qsTr("Hover Fade")
+            title: qsTr("Hover fade")
             description: qsTr(
                 "Hover to make the widget transparent and let clicks go through, move away to bring it back."
             )
@@ -33,38 +33,45 @@ FluentPage {
             }
         }
 
+        SettingCard {
+            Layout.fillWidth: true
+            icon.name: "ic_fluent_tap_single_20_regular"
+            title: qsTr("Tap to hide")
+            description: qsTr(
+                "Click on the widget to hide it, click it again to bring it back. \n" +
+                "* Some interactive elements may not respond to clicks"
+            )
+            Switch {
+                id: tapToHideSwitch
+                onCheckedChanged: Configs.set("interactions.hide.clicked", checked)
+                Component.onCompleted: checked = Configs.data.interactions.hide.clicked
+            }
+        }
+
         SettingExpander {
             Layout.fillWidth: true
-            title: qsTr("Hide Behavior")
+            title: qsTr("More hide behavior")
             icon.name: "ic_fluent_slide_hide_20_regular"
-            description: qsTr("Control when widgets automatically hide")
+            description: qsTr("Choose whether widgets hide or switch to Mini Mode when triggered")
 
-            action: ToggleButton {
-                text: !checked ? qsTr("Hide Widgets") : qsTr("Show Widgets")
-                onCheckedChanged: Configs.set("interactions.hide.state", checked)
-                Component.onCompleted: checked = Configs.data.interactions.hide.state
+            action: ComboBox {
+                id: modeSelector
+                Layout.preferredWidth: 180
+                model: ListModel {
+                    ListElement { text: qsTr("Hide Widgets"); value: false }
+                    ListElement { text: qsTr("Switch to mini mode"); value: true }
+                }
+                textRole: "text"
+                valueRole: "value"
+                onCurrentIndexChanged: if (focus) Configs.set("interactions.hide.mini_mode", currentValue) // !important "focus"!!!
+                Component.onCompleted: {
+                    modeSelector.currentIndex = Configs.data.interactions.hide.mini_mode? 1 : 0
+                }
             }
 
             SettingItem {
                 ColumnLayout {
                     Layout.fillWidth: true
-                    RowLayout {
-                        Layout.fillWidth: true
-                        CheckBox {
-                            Layout.fillWidth: true
-                            text: qsTr("Hide when clicked")
-                            onCheckedChanged: Configs.set("interactions.hide.clicked", checked)
-                            Component.onCompleted: checked = Configs.data.interactions.hide.clicked
-                        }
-                        Text {
-                            Layout.fillWidth: true
-                            Layout.maximumWidth: 200
-                            typography: Typography.Caption
-                            color: Colors.proxy.textSecondaryColor
-                            horizontalAlignment: Qt.AlignRight
-                            text: qsTr("* Widgets won't respond to clicks")
-                        }
-                    }
                     CheckBox {
                         Layout.fillWidth: true
                         text: qsTr("Hide when in class")

@@ -8,6 +8,8 @@ import Qt5Compat.GraphicalEffects
 Widget {
     id: root
     text: qsTr("Upcoming")
+    property bool isExternalClass: AppCentral.scheduleRuntime.currentSubject.isLocalClassroom === false
+    property bool showLeaveHint: false
 
     property var entries: AppCentral.scheduleRuntime.nextEntries || []
     property var subjects: AppCentral.scheduleRuntime.subjects || []
@@ -26,7 +28,7 @@ Widget {
             result += entryText + (i === entries.length - 1 ? "" : "  ")
         }
         if (!result) {
-            result = qsTr("Nothing ahead")
+            return qsTr("Nothing ahead")
         }
         return result
     }
