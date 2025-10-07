@@ -1,1 +1,0 @@
-"C:\Program Files\Git\bin\bash.exe" "C:/Users/lintu/PycharmProjects/Class-Widgets-2/scripts/update_ts.sh"
