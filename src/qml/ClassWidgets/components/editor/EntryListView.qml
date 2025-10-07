@@ -17,8 +17,43 @@ ColumnLayout {
     Layout.fillWidth: true
     Layout.fillHeight: true
 
+    // 空白提示
+    Item {
+        Layout.fillWidth: true
+        Layout.fillHeight: true
+        visible: !flickable.visible
+
+        ColumnLayout {
+            width: parent.width
+            anchors.centerIn: parent
+            opacity: 0.5
+
+            Icon {
+                Layout.alignment: Qt.AlignCenter
+                name: "ic_fluent_square_hint_sparkles_20_regular"
+                size: 46
+            }
+            Text {
+                Layout.fillWidth: true
+                horizontalAlignment: Text.AlignHCenter
+                typography: Typography.BodyLarge
+                text: qsTr("No timeline selected")
+            }
+            Text {
+                horizontalAlignment: Text.AlignHCenter
+                Layout.fillWidth: true
+                typography: Typography.Caption
+                text: qsTr(
+                    "Please select a timeline first to add a new schedule."
+                )
+            }
+        }
+    }
+
     // 时间轴
     Flickable {
+        visible: currentDayIndex >= 0
+
         id: flickable
         Layout.fillWidth: true
         Layout.fillHeight: true
@@ -98,6 +133,7 @@ ColumnLayout {
         Layout.fillWidth: true
         spacing: 4
         property bool expanded: toolBar.width > 600
+        enabled: currentIndex >= 0
 
         Button {
             flat: true

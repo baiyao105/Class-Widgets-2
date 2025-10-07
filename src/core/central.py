@@ -71,6 +71,14 @@ class AppCentral(QObject):  # Class Widgets 的中枢
 
     def run(self):  # 运行
         self._load_config()  # 加载配置
+
+        # 如果教程未完成，先显示引导窗口
+        if not getattr(self.configs.app, "tutorial_completed", False):
+            logger.info("Tutorial not completed, showing tutorial window first.")
+            self.tutorial_window = Tutorial(self)
+            self.tutorial_window.root_window.show()
+            return  # 中断后续初始化流程，教程窗口负责完成设置后重启
+
         self._setup_logging()  # 设置日志
         self._load_schedule()  # 加载课程表
         self._load_runtime()  # 加载运行时
@@ -278,5 +286,16 @@ class Editor(RinUIWindow):
 
         self.central.setup_qml_context(self)
         self.load(CW_PATH / "windows" / "Editor.qml")
+
+        self.central.retranslate.connect(self.engine.retranslate)
+
+
+class Tutorial(RinUIWindow):
+    def __init__(self, parent: AppCentral):
+        super().__init__()
+        self.central = parent
+
+        self.central.setup_qml_context(self)
+        self.load(CW_PATH / "windows" / "Tutorial.qml")
 
         self.central.retranslate.connect(self.engine.retranslate)

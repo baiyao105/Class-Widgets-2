@@ -76,7 +76,7 @@ class AppConfig(ConfigBaseModel):
     no_logs: bool = False
     version: str = "0.0.1"
     channel: str = "alpha"
-    initialization: bool = False  # 是否完成初始化
+    tutorial_completed: bool = False  # 是否完成初始化
 
 
 class PreferencesConfig(ConfigBaseModel):

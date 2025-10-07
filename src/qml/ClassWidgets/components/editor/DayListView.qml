@@ -79,8 +79,40 @@ ColumnLayout {
         return weekDays[index]
     }
 
+    Item {
+        visible: !days.length > 0
+        Layout.fillWidth: true
+        Layout.fillHeight: true
+
+        ColumnLayout {
+            width: parent.width * 0.75
+            anchors.centerIn: parent
+            opacity: 0.5
+
+            Icon {
+                Layout.alignment: Qt.AlignCenter
+                name: "ic_fluent_square_hint_sparkles_20_regular"
+                size: 46
+            }
+            Text {
+                Layout.fillWidth: true
+                horizontalAlignment: Text.AlignHCenter
+                typography: Typography.BodyLarge
+                text: qsTr("No timelines yet")
+            }
+            Text {
+                horizontalAlignment: Text.AlignHCenter
+                Layout.fillWidth: true
+                typography: Typography.Caption
+                text: qsTr("No timelines yet. Click \"New Timeline\" to get started.")
+
+            }
+        }
+    }
+
 
     ListView {
+        visible: model.length > 0
         id: timelinesView
         Layout.fillHeight: true
         Layout.fillWidth: true

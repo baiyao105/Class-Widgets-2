@@ -218,6 +218,20 @@ FluentPage {
                 Component.onCompleted: checked = Configs.data.app.debug_mode
             }
         }
+
+        SettingCard {
+            Layout.fillWidth: true
+            icon.name: "ic_fluent_learning_app_20_regular"
+            title: qsTr("Show Tutorials again")
+
+            Button {
+                text: qsTr("Restart")
+                onClicked: {
+                    Configs.set("app.tutorial_completed", false)
+                    AppCentral.restart()
+                }
+            }
+        }
     }
 
     Dialog {
