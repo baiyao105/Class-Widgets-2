@@ -47,11 +47,10 @@ Clip {
     Menu {
         id: contextMenu
 
-        Action {
+        MenuItem {
             icon.name: "ic_fluent_delete_20_regular"
             text: qsTr("Remove")
             onTriggered: {
-                root.currentIndex = -1
                 AppCentral.scheduleEditor.removeEntry(entry.id)
             }
         }

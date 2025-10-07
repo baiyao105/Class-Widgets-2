@@ -71,6 +71,18 @@ ColumnLayout {
         Repeater {
             id: entryList
             model: currentDayIndex >= 0 ? AppCentral.scheduleEditor.days[currentDayIndex].entries : []
+
+            property int prevLength: 0
+
+            onModelChanged: {
+                if (prevLength !== model.length) {
+                    currentIndex = -1
+                }
+                if (model.length === 0) {
+                    currentIndex = -1
+                }
+                prevLength = model.length
+            }
             
             delegate: EntryDelegate {
                 index: model.index
