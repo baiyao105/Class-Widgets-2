@@ -1,3 +1,4 @@
+import shutil
 from pathlib import Path
 
 from PySide6.QtCore import Property, Slot, QObject, Signal
@@ -43,15 +44,23 @@ class UtilsBackend(QObject):
     def licenseText(self):
         return self._license_text
 
-    @Slot(result=bool)
-    def clearLogs(self) -> bool:
+    @Slot(result=list)
+    def clearLogs(self):
         try:
-            log_path = Path(LOGS_PATH)
-            log_path.rmdir()
-            return True
+            size = 0
+            if LOGS_PATH.exists():
+                for file in LOGS_PATH.glob("**/*"):
+                    if file.is_file():
+                        try:
+                            file_size = file.stat().st_size / 1024 # kb
+                            file.unlink()
+                            size += file_size
+                        except PermissionError:
+                            logger.debug(f"Failed to delete {file.name} caused by permission error")
+            return True, round(size, 2)
         except Exception as e:
-            logger.error(f"Failed to clear logs: {e}")
-            return False
+            logger.exception(f"Failed to clear logs caused by {e}")
+            return False, 0
 
     @Slot(str, result=bool)
     def copyToClipboard(self, text):

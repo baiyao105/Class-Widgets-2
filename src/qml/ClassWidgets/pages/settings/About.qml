@@ -180,10 +180,13 @@ FluentPage {
                     icon.name: "ic_fluent_broom_20_regular"
                     text: qsTr("Clear")
                     onClicked: {
-                        if (UtilsBackend.clearLogs()) {
+                        let resultTuple = UtilsBackend.clearLogs() // 0, bool; 1, int(kb)
+                        if (resultTuple[0]) {
                             floatLayer.createInfoBar({
                                 title: qsTr("Cleared"),
-                                text: qsTr("All logs have been cleared."),
+                                text: qsTr(
+                                    `All logs have been cleared about ${resultTuple[1]} KB.`
+                                ),
                                 severity: Severity.Success,
                                 duration: 2000,
                             })
