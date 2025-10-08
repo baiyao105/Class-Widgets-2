@@ -37,7 +37,7 @@ ColumnLayout {
                 Layout.fillWidth: true
                 horizontalAlignment: Text.AlignHCenter
                 typography: Typography.BodyLarge
-                text: qsTr("No schedule selected")
+                text: qsTr("No timeline selected")
             }
             Text {
                 horizontalAlignment: Text.AlignHCenter
