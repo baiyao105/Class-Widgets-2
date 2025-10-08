@@ -13,9 +13,9 @@ Window {
     x: Screen.width / 2 - width / 2
     y: Screen.height / 2 - height / 2
     minimumWidth: width
-    maximumWidth: width
+    // maximumWidth: width
     minimumHeight: height
-    maximumHeight: height
+    // maximumHeight: height
 
     minimizeVisible: false
     maximizeVisible: false
