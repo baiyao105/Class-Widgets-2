@@ -96,7 +96,7 @@ FluentWindow {
             closable: false
             title: qsTr("Unsaved Changes")
             text: qsTr(
-                "Don\'t forget to save your changes before closing the editor or switching schedule. \n" +
+                "Don\'t forget to save your changes before closing the editor or switching schedule. " +
                 "You can click the save button in the title bar."
             )
             customContent: [
