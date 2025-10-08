@@ -114,7 +114,7 @@ FluentWindow {
     Connections {
         target: AppCentral.scheduleEditor
         onUpdated: {
-            if (!notHint && !hintVisible) {
+            if (!notHint && !hintVisible && settingsWindow.visible) {
                 floatLayer.createCustom(saveHint)
                 hintVisible = true
             }
