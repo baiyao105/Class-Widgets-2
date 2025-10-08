@@ -24,6 +24,7 @@ class ScheduleEditor(QObject):
     def refresh(self, schedule: ScheduleData):  # 接受来自 manager 的更新
         self.schedule = schedule
         self._filename = self.manager.schedule_path.stem
+        self.updated.emit()
 
     def refresh_manager(self):
         self.manager.modify(self.schedule)  # 提交给 manager
