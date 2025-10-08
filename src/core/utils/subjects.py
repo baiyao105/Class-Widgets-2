@@ -30,7 +30,7 @@ def get_default_subjects() -> list[Subject]:
         sub = Subject(
             id=subj["id"],
             name=QCoreApplication.translate("Subjects", subj["name"]),
-            simplifiedName=QCoreApplication.translate("Subjects", subj.get("simplifiedName", "")),
+            simplifiedName=QCoreApplication.translate("SubjectsSimplified", subj.get("simplifiedName", "")),
             teacher=subj.get("teacher", ""),
             icon=subj.get("icon", ""),
             color=subj.get("color", ""),
