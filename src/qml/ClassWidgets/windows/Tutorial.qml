@@ -49,9 +49,37 @@ ApplicationWindow {
         }
 
         RowLayout {
+            Layout.alignment: Qt.AlignHCenter
+            Text {
+                text: qsTr("Select a language")
+            }
+            ComboBox {
+                property var data: [AppCentral.translator.getSystemLanguage(), "en_US", "zh_CN"]
+                property bool initialized: false
+                model: ListModel {
+                    ListElement { text: qsTr("Use System Language") }
+                    ListElement { text: "English (US)" }
+                    ListElement { text: "简体中文" }
+                }
+
+                Component.onCompleted: {
+                    currentIndex = data.indexOf(AppCentral.translator.getLanguage())
+                    console.log("Language: " + AppCentral.translator.getLanguage())
+                    initialized = true
+                }
+
+                onCurrentIndexChanged: {
+                    if (!initialized) return
+                    AppCentral.translator.setLanguage(data[currentIndex])
+                }
+            }
+        }
+
+        RowLayout {
             Layout.alignment: Qt.AlignHCenter | Qt.AlignBottom
             Button {
                 text: qsTr("Exit")
+                onClicked: Qt.quit()
             }
             Button {
                 highlighted: true

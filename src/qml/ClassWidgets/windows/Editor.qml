@@ -16,9 +16,46 @@ FluentWindow {
     navigationView.navMinimumExpandWidth: Screen.width
     navigationView.navigationBar.collapsed: true
 
+    property bool notHint: false
+    property bool hintVisible: false
+
     onClosing: function(event) {
         event.accepted = false
         settingsWindow.visible = false
+    }
+
+    titleBarArea: RowLayout {
+        anchors.fill: parent
+        spacing: 24
+
+        ToolButton {
+            flat: true
+            Layout.alignment: Qt.AlignRight
+            icon.name: "ic_fluent_save_20_regular"
+            size: 18
+
+            ToolTip {
+                text: qsTr("Save Changes")
+                visible: parent.hovered
+            }
+
+            onClicked: {
+                let result = AppCentral.scheduleManager.save()
+                if (result) {
+                    floatLayer.createInfoBar({
+                        title: qsTr("Saved"),
+                        severity: Severity.Success,
+                        text: qsTr("Schedule saved successfully")
+                    })
+                } else {
+                    floatLayer.createInfoBar({
+                        title: qsTr("Save Failed"),
+                        severity: Severity.Error,
+                        text: qsTr("Failed to save schedule, see log for details")
+                    })
+                }
+            }
+        }
     }
 
     navigationItems: [
@@ -49,6 +86,40 @@ FluentWindow {
             page: PathManager.qml("pages/editor/Subjects.qml"),
         }
     ]
+
+    Component {
+        id: saveHint
+        InfoBar {
+            timeout: -1
+            position: Position.BottomRight
+            severity: Severity.Info
+            closable: false
+            title: qsTr("Unsaved Changes")
+            text: qsTr(
+                "Don\'t forget to save your changes before closing the editor or switching schedule. \n" +
+                "You can click the save button in the title bar."
+            )
+            customContent: [
+                Button {
+                    text: qsTr("OK")
+                    onClicked: {
+                        notHint = true
+                        close()
+                    }
+                }
+            ]
+        }
+    }
+
+    Connections {
+        target: AppCentral.scheduleEditor
+        onUpdated: {
+            if (!notHint && !hintVisible) {
+                floatLayer.createCustom(saveHint)
+                hintVisible = true
+            }
+        }
+    }
 
     // 测试水印
     Watermark {

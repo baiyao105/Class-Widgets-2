@@ -8,13 +8,13 @@ import QtQuick.Effects  // shadow
 
 Item {
     id: root
-    SaveFlyout { id: saveFlyout }
+    // SaveFlyout { id: saveFlyout }
 
     RowLayout {
         id: rowLayout
         anchors.fill: parent
         anchors.margins: 24
-        anchors.topMargin: 24 + saveFlyout.height
+        // anchors.topMargin: 24 + saveFlyout.height
         spacing: 10
 
         ScheduleTableView {

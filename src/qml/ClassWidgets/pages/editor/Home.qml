@@ -21,6 +21,13 @@ FluentPage {
         )
         Button {
             flat: true
+            Layout.alignment: Qt.AlignRight
+            icon.name: "ic_fluent_folder_open_20_regular"
+            text: qsTr("Open schedules folder")
+            onClicked: AppCentral.scheduleManager.openSchedulesFolder()
+        }
+        Button {
+            flat: true
             highlighted: true
             Layout.alignment: Qt.AlignRight
             icon.name: "ic_fluent_add_20_regular"

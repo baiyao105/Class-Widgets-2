@@ -131,6 +131,7 @@ Clip {
                 MenuItem {
                     icon.name: "ic_fluent_delete_20_regular"
                     text: qsTr("Delete")
+                    enabled: !selected
                     onTriggered: {
                         confirmDeleteDialog.open()
                     }

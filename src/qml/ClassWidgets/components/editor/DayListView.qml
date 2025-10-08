@@ -79,6 +79,47 @@ ColumnLayout {
         return weekDays[index]
     }
 
+    SettingCard {
+        Layout.fillWidth: true
+        title: qsTr("Set Start Date")
+        description: qsTr("Set the first day of school to calculate week numbers accurately")
+        icon.name: "ic_fluent_calendar_arrow_counterclockwise_20_regular"
+
+        Button {
+            text: qsTr("Set")
+            onClicked: {
+                const currentDate = AppCentral.scheduleEditor.getStartDate()
+                datePicker.setDate(currentDate)
+                datePickerDialog.open()
+            }
+        }
+    }
+
+    Dialog {
+        id: datePickerDialog
+        modal: true
+        title: qsTr("Select Date")
+        width: 300
+        height: 200
+        DatePicker {
+            locale: Qt.locale()
+            id: datePicker
+        }
+        standardButtons: Dialog.Ok | Dialog.Cancel
+
+        onAccepted: {
+            const newDate = datePicker.date // 形如 "2025-9-1"
+            if (!AppCentral.scheduleEditor.setStartDate(newDate)) {
+                floatLayer.createInfoBar({
+                    title: qsTr("Failed"),
+                    text: qsTr("Failed to set start date. Please report this issue to the community or the developer.") ,
+                    severity: Severity.Error,
+                    duration: 5000,
+                })
+            }
+        }
+    }
+
     Item {
         visible: !days.length > 0
         Layout.fillWidth: true

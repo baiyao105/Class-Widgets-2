@@ -2,9 +2,11 @@ import json
 import shutil
 from datetime import datetime
 from pathlib import Path
-from PySide6.QtCore import QObject, Signal, Slot, Property
+from PySide6.QtCore import QObject, Signal, Slot, Property, QUrl
+from PySide6.QtGui import QDesktopServices
 from loguru import logger
 
+from src.core.directories import SCHEDULES_PATH
 from src.core.schedule.model import ScheduleData, MetaInfo
 from src.core.parser import ScheduleParser
 from src.core.utils import generate_id, get_default_subjects
@@ -130,7 +132,7 @@ class ScheduleManager(QObject):
             logger.error(f"Error creating new schedule: {e}")
             return False
 
-    @Slot(str)
+    @Slot(str, result=bool)
     def delete(self, name: str) -> bool:
         """删除课表文件"""
         if name == self.current_schedule_name:
@@ -138,10 +140,13 @@ class ScheduleManager(QObject):
             return False
 
         path = self.schedules_dir / f"{name}.json"
-        if path.exists():
-            path.unlink()
-            logger.info(f"Schedule deleted: {name}")
+        try:
+            if path.exists():
+                path.unlink()
+                logger.info(f"Schedule deleted: {name}")
             return True
+        except Exception as e:
+            logger.error(f"Error deleting schedule: {e}")
         return False
 
     @Slot(str, str)
@@ -189,3 +194,16 @@ class ScheduleManager(QObject):
     def checkNameExists(self, name: str) -> bool:  # validator
         path = self.schedules_dir / f"{name}.json"
         return path.exists()
+
+    @Slot(result=bool)
+    def openSchedulesFolder(self) -> bool:
+        """
+        打开指定插件的本地文件夹
+        """
+
+        # 打开文件夹
+        url = QUrl.fromLocalFile(str(SCHEDULES_PATH))
+        success = QDesktopServices.openUrl(url)
+        if not success:
+            logger.error(f"Failed to open plugin folder: {SCHEDULES_PATH}")
+        return success

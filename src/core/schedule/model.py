@@ -47,7 +47,7 @@ class MetaInfo(BaseModel):
     id: str
     version: int
     maxWeekCycle: int
-    startDate: str
+    startDate: str  # yyyy-mm-dd
 
 
 class Timetable(BaseModel):  # 覆盖Entry信息以方便设置课表
