@@ -92,7 +92,7 @@ FluentWindow {
         InfoBar {
             timeout: -1
             position: Position.BottomRight
-            severity: Severity.Info
+            severity: Severity.Warning
             closable: false
             title: qsTr("Unsaved Changes")
             text: qsTr(

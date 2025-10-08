@@ -133,7 +133,7 @@ ColumnLayout {
         Layout.fillWidth: true
         spacing: 4
         property bool expanded: toolBar.width > 600
-        enabled: currentIndex >= 0
+        enabled: currentDayIndex >= 0
 
         Button {
             flat: true
