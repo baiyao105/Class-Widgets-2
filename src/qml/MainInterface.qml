@@ -14,10 +14,11 @@ QQW.Window {
     visible: true
     flags: Qt.FramelessWindowHint | Qt.Tool
     color: "transparent"
-    // width: Screen.width
-    // height: Screen.height
-    width: Screen.desktopAvailableWidth
-    height: Screen.desktopAvailableHeight
+    property var screen: Qt.application.screens[0]  // 主屏 日后再开发多屏适配
+    x: screen.x
+    y: screen.y
+    width: screen.width
+    height: screen.height
 
     property bool initialized: false
     property alias editMode: widgetsLoader.editMode
