@@ -50,7 +50,7 @@ jobs:
             --contents-directory=. \
             --noconfirm \
             --icon=assets/images/logo.ico \
-            --name="Class Widgets 2"
+            --name=ClassWidgets-2
 
       - name: 🔨 Build ClassWidgets-2 (macOS)
         if: runner.os == 'macOS'
@@ -66,20 +66,20 @@ jobs:
             --contents-directory=. \
             --noconfirm \
             --icon=assets/images/logo.icns \
-            --name="Class Widgets 2"
+            --name=ClassWidgets-2
 
       - name: 📦 Zip build (Windows)
         if: runner.os == 'Windows'
         shell: pwsh
         run: |
-          Compress-Archive -Path dist/"Class Widgets 2"/* -DestinationPath dist/ClassWidgets-2-Windows.zip
+          Compress-Archive -Path dist/ClassWidgets-2/* -DestinationPath dist/ClassWidgets-2-Windows.zip
 
       - name: 📦 Zip build (macOS)
         if: runner.os == 'macOS'
         shell: bash
         run: |
           cd dist
-          ditto -c -k --sequesterRsrc --keepParent "Class Widgets 2".app ClassWidgets-2-macOS.zip
+          ditto -c -k --sequesterRsrc --keepParent ClassWidgets-2.app ClassWidgets-2-macOS.zip
 
       - name: ☁️ Upload artifact (Windows)
         if: runner.os == 'Windows'
