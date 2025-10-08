@@ -1,6 +1,6 @@
 [project]
 name = "ClassWidgets-2"
-version = "0.0.1"
+version = "0.0.1.post1"
 description = "Class Widgets 2, The Next Class Schedule."
 authors = [
     {name = "RinLit",email = "lintusup@foxmail.com"}
