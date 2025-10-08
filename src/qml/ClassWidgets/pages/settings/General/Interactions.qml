@@ -63,9 +63,10 @@ FluentPage {
                 }
                 textRole: "text"
                 valueRole: "value"
-                onCurrentIndexChanged: if (focus) Configs.set("interactions.hide.mini_mode", currentValue) // !important "focus"!!!
+                onCurrentValueChanged: if (focus) Configs.set("interactions.hide.mini_mode", currentValue) // !important "focus"!!!
                 Component.onCompleted: {
-                    modeSelector.currentIndex = Configs.data.interactions.hide.mini_mode? 1 : 0
+                    console.log(Configs.data.interactions.hide.mini_mode + "123")
+                    currentIndex = Configs.data.interactions.hide.mini_mode
                 }
             }
 
