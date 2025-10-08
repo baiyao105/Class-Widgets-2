@@ -96,6 +96,7 @@ class AppCentral(QObject):  # Class Widgets 的中枢
         self.updated.emit()  # 发送信号
 
     def cleanup(self):
+        self.schedule_manager.save()
         self.union_update_timer.stop()
         logger.info("Clean up.")
 
