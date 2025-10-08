@@ -16,7 +16,7 @@ body = """
 
 {% if group != "✨ 新亮点" %}
 <details>
-<summary>{{ group | upper_first }}</summary>
+<summary><h3>{{ group | upper_first }}</h3></summary>
 {% for commit in commits | unique(attribute="message") %}
 - {% if commit.scope %}{{ commit.scope }}: {%- endif -%}{{ commit.message | upper_first }}\
   {% if commit.remote.username %} 作者: @{{ commit.remote.username }}{%- endif -%}
