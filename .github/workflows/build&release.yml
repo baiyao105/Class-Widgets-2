@@ -40,46 +40,46 @@ jobs:
         if: runner.os == 'Windows'
         shell: bash
         run: |
-          uv run pyinstaller \
-            src/app.py \
-            --add-data src/qml:src/qml \
-            --add-data src/plugins:src/plugins \
-            --add-data assets:assets \
-            --add-data LICENSE:. \
+          uv run pyinstaller --noconfirm \
+            --icon "assets/images/logo.ico" \
+            --add-data "src/qml:src/qml" \
+            --add-data "src/plugins:src/plugins" \
+            --add-data "assets:assets" \
+            --add-data "LICENSE:." \
             --paths=. \
-            --contents-directory=. \
-            --noconfirm \
-            --icon=assets/images/logo.ico \
-            --name=ClassWidgets-2
+            --distpath dist/win \
+            --workpath build/win \
+            --name ClassWidgets2 \
+            src/app.py
 
       - name: 🔨 Build ClassWidgets-2 (macOS)
         if: runner.os == 'macOS'
         shell: bash
         run: |
-          uv run pyinstaller \
-            src/app.py \
-            --add-data src/qml:src/qml \
-            --add-data src/plugins:src/plugins \
-            --add-data assets:assets \
-            --add-data LICENSE:. \
+          uv run pyinstaller --noconfirm \
+            --icon "assets/images/logo.icns" \
+            --add-data "src/qml:src/qml" \
+            --add-data "src/plugins:src/plugins" \
+            --add-data "assets:assets" \
+            --add-data "LICENSE:." \
             --paths=. \
-            --contents-directory=. \
-            --noconfirm \
-            --icon=assets/images/logo.icns \
-            --name=ClassWidgets-2
+            --distpath dist/macos \
+            --workpath build/macos \
+            --name ClassWidgets2 \
+            src/app.py
 
       - name: 📦 Zip build (Windows)
         if: runner.os == 'Windows'
         shell: pwsh
         run: |
-          Compress-Archive -Path dist/ClassWidgets2/* -DestinationPath dist/ClassWidgets-2-Windows.zip
+          Compress-Archive -Path "dist/win/*" -DestinationPath "dist/ClassWidgets-2-Windows.zip"
 
       - name: 📦 Zip build (macOS)
         if: runner.os == 'macOS'
         shell: bash
         run: |
-          cd dist
-          ditto -c -k --sequesterRsrc --keepParent ClassWidgets2.app ClassWidgets-2-macOS.zip
+          cd dist/macos
+          ditto -c -k --sequesterRsrc --keepParent ClassWidgets2.app ../../ClassWidgets-2-macOS.zip
 
       - name: ☁️ Upload artifact (Windows)
         if: runner.os == 'Windows'
