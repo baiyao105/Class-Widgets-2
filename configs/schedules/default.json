@@ -1,9 +1,9 @@
 {
     "meta": {
-        "id": "meta_a0134697ec294305ad983bc063899334",
+        "id": "meta_034f83058d3c4b239098aca02c479b5c",
         "version": 1,
         "maxWeekCycle": 2,
-        "startDate": "2026-09-01"
+        "startDate": "2025-09-01"
     },
     "subjects": [
         {
@@ -252,9 +252,17 @@
                     "title": ""
                 },
                 {
+                    "id": "entry_aceea7f28350408db4b7353a24521bf1",
+                    "type": "break",
+                    "startTime": "10:30",
+                    "endTime": "10:45",
+                    "subjectId": "",
+                    "title": ""
+                },
+                {
                     "id": "entry_99d6f4f4c7134bc5adf6925a0b0d3148",
                     "type": "class",
-                    "startTime": "10:30",
+                    "startTime": "10:45",
                     "endTime": "11:25",
                     "subjectId": "",
                     "title": ""

@@ -1,30 +1,35 @@
-import win32gui
-import win32con
-import ctypes
 from loguru import logger
 
 from .base import AutomationTask
 from ..schedule import EntryType
 
-SYSTEM_WINDOW_CLASSES = {
-    "Progman",          # 桌面
-    "Shell_TrayWnd",    # 任务栏
-    "Windows.UI.Core.CoreWindow",  # 输入体验等
-}
+import platform
 
+IS_WINDOWS = platform.system() == "Windows"
 
-def is_window_maximized(hwnd) -> bool:
-    placement = win32gui.GetWindowPlacement(hwnd)
-    return placement[1] == win32con.SW_MAXIMIZE
+if IS_WINDOWS:
+    import win32gui
+    import win32con
+    import ctypes
 
-def is_window_fullscreen(hwnd) -> bool:
-    if not win32gui.IsWindowVisible(hwnd):
-        return False
-    rect = win32gui.GetWindowRect(hwnd)
-    screen_width = ctypes.windll.user32.GetSystemMetrics(0)
-    screen_height = ctypes.windll.user32.GetSystemMetrics(1)
-    margin = 2
-    return rect[0] <= margin and rect[1] <= margin and rect[2] >= screen_width - margin and rect[3] >= screen_height - margin
+    SYSTEM_WINDOW_CLASSES = {
+        "Progman",  # 桌面
+        "Shell_TrayWnd",  # 任务栏
+        "Windows.UI.Core.CoreWindow",  # 输入体验等
+    }
+
+    def is_window_maximized(hwnd) -> bool:
+        placement = win32gui.GetWindowPlacement(hwnd)
+        return placement[1] == win32con.SW_MAXIMIZE
+
+    def is_window_fullscreen(hwnd) -> bool:
+        if not win32gui.IsWindowVisible(hwnd):
+            return False
+        rect = win32gui.GetWindowRect(hwnd)
+        screen_width = ctypes.windll.user32.GetSystemMetrics(0)
+        screen_height = ctypes.windll.user32.GetSystemMetrics(1)
+        margin = 2
+        return rect[0] <= margin and rect[1] <= margin and rect[2] >= screen_width - margin and rect[3] >= screen_height - margin
 
 
 class AutoHideTask(AutomationTask):

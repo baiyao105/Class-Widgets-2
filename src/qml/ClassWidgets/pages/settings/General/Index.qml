@@ -119,4 +119,36 @@ FluentPage {
             }
         }
     }
+
+    ColumnLayout {
+        Layout.fillWidth: true
+        spacing: 4
+        Text {
+            typography: Typography.BodyStrong
+            text: qsTr("Actions")
+        }
+
+        SettingCard {
+            Layout.fillWidth: true
+            title: qsTr("Run at Startup")
+            description: qsTr("Run Class Widgets on startup")
+            icon.name: "ic_fluent_open_20_regular"
+
+            Switch {
+                onCheckedChanged: {
+                    Configs.set("app.auto_startup", checked)
+                    UtilsBackend.setAutostart(checked)
+                }
+                enabled: UtilsBackend.autostartSupported()
+                Component.onCompleted: {
+                    if (!UtilsBackend.autostartEnabled()) {
+                        checked = false
+                        Configs.set("app.auto_startup", checked)
+                        return
+                    }
+                    checked = Configs.data.app.auto_startup
+                }
+            }
+        }
+    }
 }

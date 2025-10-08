@@ -78,6 +78,7 @@ class AppConfig(ConfigBaseModel):
     version: str = __version__
     channel: str = __version_type__
     tutorial_completed: bool = False  # 是否完成初始化
+    auto_startup: bool = False  # 开机自启
 
 
 class PreferencesConfig(ConfigBaseModel):

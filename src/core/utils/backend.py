@@ -1,11 +1,11 @@
-import shutil
 from pathlib import Path
 
 from PySide6.QtCore import Property, Slot, QObject, Signal
-from PySide6.QtGui import QGuiApplication, QClipboard
+from PySide6.QtGui import QGuiApplication
 from loguru import logger
 
 from src.core.directories import LOGS_PATH, ROOT_PATH
+from src.core.utils.auto_startup import autostart_supported, enable_autostart, disable_autostart, is_autostart_enabled
 
 
 class UtilsBackend(QObject):
@@ -79,3 +79,19 @@ class UtilsBackend(QObject):
             self._license_text = license_text
         except Exception as e:
             logger.error(f"Failed to load license: {e}")
+
+    # 自启动
+    @Property(bool, constant=True)
+    def autostartSupported(self):
+        return autostart_supported()
+
+    @Slot(bool, result=bool)
+    def setAutostart(self, enabled):
+        if enabled:
+            enable_autostart()
+        else:
+            disable_autostart()
+
+    @Slot(result=bool)
+    def autostartEnabled(self):
+        return autostart_supported() and is_autostart_enabled()
