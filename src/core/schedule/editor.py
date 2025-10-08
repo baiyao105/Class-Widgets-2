@@ -58,14 +58,10 @@ class ScheduleEditor(QObject):
             subject.name = name
         if simplified_name:
             subject.simplifiedName = simplified_name
-        if teacher:
-            subject.teacher = teacher
-        if icon:
-            subject.icon = icon
-        if color:
-            subject.color = color
-        if location:
-            subject.location = location
+        subject.icon = icon
+        subject.color = color
+        subject.teacher = teacher
+        subject.location = location
         subject.isLocalClassroom = is_local_classroom
         self.updated.emit()
 
