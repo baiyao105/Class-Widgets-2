@@ -231,8 +231,10 @@ Flow {
             // 鼠标右键打开设置
             TapHandler {
                 acceptedButtons: Qt.RightButton
-                onTapped: {
-                    widgetMenu.open()
+                onTapped: (point, button) => {
+                    if (button === Qt.RightButton) {
+                        widgetMenu.open()
+                    }
                 }
             }
 
