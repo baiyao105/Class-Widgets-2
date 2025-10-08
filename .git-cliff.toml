@@ -1,8 +1,7 @@
 [changelog]
 body = """
 
-<!-- 顶部 banner 图片 -->
-<img src="https://raw.githubusercontent.com/{{ remote.github.owner }}/{{ remote.github.repo }}/main/docs/assets/release_banner.png" width="100%" />
+<img src="https://raw.githubusercontent.com/rinlit-233-shiroko/class-widgets-2/main/docs/assets/release_banner.png" width="100%" />
 
 > [!WARNING]
 > 目前 Class Widgets 2 仍然处于开发阶段，可能不适用于生产环境。
