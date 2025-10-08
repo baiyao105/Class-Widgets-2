@@ -12,6 +12,7 @@ CW_PATH = QML_PATH / "ClassWidgets"
 DEFAULT_THEME = QML_PATH / "builtin"
 
 CONFIGS_PATH = ROOT_PATH / "configs"
+SCHEDULES_PATH = CONFIGS_PATH / "schedules"
 THEMES_PATH = ROOT_PATH / "themes"
 PLUGINS_PATH = ROOT_PATH / "plugins"
 BUILTIN_PLUGINS_PATH = SRC_PATH / "plugins"

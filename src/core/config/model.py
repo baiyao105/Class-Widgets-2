@@ -5,6 +5,7 @@ from typing import Dict, List, Optional, Any
 from PySide6.QtCore import QLocale, QCoreApplication
 
 from ..directories import DEFAULT_THEME
+from src import __version__, __version_type__
 
 class ConfigBaseModel(BaseModel):
     _on_change: callable = PrivateAttr(default=None)
@@ -40,7 +41,7 @@ class ZOrder(str, Enum):
 
 # w
 class ScheduleConfig(ConfigBaseModel):
-    current_schedule: str = QCoreApplication.translate("Configs", "default")
+    current_schedule: str = QCoreApplication.translate("Configs", "New Schedule 1")
     preparation_time: int = 2
 
 class WidgetEntry(ConfigBaseModel):
@@ -74,8 +75,8 @@ class AppConfig(ConfigBaseModel):
     """
     debug_mode: bool = False
     no_logs: bool = False
-    version: str = "0.0.1"
-    channel: str = "alpha"
+    version: str = __version__
+    channel: str = __version_type__
     tutorial_completed: bool = False  # 是否完成初始化
 
 

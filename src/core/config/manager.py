@@ -5,6 +5,7 @@ from PySide6.QtCore import QObject, QTimer, Signal, Property, Slot
 
 from .model import AppConfig, ScheduleConfig, PreferencesConfig, PluginsConfig, LocaleConfig, InteractionsConfig, \
     ConfigBaseModel
+from src import __version__, __version_type__
 
 
 class RootConfig(ConfigBaseModel):
@@ -55,9 +56,17 @@ class ConfigManager(QObject):
             try:
                 data = self.full_path.read_text(encoding="utf-8")
                 self._config = RootConfig.model_validate_json(data)
+
+                if (self._config.app.version != __version__
+                    or self._config.app.channel != __version_type__):
+                    logger.warning(f"Config version mismatch: {self._config.app.version} {self._config.app.channel}"
+                                   f"!= {__version__} {__version_type__}")
+                    self._config.app.version = __version__
+                    self._config.app.channel = __version_type__
+
                 self._bind_nested_on_change(self._config)
             except Exception as e:
-                logger.warning(f"配置文件读取失败: {e}, 使用默认配置")
+                logger.warning(f"Load config failed: {e}, use default config")
         self.save()
 
     def save(self, silent=False):
@@ -65,9 +74,9 @@ class ConfigManager(QObject):
             self.path.mkdir(parents=True, exist_ok=True)
             self.full_path.write_text(self._config.model_dump_json(indent=4), encoding="utf-8")
             if not silent:
-                logger.success(f"配置保存成功: {self.full_path}")
+                logger.success(f"Save config success: {self.full_path}")
         except Exception as e:
-            logger.error(f"保存配置失败: {e}")
+            logger.error(f"Save config failed: {e}")
 
     def __getattr__(self, name):
         """代理属性获取"""

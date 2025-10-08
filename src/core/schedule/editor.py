@@ -1,3 +1,4 @@
+from datetime import datetime
 from typing import Optional, List, Dict, Union
 
 from PySide6.QtCore import QObject, Property, Signal, Slot
@@ -310,6 +311,35 @@ class ScheduleEditor(QObject):
                 data["title"] = applicable.title
 
         return data
+
+    # 加急做的，要发prerelease了忘记做了也是神人了
+    @Slot(str, result=bool)
+    def setStartDate(self, date_str: str) -> bool:
+        """
+        设置开学日期，格式: yyyy-mm-dd
+        """
+        try:
+            datetime.strptime(date_str, "%Y-%m-%d")
+        except ValueError:
+            logger.warning(f"Invalid date format: {date_str}")
+            return False
+
+        if not self.schedule or not self.schedule.meta:
+            logger.warning("No schedule or meta data available.")
+            return False
+
+        self.schedule.meta.startDate = date_str
+        self.updated.emit()
+        return True
+
+    @Slot(result=str)
+    def getStartDate(self) -> str:
+        """
+        获取当前开学日期
+        """
+        if not self.schedule or not self.schedule.meta:
+            return datetime.now().strftime("%Y-%m-%d")
+        return getattr(self.schedule.meta, "startDate", datetime.now().strftime("%Y-%m-%d"))
 
     @Slot(result=bool)
     def restoreDefaultSubjects(self):
