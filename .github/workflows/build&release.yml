@@ -1,0 +1,138 @@
+name: Build & Release ClassWidgets-2
+
+on:
+  push:
+    tags:
+      - "*"
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  build:
+    runs-on: ${{ matrix.os }}
+    strategy:
+      matrix:
+        os: [windows-latest, macos-latest]
+
+    steps:
+      - name: ⬇️ Checkout code
+        uses: actions/checkout@v5
+
+      - name: 📦 Set up Python & Install uv
+        uses: astral-sh/setup-uv@v6
+
+      - name: 📦 Cache dependencies
+        uses: actions/cache@v4
+        with:
+          path: ~/.cache/uv
+          key: uv-${{ runner.os }}-${{ github.workflow }}-${{ hashFiles('uv.lock') }}
+          restore-keys: |
+            uv-${{ runner.os }}-${{ github.workflow }}-
+
+      - name: 📦 Install dependencies
+        run: |
+          uv sync
+          uv pip install pyinstaller
+
+      - name: 🔨 Build ClassWidgets-2 (Windows)
+        if: runner.os == 'Windows'
+        shell: bash
+        run: |
+          uv run pyinstaller \
+            src/app.py \
+            --add-data src/qml:src/qml \
+            --add-data src/plugins:src/plugins \
+            --add-data assets:assets \
+            --add-data LICENSE:. \
+            --paths=. \
+            --contents-directory=. \
+            --noconfirm \
+            --icon=assets/images/logo.ico \
+            --name="Class Widgets 2"
+
+      - name: 🔨 Build ClassWidgets-2 (macOS)
+        if: runner.os == 'macOS'
+        shell: bash
+        run: |
+          uv run pyinstaller \
+            src/app.py \
+            --add-data src/qml:src/qml \
+            --add-data src/plugins:src/plugins \
+            --add-data assets:assets \
+            --add-data LICENSE:. \
+            --paths=. \
+            --contents-directory=. \
+            --noconfirm \
+            --icon=assets/images/logo.icns \
+            --name="Class Widgets 2"
+
+      - name: 📦 Zip build (Windows)
+        if: runner.os == 'Windows'
+        shell: pwsh
+        run: |
+          Compress-Archive -Path dist/"Class Widgets 2"/* -DestinationPath dist/ClassWidgets-2-Windows.zip
+
+      - name: 📦 Zip build (macOS)
+        if: runner.os == 'macOS'
+        shell: bash
+        run: |
+          cd dist
+          ditto -c -k --sequesterRsrc --keepParent "Class Widgets 2".app ClassWidgets-2-macOS.zip
+
+      - name: ☁️ Upload artifact (Windows)
+        if: runner.os == 'Windows'
+        uses: actions/upload-artifact@v4
+        with:
+          name: ClassWidgets-2-Windows
+          path: dist/ClassWidgets-2-Windows.zip
+
+      - name: ☁️ Upload artifact (macOS)
+        if: runner.os == 'macOS'
+        uses: actions/upload-artifact@v4
+        with:
+          name: ClassWidgets-2-macOS
+          path: dist/ClassWidgets-2-macOS.zip
+
+  release:
+    needs: [build]
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: ⬇️ Checkout code
+        uses: actions/checkout@v5
+        with:
+          fetch-depth: 0
+
+      - name: ⬇️ Download artifacts
+        uses: actions/download-artifact@v5
+        with:
+          path: dist/
+
+      - name: 🗃 Move release files to root dist/
+        run: |
+          echo "::group::Show downloaded structure"
+          ls -R dist/
+          echo "::endgroup::"
+          mv dist/ClassWidgets-2-Windows/*.zip dist/
+          mv dist/ClassWidgets-2-macOS/*.zip dist/
+
+      - name: 🧱 Set up git-cliff
+        uses: kenji-miyake/setup-git-cliff@v2
+
+      - name: 📜 Generate CHANGELOG.md
+        run: |
+          git cliff --latest --tag "${{ github.ref_name }}" --config .git-cliff.toml > CHANGELOG.md
+
+      - name: 🚀 Create GitHub Release
+        uses: softprops/action-gh-release@v2
+        with:
+          name: Class Widgets 2 ${{ github.ref_name }}
+          tag_name: ${{ github.ref_name }}
+          body_path: CHANGELOG.md
+          files: |
+            dist/ClassWidgets-2-Windows.zip
+            dist/ClassWidgets-2-macOS.zip
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
