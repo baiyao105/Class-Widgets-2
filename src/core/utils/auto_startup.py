@@ -1,13 +1,12 @@
 import os
 import sys
+from pathlib import Path
+
 from src import __app_name__
 import platform
 
 APP_NAME = __app_name__
-APP_PATH = os.path.abspath(sys.argv[0])  # 当前脚本或 exe 路径
-
-print(f"Current script/exe path: {APP_PATH}")
-
+APP_PATH = getattr(sys, "frozen", False) and sys.executable or os.path.abspath(__file__) # 当前脚本或 exe 路径
 IS_WINDOWS = platform.system() == "Windows"
 
 if IS_WINDOWS:
@@ -31,6 +30,7 @@ def enable_autostart():
             r"Software\Microsoft\Windows\CurrentVersion\Run",
             0, winreg.KEY_SET_VALUE
         )
+        print(APP_PATH)
         winreg.SetValueEx(key, APP_NAME, 0, winreg.REG_SZ, APP_PATH)
         key.Close()
         print(f"{APP_NAME} autostart enabled")
