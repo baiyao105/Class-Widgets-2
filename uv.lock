@@ -27,7 +27,7 @@ requires-dist = [
     { name = "loguru" },
     { name = "pydantic" },
     { name = "pyside6" },
-    { name = "rinui", specifier = ">=0.1.8" },
+    { name = "rinui", specifier = ">=0.1.8.1.post1" },
 ]
 
 [[package]]
@@ -185,16 +185,16 @@ wheels = [
 
 [[package]]
 name = "rinui"
-version = "0.1.8"
+version = "0.1.8.1.post1"
 source = { registry = "https://pypi.org/simple" }
 dependencies = [
     { name = "darkdetect" },
     { name = "pyside6" },
     { name = "pywin32", marker = "sys_platform == 'win32'" },
 ]
-sdist = { url = "https://files.pythonhosted.org/packages/84/7a/63480e062c19d3e07ef2d5fe7d826f94d0aa47e09073dc67c4f9cb5a53ae/rinui-0.1.8.tar.gz", hash = "sha256:7a1e0f6b7d93147d19ef5ea8243ea798e4403b1d82939b12601a38206cadf966", size = 887347, upload-time = "2025-10-07T04:44:34.294Z" }
+sdist = { url = "https://files.pythonhosted.org/packages/ef/4f/102f39c31f350c8f5644388d2b5cee1c9d2f56e66bb27629e8845508552d/rinui-0.1.8.1.post1.tar.gz", hash = "sha256:3ce879c34bfcbda344cba31a2497844a53d314bb8f28e8767cd82c568f8ccb95", size = 887440, upload-time = "2025-10-08T05:20:11.906Z" }
 wheels = [
-    { url = "https://files.pythonhosted.org/packages/54/fe/005bd908b2dfb1b0ef89af220f9bbff68646cda7988c84049729fe3db76b/rinui-0.1.8-py3-none-any.whl", hash = "sha256:e854bc07b0ed9fa98be6e1c35f7b8f394e76360f312a598eafc83384300e1c4c", size = 937063, upload-time = "2025-10-07T04:44:32.409Z" },
+    { url = "https://files.pythonhosted.org/packages/15/11/7ec9f7a7ab0c7993890b301998b055946cf4d1aba748c33d152aadaa9f57/rinui-0.1.8.1.post1-py3-none-any.whl", hash = "sha256:bba9c8b1b33f01fded201c446ca4277048d902b1b6bc9b4b79293449a5655d83", size = 937339, upload-time = "2025-10-08T05:20:10.511Z" },
 ]
 
 [[package]]
