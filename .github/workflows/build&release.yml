@@ -150,3 +150,14 @@ jobs:
             dist/ClassWidgets-2-macOS.zip
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: 📤 Upload CHANGELOG to 123Pan WebDAV
+        if: success()
+        run: |
+          VERSION="${{ github.ref_name }}"
+          ENCODED_VERSION=$(echo "$VERSION" | sed 's/ /%20/g')
+
+          # 上传 CHANGELOG.md 到同一版本目录
+          curl -u "${{ secrets.PAN_USER }}:${{ secrets.PAN_PASS }}" \
+            -T "CHANGELOG.md" \
+            "https://webdav.123pan.cn/webdav/${ENCODED_VERSION}/CHANGELOG.md"
