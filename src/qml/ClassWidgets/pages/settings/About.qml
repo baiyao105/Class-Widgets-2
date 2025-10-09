@@ -109,7 +109,7 @@ FluentPage {
 
                 Hyperlink {
                     text: qsTr("Create an issue on GitHub")
-                    openUrl: "https://github.com/RinLit-233-shiroko/Rin-UI/issues/new/choose"
+                    openUrl: "https://github.com/RinLit-233-shiroko/Class-Widgets-2/issues/new/choose"
                 }
             }
             SettingItem {

@@ -37,7 +37,7 @@ class Plugin(CW2Plugin):
                 "default_settings": {
                     "marquee": True,
                     "max_activities": 5,
-                    "full_name": False
+                    "full_name": True
                 }
             },
         ]
