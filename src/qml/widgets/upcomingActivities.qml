@@ -24,7 +24,11 @@ Widget {
         let result = ""
         for (let i = 0; i < entriesLength; i++) {
             let entry = entries[i]
-            let entryText = entry.title || subjectNameById(entry.subjectId) || qsTr("Unknown")
+            let entryText = entry.title
+                            || subjectNameById(entry.subjectId)
+                            || (entry.type === "class" ? qsTr("Class")
+                                : entry.type === "activity" ? qsTr("Activity")
+                                : qsTr("Unset"))
             result += entryText + (i === entries.length - 1 ? "" : "  ")
         }
         if (!result) {
@@ -42,7 +46,7 @@ Widget {
                 return subjects[i].name
             }
         }
-        return qsTr("Unset")
+        return null
     }
 
     MarqueeTitle {
