@@ -79,19 +79,28 @@ jobs:
           cd dist
           ditto -c -k --sequesterRsrc --keepParent "Class Widgets 2".app ClassWidgets-2-macOS.zip
 
-      - name: ☁️ Upload artifact (Windows)
+      - name: 📤 Upload Windows package & CHANGELOG to 123Pan WebDAV
         if: runner.os == 'Windows'
-        uses: actions/upload-artifact@v4
-        with:
-          name: ClassWidgets-2-Windows
-          path: dist/ClassWidgets-2-Windows.zip
+        shell: pwsh
+        run: |
+          $VERSION = "${{ github.ref_name }}"
+          $ENCODED_VERSION = $VERSION -replace ' ', '%20'
 
-      - name: ☁️ Upload artifact (macOS)
+          curl -u "${{ secrets.PAN_USER }}:${{ secrets.PAN_PASS }}" `
+               -T "dist/ClassWidgets-2-Windows.zip" `
+               "https://webdav.123pan.cn/webdav/$ENCODED_VERSION/ClassWidgets-2-Windows.zip"
+
+      - name: 📤 Upload macOS package & CHANGELOG to 123Pan WebDAV
         if: runner.os == 'macOS'
-        uses: actions/upload-artifact@v4
-        with:
-          name: ClassWidgets-2-macOS
-          path: dist/ClassWidgets-2-macOS.zip
+        shell: bash
+        run: |
+          VERSION="${{ github.ref_name }}"
+          ENCODED_VERSION=$(echo "$VERSION" | sed 's/ /%20/g')
+
+          curl -u "${{ secrets.PAN_USER }}:${{ secrets.PAN_PASS }}" \
+               -T "dist/ClassWidgets-2-macOS.zip" \
+               "https://webdav.123pan.cn/webdav/${ENCODED_VERSION}/ClassWidgets-2-macOS.zip"
+      
 
       - name: 📤 Upload to 123Pan WebDAV
         if: success()
@@ -156,8 +165,7 @@ jobs:
         run: |
           VERSION="${{ github.ref_name }}"
           ENCODED_VERSION=$(echo "$VERSION" | sed 's/ /%20/g')
-
-          # 上传 CHANGELOG.md 到同一版本目录
+          
           curl -u "${{ secrets.PAN_USER }}:${{ secrets.PAN_PASS }}" \
             -T "CHANGELOG.md" \
             "https://webdav.123pan.cn/webdav/${ENCODED_VERSION}/CHANGELOG.md"
