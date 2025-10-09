@@ -95,6 +95,20 @@ ColumnLayout {
         }
     }
 
+    SettingCard {
+        Layout.fillWidth: true
+        title: qsTr("Set Default Duration")
+        description: qsTr("Set the default duration for new classes, breaks, or activities.")
+        icon.name: "ic_fluent_calendar_arrow_counterclockwise_20_regular"
+
+        Button {
+            text: qsTr("Set")
+            onClicked: {
+                defaultDurationDialog.open()
+            }
+        }
+    }
+
     Dialog {
         id: datePickerDialog
         modal: true
@@ -117,6 +131,74 @@ ColumnLayout {
                     duration: 5000,
                 })
             }
+        }
+    }
+
+    Dialog {
+        id: defaultDurationDialog
+        modal: true
+        title: qsTr("Select Default Duration")
+        width: 325
+
+        RowLayout {
+            Text {
+                Layout.fillWidth: true
+                text: qsTr("Class")
+            }
+            SpinBox {
+                id: classDuration
+                Layout.preferredWidth: 150
+                from: 1
+                to: 1440
+                stepSize: 5
+            }
+        }
+
+        RowLayout {
+            Text {
+                Layout.fillWidth: true
+                text: qsTr("Break")
+            }
+            SpinBox {
+                id: breakDuration
+                Layout.preferredWidth: 150
+                from: 1
+                to: 1440
+            }
+        }
+
+        RowLayout {
+            Text {
+                Layout.fillWidth: true
+                text: qsTr("Activity")
+            }
+            SpinBox {
+                id: activityDuration
+                Layout.preferredWidth: 150
+                from: 1
+                to: 1440
+                stepSize: 5
+            }
+        }
+
+        standardButtons: Dialog.Ok | Dialog.Cancel
+
+        onOpened: {
+            classDuration.value = Configs.data.schedule.default_duration.class_
+            breakDuration.value = Configs.data.schedule.default_duration.break_
+            activityDuration.value = Configs.data.schedule.default_duration.activity
+        }
+
+        onAccepted: {
+            Configs.set("schedule.default_duration.class_", classDuration.value)
+            Configs.set("schedule.default_duration.break_", breakDuration.value)
+            Configs.set("schedule.default_duration.activity", activityDuration.value)
+        }
+
+        Component.onCompleted: {
+            classDuration.value = Configs.data.schedule.default_duration.class_
+            breakDuration.value = Configs.data.schedule.default_duration.break_
+            activityDuration.value = Configs.data.schedule.default_duration.activity
         }
     }
 

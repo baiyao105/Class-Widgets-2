@@ -38,12 +38,6 @@ class ZOrder(str, Enum):
     BOTTOM = "bottom"
     NORMAL = "normal"
 
-
-# w
-class ScheduleConfig(ConfigBaseModel):
-    current_schedule: str = QCoreApplication.translate("Configs", "New Schedule 1")
-    preparation_time: int = 2
-
 class WidgetEntry(ConfigBaseModel):
     type_id: str
     instance_id: str
@@ -55,6 +49,13 @@ class LocaleConfig(ConfigBaseModel):
     """
     language: str = QLocale.system().name()
 
+class ScheduleDefaultDurationConfig(ConfigBaseModel):
+    """
+    课程默认时长
+    """
+    class_: int = 40  # 分钟
+    break_: int = 10
+    activity: int = 30
 
 class HideInteractionsConfig(ConfigBaseModel):
     """
@@ -120,3 +121,8 @@ class InteractionsConfig(ConfigBaseModel):
 
 class PluginsConfig(ConfigBaseModel):
     enabled: List[str] = ["builtin.classwidgets.widgets"]
+
+class ScheduleConfig(ConfigBaseModel):
+    current_schedule: str = QCoreApplication.translate("Configs", "New Schedule 1")
+    preparation_time: int = 2  # min
+    default_duration: ScheduleDefaultDurationConfig = Field(default_factory=ScheduleDefaultDurationConfig)  # 默认时长

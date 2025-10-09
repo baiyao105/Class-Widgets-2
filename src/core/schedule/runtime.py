@@ -31,6 +31,7 @@ class ScheduleRuntime(QObject):
         self.current_day: Optional[Timeline] = None
         self.previous_entry: Optional[Entry] = None
         self.current_entry: Optional[Entry] = None
+        self.all_entries: Optional[List[Entry]] = None
         self.next_entries: Optional[List[Entry]] = None
         self.remaining_time: Optional[timedelta] = None
         self._progress: Optional[float] = None
@@ -146,6 +147,7 @@ class ScheduleRuntime(QObject):
 
         if self.current_day:
             self.current_entry = self.services.get_current_entry(self.current_day, self.current_time)
+            self.all_entries = self.services.get_all_entries(self.current_day)
             self.next_entries = self.services.get_next_entries(self.current_day, self.current_time)
             self.remaining_time = self.services.get_remaining_time(self.current_day, self.current_time)
             self.current_status = self.services.get_current_status(self.current_day, self.current_time)
@@ -154,6 +156,7 @@ class ScheduleRuntime(QObject):
             self.current_title = getattr(self.current_entry, "title", None)
         else:
             self.current_entry = None
+            self.all_entries = None
             self.next_entries = None
             self.remaining_time = None
             self.current_status = EntryType.FREE

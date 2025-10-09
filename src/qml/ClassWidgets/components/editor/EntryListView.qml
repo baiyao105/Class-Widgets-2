@@ -221,9 +221,9 @@ ColumnLayout {
         let entries = day.entries || []
 
         let startTimeMin = 8 * 60  // 默认 08:00
-        let duration = 40  // 默认课程 40 分钟 TODO: 从设置中读取默认值
-        if (type === "break") duration = 15
-        else if (type === "activity") duration = 30
+        let duration = Configs.data.schedule.default_duration.class_ || 40
+        if (type === "break") duration = Configs.data.schedule.default_duration.break_ || 10
+        else if (type === "activity") duration = Configs.data.schedule.default_duration.activity || 30
 
         if (entries.length > 0) {
             if (root.currentIndex >= 0) {

@@ -12,7 +12,6 @@ class ScheduleServices:
         """
         current_week = self._get_week_number(schedule, now)
         weekday = now.isoweekday()  # 1-7
-        current_date_str = now.date().isoformat()
 
         for day in schedule.days:
             day_of_week_list = [day.dayOfWeek] if isinstance(day.dayOfWeek, int) else day.dayOfWeek
@@ -58,6 +57,17 @@ class ScheduleServices:
             if start <= time < end:
                 return entry
         return None
+
+    @staticmethod
+    def get_all_entries(day: Timeline) -> List[Entry]:
+        """
+        返回当天所有可显示的条目
+        """
+        entries = [
+            e for e in day.entries
+            if e.type in {EntryType.CLASS, EntryType.ACTIVITY}
+        ]
+        return sorted(entries, key=lambda e: datetime.strptime(e.startTime, "%H:%M").time())
 
     @staticmethod
     def get_next_entries(day: Timeline, now: Optional[datetime] = None) -> List[Entry]:
