@@ -93,6 +93,22 @@ jobs:
           name: ClassWidgets-2-macOS
           path: dist/ClassWidgets-2-macOS.zip
 
+      - name: 📤 Upload to 123Pan WebDAV
+        if: success()
+        run: |
+          VERSION="${{ github.ref_name }}"
+          ENCODED_VERSION=$(echo "$VERSION" | sed 's/ /%20/g')
+
+          # 上传 Windows 包
+          curl -u "${{ secrets.PAN_USER }}:${{ secrets.PAN_PASS }}" \
+            -T "dist/ClassWidgets-2-Windows.zip" \
+            "https://webdav.123pan.cn/webdav/${ENCODED_VERSION}/ClassWidgets-2-Windows.zip"
+
+          # 上传 macOS 包
+          curl -u "${{ secrets.PAN_USER }}:${{ secrets.PAN_PASS }}" \
+            -T "dist/ClassWidgets-2-macOS.zip" \
+            "https://webdav.123pan.cn/webdav/${ENCODED_VERSION}/ClassWidgets-2-macOS.zip"
+
   release:
     needs: [build]
     runs-on: ubuntu-latest
