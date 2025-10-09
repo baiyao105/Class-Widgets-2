@@ -1,3 +1,4 @@
+from copy import deepcopy
 from datetime import datetime
 from typing import Optional, List, Dict, Union
 
@@ -133,6 +134,27 @@ class ScheduleEditor(QObject):
 
         self.schedule.days.remove(day)
         self.updated.emit()
+
+    @Slot(str, result=str)
+    def duplicateDay(self, day_id: str) -> Optional[str]:
+        """
+        复制指定时间线
+        """
+        original_day = self.getDay(day_id)
+        if not original_day:
+            logger.warning(f"Day to duplicate not found: {day_id}")
+            return None
+
+        new_day = deepcopy(original_day)
+        new_day.id = generate_id("day")  # 生成新的 day id
+
+        # 为 entries 生成新的 id
+        for entry in new_day.entries:
+            entry.id = generate_id("entry")
+
+        self.schedule.days.append(new_day)
+        self.updated.emit()
+        return new_day.id
 
     @Slot(str, result="QVariant")
     def getDay(self, day_id: str) -> Optional[Timeline]:

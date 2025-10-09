@@ -302,7 +302,8 @@ ColumnLayout {
         }
         Button {
             flat: true; icon.name: "ic_fluent_document_copy_20_regular"; text: qsTr("Duplicate")
-            enabled: false
+            enabled: selectedDayId !== ""
+            onClicked: AppCentral.scheduleEditor.duplicateDay(selectedDayId)  // 复制
         }
         // 复制（后端暂无接口）
     }
