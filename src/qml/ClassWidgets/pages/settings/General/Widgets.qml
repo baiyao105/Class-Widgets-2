@@ -125,19 +125,37 @@ FluentPage {
             text: qsTr("Window")
         }
 
-        Frame {
+        SettingExpander {
             Layout.fillWidth: true
-            padding: 24
+            icon.name: "ic_fluent_laptop_20_regular"
+            title: qsTr("Display")
+            description: qsTr("Set which screen to display widgets on, and adjust their position")
+
+            action: ComboBox {
+                Layout.fillWidth: true
+                model: Qt.application.screens
+                textRole: "name"
+                onCurrentTextChanged: if (focus) Configs.set("preferences.display", currentText)
+                Component.onCompleted: {
+                    const saved = Configs.data.preferences.display
+                    const screens = Qt.application.screens
+                    const i = screens.findIndex(s => s.name === saved)
+                    currentIndex = i >= 0 ? i : 0
+                }
+            }
 
             RowLayout {
-                anchors.fill: parent
+                Layout.fillWidth: true
+                Layout.margins: 24
                 spacing: 12
 
                 Rectangle {
                     // 屏幕边框
-                    Layout.fillWidth: true
+                    Layout.preferredWidth: parent.width * 0.65
+                    Layout.preferredHeight: 200
+                    // Layout.fillWidth: true
                     Layout.fillHeight: true
-                    Layout.preferredHeight: Math.min(width / 1.75, 350)
+                    // Layout.preferredHeight: Math.min(width / 1.75, 350)
                     border.width: 8
                     radius: 12
                     color: "transparent"
@@ -146,7 +164,9 @@ FluentPage {
                     property alias selectedAnchor: anchorGroup.checkedButton
 
                     // RadioButton Group
-                    ButtonGroup { id: anchorGroup }
+                    ButtonGroup {
+                        id: anchorGroup
+                    }
 
                     // 左上角
                     RadioButton {
@@ -213,26 +233,34 @@ FluentPage {
                 ColumnLayout {
                     Layout.alignment: Qt.AlignTop
                     Layout.fillWidth: true
-                    spacing: 4
-                    Text {
-                        text: qsTr("X-axis offset")
+                    spacing: 12
+                    ColumnLayout {
+                        Text {
+                            Layout.alignment: Qt.AlignLeft
+                            text: qsTr("X-axis offset")
+                        }
+                        SpinBox {
+                            Layout.fillWidth: true
+                            from: -1000
+                            to: 1000
+                            stepSize: 1
+                            onValueChanged: if (focus) Configs.set("preferences.widgets_offset_x", value)
+                            Component.onCompleted: value = Configs.data.preferences.widgets_offset_x || 0
+                        }
                     }
-                    SpinBox {
-                        from: -1000
-                        to: 1000
-                        stepSize: 1
-                        onValueChanged: if (focus) Configs.set("preferences.widgets_offset_x", value)
-                        Component.onCompleted: value = Configs.data.preferences.widgets_offset_x || 0
-                    }
-                    Text {
-                        text: qsTr("Y-axis offset")
-                    }
-                    SpinBox {
-                        from: -1000
-                        to: 1000
-                        stepSize: 1
-                        onValueChanged: if (focus) Configs.set("preferences.widgets_offset_y", value)
-                        Component.onCompleted: value = Configs.data.preferences.widgets_offset_y || 0
+                    ColumnLayout {
+                        Text {
+                            Layout.alignment: Qt.AlignLeft
+                            text: qsTr("Y-axis offset")
+                        }
+                        SpinBox {
+                            Layout.fillWidth: true
+                            from: -1000
+                            to: 1000
+                            stepSize: 1
+                            onValueChanged: if (focus) Configs.set("preferences.widgets_offset_y", value)
+                            Component.onCompleted: value = Configs.data.preferences.widgets_offset_y || 0
+                        }
                     }
                 }
             }

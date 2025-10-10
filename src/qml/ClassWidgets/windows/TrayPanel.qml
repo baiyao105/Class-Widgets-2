@@ -10,11 +10,9 @@ Window {
     title: "Control Panel"
     width: 375
     height: 500
-    x: Screen.width / 2 - width / 2
-    y: Screen.height / 2 - height / 2
-    minimumWidth: width
+    minimumWidth: 375
     // maximumWidth: width
-    minimumHeight: height
+    minimumHeight: 500
     // maximumHeight: height
 
     minimizeVisible: false

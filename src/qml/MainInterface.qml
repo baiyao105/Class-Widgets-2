@@ -14,9 +14,18 @@ QQW.Window {
     visible: true
     flags: Qt.FramelessWindowHint | Qt.Tool
     color: "transparent"
-    property var screen: Qt.application.screens[0]  // 主屏 日后再开发多屏适配
-    x: screen.x
-    y: screen.y
+
+    property string screenName: Configs.data.preferences.display || Qt.application.screens[0].name
+    property var screen: {
+        for (let s of Qt.application.screens) {
+            if (s.name === screenName)
+                return s
+        }
+        return Qt.application.screens[0]
+    }
+
+    x: screen.virtualX + ((screen.width - width) / 2)  || 0
+    y: screen.virtualY + ((screen.height - height) / 2) || 0
     width: screen.width
     height: screen.height
 

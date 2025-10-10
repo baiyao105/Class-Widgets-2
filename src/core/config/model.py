@@ -93,6 +93,7 @@ class PreferencesConfig(ConfigBaseModel):
     widgets_offset_x: int = 0  # 水平偏移
     widgets_offset_y: int = 24  # 垂直偏移
     widgets_layer: ZOrder = ZOrder.TOP  # 小组件置顶/置底
+    display: Optional[str] = None  # 指定显示器
 
     mini_mode: bool = False  # 迷你
 
@@ -126,3 +127,4 @@ class ScheduleConfig(ConfigBaseModel):
     current_schedule: str = QCoreApplication.translate("Configs", "New Schedule 1")
     preparation_time: int = 2  # min
     default_duration: ScheduleDefaultDurationConfig = Field(default_factory=ScheduleDefaultDurationConfig)  # 默认时长
+    time_offset: int = 0  # 时差偏移
