@@ -5,13 +5,22 @@ from src.core.schedule.model import Entry, EntryType, Timeline, Subject, Schedul
 
 
 class ScheduleServices:
+    def __init__(self, app_central):
+        self.app_central = app_central
+        self.configs = self.app_central.configs
+        self.reschedule_map: dict = {}
 
     def get_day_entries(self, schedule: ScheduleData, now: datetime) -> Optional[Timeline]:
         """
         返回当前日期对应的 DayEntry（深拷贝，应用 override，不修改原始数据）
         """
-        current_week = self._get_week_number(schedule, now)
-        weekday = now.isoweekday()  # 1-7
+        current_week = self._get_week_index(schedule, now)  # 当前第几周
+        # 调休处理：优先使用调休映射表
+        date_str = now.strftime("%Y-%m-%d")
+        if date_str in self.reschedule_map:
+            weekday = self.reschedule_map[date_str]  # 1-7
+        else:
+            weekday = now.isoweekday()  # 默认 1-7
 
         for day in schedule.days:
             day_of_week_list = [day.dayOfWeek] if isinstance(day.dayOfWeek, int) else day.dayOfWeek
@@ -119,7 +128,7 @@ class ScheduleServices:
         return None
 
     @staticmethod
-    def _get_week_number(schedule: ScheduleData, now: datetime) -> int:
+    def _get_week_index(schedule: ScheduleData, now: datetime) -> int:
         """
         根据 schedule.meta.startDate 算出当前是第几周
         """
@@ -138,6 +147,8 @@ class ScheduleServices:
         - None → 永远 True（等于没限制）
         - int → 当前周 == int
         - list[int] → 当前周 in list
+        :arg weeks: 限制周数的字段
+        :arg current_week: 当前周
         """
         if weeks is None:
             return True
