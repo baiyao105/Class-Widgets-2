@@ -149,14 +149,14 @@ jobs:
           # 上传 Windows zip
           curl -u "${{ secrets.PAN_USER }}:${{ secrets.PAN_PASS }}" \
                -T "dist/ClassWidgets-2-Windows.zip" \
-               "https://webdav.123pan.cn/webdav/${ENCODED_VERSION}/ClassWidgets-2-Windows.zip"
+               "https://webdav.123pan.cn/webdav/${ENCODED_VERSION}"
 
           # 上传 macOS zip
           curl -u "${{ secrets.PAN_USER }}:${{ secrets.PAN_PASS }}" \
                -T "dist/ClassWidgets-2-macOS.zip" \
-               "https://webdav.123pan.cn/webdav/${ENCODED_VERSION}/ClassWidgets-2-macOS.zip"
+               "https://webdav.123pan.cn/webdav/${ENCODED_VERSION}"
 
           # 上传 CHANGELOG
           curl -u "${{ secrets.PAN_USER }}:${{ secrets.PAN_PASS }}" \
                -T "CHANGELOG.md" \
-               "https://webdav.123pan.cn/webdav/${ENCODED_VERSION}/CHANGELOG.md"
+               "https://webdav.123pan.cn/webdav/${ENCODED_VERSION}"
