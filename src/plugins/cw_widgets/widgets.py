@@ -1,10 +1,10 @@
 from pathlib import Path
 
 from PySide6.QtCore import Slot
-from loguru import logger
 
-from src.core.plugin import CW2Plugin
 from src.core.directories import QML_PATH
+from src.core.plugin import CW2Plugin
+
 
 class Plugin(CW2Plugin):
     def __init__(self, plugin_api):
@@ -66,7 +66,7 @@ class Plugin(CW2Plugin):
             "year": current_time.year,
             "month": current_time.month,
             "day": current_time.day,
-            "weekday": current_time.weekday()
+            "weekday": current_time.isoweekday()
         }
 
     def on_unload(self):
