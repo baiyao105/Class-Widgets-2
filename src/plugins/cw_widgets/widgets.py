@@ -66,7 +66,7 @@ class Plugin(CW2Plugin):
             "year": current_time.year,
             "month": current_time.month,
             "day": current_time.day,
-            "weekday": current_time.weekday()
+            "weekday": current_time.isoweekday()
         }
 
     def on_unload(self):
