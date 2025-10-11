@@ -93,28 +93,6 @@ jobs:
           name: ClassWidgets-2-macOS
           path: dist/ClassWidgets-2-macOS.zip
 
-      - name: 📤 Upload Windows package & CHANGELOG to 123Pan WebDAV
-        if: runner.os == 'Windows'
-        shell: pwsh
-        run: |
-          $VERSION = "${{ github.ref_name }}"
-          $ENCODED_VERSION = $VERSION -replace ' ', '%20'
-
-          curl -u "${{ secrets.PAN_USER }}:${{ secrets.PAN_PASS }}" `
-               -T "dist/ClassWidgets-2-Windows.zip" `
-               "https://webdav.123pan.cn/webdav/$ENCODED_VERSION/ClassWidgets-2-Windows.zip"
-
-      - name: 📤 Upload macOS package & CHANGELOG to 123Pan WebDAV
-        if: runner.os == 'macOS'
-        shell: bash
-        run: |
-          VERSION="${{ github.ref_name }}"
-          ENCODED_VERSION=$(echo "$VERSION" | sed 's/ /%20/g')
-
-          curl -u "${{ secrets.PAN_USER }}:${{ secrets.PAN_PASS }}" \
-               -T "dist/ClassWidgets-2-macOS.zip" \
-               "https://webdav.123pan.cn/webdav/${ENCODED_VERSION}/ClassWidgets-2-macOS.zip"
-
   release:
     needs: [build]
     runs-on: ubuntu-latest
@@ -130,22 +108,16 @@ jobs:
         with:
           path: dist/
 
-      - name: 🗃 Move release files to root dist/
-        run: |
-          echo "::group::Show downloaded structure"
-          ls -R dist/
-          echo "::endgroup::"
-          mv dist/ClassWidgets-2-Windows/*.zip dist/
-          mv dist/ClassWidgets-2-macOS/*.zip dist/
+      - name: 🗃 Show downloaded structure
+        run: ls -R dist/
 
       - name: 🧱 Set up git-cliff
         uses: kenji-miyake/setup-git-cliff@v2
 
       - name: 📜 Generate CHANGELOG.md
-        run: |
-          git cliff --latest --tag "${{ github.ref_name }}" --config .git-cliff.toml > CHANGELOG.md
+        run: git cliff --latest --tag "${{ github.ref_name }}" --config .git-cliff.toml > CHANGELOG.md
 
-      - name: 🚀 Create GitHub Release
+      - name: 🚀 Create GitHub Prerelease
         uses: softprops/action-gh-release@v2
         with:
           name: Class Widgets 2 ${{ github.ref_name }}
@@ -158,12 +130,25 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
-      - name: 📤 Upload CHANGELOG to 123Pan WebDAV
-        if: success()
+      - name: 📤 Upload all to 123Pan WebDAV
         run: |
           VERSION="${{ github.ref_name }}"
           ENCODED_VERSION=$(echo "$VERSION" | sed 's/ /%20/g')
-          
+
+          # 确保远程目录存在
+          curl -u "${{ secrets.PAN_USER }}:${{ secrets.PAN_PASS }}" -X MKCOL "https://webdav.123pan.cn/webdav/${ENCODED_VERSION}/" || true
+
+          # 上传 Windows zip
           curl -u "${{ secrets.PAN_USER }}:${{ secrets.PAN_PASS }}" \
-            -T "CHANGELOG.md" \
-            "https://webdav.123pan.cn/webdav/${ENCODED_VERSION}/CHANGELOG.md"
+               -T "dist/ClassWidgets-2-Windows.zip" \
+               "https://webdav.123pan.cn/webdav/${ENCODED_VERSION}/ClassWidgets-2-Windows.zip"
+
+          # 上传 macOS zip
+          curl -u "${{ secrets.PAN_USER }}:${{ secrets.PAN_PASS }}" \
+               -T "dist/ClassWidgets-2-macOS.zip" \
+               "https://webdav.123pan.cn/webdav/${ENCODED_VERSION}/ClassWidgets-2-macOS.zip"
+
+          # 上传 CHANGELOG
+          curl -u "${{ secrets.PAN_USER }}:${{ secrets.PAN_PASS }}" \
+               -T "CHANGELOG.md" \
+               "https://webdav.123pan.cn/webdav/${ENCODED_VERSION}/CHANGELOG.md"
