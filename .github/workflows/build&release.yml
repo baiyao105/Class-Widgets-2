@@ -108,6 +108,14 @@ jobs:
         with:
           path: dist/
 
+      - name: 🗃 Move release files to root dist/
+        run: |
+          echo "::group::Show downloaded structure"
+          ls -R dist/
+          echo "::endgroup::"
+          mv dist/ClassWidgets-2-Windows/*.zip dist/
+          mv dist/ClassWidgets-2-macOS/*.zip dist/
+
       - name: 🗃 Show downloaded structure
         run: ls -R dist/
 
