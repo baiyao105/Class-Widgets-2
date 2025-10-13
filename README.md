@@ -65,7 +65,7 @@ Class Widgets 2 是新一代的电子化课程表展示工具，基于比前代�
 ### 贡献者
 [![Contributors](http://contrib.nn.ci/api?repo=rinlit-233-shiroko/class-widgets-2)](https://github.com/rinlit-233-shiroko/class-widgets-2/graphs/contributors)
 
-![Repobeats](https://repobeats.axiom.co/api/embed/9d06f1435d1b14cb7837d1e863e55f24cc98df23.svg)
+![Repobeats](https://repobeats.axiom.co/api/embed/804be9d62a4ed9c120de1e7b6e3919e8a3dd3c92.svg "Repobeats analytics image")
 
 ## 星标历史
 
