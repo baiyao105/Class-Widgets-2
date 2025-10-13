@@ -32,8 +32,9 @@ class AppCentral(QObject):  # Class Widgets 的中枢
 
     def __init__(self):  # 初始化
         super().__init__()
-        self._initialize_schedule_components()
         self._initialize_cores()
+        self._initialize_schedule_components()
+        self._initialize_utils()
         self._initialize_ui_components()
 
     def _initialize_cores(self):
@@ -43,16 +44,15 @@ class AppCentral(QObject):  # Class Widgets 的中枢
         self.configs = ConfigManager(path=CONFIGS_PATH, filename="configs.json")
         self.theme_manager = ThemeManager(self)
         self.widgets_model = WidgetListModel(self)
+        # debugger
+        self.debugger = None
+
+    def _initialize_utils(self):
         self.plugin_api = PluginAPI(self)
         self.plugin_manager = PluginManager(self.plugin_api, self)
         self.app_translator = AppTranslator(self)
         self.utils_backend = UtilsBackend()
-        
-        # 交互管理器
         self.automation_manager = AutomationManager(self)
-
-        # debugger
-        self.debugger = None
 
     def _initialize_schedule_components(self):
         """初始化调度相关组件"""
@@ -193,7 +193,7 @@ class AppCentral(QObject):  # Class Widgets 的中枢
         self.plugin_manager.load_plugins()
 
     def _init_tray_icon(self):
-        self.tray_icon = TrayIcon(self)
+        self.tray_icon = TrayIcon()
         self.tray_icon.togglePanel.connect(self._on_tray_toggle)
 
     def _setup_logging(self):

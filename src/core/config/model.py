@@ -128,3 +128,4 @@ class ScheduleConfig(ConfigBaseModel):
     preparation_time: int = 2  # min
     default_duration: ScheduleDefaultDurationConfig = Field(default_factory=ScheduleDefaultDurationConfig)  # 默认时长
     time_offset: int = 0  # 时差偏移
+    reschedule_day: dict = {}  # 调整日程

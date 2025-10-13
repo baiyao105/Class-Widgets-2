@@ -11,7 +11,7 @@ from src.core import ASSETS_PATH
 class TrayIcon(QObject):
     togglePanel = Signal(QPoint)
 
-    def __init__(self, parent=None):
+    def __init__(self):
         super().__init__()
         tray_icon_path = Path(ASSETS_PATH / "images" / "tray_icon.png").as_posix()
         self.tray = QSystemTrayIcon(QIcon(tray_icon_path))
@@ -23,12 +23,3 @@ class TrayIcon(QObject):
         # if reason == QSystemTrayIcon.ActivationReason.Trigger:
         pos = QCursor.pos()
         self.togglePanel.emit(pos)
-
-    @Slot()
-    def quitApp(self):
-        import sys
-        sys.exit(0)
-
-    @Slot()
-    def openSettings(self):
-        print("打开设置面板！")
