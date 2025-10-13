@@ -55,7 +55,7 @@ Dialog {
                     // iso-weekday
                     property int weekday: index + 1
 
-                    text: Qt.locale().standaloneDayName(weekday, Locale.ShortFormat)
+                    text: locale.standaloneDayName(weekday, Locale.ShortFormat)
 
                     onClicked: {
                         reScheduleDayDialog.selectedWeekday = weekday
