@@ -190,6 +190,9 @@ class AppCentral(QObject):  # Class Widgets 的中枢
         self.automation_manager.init_builtin_tasks()
         self.widgets_window.run()
 
+        if "--update-done" in sys.argv:
+            self.updater_bridge.update_complete()
+
     def _load_theme_and_plugins(self):
         """主题和插件"""
         self.theme_manager.load()

@@ -28,7 +28,7 @@ class WindowsUpdater:
                 echo Updating files...
                 xcopy /E /Y /Q "{extract_dir}" "{target_dir}"
                 echo Done. Restarting...
-                start "" "{target_dir / "__app_filename__"}"
+                start "" "{target_dir / "__app_filename__"}" --update-done
                 """
             )
 

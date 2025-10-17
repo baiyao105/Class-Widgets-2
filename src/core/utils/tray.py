@@ -22,6 +22,7 @@ class TrayIcon(QObject):
             "default": tray_icon_path,
             "error": Path(icons_dir / "cw2_error.png").as_posix(),
             "update_available": Path(icons_dir / "cw2_update_available.png").as_posix(),
+            "up_to_date": Path(icons_dir / "cw2_up_to_date.png").as_posix(),
         }
 
         self._set_app_user_model_id("Class Widgets 2")
@@ -47,9 +48,12 @@ class TrayIcon(QObject):
     def push_update_notification(self, title: str, text: str):
         self.tray.showMessage(title, text, QIcon(Path(self.icon_paths["update_available"]).as_posix()), 10000)
 
+    def push_up_to_date_notification(self, title: str, text: str):
+        self.tray.showMessage(title, text, QIcon(Path(self.icon_paths["up_to_date"]).as_posix()), 10000)
+
     def push_error_notification(self, title: str, text: str):
         self.tray.showMessage(title, text, QIcon(Path(self.icon_paths["error"]).as_posix()), 5000)
 
-    def push_notification(self, title: str, text: str):
-        self.tray.showMessage(title, text, QIcon(Path(self.icon_paths["default"]).as_posix()), 5000)
+    def push_notification(self, title: str, text: str, icon: QIcon = None):
+        self.tray.showMessage(title, text, icon or QIcon(Path(self.icon_paths["default"]).as_posix()), 5000)
 

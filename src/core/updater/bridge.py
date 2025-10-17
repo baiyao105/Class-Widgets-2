@@ -2,7 +2,9 @@ import platform
 import tempfile
 from pathlib import Path
 from PySide6.QtCore import QObject, Signal, Slot, Property
+from PySide6.QtWidgets import QApplication
 from loguru import logger
+from src import __version__
 
 from .downloader import UpdateDownloader
 from .updater import WindowsUpdater
@@ -37,7 +39,6 @@ class UpdaterBridge(QObject):
         self._latest_url = ""
         self._downloaded_file = None
 
-    # ------------------- QML 属性 -------------------
     @Property(str, notify=statusChanged)
     def status(self):
         return self._status
@@ -54,7 +55,6 @@ class UpdaterBridge(QObject):
     def errorDetails(self):
         return self._error_details
 
-    # ------------------- 内部辅助方法 -------------------
     def _set_status(self, s):
         if self._status != s:
             self._status = s
@@ -72,7 +72,25 @@ class UpdaterBridge(QObject):
         self.errorOccurred.emit(msg)
         logger.error(f"[UpdaterBridge] {msg}")
 
-    # ------------------- 更新流程 -------------------
+    def update_complete(self):
+        if self.temp_dir.exists():
+            try:
+                import shutil
+                shutil.rmtree(self.temp_dir)
+                logger.info("Temporary directory removed.")
+            except FileNotFoundError:
+                pass
+            except Exception as e:
+                logger.warning(f"Failed to remove temporary directory: {e}")
+        text_template = QApplication.translate(
+            "UpdateNotification", "Class Widgets has been updated to the latest version: {version}"
+        )
+
+        self.app_central.tray_icon.push_up_to_date_notification(
+            title=QApplication.translate("UpdateNotification", "Update Completed ヾ(≧▽≦*)o"),
+            text=text_template.format(version=__version__),
+        )
+
     @Slot()
     def checkUpdate(self):
         """检查更新：所有平台通用"""
