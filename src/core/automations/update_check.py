@@ -12,6 +12,9 @@ class UpdateCheckTask(AutomationTask):
         super().__init__(central, parent)
         self.app_central = central
 
+        if not self.app_central.configs.network.auto_check_updates:
+            return  # 不检查
+
         self._timer = QTimer(self)
         self._timer.setInterval(1000)
         self._timer.timeout.connect(self._check_update)

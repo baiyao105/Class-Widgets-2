@@ -144,6 +144,7 @@ FluentPage {
                     }
                 }
                 highlighted: UpdaterBridge.status !== "UpdateAvailable"
+                    || (UpdaterBridge.status === "UpdateAvailable" && !downloadBtn.visible)
                 enabled: UpdaterBridge.status !== "Checking"
                 onClicked: {
                     root.errorDetails = ""
@@ -262,6 +263,21 @@ FluentPage {
                         text: modelData + " (" + Configs.data.network.mirrors[modelData] + ")"
                     }
                 }
+            }
+        }
+
+        SettingCard {
+            Layout.fillWidth: true
+            icon.name: "ic_fluent_arrow_sync_checkmark_20_regular"
+            title: qsTr("Auto check for updates")
+            description: qsTr(
+                "Automatically check for updates and download them when they are available \n" +
+                "* Requires restart"
+            )
+
+            Switch {
+                onCheckedChanged: Configs.set("network.auto_check_updates", checked)
+                Component.onCompleted: checked = Configs.data.network.auto_check_updates
             }
         }
     }
