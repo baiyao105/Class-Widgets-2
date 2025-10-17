@@ -267,6 +267,8 @@ FluentPage {
     }
 
     ColumnLayout {
+        visible: Configs.data.app.debug_mode
+
         Layout.fillWidth: true
         spacing: 4
         Text {
