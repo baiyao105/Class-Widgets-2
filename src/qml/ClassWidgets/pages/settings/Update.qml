@@ -284,11 +284,25 @@ FluentPage {
                 "Set a custom URL to use for the updater server"
             )
 
-            TextField {
-                Layout.fillWidth: true
-                placeholderText: qsTr("https://example.com/releases.json/")
-                onTextChanged: if (focus) Configs.set("network.releases_url", text)
-                Component.onCompleted: text = Configs.data.network.releases_url
+            RowLayout {
+                spacing: 4
+                ToolButton {
+                    icon.name: "ic_fluent_arrow_reset_20_regular"
+                    onClicked: urlField.text = "https://classwidgets.rinlit.cn/2/releases.json/"
+
+                    ToolTip {
+                        text: qsTr("Reset to default")
+                        visible: parent.hovered
+                    }
+                }
+
+                TextField {
+                    id: urlField
+                    Layout.fillWidth: true
+                    placeholderText: qsTr("https://example.com/releases.json/")
+                    onTextChanged: if (focus) Configs.set("network.releases_url", text)
+                    Component.onCompleted: text = Configs.data.network.releases_url
+                }
             }
         }
     }

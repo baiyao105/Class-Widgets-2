@@ -86,6 +86,7 @@ class AppCentral(QObject):  # Class Widgets 的中枢
         self._load_schedule()  # 加载课程表
         self._load_runtime()  # 加载运行时
         self._init_tray_icon()  # 初始化托盘图标
+        self._run_utils()
         self.initialized.emit()  # 发送信号
         logger.info(f"Configs loaded.")
 
@@ -168,13 +169,9 @@ class AppCentral(QObject):  # Class Widgets 的中枢
         self.app_translator.setLanguage(self.configs.locale.language)
 
     def _load_runtime(self):
-        if self.configs.app.debug_mode:  # 调试模式
-            self.debugger = DebuggerWindow(self)
-
         self.runtime.refresh(self.schedule_manager.schedule)
         self._setup_runtime_connections()
         self._load_theme_and_plugins()
-        self.widgets_window.run()
 
     def _setup_runtime_connections(self):
         """设置runtime连接"""
@@ -185,6 +182,13 @@ class AppCentral(QObject):  # Class Widgets 的中枢
         self.schedule_manager.scheduleModified.connect(self.runtime.refresh)
 
         self.union_update_timer.start()
+
+    def _run_utils(self):
+        if self.configs.app.debug_mode:  # 调试模式
+            self.debugger = DebuggerWindow(self)
+
+        self.automation_manager.init_builtin_tasks()
+        self.widgets_window.run()
 
     def _load_theme_and_plugins(self):
         """主题和插件"""

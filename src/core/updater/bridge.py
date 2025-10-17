@@ -8,8 +8,6 @@ from .downloader import UpdateDownloader
 from .updater import WindowsUpdater
 from .workers import CheckUpdateWorker, DownloadWorker, InstallWorker
 
-ZIP_APP_NAME = "Class Widgets 2.exe"
-
 
 class UpdaterBridge(QObject):
     # --- QML 信号 ---
@@ -103,7 +101,6 @@ class UpdaterBridge(QObject):
         else:
             self._set_status("UpToDate")
 
-    # ------------------- 下载 -------------------
     @Slot()
     def startDownload(self):
         """仅 Windows 支持下载"""
@@ -138,7 +135,7 @@ class UpdaterBridge(QObject):
     def _on_download_finished(self, success: bool, msg: str, manual_stop: bool = False):
         if not success:
             if manual_stop:
-                self._set_status("Idle")  # 用户取消下载 -> 回到 Idle
+                self._set_status("Idle")
             else:
                 self._set_status("Error")
                 self._set_error(msg)
@@ -147,7 +144,6 @@ class UpdaterBridge(QObject):
         self._set_status("Downloaded")
         self.installReady.emit(self._latest_version)
 
-    # ------------------- 停止下载 -------------------
     @Slot()
     def stopDownload(self):
         self._set_progress(0.0, 0.0)
@@ -169,7 +165,7 @@ class UpdaterBridge(QObject):
 
         self._set_status("Installing")
         self._install_worker = InstallWorker(
-            WindowsUpdater(self.temp_dir, exe_name=ZIP_APP_NAME),
+            WindowsUpdater(self.temp_dir),
             self._downloaded_file,
             Path.cwd()
         )
