@@ -30,12 +30,14 @@ class UpdateCheckTask(AutomationTask):
     def _handle_update_available(self, version, url):
         logger.info(f"Update available: {version}, {url}")
         try:
+            text_template = QApplication.translate(
+                "UpdateNotification",
+                '"{version}" is available!\nGo to "Settings" → "Update" for more details.'
+            )
+            text = text_template.format(version=version)  # fix translation
             self.app_central.tray_icon.push_update_notification(
                 title=QApplication.translate("UpdateNotification", "Class Widgets Update Available"),
-                text=QApplication.translate(
-                    "UpdateNotification",
-                    f"\"{version}\" is available!\nGo to \"Settings\" → \"Update\" for more details."
-                )
+                text=text
             )
             self.app_central.updater_bridge.updateAvailable.disconnect(self._handle_update_available)
         except Exception as e:

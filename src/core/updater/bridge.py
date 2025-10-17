@@ -59,7 +59,7 @@ class UpdaterBridge(QObject):
         if self._status != s:
             self._status = s
             self.statusChanged.emit(s)
-            logger.info(f"[UpdaterBridge] Status -> {s}")
+            # logger.info(f"[UpdaterBridge] Status -> {s}")
 
     def _set_progress(self, percent, speed):
         self._progress = max(0.0, min(100.0, percent))

@@ -232,7 +232,7 @@ FluentPage {
             Layout.fillWidth: true
             icon.name: "ic_fluent_network_check_20_regular"
             title: qsTr("Use Mirror Source")
-            description: qsTr("If GitHub is slow or unavailable in your region, use a mirror to download updates faster.")
+            description: qsTr("If GitHub is slow or unavailable in your region, use a mirror to download updates faster")
 
             action: Switch {
                 onCheckedChanged: Configs.set("network.mirror_enabled", checked)
@@ -241,7 +241,7 @@ FluentPage {
 
             SettingItem {
                 title: qsTr("Select Mirror")
-                description: qsTr("Choose a mirror source for downloading updates.")
+                description: qsTr("Choose a mirror source for downloading updates")
 
                 ComboBox {
                     Layout.fillWidth: true
