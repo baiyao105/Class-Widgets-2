@@ -4,6 +4,9 @@ from pathlib import Path
 import zipfile
 
 
+APP_NAME = "Class Widgets 2.exe"
+
+
 class WindowsUpdater:
     """
     解压并替换更新
@@ -28,7 +31,7 @@ class WindowsUpdater:
                 echo Updating files...
                 xcopy /E /Y /Q "{extract_dir}" "{target_dir}"
                 echo Done. Restarting...
-                start "" "{target_dir / "__app_filename__"}" --update-done
+                start "" "{target_dir / APP_NAME}" --update-done
                 """
             )
 
