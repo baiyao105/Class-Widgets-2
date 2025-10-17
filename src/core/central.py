@@ -17,6 +17,7 @@ from src.core.schedule import ScheduleRuntime, ScheduleManager
 from src.core.schedule.editor import ScheduleEditor
 from src.core.themes import ThemeManager
 from src.core.timer import UnionUpdateTimer
+from src.core.updater import UpdaterBridge
 from src.core.utils import TrayIcon, AppTranslator, UtilsBackend
 from src.core.utils.debugger import DebuggerWindow
 from src.core.widgets import WidgetsWindow, WidgetListModel
@@ -53,6 +54,7 @@ class AppCentral(QObject):  # Class Widgets 的中枢
         self.app_translator = AppTranslator(self)
         self.utils_backend = UtilsBackend()
         self.automation_manager = AutomationManager(self)
+        self.updater_bridge = UpdaterBridge(self)
 
     def _initialize_schedule_components(self):
         """初始化调度相关组件"""
@@ -276,6 +278,7 @@ class Settings(RinUIWindow):
         self.engine.addImportPath(DEFAULT_THEME)
         self.central.setup_qml_context(self)
         self.engine.rootContext().setContextProperty("UtilsBackend", self.central.utils_backend)
+        self.engine.rootContext().setContextProperty("UpdaterBridge", self.central.updater_bridge)
         self.central.retranslate.connect(self.engine.retranslate)
 
         self.load(CW_PATH / "windows" / "Settings.qml")
