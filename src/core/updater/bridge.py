@@ -159,6 +159,14 @@ class UpdaterBridge(QObject):
                 self._set_error(msg)
             return
 
+        self.app_central.tray_icon.push_notification(
+            title=QApplication.translate("UpdateNotification", "Update Downloaded"),
+            text=QApplication.translate(
+                "UpdateNotification",
+                "Ready to install anytime. Go to \"Settings\" → \"Update\" to proceed with installation."
+            )
+        )
+
         self._set_status("Downloaded")
         self.installReady.emit(self._latest_version)
 
@@ -193,6 +201,12 @@ class UpdaterBridge(QObject):
     def _on_install_finished(self, success, msg):
         if success:
             self._set_status("Installed")
+            self.app_central.tray_icon.push_notification(
+                title=QApplication.translate("UpdateNotification", "Applying Update Soon"),
+                text=QApplication.translate(
+                    "UpdateNotification", "The update may take several seconds to complete. (●'◡'●)"
+                )
+            )
             self.app_central.restart()
         else:
             self._set_status("Error")
