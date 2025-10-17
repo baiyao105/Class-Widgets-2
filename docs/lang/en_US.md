@@ -2,7 +2,7 @@
 <img src="../../assets/images/logo.png" width="15%" alt="Class Widgets 2">
 <h1>Class Widgets 2</h1>
 
-<p>The New Is a Natural Difference.</p>
+<p>Rewritten. Reimagined.</p>
 
 <!--[![当前版本](https://img.shields.io/github/v/release/rinlit-233-shiroko/class-widgets-2?style=for-the-badge&color=purple&label=%E5%BD%93%E5%89%8D%E7%89%88%E6%9C%AC)](https://github.com/rinlit-233-shiroko/class-widgets-2/releases/latest)--->
 
