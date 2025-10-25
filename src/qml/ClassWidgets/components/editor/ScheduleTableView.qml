@@ -39,14 +39,13 @@ Item {
     function isWeekActive(weeks) {
         if (!weeks || weeks === "all") return true;
 
-        maxWeekCycle = AppCentral.scheduleEditor.meta.maxWeekCycle;
+        let maxWeekCycle = AppCentral.scheduleEditor.meta.maxWeekCycle;
 
         if (Array.isArray(weeks)) {
             return weeks.indexOf(currentWeek) !== -1;
         }
-
         if (typeof weeks === "number") {
-            return currentWeek === weeks || currentWeek >= maxWeekCycle && (currentWeek - maxWeekCycle) % weeks === 0;
+            return currentWeek >= weeks && (currentWeek - weeks) % maxWeekCycle === 0;
         }
 
         return false;
