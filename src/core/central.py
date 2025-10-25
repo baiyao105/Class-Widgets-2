@@ -134,6 +134,7 @@ class AppCentral(QObject):  # Class Widgets 的中枢
 
     @Slot()
     def restart(self):
+        self.cleanup()
         os.execl(sys.executable, sys.executable, *sys.argv)
 
     def setup_qml_context(self, window):
