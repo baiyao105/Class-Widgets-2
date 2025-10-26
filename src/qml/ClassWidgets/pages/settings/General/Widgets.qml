@@ -152,6 +152,9 @@ FluentPage {
                 Text {
                     text: {
                         switch (Math.round(weightSlider.value)) {
+                            case 100: return qsTr("Thin")
+                            case 200: return qsTr("Extra Light")
+                            case 300: return qsTr("Light")
                             case 400: return qsTr("Regular")
                             case 500: return qsTr("Medium")
                             case 600: return qsTr("Semi Bold")
@@ -165,7 +168,7 @@ FluentPage {
 
                 Slider {
                     id: weightSlider
-                    from: 400
+                    from: 100
                     to: 900
                     stepSize: 100
                     snapMode: Slider.SnapAlways
@@ -191,6 +194,7 @@ FluentPage {
             SettingItem {
                 title: qsTr("Preview")
                 TextArea {
+                    textFormat: TextEdit.RichText
                     text: qsTr(
                         "The quick brown fox jumps over the lazy dog"
                     )
