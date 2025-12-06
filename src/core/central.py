@@ -53,7 +53,7 @@ class AppCentral(QObject):  # Class Widgets 的中枢
         self.plugin_api = PluginAPI(self)
         self.plugin_manager = PluginManager(self.plugin_api, self)
         self.app_translator = AppTranslator(self)
-        self.utils_backend = UtilsBackend()
+        self.utils_backend = UtilsBackend(self)
         self.automation_manager = AutomationManager(self)
         self.updater_bridge = UpdaterBridge(self)
 
@@ -85,7 +85,7 @@ class AppCentral(QObject):  # Class Widgets 的中枢
 
         self._setup_logging()  # 设置日志
         self._load_schedule()  # 加载课程表
-        self._load_runtime()  # 加载运行时
+        self._load_runtime()  # 加载运行时(以及插件)
         self._init_tray_icon()  # 初始化托盘图标
         self._run_utils()
         self.initialized.emit()  # 发送信号
@@ -303,7 +303,8 @@ class AppCentral(QObject):  # Class Widgets 的中枢
         return f
 
 
-class Settings(RinUIWindow):
+class Settings(RinUIWindow, QObject):
+    extraSettingsChanged = Signal()
     def __init__(self, parent: AppCentral):
         super().__init__()
         self.central = parent
@@ -312,7 +313,9 @@ class Settings(RinUIWindow):
         self.central.setup_qml_context(self)
         self.engine.rootContext().setContextProperty("UtilsBackend", self.central.utils_backend)
         self.engine.rootContext().setContextProperty("UpdaterBridge", self.central.updater_bridge)
+        self.engine.rootContext().setContextProperty("Settings", self)
         self.central.retranslate.connect(self.engine.retranslate)
+        self.extra_settings = []
 
         self.load(CW_PATH / "windows" / "Settings.qml")
 

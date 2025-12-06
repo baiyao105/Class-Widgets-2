@@ -1,10 +1,12 @@
-from typing import Optional, List, Dict, Union, Any
+from pathlib import Path
+from typing import Optional, List, Dict, Union
 from datetime import datetime
-from PySide6.QtCore import QObject, Signal, QUrl
+from PySide6.QtCore import Signal, QUrl
+from loguru import logger
+
 from src.core.schedule.model import EntryType
+from PySide6.QtCore import QObject
 
-
-# -------- 子 API 模块 --------
 
 class WidgetsAPI:
     def __init__(self, app):
@@ -20,7 +22,7 @@ class WidgetsAPI:
 
 
 class NotifyAPI(QObject):
-    pushed = Signal(str)  # 给插件监听的信号 (轻量)
+    pushed = Signal(str)  # 给插件监听的信号暂定
 
     def __init__(self, app):
         super().__init__()
@@ -159,7 +161,41 @@ class AutomationAPI:
         self._app.automation_manager.add_task(task)
 
 
-# -------- 主 API --------
+class UiAPI(QObject):
+    settingsPageRegistered = Signal()
+    def __init__(self):
+        super().__init__()
+        self._registered_pages: list[dict] = []
+
+    @property
+    def pages(self):
+        return self._registered_pages
+
+    def register_settings_page(
+        self,
+        plugin,
+        qml_path: str | Path,
+        title: str | None = None,
+        icon: str | None = None
+    ):
+        """插件提供相对路径，可自定义 title 和 icon"""
+        qml_path = Path(qml_path)
+        if not qml_path.is_absolute():
+            qml_path = plugin.PATH / qml_path
+
+        pid = plugin.meta.get("id")
+        if not pid:
+            raise ValueError("Plugin initialization failed, missing meta.id")
+
+        self._registered_pages.append({
+            "id": pid,
+            "page": qml_path.resolve().as_uri(),
+            "title": title or plugin.meta.get("name", "UNKNOWN"),
+            "icon": icon or plugin.meta.get("icon", "ic_fluent_cube_20_regular")
+        })
+        self.settingsPageRegistered.emit()
+        logger.debug(f"Plugin: {pid} register settings page: {qml_path}")
+
 
 class PluginAPI:
     def __init__(self, app):
@@ -170,15 +206,14 @@ class PluginAPI:
         self.runtime: RuntimeAPI = RuntimeAPI(app)
         self.config: ConfigAPI = ConfigAPI(app)
         self.automation: AutomationAPI = AutomationAPI(app)
+        self.ui: UiAPI = UiAPI()
 
-
-from PySide6.QtCore import QObject
 
 class CW2Plugin(QObject):
-    """插件基类（插件必须继承它）"""
-
     def __init__(self, api: PluginAPI):
         super().__init__()
+        self.PATH = Path()
+        self.meta = {}
         self.api = api
 
     def on_load(self):
