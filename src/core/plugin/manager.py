@@ -4,6 +4,7 @@ import json
 import shutil
 import sys
 import zipfile
+from contextlib import contextmanager
 from pathlib import Path
 from typing import List, Dict
 
@@ -13,9 +14,9 @@ from PySide6.QtWidgets import QFileDialog
 from loguru import logger
 
 from src.core.directories import PLUGINS_PATH, BUILTIN_PLUGINS_PATH
-from src.core.plugin import CW2Plugin
+from src.core.plugin import CW2Plugin, PluginAPI
 from src.core.utils import check_api_version
-
+from src.plugins import BUILTIN_PLUGINS
 
 REQUIRED_FIELDS = ["id", "name", "version", "api_version", "entry", "author"]
 
@@ -33,27 +34,37 @@ def validate_meta(meta: dict, plugin_dir: Path) -> bool:
     return True
 
 
-
 class PluginManager(QObject):
     initialized = Signal()
     pluginListChanged = Signal()
 
-    def __init__(self, plugin_api, app_central):
+    def __init__(self, plugin_api: PluginAPI, app_central):
+        """
+        :param plugin_api: 由 AppCentral 创建的 PluginAPI 实例
+        :param app_central: AppCentral
+        """
         super().__init__()
         self.api = plugin_api
         self.app_central = app_central
+
+        # 存放 plugin_id -> plugin instance
         self._plugins: Dict[str, CW2Plugin] = {}
-        self.metas: List[dict] = []  # 所有找到的插件
-        self.enabled_plugins = set(self.app_central.configs.plugins.enabled)
+        self.metas: List[dict] = []  # 所有找到的插件 meta
+        self.enabled_plugins = set(getattr(self.app_central.configs.plugins, "enabled", []))
 
         self.external_path = PLUGINS_PATH
         self.builtin_path = BUILTIN_PLUGINS_PATH
 
+        # 注入运行时 SDK（让插件 import class_widgets_sdk 拿到真实对象）
+        self._inject_runtime_sdk()
+
+        # 扫描并初始化
         self.scan()
         logger.info(f"Found {len(self.metas)} plugins.")
-        logger.info(f"Plugin Manager initialized.")
+        logger.info("Plugin Manager initialized.")
         self.initialized.emit()
 
+    # ---------------- discover / scan ----------------
     def discover_plugins_in_dir(self, base_dir: Path) -> List[Path]:
         found = []
         if base_dir.exists() and base_dir.is_dir():
@@ -63,18 +74,24 @@ class PluginManager(QObject):
         return found
 
     def scan(self):
-        """扫描内置和外部插件目录，收集所有插件的元数据"""
+        """扫描外部插件 + 加载内置插件 meta"""
         self.metas.clear()
 
-        for plugin_dir in self.discover_plugins_in_dir(self.builtin_path):
-            self._load_meta(plugin_dir, "builtin")
+        # 内置插件
+        for item in BUILTIN_PLUGINS:
+            meta = item["meta"].copy()
+            meta["_type"] = "builtin"
+            meta["_class"] = item["class"]
+            meta["_path"] = None
+            self.metas.append(meta)
 
+        # 扫描外置插件目录
         for plugin_dir in self.discover_plugins_in_dir(self.external_path):
             self._load_meta(plugin_dir, "external")
 
-        logger.info(f"Found {len(self.metas)} plugins.")
+        logger.info(f"Found {len(self.metas)} plugins (builtin + external).")
 
-    def _load_meta(self, plugin_dir: Path, type="external"):
+    def _load_meta(self, plugin_dir: Path, type: str = "external"):
         try:
             meta_path = plugin_dir / "cwplugin.json"
             meta = json.loads(meta_path.read_text(encoding="utf-8"))
@@ -89,13 +106,87 @@ class PluginManager(QObject):
         except Exception as e:
             logger.exception(f"Failed to read plugin meta from {plugin_dir}: {e}")
 
+    # ---------------- runtime SDK 注入 ----------------
+    def _inject_runtime_sdk(self):
+        """
+        在 sys.modules 注入一个名为 ClassWidgets_SDK 的伪模块，
+        使插件 import ClassWidgets_SDK 时得到的是主程序提供的真实类型与类。
+        """
+        import types
+
+        module_name = "ClassWidgets_SDK"
+
+        if module_name in sys.modules:
+            logger.debug(f"{module_name} already injected into sys.modules.")
+            return
+
+        fake_mod = types.ModuleType(module_name)
+        try:
+            from src.core.plugin.api import PluginAPI as RealPluginAPI
+            from src.core.plugin import CW2Plugin as RealCW2Plugin
+        except Exception as e:
+            logger.exception(f"Failed to import runtime API classes for injection: {e}")
+            return
+
+        # 挂载核心类型
+        fake_mod.PluginAPI = RealPluginAPI
+        fake_mod.CW2Plugin = RealCW2Plugin
+
+        # 可选挂载子 API
+        # try:
+        #     widget_cls = getattr(self.api, "widgets", None).__class__ if getattr(self, "api", None) else None
+        #     notify_cls = getattr(self.api, "notify", None).__class__ if getattr(self, "api", None) else None
+        #     schedule_cls = getattr(self.api, "schedule", None).__class__ if getattr(self, "api", None) else None
+        #     theme_cls = getattr(self.api, "theme", None).__class__ if getattr(self, "api", None) else None
+        #     runtime_cls = getattr(self.api, "runtime", None).__class__ if getattr(self, "api", None) else None
+        #     config_cls = getattr(self.api, "config", None).__class__ if getattr(self, "api", None) else None
+        #     automation_cls = getattr(self.api, "automation", None).__class__ if getattr(self, "api", None) else None
+        #
+        #     if widget_cls: fake_mod.WidgetsAPI = widget_cls
+        #     if notify_cls: fake_mod.NotifyAPI = notify_cls
+        #     if schedule_cls: fake_mod.ScheduleAPI = schedule_cls
+        #     if theme_cls: fake_mod.ThemeAPI = theme_cls
+        #     if runtime_cls: fake_mod.RuntimeAPI = runtime_cls
+        #     if config_cls: fake_mod.ConfigAPI = config_cls
+        #     if automation_cls: fake_mod.AutomationAPI = automation_cls
+        # except Exception:
+        #     logger.debug("Some child API classes not injected into fake module (optional).")
+
+        sys.modules[module_name] = fake_mod
+        logger.debug(f"Injected {module_name} into sys.modules (runtime-backed).")
+
+    # ---------------- path 上下文管理 ----------------
+    @contextmanager
+    def plugin_import_context(self, plugin_dir: Path):
+        """
+        上下文：在加载插件期间，临时把 plugin_dir 与 plugin_dir/libs 放到 sys.path 最前面，
+        其它 sys.path 项会在 finally 中恢复。切记不要清空 sys.path（可能导致 stdlib 丢失）。
+        """
+        old_path = sys.path.copy()
+        try:
+            # 插件目录优先
+            to_insert = [str(plugin_dir)]
+            libs_dir = plugin_dir / "libs"
+            if libs_dir.exists() and libs_dir.is_dir():
+                to_insert.insert(0, str(libs_dir))
+            # 插入到 sys.path 最前（保留原有其他路径）
+            for p in reversed(to_insert):
+                if p in sys.path:
+                    sys.path.remove(p)
+                sys.path.insert(0, p)
+            yield
+        finally:
+            # 恢复旧的 sys.path（完全复原）
+            sys.path[:] = old_path
+
     # 加载启用插件
     def load_plugins(self):
-        """加载插件实例"""
+        """加载已启用的插件实例（批量）"""
         for pid in self.enabled_plugins:
             meta = next((m for m in self.metas if m["id"] == pid), None)
             if meta:
                 try:
+                    logger.info(f"Loading plugin {meta['name']} ({meta['id']}) v{meta['version']}")
                     self._initialized_plugin(meta)
                 except Exception as e:
                     logger.exception(f"Failed to initialize plugin {meta['id']}: {e}")
@@ -103,11 +194,61 @@ class PluginManager(QObject):
                 logger.warning(f"Enabled plugin {pid} not found in metas")
 
     def _initialized_plugin(self, meta: dict):
-        plugin_dir = meta["_path"]
+        """
+        负责单个插件的加载、实例化与 on_load() 调用
+        """
+        if meta["_type"] == "builtin":
+            return self._load_builtin_plugin(meta)
+        else:
+            return self._load_external_plugin(meta)
+
+    def _load_builtin_plugin(self, meta: dict):
+        plugin_id = meta["id"]
+
+        try:
+            if not check_api_version(meta["api_version"], self.app_central.configs.app.version):
+                logger.error(
+                    f"Builtin-Plugin {plugin_id} (api_version {meta.get('api_version')}) "
+                    f"is not compatible with app version {self.app_central.configs.app.version}"
+                )
+
+            PluginClass = meta["_class"]
+            plugin_instance = PluginClass(self.api)
+
+            # 注入 PATH 与 meta
+            plugin_instance.PATH = meta["_path"]
+            plugin_instance.meta = meta
+
+            from src.core.plugin import CW2Plugin as RealCW2Plugin
+            if not isinstance(plugin_instance, RealCW2Plugin):
+                raise TypeError("Builtin plugin must inherit from CW2Plugin")
+
+            plugin_instance.on_load()
+            self._plugins[plugin_id] = plugin_instance
+
+            logger.success(f"Loaded builtin plugin {meta['name']} ({plugin_id}) v{meta['version']}")
+            return plugin_instance
+
+        except Exception as e:
+            logger.exception(f"Failed to load builtin plugin {plugin_id}: {e}")
+            return None
+
+    def _load_external_plugin(self, meta: dict):
+        plugin_dir: Path = meta["_path"]
+        plugin_id = meta["id"]
+        module_name = f"cw_plugin_{plugin_id}"
+
+        def cleanup():
+            if module_name in sys.modules:
+                try:
+                    del sys.modules[module_name]
+                except Exception:
+                    pass
+
         try:
             if not check_api_version(meta["api_version"], self.app_central.configs.app.version):
                 raise RuntimeError(
-                    f"Plugin {meta['id']} (api_version {meta.get('api_version')}) "
+                    f"Plugin {plugin_id} (api_version {meta.get('api_version')}) "
                     f"is not compatible with app version {self.app_central.configs.app.version}"
                 )
 
@@ -115,39 +256,85 @@ class PluginManager(QObject):
             if not entry_file.exists():
                 raise FileNotFoundError(f"Entry file not found: {entry_file}")
 
-            sys.path.insert(0, str(plugin_dir))
+            cleanup()
 
-            spec = importlib.util.spec_from_file_location(meta["id"], entry_file)
-            module = importlib.util.module_from_spec(spec)
-            spec.loader.exec_module(module)
+            with self.plugin_import_context(plugin_dir):
+                spec = importlib.util.spec_from_file_location(module_name, str(entry_file))
+                if not spec or not spec.loader:
+                    raise RuntimeError("Invalid plugin entry (spec loader not found)")
 
-            if not hasattr(module, "Plugin"):
-                raise AttributeError("Plugin entry file does not define a 'Plugin' class")
+                module = importlib.util.module_from_spec(spec)
+                sys.modules[module_name] = module
 
-            plugin_instance = getattr(module, "Plugin")(self.api)
+                try:
+                    spec.loader.exec_module(module)
+                except Exception as e:
+                    logger.exception(f"Plugin {plugin_id} failed to exec module: {e}")
+                    cleanup()
+                    raise
 
-            if not isinstance(plugin_instance, CW2Plugin):
-                raise TypeError("Plugin class must inherit from CW2Plugin")
+                if not hasattr(module, "Plugin"):
+                    cleanup()
+                    raise AttributeError("Plugin entry file does not define a 'Plugin' class")
 
-            plugin_instance.on_load()
-            self._plugins[meta["id"]] = plugin_instance
+                PluginClass = getattr(module, "Plugin")
 
-            logger.success(f"Loaded plugin {meta['name']} ({meta['id']}) v{meta['version']}")
+                try:
+                    plugin_instance = PluginClass(self.api)
+                except Exception as e:
+                    logger.exception(f"Failed to instantiate plugin {plugin_id}: {e}")
+                    cleanup()
+                    raise
+
+                # 注入 PATH/meta
+                plugin_instance.PATH = plugin_dir
+                plugin_instance.meta = meta
+
+                from src.core.plugin import CW2Plugin as RealCW2Plugin
+                if not isinstance(plugin_instance, RealCW2Plugin):
+                    cleanup()
+                    raise TypeError("Plugin class must inherit from CW2Plugin (runtime class)")
+
+                try:
+                    plugin_instance.on_load()
+                except Exception as e:
+                    logger.exception(f"Plugin {plugin_id} on_load raised: {e}")
+                    try:
+                        plugin_instance.on_unload()
+                    except Exception:
+                        pass
+                    cleanup()
+                    raise
+
+                self._plugins[plugin_id] = plugin_instance
+                logger.success(f"Loaded plugin {meta['name']} ({plugin_id}) v{meta['version']}")
+
+                return plugin_instance
+
         except Exception as e:
-            logger.exception(f"Failed to load plugin {meta['id']}: {e}")
+            logger.exception(f"Failed to load plugin {plugin_id}: {e}")
+            return None
 
+    # ---------------- 管理 / 卸载 ----------------
     def set_enabled_plugins(self, enabled_plugins: List[str]):
         if not enabled_plugins:
             return
         self.enabled_plugins = set(enabled_plugins)
 
-    # 卸载全部
     def cleanup(self):
-        for name, plugin in list(self._plugins.items()):
+        """卸载全部插件（用于退出时）"""
+        for pid, plugin in list(self._plugins.items()):
             try:
                 plugin.on_unload()
             except Exception as e:
-                logger.error(f"Failed to unload plugin {name}: {e}")
+                logger.error(f"Failed to unload plugin {pid}: {e}")
+            # 尝试从 sys.modules 移除对应模块（使用标准模块前缀 cw_plugin_{id}）
+            mod_name = f"cw_plugin_{pid}"
+            if mod_name in sys.modules:
+                try:
+                    del sys.modules[mod_name]
+                except Exception:
+                    pass
         self._plugins.clear()
 
     @Slot(result=bool)
@@ -194,6 +381,7 @@ class PluginManager(QObject):
             logger.exception(f"Failed to import plugin: {e}")
             return False
 
+    # ---------------- QML 接口 ----------------
     @Property('QVariant', notify=pluginListChanged)
     def plugins(self):
         """QML调用此函数获取插件列表"""
@@ -267,6 +455,14 @@ class PluginManager(QObject):
                     logger.error(f"Error while unloading plugin {pid}: {e}")
                 self._plugins.pop(pid, None)
 
+            # 尝试清理模块
+            mod_name = f"cw_plugin_{pid}"
+            if mod_name in sys.modules:
+                try:
+                    del sys.modules[mod_name]
+                except Exception:
+                    pass
+
             # 删除插件目录
             plugin_dir = Path(meta["_path"])
             if plugin_dir.exists():
@@ -284,5 +480,3 @@ class PluginManager(QObject):
         except Exception as e:
             logger.exception(f"Failed to uninstall plugin {pid}: {e}")
             return False
-
-
