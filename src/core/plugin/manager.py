@@ -124,6 +124,7 @@ class PluginManager(QObject):
         try:
             from src.core.plugin.api import PluginAPI as RealPluginAPI
             from src.core.plugin import CW2Plugin as RealCW2Plugin
+            from src.core.config.model import ConfigBaseModel as RealConfigBaseModel
         except Exception as e:
             logger.exception(f"Failed to import runtime API classes for injection: {e}")
             return
@@ -131,26 +132,7 @@ class PluginManager(QObject):
         # 挂载核心类型
         fake_mod.PluginAPI = RealPluginAPI
         fake_mod.CW2Plugin = RealCW2Plugin
-
-        # 可选挂载子 API
-        # try:
-        #     widget_cls = getattr(self.api, "widgets", None).__class__ if getattr(self, "api", None) else None
-        #     notify_cls = getattr(self.api, "notify", None).__class__ if getattr(self, "api", None) else None
-        #     schedule_cls = getattr(self.api, "schedule", None).__class__ if getattr(self, "api", None) else None
-        #     theme_cls = getattr(self.api, "theme", None).__class__ if getattr(self, "api", None) else None
-        #     runtime_cls = getattr(self.api, "runtime", None).__class__ if getattr(self, "api", None) else None
-        #     config_cls = getattr(self.api, "config", None).__class__ if getattr(self, "api", None) else None
-        #     automation_cls = getattr(self.api, "automation", None).__class__ if getattr(self, "api", None) else None
-        #
-        #     if widget_cls: fake_mod.WidgetsAPI = widget_cls
-        #     if notify_cls: fake_mod.NotifyAPI = notify_cls
-        #     if schedule_cls: fake_mod.ScheduleAPI = schedule_cls
-        #     if theme_cls: fake_mod.ThemeAPI = theme_cls
-        #     if runtime_cls: fake_mod.RuntimeAPI = runtime_cls
-        #     if config_cls: fake_mod.ConfigAPI = config_cls
-        #     if automation_cls: fake_mod.AutomationAPI = automation_cls
-        # except Exception:
-        #     logger.debug("Some child API classes not injected into fake module (optional).")
+        fake_mod.ConfigBaseModel = RealConfigBaseModel
 
         sys.modules[module_name] = fake_mod
         logger.debug(f"Injected {module_name} into sys.modules (runtime-backed).")

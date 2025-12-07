@@ -4,6 +4,7 @@ from datetime import datetime
 from PySide6.QtCore import Signal, QUrl
 from loguru import logger
 
+from src.core.config.model import ConfigBaseModel, PluginsConfig
 from src.core.plugin.bridge import PluginBackendBridge
 from src.core.schedule.model import EntryType
 from PySide6.QtCore import QObject
@@ -140,7 +141,6 @@ class RuntimeAPI(QObject):
     def current_title(self) -> Optional[str]:
         return self._runtime.current_title
 
-    # ------------------- 内部事件 -------------------
     def _on_runtime_updated(self):
         self.updated.emit()
         self.entryChanged.emit(self.current_entry or {})
@@ -148,10 +148,56 @@ class RuntimeAPI(QObject):
 
 class ConfigAPI:
     def __init__(self, app):
-        self._app = app
+        self.app = app
+        self._cm = app.configs
+        self._plugin_models: Dict[str, ConfigBaseModel] = {}  # 运行时对象
 
-    def get(self) -> dict:
-        return self._app.globalConfig
+    def register_plugin_model(self, plugin_id: str, model: ConfigBaseModel):
+        """
+        注册插件配置 Model
+        """
+        if plugin_id in self._cm.plugins.configs:
+            saved_config = self._cm.plugins.configs[plugin_id]
+            try:
+                # 使用模型解析已保存的配置
+                validated = type(model).model_validate(saved_config)
+                # 更新模型实例
+                for field in model.__fields__:
+                    if hasattr(validated, field):
+                        setattr(model, field, getattr(validated, field))
+            except Exception as e:
+                logger.warning(f"Failed to load saved config for {plugin_id}: {e}")
+                # 如果解析失败，保存当前模型到配置
+                self._cm.plugins.configs[plugin_id] = model.model_dump()
+        else:
+            # 用模型默认值初始化
+            self._cm.plugins.configs[plugin_id] = model.model_dump()
+        self._plugin_models[plugin_id] = model
+        original_on_change = getattr(model, '_on_change', None)
+
+        def _sync_to_config_manager():
+            if original_on_change:
+                try:
+                    original_on_change()
+                except Exception as e:
+                    logger.error(f"Error in original _on_change for {plugin_id}: {e}")
+
+            # 同步到 ConfigManager
+            try:
+                self._cm.plugins.configs[plugin_id] = model.model_dump()
+                self._cm._config._on_change()
+            except Exception as e:
+                logger.error(f"Failed to sync config for {plugin_id}: {e}")
+        model._on_change = _sync_to_config_manager
+        model._on_change()
+
+        logger.debug(f"Plugin: {plugin_id} registered config model: {model}")
+
+    def get_plugin_model(self, plugin_id: str) -> Optional[ConfigBaseModel]:
+        return self._plugin_models.get(plugin_id)
+
+    def save(self):
+        return self._cm.save()
 
 
 class AutomationAPI:
@@ -227,11 +273,12 @@ class CW2Plugin(QObject):
         super().__init__()
         self.PATH = Path()
         self.meta = {}
+        self.pid = None
         self.api = api
 
     def on_load(self):
-        pid = self.meta.get("id")
-        if pid:
+        self.pid = self.meta.get("id")
+        if self.pid:
             PluginBackendBridge.register_backend(self.meta.get("id"), self)
         else:
             logger.warning(f"Plugin {self.meta.get('name')} missing meta.id, skipping backend registration")
