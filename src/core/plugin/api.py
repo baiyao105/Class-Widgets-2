@@ -4,6 +4,7 @@ from datetime import datetime
 from PySide6.QtCore import Signal, QUrl
 from loguru import logger
 
+from src.core.plugin.bridge import PluginBackendBridge
 from src.core.schedule.model import EntryType
 from PySide6.QtCore import QObject
 
@@ -171,6 +172,18 @@ class UiAPI(QObject):
     def pages(self):
         return self._registered_pages
 
+    def unregister_settings_page(self, plugin, qml_path: Union[str, Path]):
+        qml_path = Path(qml_path)
+        if not qml_path.is_absolute():
+            qml_path = plugin.PATH / qml_path
+        qml_path = qml_path.as_uri()
+
+        for page in self._registered_pages:
+            if page["page"] == str(qml_path):
+                self._registered_pages.remove(page)
+                logger.debug(f"Unregister settings page: {qml_path}")
+        self.settingsPageRegistered.emit()
+
     def register_settings_page(
         self,
         plugin,
@@ -217,7 +230,11 @@ class CW2Plugin(QObject):
         self.api = api
 
     def on_load(self):
-        pass
+        pid = self.meta.get("id")
+        if pid:
+            PluginBackendBridge.register_backend(self.meta.get("id"), self)
+        else:
+            logger.warning(f"Plugin {self.meta.get('name')} missing meta.id, skipping backend registration")
 
     def on_unload(self):
         pass

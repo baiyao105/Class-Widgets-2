@@ -13,6 +13,7 @@ from src.core.config import ConfigManager
 from src.core.directories import PathManager, DEFAULT_THEME, CW_PATH, LOGS_PATH
 from src.core.notification import Notification
 from src.core.plugin.api import PluginAPI
+from src.core.plugin.bridge import PluginBackendBridge
 from src.core.plugin.manager import PluginManager
 from src.core.schedule import ScheduleRuntime, ScheduleManager
 from src.core.schedule.editor import ScheduleEditor
@@ -308,11 +309,13 @@ class Settings(RinUIWindow, QObject):
     def __init__(self, parent: AppCentral):
         super().__init__()
         self.central = parent
+        self.bridge = PluginBackendBridge()
 
         self.engine.addImportPath(DEFAULT_THEME)
         self.central.setup_qml_context(self)
         self.engine.rootContext().setContextProperty("UtilsBackend", self.central.utils_backend)
         self.engine.rootContext().setContextProperty("UpdaterBridge", self.central.updater_bridge)
+        self.engine.rootContext().setContextProperty("PluginBackendBridge", self.bridge)
         self.engine.rootContext().setContextProperty("Settings", self)
         self.central.retranslate.connect(self.engine.retranslate)
         self.extra_settings = []
