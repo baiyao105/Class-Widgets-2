@@ -1,3 +1,4 @@
+import sys
 from pathlib import Path
 from typing import Optional, List, Dict, Union
 from datetime import datetime
@@ -14,9 +15,9 @@ class WidgetsAPI:
     def __init__(self, app):
         self._app = app
 
-    def register(self, widget_id: str, name: str, qml_path: Union[str, QUrl],
+    def register(self, widget_id: str, name: str, qml_path: Union[str, Path],
                  backend_obj: QObject = None,
-                 settings_qml: Optional[Union[str, QUrl]] = None,
+                 settings_qml: Optional[Union[str, Path]] = None,
                  default_settings: Optional[dict] = None):
         self._app.widgets_model.add_widget(
             widget_id, name, qml_path, backend_obj, settings_qml, default_settings
@@ -275,13 +276,25 @@ class CW2Plugin(QObject):
         self.meta = {}
         self.pid = None
         self.api = api
+        self._load_plugin_libs()  # 插件库加载
+
+    def _load_plugin_libs(self):
+        """Automatically adds the plugin's 'lib' subdirectory to sys.path."""
+        # 如果 self.PATH 是空的，我们需要更可靠的方式获取根目录
+        plugin_root = self.PATH if self.PATH.is_absolute() else (
+            Path(__file__).parent.resolve()
+        )
+        lib_dir = plugin_root / 'lib'
+        if lib_dir.is_dir() and str(lib_dir) not in sys.path:
+            sys.path.insert(0, str(lib_dir))
 
     def on_load(self):
         self.pid = self.meta.get("id")
         if self.pid:
             PluginBackendBridge.register_backend(self.meta.get("id"), self)
+            logger.debug(self.meta)
         else:
-            logger.warning(f"Plugin {self.meta.get('name')} missing meta.id, skipping backend registration")
+            logger.warning(f"Plugin {self.meta.get('name')} missing meta.id")
 
     def on_unload(self):
         pass
