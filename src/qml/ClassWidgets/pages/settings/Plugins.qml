@@ -165,8 +165,8 @@ FluentPage {
                                 name: !source ? "ic_fluent_apps_add_in_20_filled" : ""
                                 source: "icon" in modelData ? modelData.icon : ""
                                 anchors.fill: parent
-                                size: 32
-                                opacity: 0.5
+                                size: "icon" in modelData ? 48 : 32
+                                opacity: "icon" in modelData ? 1 : 0.5
 
                                 layer.enabled: true
                                 layer.effect: OpacityMask {

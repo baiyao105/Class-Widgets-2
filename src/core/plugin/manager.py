@@ -98,6 +98,9 @@ class PluginManager(QObject):
             meta["_path"] = plugin_dir
             meta["_type"] = type
 
+            if meta.get("icon"):
+                meta["icon"] = QUrl.fromLocalFile(str(plugin_dir / meta["icon"]))
+
             if not validate_meta(meta, plugin_dir):
                 logger.warning(f"Plugin meta invalid, skipped: {plugin_dir}")
                 return
@@ -106,15 +109,11 @@ class PluginManager(QObject):
         except Exception as e:
             logger.exception(f"Failed to read plugin meta from {plugin_dir}: {e}")
 
-    # ---------------- runtime SDK 注入 ----------------
+    # runtime SDK 注入
     def _inject_runtime_sdk(self):
-        """
-        在 sys.modules 注入一个名为 ClassWidgets_SDK 的伪模块，
-        使插件 import ClassWidgets_SDK 时得到的是主程序提供的真实类型与类。
-        """
         import types
 
-        module_name = "ClassWidgets_SDK"
+        module_name = "ClassWidgets.SDK"
 
         if module_name in sys.modules:
             logger.debug(f"{module_name} already injected into sys.modules.")
@@ -137,7 +136,6 @@ class PluginManager(QObject):
         sys.modules[module_name] = fake_mod
         logger.debug(f"Injected {module_name} into sys.modules (runtime-backed).")
 
-    # ---------------- path 上下文管理 ----------------
     @contextmanager
     def plugin_import_context(self, plugin_dir: Path):
         """
@@ -151,14 +149,13 @@ class PluginManager(QObject):
             libs_dir = plugin_dir / "libs"
             if libs_dir.exists() and libs_dir.is_dir():
                 to_insert.insert(0, str(libs_dir))
-            # 插入到 sys.path 最前（保留原有其他路径）
             for p in reversed(to_insert):
                 if p in sys.path:
                     sys.path.remove(p)
                 sys.path.insert(0, p)
             yield
         finally:
-            # 恢复旧的 sys.path（完全复原）
+            # 恢复
             sys.path[:] = old_path
 
     # 加载启用插件
