@@ -3,18 +3,18 @@ import importlib.util
 import json
 import shutil
 import sys
-import zipfile
 from contextlib import contextmanager
 from pathlib import Path
 from typing import List, Dict
 
-from PySide6.QtCore import Slot, QObject, Signal, Property, QUrl
+from PySide6.QtCore import Slot, QObject, Signal, Property, QUrl, QThread
 from PySide6.QtGui import QDesktopServices
 from PySide6.QtWidgets import QFileDialog
 from loguru import logger
 
 from src.core.directories import PLUGINS_PATH, BUILTIN_PLUGINS_PATH
 from src.core.plugin import CW2Plugin, PluginAPI
+from src.core.plugin.worker import PluginImportWorker
 from src.core.utils import check_api_version
 from src.plugins import BUILTIN_PLUGINS
 
@@ -37,6 +37,9 @@ def validate_meta(meta: dict, plugin_dir: Path) -> bool:
 class PluginManager(QObject):
     initialized = Signal()
     pluginListChanged = Signal()
+    pluginImportSucceeded = Signal()
+    pluginImportFailed = Signal(str)
+
 
     def __init__(self, plugin_api: PluginAPI, app_central):
         """
@@ -65,7 +68,8 @@ class PluginManager(QObject):
         self.initialized.emit()
 
     # ---------------- discover / scan ----------------
-    def discover_plugins_in_dir(self, base_dir: Path) -> List[Path]:
+    @staticmethod
+    def discover_plugins_in_dir(base_dir: Path) -> List[Path]:
         found = []
         if base_dir.exists() and base_dir.is_dir():
             for plugin_dir in base_dir.iterdir():
@@ -110,7 +114,8 @@ class PluginManager(QObject):
             logger.exception(f"Failed to read plugin meta from {plugin_dir}: {e}")
 
     # runtime SDK 注入
-    def _inject_runtime_sdk(self):
+    @staticmethod
+    def _inject_runtime_sdk():
         import types
 
         module_name = "ClassWidgets.SDK"
@@ -325,40 +330,36 @@ class PluginManager(QObject):
         if not zip_path:
             return False
 
-        old_ids = {m["id"] for m in self.metas}  # 导入前已有的插件ID
-        try:
-            with zipfile.ZipFile(zip_path, 'r') as zip_ref:
-                members = zip_ref.namelist()
-                top_dirs = {Path(m).parts[0] for m in members if not m.endswith('/')}
+        self.thread = QThread()
+        self.worker = PluginImportWorker(zip_path, self.external_path, self.scan, self.metas)
+        self.worker.moveToThread(self.thread)
 
-                if len(top_dirs) == 1:  # 检测目录层级
-                    zip_ref.extractall(self.external_path)
-                    target_dir = self.external_path / list(top_dirs)[0]
-                else:
-                    target_dir = self.external_path / Path(zip_path).stem
-                    if target_dir.exists():
-                        shutil.rmtree(target_dir)
-                    zip_ref.extractall(target_dir)
+        self.thread.started.connect(self.worker.run)
 
-            self.scan()  # 扫描新插件
-            new_ids = {m["id"] for m in self.metas}
-            diff = new_ids - old_ids
-
-            if not diff:
-                name_guess = Path(zip_path).stem
-                candidate_dir = self.external_path / name_guess
-                if candidate_dir.exists():
-                    shutil.rmtree(candidate_dir)
-
-                logger.warning(f"Plugin import failed: {zip_path} is not a valid plugin.")
-                return False
-            else:
-                self.pluginListChanged.emit()
+        def on_finished(diff):
+            if diff:
                 logger.info(f"Imported plugin(s): {', '.join(diff)}")
-                return True
-        except Exception as e:
-            logger.exception(f"Failed to import plugin: {e}")
-            return False
+                self.pluginListChanged.emit()
+                self.pluginImportSucceeded.emit()
+            else:
+                logger.warning(f"Plugin import failed: {zip_path}")
+                self.pluginImportFailed.emit("No valid plugin found in archive.")
+            self.thread.quit()
+            self.worker.deleteLater()
+            self.thread.deleteLater()
+
+        def on_error(msg):
+            logger.error(f"Plugin import error: {msg}")
+            self.pluginImportFailed.emit(msg)
+            self.thread.quit()
+            self.worker.deleteLater()
+            self.thread.deleteLater()
+
+        self.worker.finished.connect(on_finished)
+        self.worker.error.connect(on_error)
+
+        self.thread.start()
+        return True
 
     # ---------------- QML 接口 ----------------
     @Property('QVariant', notify=pluginListChanged)

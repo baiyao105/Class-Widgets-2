@@ -75,23 +75,37 @@ FluentPage {
 
             Item { Layout.fillWidth: true }
 
+            Connections {
+                target: PluginManager
+
+                function onPluginImportSucceeded() {
+                    floatLayer.createInfoBar({
+                        title: qsTr("Success"),
+                        text: qsTr("The plugin has been imported successfully."),
+                        severity: Severity.Success,
+                        timeout: 5000,
+                    })
+                }
+
+                function onPluginImportFailed(msg) {
+                    floatLayer.createInfoBar({
+                        title: qsTr("Import Failed"),
+                        text: qsTr("The selected plugin could not be imported.\n") + msg,
+                        severity: Severity.Error,
+                        timeout: 5000,
+                    })
+                }
+            }
+
             Button {
                 icon.name: "ic_fluent_add_20_regular"
                 text: qsTr("Import")
                 onClicked: {
                     if (PluginManager.importPlugin()) {
                         floatLayer.createInfoBar({
-                            title: qsTr("Success"),
-                            text: qsTr("The plugin has been imported successfully."),
-                            severity: Severity.Success,
-                            timeout: 5000,
-                        })
-                    } else {
-                        floatLayer.createInfoBar({
-                            title: qsTr("Import Failed"),
-                            text: qsTr("The selected ZIP file does not contain a valid plugin."),
-                            severity: Severity.Error,
-                            timeout: 5000,
+                            title: qsTr("Importing"),
+                            text: qsTr("Importing the selected plugin. Please wait..."),
+                            severity: Severity.Info
                         })
                     }
                 }
