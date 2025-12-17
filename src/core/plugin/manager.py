@@ -11,11 +11,13 @@ from PySide6.QtCore import Slot, QObject, Signal, Property, QUrl, QThread
 from PySide6.QtGui import QDesktopServices
 from PySide6.QtWidgets import QFileDialog
 from loguru import logger
+from packaging.specifiers import SpecifierSet
+from packaging.version import Version
 
 from src.core.directories import PLUGINS_PATH, BUILTIN_PLUGINS_PATH
 from src.core.plugin import CW2Plugin, PluginAPI
+from src.core.plugin.api import __version__ as __API_VERSION__
 from src.core.plugin.worker import PluginImportWorker
-from src.core.utils import check_api_version
 from src.plugins import BUILTIN_PLUGINS
 
 REQUIRED_FIELDS = ["id", "name", "version", "api_version", "entry", "author"]
@@ -30,8 +32,27 @@ def validate_meta(meta: dict, plugin_dir: Path) -> bool:
         if field not in meta or not meta[field]:
             logger.warning(f"Plugin meta missing required field '{field}' in {plugin_dir}")
             return False
-
     return True
+
+
+def check_api_version(plugin_api_version: str) -> bool:
+    """
+    检查插件声明的 API 版本是否兼容
+    """
+    if not plugin_api_version or plugin_api_version.strip() == "*":
+        return True
+
+    try:
+        api_v = Version(__API_VERSION__)
+        required_specs = SpecifierSet(plugin_api_version)
+        return required_specs.contains(api_v)
+
+    except Exception as e:
+        logger.debug(
+            f"Version check failed. Plugin requirement: {plugin_api_version}, "
+            f"Host version: {__API_VERSION__}. Error: {e}"
+        )
+        return False
 
 
 class PluginManager(QObject):
@@ -190,7 +211,7 @@ class PluginManager(QObject):
         plugin_id = meta["id"]
 
         try:
-            if not check_api_version(meta["api_version"], self.app_central.configs.app.version):
+            if not check_api_version(meta["api_version"]):
                 logger.error(
                     f"Builtin-Plugin {plugin_id} (api_version {meta.get('api_version')}) "
                     f"is not compatible with app version {self.app_central.configs.app.version}"
@@ -230,7 +251,7 @@ class PluginManager(QObject):
                     pass
 
         try:
-            if not check_api_version(meta["api_version"], self.app_central.configs.app.version):
+            if not check_api_version(meta["api_version"]):
                 raise RuntimeError(
                     f"Plugin {plugin_id} (api_version {meta.get('api_version')}) "
                     f"is not compatible with app version {self.app_central.configs.app.version}"
@@ -376,7 +397,7 @@ class PluginManager(QObject):
         meta = next((m for m in self.metas if m["id"] == pid), None)
         if not meta:
             return False
-        return check_api_version(meta["api_version"], self.app_central.configs.app.version)
+        return check_api_version(meta["api_version"])
 
     @Slot(str, bool)
     def setPluginEnabled(self, pid: str, enabled: bool):
