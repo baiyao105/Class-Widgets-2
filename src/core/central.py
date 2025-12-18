@@ -24,7 +24,7 @@ from src.core.utils import TrayIcon, AppTranslator, UtilsBackend
 from src.core.utils.debugger import DebuggerWindow
 from src.core.widgets import WidgetsWindow, WidgetListModel
 from src.core.automations.manager import AutomationManager
-from src.core.windows import Settings, Editor, Tutorial
+from src.core.windows import Settings, Editor, Tutorial, WhatsNew
 
 
 class AppCentral(QObject):  # Class Widgets 的中枢
@@ -72,6 +72,7 @@ class AppCentral(QObject):  # Class Widgets 的中枢
         """初始化UI组件"""
         self.settings = Settings(self)
         self.editor = Editor(self)
+        self.whatsnew = WhatsNew(self)
         self.widgets_window: WidgetsWindow = WidgetsWindow(self)  # 简化参数传递
 
     def run(self):  # 运行
@@ -205,6 +206,7 @@ class AppCentral(QObject):  # Class Widgets 的中枢
         self.widgets_window.run()
 
         if "--update-done" in sys.argv:
+            self.openWhatsNew()
             self.updater_bridge.update_complete()
 
     def _load_theme_and_plugins(self):
@@ -261,6 +263,16 @@ class AppCentral(QObject):  # Class Widgets 的中枢
             self.editor.root_window.requestActivate()
         else:
             logger.error("Editor window not initialized correctly.")
+
+    @Slot()
+    def openWhatsNew(self):
+        """显示课程表编辑器"""
+        if self.whatsnew and self.whatsnew.root_window:
+            self.whatsnew.root_window.show()
+            self.whatsnew.root_window.raise_()
+            self.whatsnew.root_window.requestActivate()
+        else:
+            logger.error("WhatsNew window not initialized correctly.")
 
     @Slot()
     def openDebugger(self):

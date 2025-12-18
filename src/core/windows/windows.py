@@ -44,3 +44,15 @@ class Tutorial(RinUIWindow):
         self.central.retranslate.connect(self.engine.retranslate)
 
         self.load(CW_PATH / "windows" / "Tutorial.qml")
+
+
+class WhatsNew(RinUIWindow):
+    def __init__(self, parent):
+        super().__init__()
+        self.central = parent
+
+        self.central.setup_qml_context(self)
+        self.central.retranslate.connect(self.engine.retranslate)
+
+        self.load(CW_PATH / "windows" / "WhatsNew.qml")
+

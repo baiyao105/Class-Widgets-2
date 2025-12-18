@@ -57,6 +57,16 @@ Window {
                 typography: Typography.BodyLarge
                 text: "Class Widgets"
             }
+            Item {
+                Layout.fillWidth: true
+            }
+            Hyperlink {
+                icon.name: "ic_fluent_star_emphasis_20_regular"
+                text: qsTr("What's New")
+                onClicked: {
+                    AppCentral.openWhatsNew()
+                }
+            }
         }
 
         ColumnLayout {
