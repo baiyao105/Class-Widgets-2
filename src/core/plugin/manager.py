@@ -346,7 +346,7 @@ class PluginManager(QObject):
     def importPlugin(self) -> bool:
         """从 ZIP 导入插件（带校验）"""
         zip_path, _ = QFileDialog.getOpenFileName(
-            None, "Import Plugin", "", "Plugin ZIP (*.zip)"
+            None, "Import Plugin", "", "Class Widgets Plugin (*.cwplugin);;Plugin ZIP (*.zip)"
         )
         if not zip_path:
             return False

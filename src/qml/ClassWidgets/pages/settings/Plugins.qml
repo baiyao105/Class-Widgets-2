@@ -13,8 +13,7 @@ FluentPage {
         Layout.fillWidth: true
         title: qsTr("Warning")
         text: qsTr(
-            "The plugin system is still under development and has not been tested. " +
-            "Using plugins may cause significant issues."
+            "The plugin system is still under development. "
         )
         severity: Severity.Warning
     }
@@ -51,11 +50,12 @@ FluentPage {
         SettingCard {
             Layout.fillWidth: true
             title: qsTr("Get Plugins")
-            description: qsTr("Find and install plugins from the Extension Plaza")
+            description: qsTr("Find and install plugins from the Extension Plaza (WEB)")
 
             Hyperlink {
                 text: qsTr("Go to Extension Plaza")
-                enabled: false
+                // enabled: false
+                openUrl: "https://plaza.cw.rinlit.cn"
             }
         }
     }

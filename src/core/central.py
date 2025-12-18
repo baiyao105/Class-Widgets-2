@@ -24,6 +24,7 @@ from src.core.utils import TrayIcon, AppTranslator, UtilsBackend
 from src.core.utils.debugger import DebuggerWindow
 from src.core.widgets import WidgetsWindow, WidgetListModel
 from src.core.automations.manager import AutomationManager
+from src.core.windows import Settings, Editor, Tutorial
 
 
 class AppCentral(QObject):  # Class Widgets 的中枢
@@ -302,44 +303,3 @@ class AppCentral(QObject):  # Class Widgets 的中枢
         f.setFamilies([target_font, fallback_font])
         f.setStyleHint(QFont.StyleHint.SansSerif)
         return f
-
-
-class Settings(RinUIWindow, QObject):
-    extraSettingsChanged = Signal()
-    def __init__(self, parent: AppCentral):
-        super().__init__()
-        self.central = parent
-        self.bridge = PluginBackendBridge()
-
-        self.engine.addImportPath(DEFAULT_THEME)
-        self.central.setup_qml_context(self)
-        self.engine.rootContext().setContextProperty("UtilsBackend", self.central.utils_backend)
-        self.engine.rootContext().setContextProperty("UpdaterBridge", self.central.updater_bridge)
-        self.engine.rootContext().setContextProperty("PluginBackendBridge", self.bridge)
-        self.engine.rootContext().setContextProperty("Settings", self)
-        self.central.retranslate.connect(self.engine.retranslate)
-        self.extra_settings = []
-
-        self.load(CW_PATH / "windows" / "Settings.qml")
-
-
-class Editor(RinUIWindow):
-    def __init__(self, parent: AppCentral):
-        super().__init__()
-        self.central = parent
-
-        self.central.setup_qml_context(self)
-        self.central.retranslate.connect(self.engine.retranslate)
-
-        self.load(CW_PATH / "windows" / "Editor.qml")
-
-
-class Tutorial(RinUIWindow):
-    def __init__(self, parent: AppCentral):
-        super().__init__()
-        self.central = parent
-
-        self.central.setup_qml_context(self)
-        self.central.retranslate.connect(self.engine.retranslate)
-
-        self.load(CW_PATH / "windows" / "Tutorial.qml")
