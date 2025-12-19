@@ -65,6 +65,7 @@ Window {
                 text: qsTr("What's New")
                 onClicked: {
                     AppCentral.openWhatsNew()
+                    panel.hide()
                 }
             }
         }

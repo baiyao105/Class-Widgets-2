@@ -6,7 +6,7 @@ import ClassWidgets.Components
 
 
 ApplicationWindow {
-    id: tutorialWindow
+    id: whatsNewWindow
     icon: PathManager.assets("images/icons/cw2_settings.png")
     title: qsTr("What's New ╰(*°▽°*)╯")
     width: Screen.width * 0.4
@@ -30,63 +30,29 @@ ApplicationWindow {
                 Layout.fillWidth: true
                 typography: Typography.Subtitle
                 horizontalAlignment: Text.AlignHCenter
-                text: qsTr("Welcome to Class Widgets 2")
+                text: qsTr("Let's see what's new in " + Configs.data.app.version)
             }
-        }
-
-        InfoBar {
-            Layout.alignment: Qt.AlignHCenter | Qt.AlignTop
-            closable: false
-            Layout.fillWidth: false
-            Layout.preferredWidth: tutorialWindow.width * 0.7
-            severity: Severity.Warning
-            title: qsTr("注意")
-            text: qsTr(
-                "初始引导窗口还未完工，在做啦在做啦 \n" +
-                "目前版本为测试版，大多数功能还未补完。若要在教学环境中使用，请三思而后行。\n" +
-                "欢迎到我们的 GitHub 页面提交反馈或建议，谢谢！"
-            )
         }
 
         RowLayout {
             Layout.alignment: Qt.AlignHCenter
-            Text {
-                text: qsTr("Select a language")
+            Icon {
+                name: "ic_fluent_code_20_regular"
+                size: 32
             }
-            ComboBox {
-                property var data: [AppCentral.translator.getSystemLanguage(), "en_US", "zh_CN"]
-                property bool initialized: false
-                model: ListModel {
-                    ListElement { text: qsTr("Use System Language") }
-                    ListElement { text: "English (US)" }
-                    ListElement { text: "简体中文" }
-                }
-
-                Component.onCompleted: {
-                    currentIndex = data.indexOf(AppCentral.translator.getLanguage())
-                    console.log("Language: " + AppCentral.translator.getLanguage())
-                    initialized = true
-                }
-
-                onCurrentIndexChanged: {
-                    if (!initialized) return
-                    AppCentral.translator.setLanguage(data[currentIndex])
-                }
+            Text {
+                text: qsTr("Under development")
+                font.pixelSize: 24
             }
         }
 
         RowLayout {
             Layout.alignment: Qt.AlignHCenter | Qt.AlignBottom
             Button {
-                text: qsTr("Exit")
-                onClicked: Qt.quit()
-            }
-            Button {
                 highlighted: true
                 text: qsTr("Get started")
                 onClicked: {
-                    Configs.set("app.tutorial_completed", true)
-                    AppCentral.restart()
+                    whatsNewWindow.hide()
                 }
             }
         }
