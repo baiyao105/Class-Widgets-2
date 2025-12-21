@@ -61,6 +61,7 @@ Class Widgets 2 是新一代的电子化课程表展示工具，基于比前代�
 - [RinUI](https://github.com/rinlit-233-shiroko/rin-ui)
 - [Pydantic](https://docs.pydantic.dev/latest/)
 - [Loguru](https://github.com/Delgan/loguru)
+- [Requests](https://github.com/psf/requests)
 
 ### 贡献者
 [![Contributors](http://contrib.nn.ci/api?repo=rinlit-233-shiroko/class-widgets-2)](https://github.com/rinlit-233-shiroko/class-widgets-2/graphs/contributors)
