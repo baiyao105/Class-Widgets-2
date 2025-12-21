@@ -3,6 +3,7 @@ from PySide6.QtGui import QGuiApplication
 from loguru import logger
 
 from src.core.directories import LOGS_PATH, ROOT_PATH
+from src.core.notification import NotificationProvider
 from src.core.utils.auto_startup import autostart_supported, enable_autostart, disable_autostart, is_autostart_enabled
 
 
@@ -20,6 +21,10 @@ class UtilsBackend(QObject):
         self._license_text: str = ""
         self._logs: list = []
         self.app.plugin_api.ui.settingsPageRegistered.connect(lambda: self.extraSettingsChanged.emit())
+        self.debugPostProvider = NotificationProvider(
+            id="com.classwidgets.debug",
+            name="Debug Notification",
+        )
 
         # 执行初始化逻辑
         self._init_logger()
@@ -76,6 +81,13 @@ class UtilsBackend(QObject):
     @Property(str, notify=licenseLoaded)
     def licenseText(self):
         return self._license_text
+
+    @Property(QObject, constant=True)
+    def debugNotificationProvider(self):
+        """
+        暴露给 QML 的调试通知 Provider
+        """
+        return self.debugPostProvider
 
     def load_license(self):
         try:

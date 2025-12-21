@@ -4,6 +4,7 @@ from typing import Optional, List
 from PySide6.QtCore import QObject, Property, Signal
 from loguru import logger
 
+from src.core.notification import NotificationProvider
 from src.core.schedule.model import ScheduleData, MetaInfo, Timeline, Entry, EntryType, Subject
 from src.core.schedule.service import ScheduleServices
 from src.core.utils import get_cycle_week, get_week_number
@@ -40,6 +41,13 @@ class ScheduleRuntime(QObject):
 
         self.current_subject: Optional[Subject] = None
         self.current_title: Optional[str] = None
+
+        self.notification_provider = NotificationProvider(
+            id="com.classwidgets.schedule.runtime",
+            name="Schedule Runtime",
+            icon="ic_fluent_calendar_20_regular",
+            manager=app_central.notification
+        )
 
         logger.info("Schedule runtime initialized.")
 

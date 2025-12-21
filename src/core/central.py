@@ -10,10 +10,14 @@ from loguru import logger
 
 from src.core import CONFIGS_PATH, QML_PATH
 from src.core.config import ConfigManager
-from src.core.directories import PathManager, DEFAULT_THEME, CW_PATH, LOGS_PATH
-from src.core.notification import Notification
+from src.core.directories import PathManager, LOGS_PATH
+from src.core.notification import (
+    NotificationManager,
+    NotificationProvider,
+    NotificationProviderConfig,
+    NotificationLevel,
+)
 from src.core.plugin.api import PluginAPI
-from src.core.plugin.bridge import PluginBackendBridge
 from src.core.plugin.manager import PluginManager
 from src.core.schedule import ScheduleRuntime, ScheduleManager
 from src.core.schedule.editor import ScheduleEditor
@@ -28,6 +32,8 @@ from src.core.windows import Settings, Editor, Tutorial, WhatsNew
 
 
 class AppCentral(QObject):  # Class Widgets 的中枢
+    _instance = None
+    
     updated = Signal()
     initialized = Signal()
     togglePanel = Signal(QPoint)
@@ -36,10 +42,23 @@ class AppCentral(QObject):  # Class Widgets 的中枢
 
     def __init__(self):  # 初始化
         super().__init__()
+        
+        # Singleton pattern - store instance
+        if AppCentral._instance is not None:
+            raise RuntimeError("AppCentral is a singleton. Use AppCentral.instance() instead.")
+        AppCentral._instance = self
+        
         self._initialize_cores()
         self._initialize_schedule_components()
         self._initialize_utils()
         self._initialize_ui_components()
+    
+    @classmethod
+    def instance(cls):
+        """获取 AppCentral 单例实例"""
+        if cls._instance is None:
+            raise RuntimeError("AppCentral instance not created. Create an instance first.")
+        return cls._instance
 
     def _initialize_cores(self):
         """初始化核心"""
@@ -62,7 +81,7 @@ class AppCentral(QObject):  # Class Widgets 的中枢
     def _initialize_schedule_components(self):
         """初始化调度相关组件"""
         self.union_update_timer = UnionUpdateTimer()
-        self._notification = Notification()
+        self._notification = NotificationManager(config_manager=self.configs)
         self.schedule_manager = ScheduleManager(Path(CONFIGS_PATH / "schedules"), self)
 
         self.runtime = ScheduleRuntime(self)
