@@ -50,6 +50,18 @@ class Plugin(CW2Plugin):
                     "full_name": True
                 }
             },
+            {
+                "widget_id": "classwidgets.dynamicNotification",
+                "name": "Dynamic Notification",
+                "qml_path": Path(QML_PATH / "widgets" / "dynamicNotification.qml").as_posix(),
+                "backend_obj": self,
+                "settings_qml": Path(QML_PATH / "widgets" / "settings" / "upcomingActivities.qml").as_posix(),
+                "default_settings": {
+                    "marquee": True,
+                    "max_activities": 5,
+                    "full_name": True
+                }
+            },
         ]
 
     def on_load(self):
