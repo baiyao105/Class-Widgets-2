@@ -27,16 +27,60 @@ class WidgetsAPI:
         )
 
 
-class NotifyAPI(QObject):
-    pushed = Signal(str)  # 给插件监听的信号暂定
+from loguru import logger
+
+class NotificationAPI(QObject):
+    pushed = Signal(str)  # 给插件监听的信号
 
     def __init__(self, app):
         super().__init__()
         self._app = app
-        app.notification.notify.connect(self.pushed.emit)
+        app.notification.notified.connect(self._on_notification)
 
-    def send(self, message: str):
-        self._app.notification.push_activity(message)
+    def _on_notification(self, payload):
+        """处理通知信号并发射给插件"""
+        try:
+            title = payload.get('title', '通知')
+            message = payload.get('message', '')
+            if message:
+                notification_text = f"{title}: {message}"
+            else:
+                notification_text = title
+            self.pushed.emit(notification_text)
+        except Exception as e:
+            logger.error(f"Error processing notification: {e}")
+            self.pushed.emit("通知")
+
+    def get_provider(self, provider_id: str, name: str = None, icon: Union[str, Path] = None):
+        """
+        为插件创建一个 NotificationProvider 实例
+        
+        Args:
+            provider_id: 提供者ID，需要唯一
+            name: 提供者名称，默认为插件名称
+            icon: 图标，支持两种类型：
+                  - str: 字体图标名称（如 "ic_fluent_bell_20_filled"）
+                  - Path: 本地图片文件路径（会自动转为绝对路径和 URI）
+            
+        Returns:
+            NotificationProvider: 可用于发送通知的 Provider 实例
+        """
+        from src.core.notification import NotificationProvider
+        
+        # 如果没有指定名称，使用默认名称
+        if name is None:
+            name = f"Plugin Provider ({provider_id})"
+        
+        # 直接传递图标对象给 NotificationProvider，它会自动处理 Path 转换
+        provider = NotificationProvider(
+            id=provider_id,
+            name=name,
+            icon=icon,
+            manager=self._app.notification
+        )
+        
+        logger.debug(f"Created notification provider: {provider_id} with icon: {icon}")
+        return provider
 
 
 class ScheduleAPI:
@@ -263,7 +307,7 @@ class UiAPI(QObject):
 class PluginAPI:
     def __init__(self, app):
         self.widgets: WidgetsAPI = WidgetsAPI(app)
-        self.notify: NotifyAPI = NotifyAPI(app)
+        self.notification: NotificationAPI = NotificationAPI(app)
         self.schedule: ScheduleAPI = ScheduleAPI(app)
         self.theme: ThemeAPI = ThemeAPI(app)
         self.runtime: RuntimeAPI = RuntimeAPI(app)
