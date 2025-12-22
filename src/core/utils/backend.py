@@ -1,7 +1,10 @@
+from pathlib import Path
+
 from PySide6.QtCore import Property, Slot, QObject, Signal
 from PySide6.QtGui import QGuiApplication
 from loguru import logger
 
+from src.core import ASSETS_PATH
 from src.core.directories import LOGS_PATH, ROOT_PATH
 from src.core.notification import NotificationProvider
 from src.core.utils.auto_startup import autostart_supported, enable_autostart, disable_autostart, is_autostart_enabled
@@ -24,6 +27,9 @@ class UtilsBackend(QObject):
         self.debugPostProvider = NotificationProvider(
             id="com.classwidgets.debug",
             name="Debug Notification",
+            manager=self.app.notification,
+            icon=Path( ASSETS_PATH / "images" / "logo.png" ),
+            # icon="ic_fluent_code_20_regular"
         )
 
         # 执行初始化逻辑

@@ -1,5 +1,6 @@
 from enum import IntEnum
-from typing import Optional
+from pathlib import Path
+from typing import Optional, Union
 from pydantic import BaseModel
 
 
@@ -15,6 +16,7 @@ class NotificationData(BaseModel):
     level: int                # 实际由前端映射样式
     title: str
     message: Optional[str] = None
+    icon: Optional[Union[str, Path]] = None  # 图标，支持字体图标名称或图片URI
 
     # 行为 & 展示
     duration: int = 4000      # ms，0 = 常驻

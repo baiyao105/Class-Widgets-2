@@ -1,5 +1,6 @@
 from PySide6.QtCore import QObject, Slot
-from typing import Optional
+from typing import Optional, Union
+from pathlib import Path
 from .model import NotificationData, NotificationLevel, NotificationProviderConfig
 
 class NotificationProvider(QObject):
@@ -11,13 +12,22 @@ class NotificationProvider(QObject):
         self,
         id: str,
         name: str,
-        icon: Optional[str] = None,
+        icon: Optional[Union[str, Path]] = None,
         manager=None,  # 默认 None，内部会自动获取
     ):
         super().__init__()
         self.id = id
         self.name = name
-        self.icon = icon
+        
+        # 自动处理图标：支持 Path 对象和字符串
+        if icon is not None and isinstance(icon, Path):
+            # Path 对象转换为 URI 字符串
+            if not icon.is_absolute():
+                icon = icon.absolute()
+            self.icon = icon.as_uri()
+        else:
+            # 字符串直接使用
+            self.icon = icon
 
         # 自动获取 manager（如果没传，则尝试从 AppCentral.notification）
         if manager is None:
@@ -59,6 +69,7 @@ class NotificationProvider(QObject):
             message=message,
             duration=duration,
             closable=closable,
+            icon=self.icon,  # 传递 Provider 的图标信息
         )
 
         self.manager.dispatch(data, cfg)
