@@ -70,6 +70,7 @@ FluentPage {
 
                 ToolButton {
                     icon.name: "ic_fluent_play_20_regular"
+                    flat: true
                     ToolTip {
                         text: qsTr("Play sound")
                         visible: parent.hovered
@@ -114,6 +115,7 @@ FluentPage {
                         text: qsTr("Play sound")
                         visible: parent.hovered
                     }
+                    flat: true
                     onClicked: UtilsBackend.playNotificationSoundLevel(1) // ANNOUNCEMENT level
                 }
                 Button {
@@ -154,6 +156,7 @@ FluentPage {
                         text: qsTr("Play sound")
                         visible: parent.hovered
                     }
+                    flat: true
                     onClicked: UtilsBackend.playNotificationSoundLevel(2) // WARNING level
                 }
                 Button {
@@ -194,6 +197,7 @@ FluentPage {
                         text: qsTr("Play sound")
                         visible: parent.hovered
                     }
+                    flat: true
                     onClicked: UtilsBackend.playNotificationSoundLevel(3) // SYSTEM level
                 }
                 Button {
@@ -305,30 +309,31 @@ FluentPage {
                     }
                 }
 
-                // 简化的通知设置Dialog（只包含启用和系统通知，不包含声音设置）
                 Dialog {
                     id: notificationDialog
                     title: modelData.name ? modelData.name : "Unknown Provider"
                     standardButtons: Dialog.Ok | Dialog.Cancel
                     modal: true
-                    width: 400
 
                     property bool dialogEnabled: modelData ? modelData.enabled : false
                     property bool dialogSystemNotify: modelData ? modelData.useSystemNotify : false
+                    property bool dialogAppNotify: modelData ? modelData.useAppNotify : false
 
                     Component.onCompleted: {
                         dialogEnabled = modelData.enabled
                         dialogSystemNotify = modelData.useSystemNotify
+                        dialogAppNotify = modelData.useAppNotify
                     }
 
                     onAccepted: {
                         // 应用设置
                         UtilsBackend.setNotificationProviderEnabled(modelData.id, dialogEnabled)
                         UtilsBackend.setNotificationProviderSystemNotify(modelData.id, dialogSystemNotify)
+                        UtilsBackend.setNotificationProviderAppNotify(modelData.id, dialogAppNotify)
                     }
 
                     ColumnLayout {
-                        spacing: 16
+                        spacing: 4
                         Layout.fillWidth: true
 
                         SettingCard {
@@ -344,15 +349,49 @@ FluentPage {
                             }
                         }
 
-                        SettingCard {
-                            Layout.fillWidth: true
-                            title: qsTr("System Notification")
-                            description: qsTr("Use system notification center instead of in-app notifications")
+                        RowLayout {
+                            Layout.alignment: Qt.AlignCenter
+                            spacing: 16
+                            ColumnLayout {
+                                Layout.maximumWidth: 250
+                                Image {
+                                    Layout.alignment: Qt.AlignCenter
+                                    Layout.maximumWidth: 250
+                                    source: PathManager.images(
+                                        "settings/notification/dynamic-" + (Theme.isDark()? "dark" : "light") + ".png"
+                                    )
+                                    fillMode: Image.PreserveAspectFit
+                                }
+                                CheckBox {
+                                    Layout.fillWidth: true
+                                    text: qsTr("Use Dynamic Notification")
+                                    checked: notificationDialog.dialogAppNotify
+                                    onCheckedChanged: {
+                                        notificationDialog.dialogAppNotify = checked
+                                    }
+                                }
+                            }
 
-                            Switch {
-                                checked: notificationDialog.dialogSystemNotify
-                                onCheckedChanged: {
-                                    notificationDialog.dialogSystemNotify = checked
+                            ColumnLayout {
+                                Layout.maximumWidth: 250
+                                Image {
+                                    Layout.alignment: Qt.AlignCenter
+                                    Layout.maximumWidth: 250
+                                    source: PathManager.images(
+                                        "settings/notification/system" +
+                                        (Qt.platform.os === "windows" ? "_windows" : "") +
+                                        "-" + (Theme.isDark() ? "dark" : "light") +
+                                        ".png"
+                                    )
+                                    fillMode: Image.PreserveAspectFit
+                                }
+                                CheckBox {
+                                    Layout.fillWidth: true
+                                    text: qsTr("Use System Notification")
+                                    checked: notificationDialog.dialogSystemNotify
+                                    onCheckedChanged: {
+                                        notificationDialog.dialogSystemNotify = checked
+                                    }
                                 }
                             }
                         }

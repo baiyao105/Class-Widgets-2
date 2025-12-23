@@ -29,3 +29,4 @@ class NotificationData(BaseModel):
 class NotificationProviderConfig(BaseModel):
     enabled: bool = True
     use_system_notify: bool = False
+    use_app_notify: bool = True

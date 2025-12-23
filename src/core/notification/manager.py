@@ -44,12 +44,18 @@ class NotificationManager(QObject):
 
         payload = data.model_dump()
         use_system_notify = getattr(cfg, "use_system_notify", False)
+        use_app_notify = getattr(cfg, "use_app_notify", True)
         payload["useSystem"] = use_system_notify
+
+        # 如果既不使用系统通知也不使用应用内通知，则直接返回
+        if not use_system_notify and not use_app_notify:
+            return
 
         provider = self.providers.get(data.provider_id)
         provider_use_system = hasattr(provider, 'use_system_notify') and provider.use_system_notify if provider else False
 
-        if provider_use_system and use_system_notify:
+        # 发送系统通知
+        if use_system_notify and (provider_use_system or use_system_notify):
             try:
                 if self.app_central and hasattr(self.app_central, "tray_icon") and self.app_central.tray_icon:
                     self.app_central.tray_icon.push_notification(
@@ -60,14 +66,16 @@ class NotificationManager(QObject):
             except Exception as e:
                 logger.error(f"System notification error: {e}")
 
-        self.notified.emit(payload)
+        # 发送应用内通知信号
+        if use_app_notify:
+            self.notified.emit(payload)
 
-        if not data.silent:
-            try:
-                if self.app_central and hasattr(self.app_central, 'utils_backend') and self.app_central.utils_backend:
-                    self.app_central.utils_backend.playNotificationSound(data.provider_id, data.level)
-            except Exception as e:
-                logger.error(f"Sound playback error: {e}")
+            if not data.silent:
+                try:
+                    if self.app_central and hasattr(self.app_central, 'utils_backend') and self.app_central.utils_backend:
+                        self.app_central.utils_backend.playNotificationSound(data.provider_id, data.level)
+                except Exception as e:
+                    logger.error(f"Sound playback error: {e}")
 
 
     
@@ -76,17 +84,18 @@ class NotificationManager(QObject):
         获取所有已注册的通知提供者信息，用于前端展示
         """
         providers_info = []
-        
+
         for provider_id, provider in self.providers.items():
             # 获取提供者配置
             cfg = self.configs.notifications.providers.get(provider_id, NotificationProviderConfig())
-            
+
             providers_info.append({
                 "id": provider_id,
                 "name": getattr(provider, "name", "Unknown Provider"),
                 "icon": getattr(provider, "icon", None),
                 "enabled": cfg.enabled,
-                "useSystemNotify": cfg.use_system_notify
+                "useSystemNotify": cfg.use_system_notify,
+                "useAppNotify": cfg.use_app_notify
             })
-        
+
         return providers_info

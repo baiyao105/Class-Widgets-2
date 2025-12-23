@@ -43,6 +43,15 @@ class NotificationService(QObject):
             self.config_manager.notifications.providers[provider_id] = NotificationProviderConfig()
         self.config_manager.notifications.providers[provider_id].use_system_notify = use_system
 
+    @Slot(str, bool)
+    def setNotificationProviderAppNotify(self, provider_id, use_app):
+        """
+        设置特定通知提供者是否使用应用内通知
+        """
+        if provider_id not in self.config_manager.notifications.providers:
+            self.config_manager.notifications.providers[provider_id] = NotificationProviderConfig()
+        self.config_manager.notifications.providers[provider_id].use_app_notify = use_app
+
     # === 声音管理方法 ===
     @Slot(int, str)
     def setLevelSound(self, level, sound):

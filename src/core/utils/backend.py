@@ -166,6 +166,13 @@ class UtilsBackend(QObject):
         """
         self.notification_service.setNotificationProviderSystemNotify(provider_id, use_system)
 
+    @Slot(str, bool)
+    def setNotificationProviderAppNotify(self, provider_id, use_app):
+        """
+        设置特定通知提供者是否使用应用内通知
+        """
+        self.notification_service.setNotificationProviderAppNotify(provider_id, use_app)
+
     @Slot(int, str)
     def setLevelSound(self, level, sound):
         """
