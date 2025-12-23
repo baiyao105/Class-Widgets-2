@@ -73,7 +73,6 @@ class NotificationService(QObject):
     def setNotificationsEnabled(self, enabled):
         """设置全局通知启用状态"""
         self.config_manager.notifications.enabled = enabled
-        logger.debug(f"Set global notifications enabled: {enabled}")
 
     @Slot(result=bool)
     def getNotificationsEnabled(self):
@@ -110,7 +109,6 @@ class NotificationService(QObject):
     def setGlobalVolume(self, volume):
         """设置全局通知音量"""
         self.config_manager.notifications.volume = volume
-        logger.debug(f"Set global notification volume: {volume}")
 
     @Slot(result=float)
     def getGlobalNotificationVolume(self):
@@ -133,7 +131,6 @@ class NotificationService(QObject):
         """播放通知级别对应的铃声"""
         try:
             if not self.getNotificationsEnabled():
-                logger.debug(f"Notifications disabled, skipping sound for level {level}")
                 return
 
             # 获取全局级别声音配置
@@ -152,14 +149,11 @@ class NotificationService(QObject):
             # 如果配置了自定义声音文件路径，使用自定义路径
             if custom_sound:
                 sound_file = custom_sound
-                logger.debug(f"Using custom sound for level {level}: {custom_sound}")
             else:
                 sound_file = str(ASSETS_PATH / "audio" / audio_filename)
-                logger.debug(f"Using default sound for level {level}: {sound_file}")
 
             # 检查声音文件是否存在
             if not Path(sound_file).exists():
-                logger.debug(f"Sound file not found: {sound_file}")
                 return
 
             # 使用Qt的QSoundEffect播放声音
@@ -181,7 +175,6 @@ class NotificationService(QObject):
             effect.setVolume(volume)
             
             # 播放声音
-            logger.debug(f"Playing notification sound: {sound_file} (Provider={provider_id}, Level={level}, Volume={volume})")
             effect.play()
             
         except Exception as e:
@@ -198,7 +191,7 @@ class NotificationService(QObject):
             dialog.setNameFilter("Audio Files (*.wav *.mp3 *.ogg)")
             dialog.setWindowTitle("Select Notification Sound")
             
-            if dialog.exec() == QFileDialog.DialogCode.Accept:
+            if dialog.exec() == QFileDialog.DialogCode.Accepted:
                 selected_files = dialog.selectedFiles()
                 if selected_files:
                     source_path = Path(selected_files[0])

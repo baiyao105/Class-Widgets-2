@@ -28,6 +28,9 @@ class NotificationManager(QObject):
         return True if cfg is None else cfg.enabled
 
     def dispatch(self, data: NotificationData, cfg=None):
+        # 记录通知分发信息
+        logger.info(f"Dispatching notification: {data.provider_id} - {data.title} (Level: {data.level})")
+
         if cfg is None:
             cfg = self.configs.notifications.providers.get(data.provider_id)
         if cfg is None:
@@ -58,7 +61,7 @@ class NotificationManager(QObject):
                 logger.error(f"System notification error: {e}")
 
         self.notified.emit(payload)
-        
+
         if not data.silent:
             try:
                 if self.app_central and hasattr(self.app_central, 'utils_backend') and self.app_central.utils_backend:
@@ -73,27 +76,17 @@ class NotificationManager(QObject):
         获取所有已注册的通知提供者信息，用于前端展示
         """
         providers_info = []
-        logger.info(f"get_providers() called. Total providers: {len(self.providers)}")
         
         for provider_id, provider in self.providers.items():
-            # 添加更详细的日志调试
-            has_name = hasattr(provider, "name")
-            has_icon = hasattr(provider, "icon")
-            provider_name = provider.name if has_name else "Unknown Provider"
-            provider_icon = provider.icon if has_icon else None
-            
-            logger.info(f"Provider {provider_id} - has_name: {has_name}, name: '{provider_name}', has_icon: {has_icon}, icon: {provider_icon}")
-            
             # 获取提供者配置
             cfg = self.configs.notifications.providers.get(provider_id, NotificationProviderConfig())
             
             providers_info.append({
                 "id": provider_id,
-                "name": provider_name,
-                "icon": provider_icon,
+                "name": getattr(provider, "name", "Unknown Provider"),
+                "icon": getattr(provider, "icon", None),
                 "enabled": cfg.enabled,
                 "useSystemNotify": cfg.use_system_notify
             })
         
-        logger.info(f"Returning {len(providers_info)} providers to QML")
         return providers_info
