@@ -1,7 +1,7 @@
 from enum import IntEnum
 from pathlib import Path
-from typing import Optional, Union
-from pydantic import BaseModel
+from typing import Optional, Union, Dict
+from pydantic import BaseModel, Field
 
 
 class NotificationLevel(IntEnum):
@@ -24,10 +24,8 @@ class NotificationData(BaseModel):
     silent: bool = False      # 是否无声音
     use_system: bool = False # 系统通知 or 应用内
 
-    # 扩展字段（给灵动岛留口子）
-    extra: dict = {}
+
 
 class NotificationProviderConfig(BaseModel):
     enabled: bool = True
     use_system_notify: bool = False
-    sound: Optional[str] = None

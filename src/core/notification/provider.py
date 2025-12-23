@@ -13,11 +13,13 @@ class NotificationProvider(QObject):
         id: str,
         name: str,
         icon: Optional[Union[str, Path]] = None,
+        use_system_notify: bool = False,  # 是否支持系统通知
         manager=None,  # 默认 None，内部会自动获取
     ):
         super().__init__()
         self.id = id
         self.name = name
+        self.use_system_notify = use_system_notify  # 记录是否支持系统通知
         
         # 自动处理图标：支持 Path 对象和字符串
         if icon is not None and isinstance(icon, Path):
@@ -44,7 +46,7 @@ class NotificationProvider(QObject):
         """
         从 ConfigManager 读取该 provider 的配置
         """
-        cfg = getattr(self.manager.configs.notifications, self.id, None)
+        cfg = self.manager.configs.notifications.providers.get(self.id, None)
         if cfg is None:
             return NotificationProviderConfig()
         return cfg

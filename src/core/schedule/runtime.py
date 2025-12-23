@@ -4,14 +4,13 @@ from typing import Optional, List
 from PySide6.QtCore import QObject, Property, Signal
 from loguru import logger
 
-from src.core.notification import NotificationProvider
+from src.core.notification import NotificationProvider, NotificationData, NotificationLevel
 from src.core.schedule.model import ScheduleData, MetaInfo, Timeline, Entry, EntryType, Subject
 from src.core.schedule.service import ScheduleServices
 from src.core.utils import get_cycle_week, get_week_number
 
 
 class ScheduleRuntime(QObject):
-    notify = Signal(str, dict, str)
     updated = Signal()  # 文件更新
     currentsChanged = Signal(EntryType)  # 日程更新
 
@@ -46,7 +45,8 @@ class ScheduleRuntime(QObject):
             id="com.classwidgets.schedule.runtime",
             name="Schedule Runtime",
             icon="ic_fluent_calendar_20_regular",
-            manager=app_central.notification
+            manager=app_central.notification,
+            use_system_notify=True
         )
 
         logger.info("Schedule runtime initialized.")
@@ -200,13 +200,37 @@ class ScheduleRuntime(QObject):
         return round((now - start).total_seconds() / (end - start).total_seconds(), 2)
 
     def _update_notify(self):
-        # 活动变更节点
         if self.previous_entry != self.current_entry:
             self.previous_entry = self.current_entry
-            logger.info(f"Notify: status changed to {self.current_status.value}; {self.previous_entry}")
-            self.notify.emit(self.current_status.value, self.current_subject, self.current_title)
+            status = self.current_status.value
+            
+            if self.current_subject:
+                subject_name = self.current_subject.name
+                message = f"当前: {subject_name}" if status == "class" else f"下一个: {subject_name}"
+            else:
+                message = f"状态变更为: {status}"
+            
+            status_mapping = {
+                "class": "上课提醒",
+                "break": "课间休息", 
+                "free": "自由时间",
+                "preparation": "预备铃",
+                "activity": "活动提醒"
+            }
+            title = status_mapping.get(status, f"状态变更: {status}")
+            
+            data = NotificationData(
+                provider_id=self.notification_provider.id,
+                level=NotificationLevel.ANNOUNCEMENT,
+                title=title,
+                message=message,
+                duration=5000,
+                closable=True
+            )
+            
+            cfg = self.notification_provider.get_config()
+            self.notification_provider.manager.dispatch(data, cfg)
 
-        # 预备铃
         if (
             self.next_entries and len(self.next_entries) > 0 and
             self.current_status in {EntryType.FREE, EntryType.PREPARATION}
@@ -214,19 +238,29 @@ class ScheduleRuntime(QObject):
             next_entry = self.next_entries[0]
             next_start = datetime.strptime(next_entry.startTime, "%H:%M")
             next_start = datetime.combine(self.current_offset_time.date(), next_start.time())
-            prep_min = self.app_central.configs.schedule.preparation_time or 2  # 准备时间
-            # prep_min = self.app_central.configs.get("schedule").get("preparation_time") or 2  # 准备时间
+            prep_min = self.app_central.configs.schedule.preparation_time or 2
 
             if next_start - timedelta(minutes=prep_min) == self.current_offset_time.replace(microsecond=0):
-                logger.info(f"Notify: status changed to {EntryType.PREPARATION.value}; {next_entry}")
                 subject_dict = None
                 if self.schedule.subjects:
                     sub = self.services.get_subject(next_entry.subjectId, self.schedule.subjects)
                     if sub:
                         subject_dict = sub.model_dump()
-                self.notify.emit(
-                    EntryType.PREPARATION.value,
-                    subject_dict,
-                    next_entry.title if next_entry else None
+                
+                if subject_dict:
+                    message = f"下一个: {subject_dict['name']}"
+                else:
+                    message = f"下一个: {next_entry.title if next_entry else '未知'}"
+                
+                data = NotificationData(
+                    provider_id=self.notification_provider.id,
+                    level=NotificationLevel.ANNOUNCEMENT,
+                    title="预备铃",
+                    message=message,
+                    duration=5000,
+                    closable=True
                 )
+                
+                cfg = self.notification_provider.get_config()
+                self.notification_provider.manager.dispatch(data, cfg)
 

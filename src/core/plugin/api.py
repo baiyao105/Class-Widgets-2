@@ -51,7 +51,7 @@ class NotificationAPI(QObject):
             logger.error(f"Error processing notification: {e}")
             self.pushed.emit("通知")
 
-    def get_provider(self, provider_id: str, name: str = None, icon: Union[str, Path] = None):
+    def get_provider(self, provider_id: str, name: str = None, icon: Union[str, Path] = None, use_system_notify: bool = False):
         """
         为插件创建一个 NotificationProvider 实例
         
@@ -76,7 +76,8 @@ class NotificationAPI(QObject):
             id=provider_id,
             name=name,
             icon=icon,
-            manager=self._app.notification
+            manager=self._app.notification,
+            use_system_notify=use_system_notify  # 插件通知默认支持系统通知
         )
         
         logger.debug(f"Created notification provider: {provider_id} with icon: {icon}")

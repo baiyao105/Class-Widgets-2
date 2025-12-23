@@ -156,10 +156,20 @@ class NetworkConfig(ConfigBaseModel):
 
 class NotificationsConfig(ConfigBaseModel):
     """
-    所有通知 Provider 的配置
-    key = provider_id
+    所有通知配置，包括全局设置和各提供者配置
     """
+    enabled: bool = True  # 全局通知开关
+    default_sound: Optional[str] = None  # 默认铃声
+    volume: float = 0.7  # 通知音量 (0.0-1.0)
     providers: Dict[str, NotificationProviderConfig] = Field(default_factory=dict)
+    
+    # 按通知级别设置的默认音频文件（默认为空字符串）
+    level_sounds: Dict[int, str] = Field(default_factory=lambda: {
+        0: "",     # INFO - 普通提示音
+        1: "",     # ANNOUNCEMENT - 上下课提醒音
+        2: "",     # WARNING - 警告音
+        3: ""      # SYSTEM - 系统音
+    })
 
     class Config:
         extra = Extra.allow

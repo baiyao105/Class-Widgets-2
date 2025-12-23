@@ -7,131 +7,93 @@ from src.core.notification import NotificationData, NotificationLevel, Notificat
 
 
 class NotificationManager(QObject):
-    """
-    统一通知出口
-    """
+    notified = Signal(dict)
 
-    notified = Signal(dict)  # 给 QML 的 payload
-
-    def __init__(self, config_manager):
+    def __init__(self, config_manager, app_central=None):
         super().__init__()
         self.providers: Dict[str, object] = {}
         self.configs = config_manager
+        self.app_central = app_central
 
     def register_provider(self, provider):
-        """
-        注册 Provider，同时确保配置存在
-        """
+        if not hasattr(provider, "id") or not hasattr(provider, "name"):
+            logger.warning(f"Invalid provider registration: {provider}")
+            return
+        
         self.providers[provider.id] = provider
-        _ = provider.get_config()  # 自动创建默认配置
+        _ = provider.get_config()
 
     def is_enabled(self, provider_id: str) -> bool:
-        """
-        检查某个 provider 是否被允许推送通知
-        """
         cfg = self.configs.notifications.providers.get(provider_id)
         return True if cfg is None else cfg.enabled
 
     def dispatch(self, data: NotificationData, cfg=None):
-        """
-        最终分发点
-        1. 检查 provider 是否启用
-        2. 根据配置决定是否使用系统通知或自带铃声
-        """
-        # 如果没有 cfg，就用 configs 里存的配置
         if cfg is None:
             cfg = self.configs.notifications.providers.get(data.provider_id)
         if cfg is None:
             cfg = NotificationProviderConfig()
 
-        # 检查是否启用
+        if not getattr(self.configs.notifications, "enabled", True):
+            return
+
         if not getattr(cfg, "enabled", True):
-            logger.debug(f"Notification blocked by config: {data.provider_id}")
             return
 
         payload = data.model_dump()
-        payload["useSystem"] = getattr(cfg, "use_system_notify", False)
-        payload["sound"] = getattr(cfg, "sound", None)
+        use_system_notify = getattr(cfg, "use_system_notify", False)
+        payload["useSystem"] = use_system_notify
+
+        provider = self.providers.get(data.provider_id)
+        provider_use_system = hasattr(provider, 'use_system_notify') and provider.use_system_notify if provider else False
+
+        if provider_use_system and use_system_notify:
+            try:
+                if self.app_central and hasattr(self.app_central, "tray_icon") and self.app_central.tray_icon:
+                    self.app_central.tray_icon.push_notification(
+                        title=data.title,
+                        text=data.message or "",
+                        icon=None
+                    )
+            except Exception as e:
+                logger.error(f"System notification error: {e}")
 
         self.notified.emit(payload)
-        logger.info(f"Notification dispatched: {data.title} (Provider={data.provider_id})")
+        
+        if not data.silent:
+            try:
+                if self.app_central and hasattr(self.app_central, 'utils_backend') and self.app_central.utils_backend:
+                    self.app_central.utils_backend.playNotificationSound(data.provider_id, data.level)
+            except Exception as e:
+                logger.error(f"Sound playback error: {e}")
 
-    def push_activity(self, status: str, subject: dict = None, title: str = None):
-        """
-        处理来自ScheduleRuntime的通知信号
-        """
-        try:
-            # 确定通知级别和图标
-            level = NotificationLevel.ANNOUNCEMENT
-            icon = "ic_fluent_shifts_activity_20_filled"
-            
-            # 根据状态设置默认标题
-            if not title:
-                status_mapping = {
-                    "class": "上课提醒",
-                    "break": "课间休息",
-                    "free": "自由时间",
-                    "preparation": "预备铃",
-                    "activity": "活动提醒"
-                }
-                title = status_mapping.get(status, f"状态变更: {status}")
-            
-            # 构建消息内容
-            if subject and isinstance(subject, dict):
-                subject_name = subject.get('name', '未知科目')
-                message = f"当前: {subject_name}" if status == "class" else f"下一个: {subject_name}"
-            else:
-                message = f"状态变更为: {status}"
-            
-            # 创建通知数据
-            data = NotificationData(
-                provider_id="com.classwidgets.schedule.runtime",
-                level=level,
-                title=title,
-                message=message,
-                duration=5000,
-                closable=True
-            )
-            
-            self.dispatch(data)
-            
-        except Exception as e:
-            logger.error(f"Failed to push activity notification: {e}")
 
-    def push_plugin_notification(self, message: str, provider_id: str = "com.classwidgets.plugins"):
+    
+    def get_providers(self):
         """
-        处理来自插件的通知
+        获取所有已注册的通知提供者信息，用于前端展示
         """
-        try:
-            data = NotificationData(
-                provider_id=provider_id,
-                level=NotificationLevel.INFO,
-                title="插件通知",
-                message=message,
-                duration=4000,
-                closable=True
-            )
+        providers_info = []
+        logger.info(f"get_providers() called. Total providers: {len(self.providers)}")
+        
+        for provider_id, provider in self.providers.items():
+            # 添加更详细的日志调试
+            has_name = hasattr(provider, "name")
+            has_icon = hasattr(provider, "icon")
+            provider_name = provider.name if has_name else "Unknown Provider"
+            provider_icon = provider.icon if has_icon else None
             
-            self.dispatch(data)
+            logger.info(f"Provider {provider_id} - has_name: {has_name}, name: '{provider_name}', has_icon: {has_icon}, icon: {provider_icon}")
             
-        except Exception as e:
-            logger.error(f"Failed to push plugin notification: {e}")
-
-    def push(self, icon: str, level: int, title: str, message: str = ""):
-        """
-        QML调试界面使用的通用推送方法
-        """
-        try:
-            data = NotificationData(
-                provider_id="com.classwidgets.debugger",
-                level=level,
-                title=title,
-                message=message,
-                duration=4000,
-                closable=True
-            )
+            # 获取提供者配置
+            cfg = self.configs.notifications.providers.get(provider_id, NotificationProviderConfig())
             
-            self.dispatch(data)
-            
-        except Exception as e:
-            logger.error(f"Failed to push notification: {e}")
+            providers_info.append({
+                "id": provider_id,
+                "name": provider_name,
+                "icon": provider_icon,
+                "enabled": cfg.enabled,
+                "useSystemNotify": cfg.use_system_notify
+            })
+        
+        logger.info(f"Returning {len(providers_info)} providers to QML")
+        return providers_info
