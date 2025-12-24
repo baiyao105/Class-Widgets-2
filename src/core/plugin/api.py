@@ -51,33 +51,31 @@ class NotificationAPI(QObject):
             logger.error(f"Error processing notification: {e}")
             self.pushed.emit("通知")
 
-    def get_provider(self, provider_id: str, name: str = None, icon: Union[str, Path] = None, use_system_notify: bool = False):
+    def get_provider(
+            self, plugin, provider_id: str, name: str = None,
+            icon: Union[str, Path] = None, use_system_notify: bool = False
+    ):
         """
         为插件创建一个 NotificationProvider 实例
-        
-        Args:
-            provider_id: 提供者ID，需要唯一
-            name: 提供者名称，默认为插件名称
-            icon: 图标，支持两种类型：
-                  - str: 字体图标名称（如 "ic_fluent_bell_20_filled"）
-                  - Path: 本地图片文件路径（会自动转为绝对路径和 URI）
-            
-        Returns:
+
+        returns:
             NotificationProvider: 可用于发送通知的 Provider 实例
         """
         from src.core.notification import NotificationProvider
-        
+
         # 如果没有指定名称，使用默认名称
         if name is None:
             name = f"Plugin Provider ({provider_id})"
-        
-        # 直接传递图标对象给 NotificationProvider，它会自动处理 Path 转换
+
+        if hasattr(icon, 'is_absolute') and not icon.is_absolute():
+            icon = plugin.PATH / icon
+
         provider = NotificationProvider(
             id=provider_id,
             name=name,
             icon=icon,
             manager=self._app.notification,
-            use_system_notify=use_system_notify  # 插件通知默认支持系统通知
+            use_system_notify=use_system_notify
         )
         
         logger.debug(f"Created notification provider: {provider_id} with icon: {icon}")
