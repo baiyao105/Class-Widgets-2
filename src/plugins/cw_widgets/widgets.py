@@ -1,9 +1,10 @@
 from pathlib import Path
 
-from PySide6.QtCore import Slot
+from PySide6.QtCore import Slot, QCoreApplication
 
 from src.core.directories import QML_PATH
 from src.core.plugin import CW2Plugin
+from src.core.utils.translations import get_widget_name, translate_keys
 
 
 META = {
@@ -19,28 +20,31 @@ META = {
 class Plugin(CW2Plugin):
     def __init__(self, plugin_api):
         super().__init__(plugin_api)
+        # 确保翻译键被注册
+        translate_keys()
+        
         self.widgets_list = [
             {
                 "widget_id": "classwidgets.currentActivity",
-                "name": "Current Activity",
+                "name": QCoreApplication.translate("Widgets", "Current Activity"),
                 "qml_path": Path(QML_PATH / "widgets" / "currentActivity.qml").as_posix(),
                 "backend_obj": self,
             },
             {
                 "widget_id": "classwidgets.time",
-                "name": "Time",
+                "name": QCoreApplication.translate("Widgets", "Time"),
                 "qml_path": Path(QML_PATH / "widgets" / "Time.qml").as_posix(),
                 "backend_obj": self,
             },
             {
                 "widget_id": "classwidgets.eventCountdown",
-                "name": "Event Countdown",
+                "name": QCoreApplication.translate("Widgets", "Event Countdown"),
                 "qml_path": Path(QML_PATH / "widgets" / "eventCountdown.qml").as_posix(),
                 "backend_obj": self,
             },
             {
                 "widget_id": "classwidgets.upcomingActivities",
-                "name": "Upcoming Activities",
+                "name": QCoreApplication.translate("Widgets", "Upcoming Activities"),
                 "qml_path": Path(QML_PATH / "widgets" / "upcomingActivities.qml").as_posix(),
                 "backend_obj": self,
                 "settings_qml": Path(QML_PATH / "widgets" / "settings" / "upcomingActivities.qml").as_posix(),
@@ -52,7 +56,7 @@ class Plugin(CW2Plugin):
             },
             {
                 "widget_id": "classwidgets.dynamicNotification",
-                "name": "Dynamic Notification",
+                "name": QCoreApplication.translate("Widgets", "Dynamic Notification"),
                 "qml_path": Path(QML_PATH / "widgets" / "dynamicNotification.qml").as_posix(),
                 "backend_obj": self,
                 "settings_qml": Path(QML_PATH / "widgets" / "settings" / "upcomingActivities.qml").as_posix(),

@@ -1,6 +1,6 @@
 from pathlib import Path
 
-from PySide6.QtCore import Property, Slot, QObject, Signal, QUrl
+from PySide6.QtCore import Property, Slot, QObject, Signal, QUrl, QCoreApplication
 from PySide6.QtGui import QGuiApplication
 from loguru import logger
 
@@ -9,6 +9,7 @@ from src.core.directories import LOGS_PATH, ROOT_PATH
 from src.core.notification import NotificationProvider
 from src.core.notification.model import NotificationProviderConfig
 from src.core.utils.auto_startup import autostart_supported, enable_autostart, disable_autostart, is_autostart_enabled
+from src.core.utils.translations import get_notification_provider_name
 
 
 class UtilsBackend(QObject):
@@ -27,14 +28,11 @@ class UtilsBackend(QObject):
         self._license_text: str = ""
         self._logs: list = []
         self.app.plugin_api.ui.settingsPageRegistered.connect(lambda: self.extraSettingsChanged.emit())
-        self.debugPostProvider = NotificationProvider(
-            id="com.classwidgets.debug",
-            name="Debug Notification",
-            manager=self.app.notification,
-            # icon=Path( ASSETS_PATH / "images" / "logo.png" ),
-            use_system_notify=True,
-            icon="ic_fluent_code_20_regular"
-        )
+        self.debugPostProvider = None
+        self._register_debug_provider()
+
+        # 连接到retranslate信号，在翻译加载后更新通知提供者名称
+        self.app.retranslate.connect(self._on_retranslate)
 
         # 音频播放对象已委托给 NotificationService
         # self._sound_effects = {}
@@ -42,6 +40,31 @@ class UtilsBackend(QObject):
         # 执行初始化逻辑
         self._init_logger()
         self.load_license()  # 启动时立即加载
+
+    def _register_debug_provider(self):
+        """注册调试通知提供者，确保在翻译加载后执行"""
+        if self.debugPostProvider is not None:
+            return
+            
+        self.debugPostProvider = NotificationProvider(
+            id="com.classwidgets.debug",
+            name=QCoreApplication.translate("NotificationProviders", "Debug Notification"),
+            manager=self.app.notification,
+            # icon=Path( ASSETS_PATH / "images" / "logo.png" ),
+            use_system_notify=True,
+            icon="ic_fluent_code_20_regular"
+        )
+
+    @Slot()
+    def _on_retranslate(self):
+        """处理翻译信号，重新注册通知提供者"""
+        if self.debugPostProvider:
+            # 取消注册旧的provider
+            self.app.notification.unregister_provider("com.classwidgets.debug")
+            self.debugPostProvider = None
+            
+        # 重新注册provider，使用新的翻译
+        self._register_debug_provider()
 
     def _init_logger(self):
         """配置 Loguru 钩子"""

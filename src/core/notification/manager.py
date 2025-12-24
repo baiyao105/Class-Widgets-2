@@ -23,6 +23,12 @@ class NotificationManager(QObject):
         self.providers[provider.id] = provider
         _ = provider.get_config()
 
+    def unregister_provider(self, provider_id: str):
+        """取消注册通知提供者"""
+        if provider_id in self.providers:
+            del self.providers[provider_id]
+            logger.debug(f"Unregistered notification provider: {provider_id}")
+
     def is_enabled(self, provider_id: str) -> bool:
         cfg = self.configs.notifications.providers.get(provider_id)
         return True if cfg is None else cfg.enabled

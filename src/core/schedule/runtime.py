@@ -1,13 +1,14 @@
 from datetime import datetime, timedelta
 from typing import Optional, List
 
-from PySide6.QtCore import QObject, Property, Signal
+from PySide6.QtCore import QObject, Property, Signal, Slot, QCoreApplication
 from loguru import logger
 
 from src.core.notification import NotificationProvider, NotificationData, NotificationLevel
 from src.core.schedule.model import ScheduleData, MetaInfo, Timeline, Entry, EntryType, Subject
 from src.core.schedule.service import ScheduleServices
 from src.core.utils import get_cycle_week, get_week_number
+from src.core.utils.translations import get_notification_provider_name, get_status_title
 
 
 class ScheduleRuntime(QObject):
@@ -41,15 +42,35 @@ class ScheduleRuntime(QObject):
         self.current_subject: Optional[Subject] = None
         self.current_title: Optional[str] = None
 
+        self.notification_provider = None
+        self._register_notification_provider()
+
+        # 连接到retranslate信号，在翻译加载后更新通知提供者名称
+        app_central.retranslate.connect(self._on_retranslate)
+
+    def _register_notification_provider(self):
+        """注册通知提供者，确保在翻译加载后执行"""
+        if self.notification_provider is not None:
+            return
+            
         self.notification_provider = NotificationProvider(
             id="com.classwidgets.schedule.runtime",
-            name="Schedule Runtime",
+            name=QCoreApplication.translate("NotificationProviders", "Schedule Runtime"),
             icon="ic_fluent_calendar_20_regular",
-            manager=app_central.notification,
+            manager=self.app_central.notification,
             use_system_notify=True
         )
 
-        logger.info("Schedule runtime initialized.")
+    @Slot()
+    def _on_retranslate(self):
+        """处理翻译信号，重新注册通知提供者"""
+        if self.notification_provider:
+            # 取消注册旧的provider
+            self.app_central.notification.unregister_provider("com.classwidgets.schedule.runtime")
+            self.notification_provider = None
+            
+        # 重新注册provider，使用新的翻译
+        self._register_notification_provider()
 
     # TIME
     @Property(str, notify=updated)
@@ -210,14 +231,7 @@ class ScheduleRuntime(QObject):
             else:
                 message = f"状态变更为: {status}"
             
-            status_mapping = {
-                "class": "上课提醒",
-                "break": "课间休息", 
-                "free": "自由时间",
-                "preparation": "预备铃",
-                "activity": "活动提醒"
-            }
-            title = status_mapping.get(status, f"状态变更: {status}")
+            title = get_status_title(status)
             
             data = NotificationData(
                 provider_id=self.notification_provider.id,

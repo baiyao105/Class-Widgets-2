@@ -107,6 +107,7 @@ class PreferencesConfig(ConfigBaseModel):
         default_factory=lambda: {
             "default": [
                 WidgetEntry(type_id="classwidgets.time", instance_id="8ee721ef-ab36-4c23-834d-2c666a6739a3"),
+                WidgetEntry(type_id="classwidgets.dynamicNotification", instance_id="4ccfdd24-eac1-4be0-8a09-7271af818327"),
                 WidgetEntry(type_id="classwidgets.currentActivity", instance_id="87985398-2844-4c9e-b27d-6ea81cd0a2c6"),
             ]
         }

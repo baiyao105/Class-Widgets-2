@@ -18,7 +18,7 @@ Widget {
     property int notificationDuration: 4000 // 默认通知显示时间 4s
 
     // 目标显示状态（用于逻辑判断）
-    readonly property bool shouldShow: editMode || hasNotification
+    readonly property bool shouldShow: editMode || !enabled || hasNotification
 
     // 实际显示状态（用于布局控制，动画完成后才改变）
     property bool actualVisible: true
