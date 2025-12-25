@@ -12,7 +12,8 @@ Widget {
     property string notificationMessage: ""
     property string notificationIcon: ""
     property int notificationLevel: -1
-    property color notificationColor: "#605ed2"
+    property color notificationColor: Utils.primaryColor  // get theme color
+    // property color notificationColor: "#605ed2"
     property bool hasNotification: false   // 新增，是否有通知
 
     property int notificationDuration: 4000 // 默认通知显示时间 4s
@@ -161,16 +162,13 @@ Widget {
 
     // Helper function 获取当前颜色
     function currentColor() {
-        if (hasNotification) {
-            return levelColor(notificationLevel)
-        }
-        return "#605ed2"
+        return levelColor(notificationLevel)
     }
 
     function levelColor(level) {
         switch (level) {
             case 0: // INFO
-                return "#605ed2"   // 蓝紫，中性提示
+                return Utils.primaryColor   // 应用主题色
             case 1: // ANNOUNCEMENT
                 return "#46CEA3"   // 绿，状态变化 / 上下课
             case 2: // WARNING
@@ -178,7 +176,7 @@ Widget {
             case 3: // SYSTEM
                 return "#0078D4"   // Fluent 蓝，系统
             default:
-                return "#605ed2"
+                return Utils.primaryColor
         }
     }
 
