@@ -234,7 +234,7 @@ Widget {
             spacing: 12
             MarqueeTitle {
                 color: "#FFF"
-                text: notificationTitle
+                text: editMode ? qsTr("No notification yet") : notificationTitle
                 maximumWidth: 150
                 speed: 100
             }
@@ -242,8 +242,10 @@ Widget {
                 Layout.preferredWidth: 2
                 color: Qt.alpha("#FFF", 0.35)
                 Layout.fillHeight: true
+                visible: messageLabel.text
             }
             MarqueeTitle {
+                id: messageLabel
                 color: "#FFF"
                 text: notificationMessage
                 speed: 100

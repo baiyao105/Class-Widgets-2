@@ -41,21 +41,64 @@ class ScheduleRuntime(QObject):
         self.current_subject: Optional[Subject] = None
         self.current_title: Optional[str] = None
 
-        self.notification_provider = None
-        self._register_notification_provider()
+        # Separate notification providers for different notification types
+        self.class_notification_provider = None
+        self.activity_notification_provider = None
+        self.break_notification_provider = None
+        self.free_notification_provider = None
+        self.preparation_bell_provider = None
+        
+        self._register_notification_providers()
 
         # 连接到retranslate信号，在翻译加载后更新通知提供者名称
         app_central.retranslate.connect(self._on_retranslate)
 
-    def _register_notification_provider(self):
-        """注册通知提供者，确保在翻译加载后执行"""
-        if self.notification_provider is not None:
+    def _register_notification_providers(self):
+        """注册不同类型的通知提供者，确保在翻译加载后执行"""
+        if self.class_notification_provider is not None:
             return
             
-        self.notification_provider = NotificationProvider(
-            id="com.classwidgets.schedule.runtime",
-            name=QCoreApplication.translate("NotificationProviders", "Schedule Runtime"),
-            icon="ic_fluent_calendar_20_regular",
+        # Class notifications
+        self.class_notification_provider = NotificationProvider(
+            id="com.classwidgets.schedule.runtime.class",
+            name=QCoreApplication.translate("NotificationProviders", "Class Notifications"),
+            icon="ic_fluent_education_20_regular",
+            manager=self.app_central.notification,
+            use_system_notify=True
+        )
+        
+        # Activity notifications  
+        self.activity_notification_provider = NotificationProvider(
+            id="com.classwidgets.schedule.runtime.activity",
+            name=QCoreApplication.translate("NotificationProviders", "Activity Notifications"),
+            icon="ic_fluent_sport_20_regular",
+            manager=self.app_central.notification,
+            use_system_notify=True
+        )
+        
+        # Break/Recess notifications
+        self.break_notification_provider = NotificationProvider(
+            id="com.classwidgets.schedule.runtime.break",
+            name=QCoreApplication.translate("NotificationProviders", "Break Notifications"),
+            icon="ic_fluent_coffee_20_regular",
+            manager=self.app_central.notification,
+            use_system_notify=True
+        )
+        
+        # Free time notifications
+        self.free_notification_provider = NotificationProvider(
+            id="com.classwidgets.schedule.runtime.free",
+            name=QCoreApplication.translate("NotificationProviders", "Free Time Notifications"),
+            icon="ic_fluent_home_20_regular",
+            manager=self.app_central.notification,
+            use_system_notify=True
+        )
+        
+        # Preparation bell notifications
+        self.preparation_bell_provider = NotificationProvider(
+            id="com.classwidgets.schedule.runtime.preparation",
+            name=QCoreApplication.translate("NotificationProviders", "Preparation Bell"),
+            icon="ic_fluent_bell_20_regular",
             manager=self.app_central.notification,
             use_system_notify=True
         )
@@ -63,13 +106,27 @@ class ScheduleRuntime(QObject):
     @Slot()
     def _on_retranslate(self):
         """处理翻译信号，重新注册通知提供者"""
-        if self.notification_provider:
-            # 取消注册旧的provider
-            self.app_central.notification.unregister_provider("com.classwidgets.schedule.runtime")
-            self.notification_provider = None
+        # Unregister all existing providers
+        providers = [
+            "com.classwidgets.schedule.runtime.class",
+            "com.classwidgets.schedule.runtime.activity", 
+            "com.classwidgets.schedule.runtime.break",
+            "com.classwidgets.schedule.runtime.free",
+            "com.classwidgets.schedule.runtime.preparation"
+        ]
+        
+        for provider_id in providers:
+            self.app_central.notification.unregister_provider(provider_id)
             
-        # 重新注册provider，使用新的翻译
-        self._register_notification_provider()
+        # Reset all providers to None
+        self.class_notification_provider = None
+        self.activity_notification_provider = None
+        self.break_notification_provider = None
+        self.free_notification_provider = None
+        self.preparation_bell_provider = None
+            
+        # Re-register all providers with new translations
+        self._register_notification_providers()
 
     # TIME
     @Property(str, notify=updated)
@@ -224,56 +281,194 @@ class ScheduleRuntime(QObject):
             self.previous_entry = self.current_entry
             status = self.current_status.value
             
-            if self.current_subject:
-                subject_name = self.current_subject.name
-                message = f"当前: {subject_name}" if status == "class" else f"下一个: {subject_name}"
+            # Main status change notification
+            if status == EntryType.CLASS.value:
+                title = QCoreApplication.translate("ScheduleRuntime", "Class Started")
+                message = None
+                
+                # Prioritize title over subject, skip if neither exists
+                entry_title = getattr(self.current_entry, 'title', None)
+                if entry_title:
+                    message = entry_title
+                elif self.current_subject:
+                    subject_name = getattr(self.current_subject, 'name', '')
+                    if subject_name:
+                        message = subject_name
+                        # Add teacher info if available
+                        teacher = getattr(self.current_subject, 'teacher', None)
+                        if teacher:
+                            message += f" —— {teacher}"
+                    
+            elif status == EntryType.ACTIVITY.value:
+                title = QCoreApplication.translate("ScheduleRuntime", "Activity Started")
+                message = None
+                
+                # Activity only uses title, skip if no title
+                entry_title = getattr(self.current_entry, 'title', None)
+                if entry_title:
+                    message = entry_title
+                    
+            elif status == EntryType.PREPARATION.value and self.next_entries:
+                 title = QCoreApplication.translate("ScheduleRuntime", "Intermission")
+                 message = None
+                 
+                 try:
+                     next_entry = self.next_entries[0]
+                     subject_dict = None
+                     
+                     if self.schedule and hasattr(self.schedule, 'subjects') and self.schedule.subjects:
+                         sub = self.services.get_subject(next_entry.subjectId, self.schedule.subjects)
+                         if sub:
+                             subject_dict = sub.model_dump() if hasattr(sub, 'model_dump') else sub.__dict__
+                     
+                     if subject_dict and 'name' in subject_dict:
+                         subject_name = subject_dict['name']
+                         is_local = subject_dict.get('isLocalClassroom', True)
+                         
+                         if is_local:
+                             message = QCoreApplication.translate("ScheduleRuntime", "Next: {}").format(subject_name)
+                         else:
+                             location = subject_dict.get('location', '')
+                             if location:
+                                 message = QCoreApplication.translate("ScheduleRuntime", "Next: {} at {}").format(subject_name, location)
+                             else:
+                                 message = QCoreApplication.translate("ScheduleRuntime", "Next: {} (Off-site)").format(subject_name)
+                     else:
+                         next_title = getattr(next_entry, 'title', '')
+                         if next_title:
+                             message = QCoreApplication.translate("ScheduleRuntime", "Next: {}").format(next_title)
+                         
+                 except (IndexError, AttributeError, TypeError) as e:
+                     logger.warning(f"Error preparing preparation notification: {e}")
+                     # Skip notification if we can't get proper information
+                     message = None
+                    
+            elif status == EntryType.BREAK.value:
+                 title = QCoreApplication.translate("ScheduleRuntime", "Recess")
+                 
+                 if self.next_entries:
+                     message = None
+                     try:
+                         next_entry = self.next_entries[0]
+                         subject_dict = None
+                         
+                         if self.schedule and hasattr(self.schedule, 'subjects') and self.schedule.subjects:
+                             sub = self.services.get_subject(next_entry.subjectId, self.schedule.subjects)
+                             if sub:
+                                 subject_dict = sub.model_dump() if hasattr(sub, 'model_dump') else sub.__dict__
+                         
+                         if subject_dict and 'name' in subject_dict:
+                             subject_name = subject_dict['name']
+                             is_local = subject_dict.get('isLocalClassroom', True)
+                             
+                             if is_local:
+                                 message = QCoreApplication.translate("ScheduleRuntime", "Next: {}").format(subject_name)
+                             else:
+                                 location = subject_dict.get('location', '')
+                                 if location:
+                                     message = QCoreApplication.translate("ScheduleRuntime", "Next: {} at {}").format(subject_name, location)
+                                 else:
+                                     message = QCoreApplication.translate("ScheduleRuntime", "Next: {} (Off-site)").format(subject_name)
+                         else:
+                             next_title = getattr(next_entry, 'title', '')
+                             if next_title:
+                                 message = QCoreApplication.translate("ScheduleRuntime", "Next: {}").format(next_title)
+                             
+                     except (IndexError, AttributeError, TypeError) as e:
+                         logger.warning(f"Error preparing break notification: {e}")
+                         # Skip notification if we can't get proper information
+                         message = None
+                 else:
+                     message = QCoreApplication.translate("ScheduleRuntime", "Enjoy your break")
+                    
+            elif status == EntryType.FREE.value:
+                title = QCoreApplication.translate("ScheduleRuntime", "Free Time")
+                message = None  # Free time doesn't need message
+                
             else:
-                message = f"状态变更为: {status}"
+                # Fallback for other statuses
+                title = QCoreApplication.translate("ScheduleRuntime", "Status Changed")
+                message = QCoreApplication.translate("ScheduleRuntime", "Current status: {}").format(status)
             
-            title = status
-            
-            data = NotificationData(
-                provider_id=self.notification_provider.id,
-                level=NotificationLevel.ANNOUNCEMENT,
-                title=title,
-                message=message,
-                duration=5000,
-                closable=True
-            )
-            
-            cfg = self.notification_provider.get_config()
-            self.notification_provider.manager.dispatch(data, cfg)
+            try:
+                # Choose appropriate notification provider based on status
+                if status == EntryType.CLASS.value:
+                    provider = self.class_notification_provider
+                elif status == EntryType.ACTIVITY.value:
+                    provider = self.activity_notification_provider
+                elif status in {EntryType.PREPARATION.value, EntryType.BREAK.value}:
+                    provider = self.break_notification_provider
+                elif status == EntryType.FREE.value:
+                    provider = self.free_notification_provider
+                else:
+                    provider = self.class_notification_provider  # fallback
+                
+                if provider:
+                    data = NotificationData(
+                        provider_id=provider.id,
+                        level=NotificationLevel.ANNOUNCEMENT,
+                        title=title,
+                        message=message,
+                        duration=5000,
+                        closable=True
+                    )
+                    
+                    cfg = provider.get_config()
+                    provider.manager.dispatch(data, cfg)
+                
+            except Exception as e:
+                logger.error(f"Failed to dispatch status notification: {e}")
 
+        # Preparation bell notification
         if (
             self.next_entries and len(self.next_entries) > 0 and
             self.current_status in {EntryType.FREE, EntryType.PREPARATION}
         ):
-            next_entry = self.next_entries[0]
-            next_start = datetime.strptime(next_entry.startTime, "%H:%M")
-            next_start = datetime.combine(self.current_offset_time.date(), next_start.time())
-            prep_min = self.app_central.configs.schedule.preparation_time or 2
+            try:
+                next_entry = self.next_entries[0]
+                next_start = datetime.strptime(next_entry.startTime, "%H:%M")
+                next_start = datetime.combine(self.current_offset_time.date(), next_start.time())
+                prep_min = getattr(self.app_central.configs.schedule, 'preparation_time', 2) or 2
 
-            if next_start - timedelta(minutes=prep_min) == self.current_offset_time.replace(microsecond=0):
-                subject_dict = None
-                if self.schedule.subjects:
-                    sub = self.services.get_subject(next_entry.subjectId, self.schedule.subjects)
-                    if sub:
-                        subject_dict = sub.model_dump()
-                
-                if subject_dict:
-                    message = f"下一个: {subject_dict['name']}"
-                else:
-                    message = f"下一个: {next_entry.title if next_entry else '未知'}"
-                
-                data = NotificationData(
-                    provider_id=self.notification_provider.id,
-                    level=NotificationLevel.ANNOUNCEMENT,
-                    title="预备铃",
-                    message=message,
-                    duration=5000,
-                    closable=True
-                )
-                
-                cfg = self.notification_provider.get_config()
-                self.notification_provider.manager.dispatch(data, cfg)
+                if next_start - timedelta(minutes=prep_min) == self.current_offset_time.replace(microsecond=0):
+                    subject_dict = None
+                    if self.schedule and hasattr(self.schedule, 'subjects') and self.schedule.subjects:
+                        sub = self.services.get_subject(next_entry.subjectId, self.schedule.subjects)
+                        if sub:
+                            subject_dict = sub.model_dump() if hasattr(sub, 'model_dump') else sub.__dict__
+                    
+                    if subject_dict and 'name' in subject_dict:
+                        subject_name = subject_dict['name']
+                        is_local = subject_dict.get('isLocalClassroom', True)
+                        
+                        if is_local:
+                            message = QCoreApplication.translate("ScheduleRuntime", "Coming up: {}").format(subject_name)
+                        else:
+                            location = subject_dict.get('location', '')
+                            if location:
+                                message = QCoreApplication.translate("ScheduleRuntime", "Coming up: {} at {}").format(subject_name, location)
+                            else:
+                                message = QCoreApplication.translate("ScheduleRuntime", "Coming up: {} (Off-site)").format(subject_name)
+                    else:
+                        next_title = getattr(next_entry, 'title', '')
+                        if next_title:
+                            message = QCoreApplication.translate("ScheduleRuntime", "Coming up: {}").format(next_title)
+                        else:
+                            message = None
+                    
+                    if self.preparation_bell_provider:
+                        data = NotificationData(
+                            provider_id=self.preparation_bell_provider.id,
+                            level=NotificationLevel.ANNOUNCEMENT,
+                            title=QCoreApplication.translate("ScheduleRuntime", "Preparation Bell"),
+                            message=message,
+                            duration=5000,
+                            closable=True
+                        )
+                        
+                        cfg = self.preparation_bell_provider.get_config()
+                        self.preparation_bell_provider.manager.dispatch(data, cfg)
+                    
+            except (ValueError, AttributeError, TypeError, IndexError) as e:
+                logger.warning(f"Error preparing preparation bell notification: {e}")
 
