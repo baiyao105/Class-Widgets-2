@@ -8,7 +8,6 @@ from src.core.notification import NotificationProvider, NotificationData, Notifi
 from src.core.schedule.model import ScheduleData, MetaInfo, Timeline, Entry, EntryType, Subject
 from src.core.schedule.service import ScheduleServices
 from src.core.utils import get_cycle_week, get_week_number
-from src.core.utils.translations import get_notification_provider_name, get_status_title
 
 
 class ScheduleRuntime(QObject):
@@ -231,7 +230,7 @@ class ScheduleRuntime(QObject):
             else:
                 message = f"状态变更为: {status}"
             
-            title = get_status_title(status)
+            title = status
             
             data = NotificationData(
                 provider_id=self.notification_provider.id,

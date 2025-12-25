@@ -4,7 +4,6 @@ from PySide6.QtCore import Slot, QCoreApplication
 
 from src.core.directories import QML_PATH
 from src.core.plugin import CW2Plugin
-from src.core.utils.translations import get_widget_name, translate_keys
 
 
 META = {
@@ -20,8 +19,6 @@ META = {
 class Plugin(CW2Plugin):
     def __init__(self, plugin_api):
         super().__init__(plugin_api)
-        # 确保翻译键被注册
-        translate_keys()
         
         self.widgets_list = [
             {

@@ -1,15 +1,12 @@
 from pathlib import Path
 
-from PySide6.QtCore import Property, Slot, QObject, Signal, QUrl, QCoreApplication
+from PySide6.QtCore import Property, Slot, QObject, Signal, QCoreApplication
 from PySide6.QtGui import QGuiApplication
 from loguru import logger
 
-from src.core import ASSETS_PATH
 from src.core.directories import LOGS_PATH, ROOT_PATH
 from src.core.notification import NotificationProvider
-from src.core.notification.model import NotificationProviderConfig
 from src.core.utils.auto_startup import autostart_supported, enable_autostart, disable_autostart, is_autostart_enabled
-from src.core.utils.translations import get_notification_provider_name
 
 
 class UtilsBackend(QObject):
