@@ -62,7 +62,7 @@ class ScheduleRuntime(QObject):
         self.class_notification_provider = NotificationProvider(
             id="com.classwidgets.schedule.runtime.class",
             name=QCoreApplication.translate("NotificationProviders", "Class Notifications"),
-            icon="ic_fluent_education_20_regular",
+            icon="ic_fluent_book_clock_20_regular",
             manager=self.app_central.notification,
             use_system_notify=True
         )
@@ -71,7 +71,7 @@ class ScheduleRuntime(QObject):
         self.activity_notification_provider = NotificationProvider(
             id="com.classwidgets.schedule.runtime.activity",
             name=QCoreApplication.translate("NotificationProviders", "Activity Notifications"),
-            icon="ic_fluent_sport_20_regular",
+            icon="ic_fluent_broad_activity_feed_20_regular",
             manager=self.app_central.notification,
             use_system_notify=True
         )
@@ -80,7 +80,7 @@ class ScheduleRuntime(QObject):
         self.break_notification_provider = NotificationProvider(
             id="com.classwidgets.schedule.runtime.break",
             name=QCoreApplication.translate("NotificationProviders", "Break Notifications"),
-            icon="ic_fluent_coffee_20_regular",
+            icon="ic_fluent_drink_coffee_20_regular",
             manager=self.app_central.notification,
             use_system_notify=True
         )
@@ -89,7 +89,7 @@ class ScheduleRuntime(QObject):
         self.free_notification_provider = NotificationProvider(
             id="com.classwidgets.schedule.runtime.free",
             name=QCoreApplication.translate("NotificationProviders", "Free Time Notifications"),
-            icon="ic_fluent_home_20_regular",
+            icon="ic_fluent_person_running_20_regular",
             manager=self.app_central.notification,
             use_system_notify=True
         )
@@ -98,7 +98,7 @@ class ScheduleRuntime(QObject):
         self.preparation_bell_provider = NotificationProvider(
             id="com.classwidgets.schedule.runtime.preparation",
             name=QCoreApplication.translate("NotificationProviders", "Preparation Bell"),
-            icon="ic_fluent_bell_20_regular",
+            icon="ic_fluent_alert_urgent_20_regular",
             manager=self.app_central.notification,
             use_system_notify=True
         )
