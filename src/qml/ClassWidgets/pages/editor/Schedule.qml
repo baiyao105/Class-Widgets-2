@@ -99,7 +99,7 @@ Item {
 
             Text {
                 id: weekText
-                text: qsTr("Week") + " " + scheduleViewer.currentWeek
+                text: qsTr(`Week ${scheduleViewer.currentWeek}`)
             }
 
             ToolButton {
