@@ -18,8 +18,8 @@ QtObject {
             "description": qsTr("A completely rebuilt notification system that supports in-app notification toggles, intelligent ringtone configuration, and customizable notification providers. Bringing users a more flexible and intelligent notification experience."),
             "image": PathManager.images("whatsnew/notification.png"),
             "icon": "ic_fluent_alert_badge_20_regular",
-            "actionButtonText": qsTr("Configure Notifications on Settings"),
-            "actionButtonAction": "openNotificationSettings"
+            "actionButtonText": qsTr("Add \"Dynamic Notifications\" to Widgets Screen"),
+            "actionButtonAction": "toggleWidgetsEditMode"
         },
         {
             "title": qsTr("Enhanced Plugin System"),
@@ -33,8 +33,7 @@ QtObject {
             "title": qsTr("Extended Multi-language Support"),
             "description": qsTr("Added Japanese and Traditional Chinese (Hong Kong) language support, improved internationalization (i18n) system. Translation management through Weblate platform allows more users to enjoy the convenience of Class Widgets."),
             "image": PathManager.images("whatsnew/whatsnew.png"),
-            "icon": "ic_fluent_translate_20_regular",
-            "actionButtonText": qsTr("Change Language")
+            "icon": "ic_fluent_translate_20_regular"
         },
         // {
         //     "title": qsTr("UI Experience Optimization"),
@@ -71,8 +70,8 @@ QtObject {
         if (!action) return
         
         switch(action) {
-            case "openNotificationSettings":
-                AppCentral.openSettings()
+            case "toggleWidgetsEditMode":
+                AppCentral.toggleWidgetsEditMode()
                 break
             case "openPluginPlaza":
                 Qt.openExternalUrl("https://plaza.cw.rinlit.cn")
