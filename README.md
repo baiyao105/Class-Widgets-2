@@ -51,7 +51,9 @@ Class Widgets 2 是新一代的电子化课程表展示工具，基于比前代�
 和 [Discord 服务器](https://discord.gg/EFF4PpqpqZ)。
 
 ## 开源许可
-本项目基于 GNU 通用公共许可证 第 3 版（GPL-3.0） 授权开源。
+
+[//]: # (本项目基于 GNU 通用公共许可证 第 3 版（GPL-3.0） 授权开源。)
+本项目基于 MIT 授权开源。
 
 在 [LICENSE](LICENSE) 文件了解更多。
 

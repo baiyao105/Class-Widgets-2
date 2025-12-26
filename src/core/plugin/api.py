@@ -11,7 +11,7 @@ from src.core.schedule.model import EntryType
 from PySide6.QtCore import QObject
 
 
-__version__ = "0.1.0"
+__version__ = "0.2.0"
 
 
 class WidgetsAPI:
