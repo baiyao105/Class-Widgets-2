@@ -9,6 +9,7 @@ from src import __version__, __version_type__
 from ..notification import NotificationProviderConfig
 
 GITHUB_MIRRORS: Dict[str, str] = {
+    "auto": "auto",
     "gh_proxy": "https://gh-proxy.com/",
     "kkgithub": "https://kkgithub.com/",
     "gitfast": "https://gitfast.top/",
@@ -175,4 +176,3 @@ class NotificationsConfig(ConfigBaseModel):
     class Config:
         extra = Extra.allow
         validate_assignment = True
-

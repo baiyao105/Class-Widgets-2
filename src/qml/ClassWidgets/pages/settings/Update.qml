@@ -260,7 +260,9 @@ FluentPage {
                     }
 
                     delegate: ItemDelegate {
-                        text: modelData + " (" + Configs.data.network.mirrors[modelData] + ")"
+                        text: modelData === "auto"
+                              ? qsTr("自动选择") + " (" + qsTr("自动") + ")"
+                              : modelData + " (" + Configs.data.network.mirrors[modelData] + ")"
                     }
                 }
             }
