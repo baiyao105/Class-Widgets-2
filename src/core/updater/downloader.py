@@ -1,5 +1,6 @@
 import hashlib
 import time
+import urllib.request
 from pathlib import Path
 from urllib.parse import urlparse
 
@@ -51,6 +52,21 @@ class UpdateDownloader:
         query = f"?{parsed.query}" if parsed.query else ""
         return f"{prefix}{suffix}{query}"
 
+    def _get_system_proxies(self) -> dict | None:
+        """获取系统代理设置"""
+        try:
+            proxies = urllib.request.getproxies()
+            return proxies if proxies else None
+        except Exception:
+            return None
+
+    def _get_verify_flag(self) -> bool:
+        """返回 SSL 校验开关"""
+        try:
+            return not bool(self.configs.network.ignore_ssl_verify)
+        except Exception:
+            return True
+
     def _resolve_candidates(self, url: str) -> list:
         """生成候选下载地址列表, 返回 (key, url)"""
         parsed = urlparse(url)
@@ -82,7 +98,7 @@ class UpdateDownloader:
 
     def _download_text(self, url: str) -> str | None:
         try:
-            r = requests.get(url, timeout=10)
+            r = requests.get(url, timeout=10, proxies=self._get_system_proxies(), verify=self._get_verify_flag())
             r.raise_for_status()
             return r.text.strip()
         except Exception:
@@ -100,7 +116,7 @@ class UpdateDownloader:
         """测量首字节延迟"""
         try:
             start = time.time()
-            r = requests.get(url, stream=True, timeout=3)
+            r = requests.get(url, stream=True, timeout=3, proxies=self._get_system_proxies(), verify=self._get_verify_flag())
             r.raise_for_status()
             r.close()
             return max(time.time() - start, 0.001)
@@ -124,7 +140,13 @@ class UpdateDownloader:
                 return False
             try:
                 logger.info(f"Trying to download from [{idx+1}/{len(candidates)}]: {resolved_url}")
-                with requests.get(resolved_url, stream=True, timeout=15, proxies=None) as r:
+                with requests.get(
+                    resolved_url,
+                    stream=True,
+                    timeout=15,
+                    proxies=self._get_system_proxies(),
+                    verify=self._get_verify_flag()
+                ) as r:
                     r.raise_for_status()
                     total = int(r.headers.get('content-length', 0))
                     downloaded = 0

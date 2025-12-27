@@ -3168,6 +3168,16 @@ If it takes place in another location, such as a sport field, lab, or another cl
         <translation type="unfinished"></translation>
     </message>
     <message>
+        <location filename="../../src/qml/ClassWidgets/pages/settings/Update.qml" line="274"/>
+        <source>Ignore SSL Verification</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../src/qml/ClassWidgets/pages/settings/Update.qml" line="275"/>
+        <source>Disables certificate verification and may reduce connection security</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <source>Use Mirror Source</source>
         <translation type="vanished">使用镜像源</translation>
     </message>
@@ -3184,39 +3194,39 @@ If it takes place in another location, such as a sport field, lab, or another cl
         <translation type="vanished">选择镜像源</translation>
     </message>
     <message>
-        <location filename="../../src/qml/ClassWidgets/pages/settings/Update.qml" line="277"/>
+        <location filename="../../src/qml/ClassWidgets/pages/settings/Update.qml" line="287"/>
         <source>Auto check for updates</source>
         <translation>自动检查更新</translation>
     </message>
     <message>
-        <location filename="../../src/qml/ClassWidgets/pages/settings/Update.qml" line="278"/>
+        <location filename="../../src/qml/ClassWidgets/pages/settings/Update.qml" line="288"/>
         <source>Automatically check for updates and download them when they are available 
 * Requires restart</source>
         <translation>自动检查更新并在可用时下载
 * 需要重启</translation>
     </message>
     <message>
-        <location filename="../../src/qml/ClassWidgets/pages/settings/Update.qml" line="297"/>
+        <location filename="../../src/qml/ClassWidgets/pages/settings/Update.qml" line="307"/>
         <source>Advanced</source>
         <translation>高级选项</translation>
     </message>
     <message>
-        <location filename="../../src/qml/ClassWidgets/pages/settings/Update.qml" line="303"/>
+        <location filename="../../src/qml/ClassWidgets/pages/settings/Update.qml" line="313"/>
         <source>Updater Server URL</source>
         <translation>更新服务器地址</translation>
     </message>
     <message>
-        <location filename="../../src/qml/ClassWidgets/pages/settings/Update.qml" line="304"/>
+        <location filename="../../src/qml/ClassWidgets/pages/settings/Update.qml" line="314"/>
         <source>Set a custom URL to use for the updater server</source>
         <translation>设置自定义的更新服务器地址</translation>
     </message>
     <message>
-        <location filename="../../src/qml/ClassWidgets/pages/settings/Update.qml" line="318"/>
+        <location filename="../../src/qml/ClassWidgets/pages/settings/Update.qml" line="328"/>
         <source>Reset to default</source>
         <translation>重置为默认值</translation>
     </message>
     <message>
-        <location filename="../../src/qml/ClassWidgets/pages/settings/Update.qml" line="326"/>
+        <location filename="../../src/qml/ClassWidgets/pages/settings/Update.qml" line="336"/>
         <source>https://example.com/releases.json/</source>
         <translation>https://example.com/releases.json/</translation>
     </message>
