@@ -152,7 +152,7 @@ class NetworkConfig(ConfigBaseModel):
     网络配置
     """
     mirrors: Dict[str, str] = GITHUB_MIRRORS  # 下载来源
-    current_mirror: str = "gh_proxy"  # 当前下载来源
+    current_mirror: str = "auto"  # 当前下载来源
     releases_url: str = "https://classwidgets.rinlit.cn/2/releases.json"  # 版本更新地址
     auto_check_updates: bool = True  # 自动检查更新
 
