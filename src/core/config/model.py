@@ -10,9 +10,10 @@ from ..notification import NotificationProviderConfig
 
 GITHUB_MIRRORS: Dict[str, str] = {
     "auto": "auto",
-    "gh_proxy": "https://gh-proxy.com/",
-    "kkgithub": "https://kkgithub.com/",
-    "gitfast": "https://gitfast.top/",
+    "origin": "origin",
+    "gh_proxy": "https://gh-proxy.com/https://github.com/",
+    "gitfast": "https://gitfast.top/github.com/",
+    "xget": "https://xget.xi-xu.me/gh/",
 }
 
 
@@ -150,9 +151,8 @@ class NetworkConfig(ConfigBaseModel):
     """
     网络配置
     """
-    mirrors: Dict[str, str] = GITHUB_MIRRORS  # 镜像源
-    current_mirror: str = "gh_proxy"  # 当前镜像源
-    mirror_enabled: bool = True  # 是否启用网络功能
+    mirrors: Dict[str, str] = GITHUB_MIRRORS  # 下载来源
+    current_mirror: str = "gh_proxy"  # 当前下载来源
     releases_url: str = "https://classwidgets.rinlit.cn/2/releases.json"  # 版本更新地址
     auto_check_updates: bool = True  # 自动检查更新
 

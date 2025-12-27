@@ -23,37 +23,49 @@ class UpdateDownloader:
             self.manual_stop = True
 
     def _resolve_url(self, url: str) -> str:
-        """构造下载地址"""
+        """构造最终下载地址"""
         parsed = urlparse(url)
+        current = self.configs.network.current_mirror
+        if not current:
+            return url
+        if current in ("origin",):
+            return url
         if "github.com" not in parsed.netloc:
             return url
 
-        if not (self.configs.network.mirror_enabled and self.configs.network.current_mirror):
-            return url
-        current = self.configs.network.current_mirror
         if current in ("auto", "自动选择"):
             return url
-        mirror_netlocs = {urlparse(v).netloc for v in self.configs.network.mirrors.values() if v and v not in ("auto", "自动选择")}
-        if parsed.netloc in mirror_netlocs:
-            return url
+        return self._build_mirror_url(url, current)
 
-        mirror_base = self.configs.network.mirrors.get(current)
-        if not mirror_base:
-            return url
-        return f"{mirror_base}{url}"
+    def _build_mirror_url(self, origin_url: str, mirror_key: str) -> str:
+        """根据镜像前缀构造代理地址"""
+        parsed = urlparse(origin_url)
+        if "github.com" not in parsed.netloc:
+            return origin_url
+        prefix = self.configs.network.mirrors.get(mirror_key)
+        if not prefix or prefix in ("auto", "origin"):
+            return origin_url
+        suffix = parsed.path.lstrip("/")
+        query = f"?{parsed.query}" if parsed.query else ""
+        return f"{prefix}{suffix}{query}"
 
     def _resolve_candidates(self, url: str) -> list:
         """生成候选下载地址列表"""
         parsed = urlparse(url)
-        if "github.com" not in parsed.netloc or not self.configs.network.mirror_enabled:
+        if "github.com" not in parsed.netloc:
             return [url]
 
         current = self.configs.network.current_mirror
         if current not in ("auto", "自动选择"):
             return [self._resolve_url(url)]
-        mirrors = [v for k, v in self.configs.network.mirrors.items() if v and k not in ("auto", "自动选择")]
-        candidates = [f"{m}{url}" for m in mirrors]
-        candidates.append(url)  # 原始地址
+        candidates = []
+        for k in self.configs.network.mirrors:
+            if k in ("auto",):
+                continue
+            if k in ("origin",):
+                candidates.append(url)
+            else:
+                candidates.append(self._build_mirror_url(url, k))
         scored = []
         for u in candidates:
             latency = self._measure_latency(u)
