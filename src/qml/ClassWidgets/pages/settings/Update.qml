@@ -269,6 +269,16 @@ FluentPage {
                     }
                 }
             }
+
+            SettingItem {
+                title: qsTr("Ignore SSL Verification")
+                description: qsTr("Disables certificate verification and may reduce connection security")
+
+                Switch {
+                    onCheckedChanged: Configs.set("network.ignore_ssl_verify", checked)
+                    Component.onCompleted: checked = Configs.data.network.ignore_ssl_verify
+                }
+            }
         }
 
         SettingCard {
