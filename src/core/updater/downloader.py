@@ -1,3 +1,4 @@
+import hashlib
 import time
 from pathlib import Path
 from urllib.parse import urlparse
@@ -15,6 +16,7 @@ class UpdateDownloader:
         self._stop_flag = False  # 用于中断
         self.manual_stop = False  # 用于手动中断
         self.configs = configs
+        self.error_msg = ""
 
     def stop(self, manual=False):
         """外部调用停止下载"""
@@ -50,28 +52,49 @@ class UpdateDownloader:
         return f"{prefix}{suffix}{query}"
 
     def _resolve_candidates(self, url: str) -> list:
-        """生成候选下载地址列表"""
+        """生成候选下载地址列表, 返回 (key, url)"""
         parsed = urlparse(url)
         if "github.com" not in parsed.netloc:
-            return [url]
+            return [("origin", url)]
 
         current = self.configs.network.current_mirror
         if current not in ("auto", "自动选择"):
-            return [self._resolve_url(url)]
+            return [(current, self._resolve_url(url))]
         candidates = []
         for k in self.configs.network.mirrors:
             if k in ("auto",):
                 continue
             if k in ("origin",):
-                candidates.append(url)
+                candidates.append((k, url))
             else:
-                candidates.append(self._build_mirror_url(url, k))
+                candidates.append((k, self._build_mirror_url(url, k)))
         scored = []
-        for u in candidates:
+        for k, u in candidates:
             latency = self._measure_latency(u)
-            scored.append((u, latency if latency is not None else float("inf")))
-        scored.sort(key=lambda x: x[1])  # 延迟从小到大
-        return [u for u, _ in scored]
+            scored.append(((k, u), latency if latency is not None else float("inf")))
+        scored.sort(key=lambda x: x[1])
+        return [pair for pair, _ in scored]
+
+    def _origin_sha_url(self, origin_url: str) -> str:
+        p = urlparse(origin_url)
+        sha_path = p.path + ".sha256"
+        return f"{p.scheme}://{p.netloc}{sha_path}"
+
+    def _download_text(self, url: str) -> str | None:
+        try:
+            r = requests.get(url, timeout=10)
+            r.raise_for_status()
+            return r.text.strip()
+        except Exception:
+            return None
+
+    def _parse_sha256(self, content: str) -> str | None:
+        if not content:
+            return None
+        s = content.strip()
+        if " " in s:
+            s = s.split()[0]
+        return s if len(s) == 64 else None
 
     def _measure_latency(self, url: str) -> float | None:
         """测量首字节延迟"""
@@ -93,10 +116,10 @@ class UpdateDownloader:
         Returns:
            bool: 是否成功下载"""
         self._stop_flag = False
-        # 候选地址
         candidates = self._resolve_candidates(self.url)
-        logger.info(f"Download candidates: {candidates}")
-        for idx, resolved_url in enumerate(candidates):
+        logger.info(f"Download candidates: {[u for _, u in candidates]}")
+        chosen_key = None
+        for idx, (key, resolved_url) in enumerate(candidates):
             if self._stop_flag:
                 return False
             try:
@@ -118,10 +141,36 @@ class UpdateDownloader:
                             speed = downloaded / elapsed  # bytes/sec
                             if progress_callback and total > 0:
                                 progress_callback(downloaded / total * 100, speed)
-
-                return True
+                chosen_key = key
+                break
             except Exception as e:
                 logger.warning(f"Failed from {resolved_url}: {e}")
                 continue
+        if not chosen_key:
+            self.error_msg = "All sources failed"
+            return False
 
-        return False
+        origin_sha = self._origin_sha_url(self.url)
+        sha_url = origin_sha if chosen_key == "origin" else self._build_mirror_url(origin_sha, chosen_key)
+        sha_text = self._download_text(sha_url)
+        if not sha_text:
+            self.error_msg = "Checksum file missing"
+            return False
+        expected = self._parse_sha256(sha_text)
+        if not expected:
+            self.error_msg = "Invalid checksum file"
+            return False
+
+        h = hashlib.sha256()
+        try:
+            with open(self.dest, "rb") as f:
+                for chunk in iter(lambda: f.read(1024 * 128), b""):
+                    h.update(chunk)
+        except Exception as e:
+            self.error_msg = f"Checksum read failed: {e}"
+            return False
+        actual = h.hexdigest()
+        if actual.lower() != expected.lower():
+            self.error_msg = "Checksum mismatch"
+            return False
+        return True
