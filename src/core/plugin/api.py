@@ -7,6 +7,7 @@ from loguru import logger
 
 from src.core.config.model import ConfigBaseModel, PluginsConfig
 from src.core.plugin.bridge import PluginBackendBridge
+from src.core.notification import NotificationProvider
 from src.core.schedule.model import EntryType
 from PySide6.QtCore import QObject
 
@@ -54,14 +55,22 @@ class NotificationAPI(QObject):
     def get_provider(
             self, plugin, provider_id: str, name: str = None,
             icon: Union[str, Path] = None, use_system_notify: bool = False
-    ):
+    ) -> NotificationProvider:
+        return self.register_provider(
+            plugin, provider_id, name, icon, use_system_notify
+        )
+
+
+    def register_provider(
+            self, plugin, provider_id: str, name: str = None,
+            icon: Union[str, Path] = None, use_system_notify: bool = False
+    ) -> NotificationProvider:
         """
         为插件创建一个 NotificationProvider 实例
 
         returns:
             NotificationProvider: 可用于发送通知的 Provider 实例
         """
-        from src.core.notification import NotificationProvider
 
         # 如果没有指定名称，使用默认名称
         if name is None:
