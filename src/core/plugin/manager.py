@@ -15,6 +15,7 @@ from src.core.plugin import CW2Plugin, PluginAPI
 from src.core.plugin.loader import PluginLoader, check_api_version
 from src.core.plugin.worker import PluginImportWorker
 from src.core.plugin.api import __version__ as __API_VERSION__
+from src.core.notification import NotificationData, NotificationLevel
 
 
 class PluginManager(QObject):
@@ -59,7 +60,40 @@ class PluginManager(QObject):
             if meta.get("icon"):
                 meta["icon"] = QUrl.fromLocalFile(str(Path(meta["_path"]) / meta["icon"]))
 
+        # 检查不兼容插件并发送通知
+        self._check_incompatible_plugins()
+        
         logger.info(f"Found {len(self.metas)} plugins (builtin + external).")
+
+    def _check_incompatible_plugins(self):
+        """检查不兼容插件并发送通知"""
+        incompatible_plugins = [
+            meta for meta in self.metas 
+            if not meta.get("_compatible", True)  # 默认为True，如果标记为False则不兼容
+        ]
+        
+        if incompatible_plugins:
+            plugin_count = len(incompatible_plugins)
+            plugin_names = [meta["name"] for meta in incompatible_plugins]
+            
+            # 发送通知
+            notification = NotificationData(
+                provider_id="com.classwidgets.plugins",
+                level=NotificationLevel.WARNING,
+                title=f"检测到 {plugin_count} 个不兼容插件",
+                message=f"当前有 {plugin_count} 个不兼容插件已被加载，可能导致未知问题。请打开\"设置\"->\"插件\"了解更多。\n\n不兼容插件：{', '.join(plugin_names)}",
+                duration=8000,  # 显示8秒
+                closable=True,
+                silent=False
+            )
+            
+            # 使用app_central的notification发送通知
+            self.app_central.notification.dispatch(notification)
+            
+            logger.warning(
+                f"Found {plugin_count} incompatible plugins: {', '.join(plugin_names)}. "
+                f"Please check plugin settings for details."
+            )
 
     # runtime SDK 注入
     # 该功能已移至 PluginLoader 中

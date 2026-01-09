@@ -43,17 +43,51 @@ class PluginLoader:
             from src.core.plugin import CW2Plugin as RealCW2Plugin
             from src.core.config.model import ConfigBaseModel as RealConfigBaseModel
             
+            # API组件类
+            from src.core.plugin.components import (
+                BaseAPI as RealBaseAPI,
+                WidgetsAPI as RealWidgetsAPI,
+                NotificationAPI as RealNotificationAPI,
+                ScheduleAPI as RealScheduleAPI,
+                ThemeAPI as RealThemeAPI,
+                RuntimeAPI as RealRuntimeAPI,
+                ConfigAPI as RealConfigAPI,
+                AutomationAPI as RealAutomationAPI,
+                UiAPI as RealUiAPI
+            )
+            
             # 通知相关类型
             from src.core.notification.provider import NotificationProvider as RealNotificationProvider
-            from src.core.notification.model import NotificationLevel, NotificationData
+            from src.core.notification.model import NotificationLevel, NotificationData, NotificationProviderConfig
+            
+            # 课程表相关类型
+            from src.core.schedule.model import EntryType, WeekType
             
             # 批量注入
             fake_mod.PluginAPI = RealPluginAPI
             fake_mod.CW2Plugin = RealCW2Plugin
             fake_mod.ConfigBaseModel = RealConfigBaseModel
+            
+            # API组件类
+            fake_mod.BaseAPI = RealBaseAPI
+            fake_mod.WidgetsAPI = RealWidgetsAPI
+            fake_mod.NotificationAPI = RealNotificationAPI
+            fake_mod.ScheduleAPI = RealScheduleAPI
+            fake_mod.ThemeAPI = RealThemeAPI
+            fake_mod.RuntimeAPI = RealRuntimeAPI
+            fake_mod.ConfigAPI = RealConfigAPI
+            fake_mod.AutomationAPI = RealAutomationAPI
+            fake_mod.UiAPI = RealUiAPI
+            
+            # 通知相关类型
             fake_mod.NotificationProvider = RealNotificationProvider
             fake_mod.NotificationLevel = NotificationLevel
             fake_mod.NotificationData = NotificationData
+            fake_mod.NotificationProviderConfig = NotificationProviderConfig
+            
+            # 课程表相关类型
+            fake_mod.EntryType = EntryType
+            fake_mod.WeekType = WeekType
         except Exception as e:
             logger.exception(f"Failed to import runtime API classes for injection: {e}")
             return
@@ -196,7 +230,7 @@ class PluginLoader:
         
         try:
             if not check_api_version(meta["api_version"]):
-                raise RuntimeError(
+                logger.warning(
                     f"Plugin {plugin_id} (api_version {meta.get('api_version')}) "
                     f"is not compatible with app version"
                 )
