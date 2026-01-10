@@ -237,6 +237,7 @@ Widget {
         RowLayout {
             spacing: 12
             MarqueeTitle {
+                id: titleLabel
                 color: "#FFF"
                 text: editMode ? qsTr("No notification yet") : notificationTitle
                 maximumWidth: 150
@@ -246,7 +247,7 @@ Widget {
                 Layout.preferredWidth: 2
                 color: Qt.alpha("#FFF", 0.35)
                 Layout.fillHeight: true
-                visible: messageLabel.text
+                visible: messageLabel.text ? !!titleLabel.text : false
             }
             MarqueeTitle {
                 id: messageLabel
