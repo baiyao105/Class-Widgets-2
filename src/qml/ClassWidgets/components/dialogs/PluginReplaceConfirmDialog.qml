@@ -15,11 +15,11 @@ Dialog {
     title: isUpdate ? qsTr("Update Plugin") : qsTr("Replace Plugin")
     modal: true
     width: Math.min(450, Screen.width * 0.3)
-    height: Math.min(250, Screen.height * 0.3)
+    height: Math.min(300, Screen.height * 0.3)
     standardButtons: Dialog.Ok | Dialog.Cancel
 
     contentItem: ColumnLayout {
-        spacing: 16
+        // spacing: 16
         
         RowLayout {
             Layout.fillWidth: true
@@ -60,10 +60,8 @@ Dialog {
             }
         }
         
-        Rectangle {
+        MenuSeparator {
             Layout.fillWidth: true
-            height: 1
-            color: Colors.proxy.dividerColor
         }
         
         Text {
@@ -72,7 +70,7 @@ Dialog {
             wrapMode: Text.WordWrap
             color: Colors.proxy.textSecondaryColor
             font.pixelSize: 12
-            font.italic: true
+            // font.italic: true
         }
     }
 }
