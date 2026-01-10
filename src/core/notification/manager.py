@@ -1,6 +1,7 @@
-from typing import Dict
+from typing import Dict, List
+from threading import Lock
 
-from PySide6.QtCore import Signal, QObject
+from PySide6.QtCore import Signal, QObject, Slot
 from loguru import logger
 
 from src.core.notification import NotificationData, NotificationLevel, NotificationProviderConfig
@@ -14,6 +15,9 @@ class NotificationManager(QObject):
         self.providers: Dict[str, object] = {}
         self.configs = config_manager
         self.app_central = app_central
+        self._qml_ready = False
+        self._pending_notifications: List[dict] = []
+        self._lock = Lock()
 
     def register_provider(self, provider):
         if not hasattr(provider, "id") or not hasattr(provider, "name"):
@@ -32,6 +36,44 @@ class NotificationManager(QObject):
     def is_enabled(self, provider_id: str) -> bool:
         cfg = self.configs.notifications.providers.get(provider_id)
         return True if cfg is None else cfg.enabled
+
+    # qml 准备就绪后，自动发送所有待处理
+    @Slot()
+    def notifyQmlReady(self):
+        """
+        QML 调用此方法通知 Python 端 QML 已准备就绪
+        此方法会自动刷新所有待处理的通知
+        """
+        self.set_qml_ready(True)
+
+    def set_qml_ready(self, ready: bool = True):
+        """
+        设置 QML 是否已准备就绪
+        当 QML 准备好后，会自动发送所有待处理的通知
+        """
+        with self._lock:
+            self._qml_ready = ready
+            if ready and self._pending_notifications:
+                logger.info(f"QML ready, flushing {len(self._pending_notifications)} pending notifications")
+                pending = list(self._pending_notifications)
+                self._pending_notifications.clear()
+        
+        if ready and pending:
+            for payload in pending:
+                self.notified.emit(payload)
+
+    def flush_pending_notifications(self):
+        """
+        手动刷新待处理的通知
+        """
+        with self._lock:
+            if not self._pending_notifications:
+                return
+            pending = list(self._pending_notifications)
+            self._pending_notifications.clear()
+        
+        for payload in pending:
+            self.notified.emit(payload)
 
     def dispatch(self, data: NotificationData, cfg=None):
         # 记录通知分发信息
@@ -74,7 +116,13 @@ class NotificationManager(QObject):
 
         # 发送应用内通知信号
         if use_app_notify:
-            self.notified.emit(payload)
+            with self._lock:
+                if not self._qml_ready:
+                    logger.debug(f"QML not ready, queuing notification: {data.title}")
+                    self._pending_notifications.append(payload)
+            
+            if self._qml_ready:
+                self.notified.emit(payload)
 
             if not data.silent:
                 try:
