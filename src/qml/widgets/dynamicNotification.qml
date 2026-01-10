@@ -43,6 +43,10 @@ Widget {
     // 初始状态设置
     Component.onCompleted: {
         actualVisible = shouldShow
+        // 通知 Python 端 QML 已准备就绪
+        if (AppCentral && AppCentral.notification) {
+            AppCentral.notification.notifyQmlReady()
+        }
     }
 
     // 宽度控制 - 只有在真正不可见时才设置为0
