@@ -183,6 +183,15 @@ jobs:
             -T "dist/ClassWidgets-2-macOS-ARM64.dmg" \
             "https://webdav.123pan.cn/webdav/${ENCODED_VERSION}/ClassWidgets-2-macOS-ARM64.dmg"
 
+      - name: 🔔 Trigger Update Class Widgets 2 Releases JSON
+        if: success()  # 只有前面成功才触发
+        run: |
+          curl -X POST \
+            -H "Accept: application/vnd.github+json" \
+            -H "Authorization: Bearer ${{ secrets.GITHUB_TOKEN }}" \
+            https://api.github.com/repos/RinLit-233-shiroko/Class-Widgets-2/dispatches \
+            -d '{"event_type": "update-version"}'
+
       - name: 📤 Upload CHANGELOG & packages to OneDrive
         if: success() &&
           (github.event_name == 'push' ||
