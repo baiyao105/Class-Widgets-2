@@ -43,9 +43,8 @@ class PluginManager(QObject):
         # 创建 PluginLoader 实例
         self.loader = PluginLoader(plugin_api, self.external_path)
 
-        # 扫描并初始化
-        self.scan()
-        logger.info(f"Found {len(self.metas)} plugins.")
+        # 扫描并初始化（延迟到翻译器加载之后）
+        # self.scan()
         logger.info("Plugin Manager initialized.")
         self.initialized.emit()
 
