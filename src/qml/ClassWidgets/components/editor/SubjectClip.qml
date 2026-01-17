@@ -26,7 +26,7 @@ Clip {
         subjectName.text = subjectNameText || ""
         subjectTeacher.text = subjectTeacherText || ""
         subjectLocation.text = subjectLocationText || ""
-        subjectColor.text = subjectColorText || "#13c4d6"
+        subjectColor.color = subjectColorText || "#13c4d6"
         subjectIsLocalClassroom.checked = subjectIsLocal
         iconBtn.icon.name = subjectIcon || "ic_fluent_square_hint_20_regular"
         editDialog.open()
@@ -162,7 +162,13 @@ Clip {
 
             RowLayout {
                 Text { text: qsTr("Color"); Layout.fillWidth: true }
-                TextField { id: subjectColor; placeholderText: qsTr("e.g. #FF0000, blue, #197, etc.") ; Layout.preferredWidth: 250 }
+                DropDownColorPicker {
+                    id: subjectColor
+                    position: Position.Left
+                    textVisible: true
+                    hexText: true
+                }
+                // TextField { id: subjectColor; placeholderText: qsTr("e.g. #FF0000, blue, #197, etc.") ; Layout.preferredWidth: 250 }
             }
 
             RowLayout {
@@ -216,7 +222,7 @@ Clip {
                 subjectSimplifiedName.text,
                 subjectTeacher.text,
                 iconBtn.icon.name,
-                subjectColor.text,
+                subjectColor.color.toString(),
                 subjectLocation.text,
                 subjectIsLocalClassroom.checked
             )
