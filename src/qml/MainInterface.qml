@@ -12,7 +12,17 @@ import ClassWidgets.Windows
 QQW.Window {
     id: root
     visible: true
-    flags: Qt.FramelessWindowHint | Qt.Tool
+    // 动态判断平台
+    flags: {
+        let result = Qt.FramelessWindowHint | Qt.Window | Qt.WindowStaysOnTopHint;
+
+        if (Qt.platform.os === "osx" || Qt.platform.os === "macos") {  // 修复macOS窗口问题
+            return result;
+        } else {
+            // Windows：小组件页面不会被alt+tab截获
+            return  Qt.Tool | result;
+        }
+    }
     color: "transparent"
 
     property string screenName: Configs.data.preferences.display || Qt.application.screens[0].name

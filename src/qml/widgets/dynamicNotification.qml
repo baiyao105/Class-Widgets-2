@@ -185,9 +185,11 @@ Widget {
     }
 
     // 订阅后端通知
+    property var notificationTarget: AppCentral.notification
     Connections {
-        target: AppCentral.notification
+        target: notificationTarget
         function onNotified(payload) {
+            if (!payload) return
             // 设置新通知内容
             notificationTitle = payload.title || ""
             notificationMessage = payload.message || ""

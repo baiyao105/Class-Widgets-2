@@ -1,108 +1,118 @@
-import json
-from dataclasses import dataclass
+from __future__ import annotations
 
-from PySide6.QtCore import QObject, Signal, Slot, Property
-from pathlib import Path
+from typing import List, Dict, Any, Optional
 
+from PySide6.QtCore import QObject, Signal, Slot, Property, QTimer
 from loguru import logger
 
-from src.core import SRC_PATH, QML_PATH
-from src.core.directories import THEMES_PATH, DEFAULT_THEME
+from src.core.themes.loader import ThemeLoader, APP_API_VERSION
+from src.core.directories import THEMES_PATH
 
-
-# from src.core.config import global_config  # 不再直接使用global_config
-
-# @dataclass
-# class ThemeMeta:
-#     name: str
-#     author: str
-#     version: str
-
-
-def verify(theme_ver, app_version):
-    if theme_ver.strip() == "*":
-        return True
-    if theme_ver.startswith(">="):
-        theme_ver = theme_ver[1:]
-        return theme_ver >= app_version
-    if theme_ver.startswith("<"):
-        theme_ver = theme_ver[1:]
-        return theme_ver >= app_version
-    if theme_ver.startswith("="):
-        theme_ver = theme_ver[1:]
-        return theme_ver >= app_version
-    return False
+DEFAULT_THEME_ID = "com.classwidgets.default"
 
 
 class ThemeManager(QObject):
     themeChanged = Signal()
+    themeListChanged = Signal()
+    themeReadyToReload = Signal()
 
-    def __init__(self, app_central=None):
-        super().__init__()
+    def __init__(self, app_central, parent: Optional[QObject] = None):
+        super().__init__(parent)
         self._app_central = app_central
-        self._currentTheme = None
-        # builtin 主题
-        self._themes: dict = {}
+        self._themes: List[Dict[str, Any]] = []
+        self._currentTheme: str = ""
 
-    @Property(QObject, notify=themeChanged)
-    def themes(self):
+        self._cooldown = QTimer(self)
+        self._cooldown.setSingleShot(True)
+        self._cooldown.setInterval(500)
+        self._cooldown.timeout.connect(self._apply_pending)
+        self._pending: Optional[str] = None
+
+        self.loader = ThemeLoader()
+        
+        # 连接到 retranslate 信号
+        app_central.retranslate.connect(self._on_retranslate)
+        # self.scan()
+
+    @Slot(result=list)
+    def load(self):
+        self.scan()
         return self._themes
 
-    @Property(QObject, notify=themeChanged)
-    def currentTheme(self):
+    @Property('QVariant', notify=themeListChanged)
+    def themes(self) -> List[Dict[str, Any]]:
+        return list(self._themes)
+
+    @Property(str, notify=themeChanged)
+    def currentTheme(self) -> str:
         return self._currentTheme
 
-    @Slot(str, result=bool)
-    def themeChange(self, theme_path):
+    @Slot(result=str)
+    def getAPIVersion(self) -> str:
+        return str(APP_API_VERSION)
+
+    @Slot(str, result=str)
+    def getThemePath(self, theme_id: str) -> str:
         for theme in self._themes:
-            if theme == theme_path:
-                self._currentTheme = theme
-                self.themeChanged.emit()
-                return True
-        return False
+            if theme["id"] == theme_id:
+                return theme.get("_path", "")
+        return ""
 
     @Slot(str, result=dict)
-    def load(self):
-        # 读取主题
-        self._themes = {
-            Path(DEFAULT_THEME): {
-                "name": "Default",
-                "description": "Class Widgets Builtin Default Theme",
-                "author": "RinLit",
-                "version": "*",
-            }
-        }
-        current_theme_exist = False
+    def getThemeById(self, theme_id: str):
+        for theme in self._themes:
+            if theme["id"] == theme_id:
+                return theme
+        return {}
 
-        if not THEMES_PATH.exists():
-            THEMES_PATH.mkdir()
-        for theme in THEMES_PATH.iterdir():
-            if theme.is_dir():
-                theme_meta = theme / "cwtheme.json"
-                if theme_meta.exists():  # 读取
-                    try:
-                        with open(theme_meta, encoding="utf-8") as theme_json:
-                            meta = json.load(theme_json)
-                            app_version = self._app_central.get_config("app", "version") if self._app_central else "1.0.0"
-                            if not verify(meta["theme"], app_version):
-                                logger.warning(f"Theme {theme.name} version is invalid (skipped)")
-                                continue
-                            self._themes[theme.as_uri()] = meta["theme"]
+    @Slot(str, result=bool)
+    def themeChange(self, theme_id: str) -> bool:
+        if theme_id == self._currentTheme:
+            return True
 
-                            # 判断当前主题可用
-                            if self._currentTheme == theme.as_uri():
-                                current_theme_exist = True
-                    except FileNotFoundError:
-                        logger.warning(f"Theme '{theme.name}' cannot load. (FileNotFoundError)")
-                    except PermissionError:
-                        logger.warning(f"Theme '{theme.name}' cannot load. (PermissionError)")
+        if not any(t["id"] == theme_id for t in self._themes):
+            logger.warning(f"Unknown theme: {theme_id}")
+            return False
 
-        if not current_theme_exist:
-            logger.warning(f"Current theme not found, use default theme.")
-            self._currentTheme = Path(QML_PATH / "builtin").as_uri()
-            if self._app_central:
-                self._app_central.configs.preferences.current_theme = self._currentTheme
-                # self._app_central.set_config(self._currentTheme, "preferences", "current_theme")
+        if self._cooldown.isActive():
+            self._pending = theme_id
+            return True
 
-        logger.info(f"Themes loaded: {len(self._themes)} themes")
-        return self._themes
+        self._apply(theme_id)
+        self._cooldown.start()
+        return True
+
+    def scan(self) -> None:
+        self._themes = self.loader.scan_themes(THEMES_PATH)
+        self._currentTheme = self._app_central.configs.preferences.current_theme
+        
+        if not self._is_theme_valid(self._currentTheme):
+            logger.warning(f"Current theme '{self._currentTheme}' is invalid, falling back to default theme")
+            self._currentTheme = DEFAULT_THEME_ID
+            self._app_central.configs.preferences.current_theme = DEFAULT_THEME_ID
+        
+        self.themeListChanged.emit()
+        self.themeChanged.emit()
+
+    def _apply_pending(self) -> None:
+        if self._pending:
+            self._apply(self._pending)
+            self._pending = None
+
+    def _is_theme_valid(self, theme_id: str) -> bool:
+        return any(t["id"] == theme_id for t in self._themes)
+
+    def _on_retranslate(self):
+        """翻译变更时重新扫描主题以更新翻译"""
+        logger.info("Retranslating themes...")
+        self.scan()
+
+    def _apply(self, theme_id: str) -> None:
+        if not self._is_theme_valid(theme_id):
+            logger.warning(f"Theme '{theme_id}' is invalid, falling back to default theme")
+            theme_id = DEFAULT_THEME_ID
+        
+        self._currentTheme = theme_id
+        self._app_central.configs.preferences.current_theme = theme_id
+        logger.info(f"Theme switched to {theme_id}")
+        self.themeChanged.emit()
