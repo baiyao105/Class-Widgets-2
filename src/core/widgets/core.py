@@ -6,8 +6,11 @@ from PySide6.QtGui import QRegion, QCursor
 from PySide6.QtWidgets import QApplication
 from loguru import logger
 
-from src.core import QML_PATH
+from src.core import QML_PATH, SRC_PATH
+from src.core.directories import CW_PATH
 
+
+from src.core.themes.interceptor import ThemeUrlInterceptor
 
 class WidgetsWindow(RinUI.RinUIWindow, QObject):
     themeReadyToReload = Signal()
@@ -21,12 +24,17 @@ class WidgetsWindow(RinUI.RinUIWindow, QObject):
         self._setup_qml_context()
         self.qml_main_path = Path(QML_PATH / "MainInterface.qml")
         self.interactive_rect = QRegion()
+        
+        # 初始化主题拦截器
+        self.interceptor = ThemeUrlInterceptor(self)
+        self.engine.setUrlInterceptor(self.interceptor)
 
         self.engine.objectCreated.connect(self.on_qml_ready, type=Qt.ConnectionType.QueuedConnection)
 
     def _setup_qml_context(self):
         """设置QML上下文属性"""
         self.app_central.setup_qml_context(self)
+        self.engine.addImportPath(CW_PATH)
 
     def _start_listening(self):
         self.timer = QTimer(self)
@@ -42,11 +50,28 @@ class WidgetsWindow(RinUI.RinUIWindow, QObject):
 
     def _load_with_theme(self):
         """加载QML并应用主题"""
+        # 确保 src/qml 在导入路径中，以便能找到 ClassWidgets 模块
+        self.engine.addImportPath(str(QML_PATH))
+
         current_theme_id = self.app_central.theme_manager.currentTheme
         if current_theme_id:
+            # 验证主题是否存在
+            if not self.app_central.theme_manager.isThemePathValid(current_theme_id):
+                logger.error(f"Current theme '{current_theme_id}' path is invalid during initial load")
+                logger.info(f"Falling back to default theme: {self.app_central.theme_manager.DEFAULT_THEME_ID}")
+                # 切换到默认主题
+                self.app_central.theme_manager.themeChange(self.app_central.theme_manager.DEFAULT_THEME_ID)
+                current_theme_id = self.app_central.theme_manager.currentTheme
+
             current_theme_path = self.app_central.theme_manager.getThemePath(current_theme_id)
             if current_theme_path:
-                self.engine.addImportPath(current_theme_path)
+                logger.info(f"Setting theme interceptor path: {current_theme_path}")
+                self.interceptor.set_theme(current_theme_path)
+            else:
+                logger.warning(f"Theme path is empty for theme: {current_theme_id}")
+        else:
+            logger.warning("No current theme ID set")
+
         self.load(self.qml_main_path)
 
         self._start_listening()
@@ -56,57 +81,42 @@ class WidgetsWindow(RinUI.RinUIWindow, QObject):
         if self._theme_reloading:
             logger.info("Theme reload in progress, skipping")
             return
-        
+
         self._theme_reloading = True
         logger.info("Theme changed, starting reload process")
-        
-        # 1. 获取当前主题路径
+
         current_theme_id = self.app_central.theme_manager.currentTheme
+
+        if not self.app_central.theme_manager.isThemePathValid(current_theme_id):
+            logger.error(f"Theme '{current_theme_id}' path is invalid during theme change")
+            logger.info(f"Falling back to default theme: {self.app_central.theme_manager.DEFAULT_THEME_ID}")
+            self.app_central.theme_manager.themeChange(self.app_central.theme_manager.DEFAULT_THEME_ID)
+            current_theme_id = self.app_central.theme_manager.currentTheme
+
         if current_theme_id:
-            current_theme_path = Path(self.app_central.theme_manager.getThemePath(current_theme_id))
+            current_theme_path = self.app_central.theme_manager.getThemePath(current_theme_id)
             if current_theme_path:
-                current_theme_path_str = str(current_theme_path).replace('\\', '/')  # 统一使用 / 分隔符
-                paths = self.engine.importPathList()
-                logger.info(f"Current import paths count: {len(paths)}")
+                logger.info(f"Updating theme interceptor path: {current_theme_path}")
+                self.interceptor.set_theme(current_theme_path)
+            else:
+                logger.warning(f"Theme path is empty for theme: {current_theme_id}")
+                self.interceptor.set_theme(None)
+        else:
+            logger.warning("No current theme ID set during theme change")
+            self.interceptor.set_theme(None)
 
-                important_paths = []
-                filtered_paths = []
-                qml_path_str = str(QML_PATH).replace('\\', '/')  # 统一使用 / 分隔符
-                logger.debug(f"QML_PATH string (normalized): {qml_path_str}")
-                
-                # 打印所有当前导入路径
-                logger.debug("Current import paths:")
-                for i, p in enumerate(paths):
-                    normalized_p = p  # 统一使用 / 分隔符
-                    logger.debug(f"  [{i}] {p}")
-                    if qml_path_str in normalized_p:
-                        important_paths.append(p)
-                        logger.debug(f"  -> Keeping as important path")
-                    # 移除其他主题路径（通过检查是否包含themes关键词）
-                    elif "themes" in normalized_p.lower() and current_theme_path_str not in normalized_p:
-                        logger.debug(f"  -> Removing old theme path")
-                    else:
-                        # 保留所有其他路径，包括插件路径
-                        filtered_paths.append(p)
-                        logger.debug(f"  -> Keeping as other path")
-                
-                # 构建最终路径列表：新主题路径 + 重要路径 + 其他路径
-                final_paths = [current_theme_path_str] + important_paths + filtered_paths
-
-                self.engine.setImportPathList(final_paths)
-                logger.info(f"Set import path list, new path at index 0: {current_theme_path_str}")
-                logger.info(f"Total paths: {len(final_paths)}")
-                logger.info(f"Important paths kept: {len(important_paths)}")
-                logger.info(f"Other paths kept: {len(filtered_paths)}")
-        
-        # 清除组件缓存
         self.engine.clearComponentCache()
         self.engine.collectGarbage()
         logger.info("Component cache cleared")
-        
-        # 触发 widget 重新加载
+
+        if self.root_window:
+            self.root_window.setProperty("_force_theme_reload", True)
+            self.root_window.setProperty("_force_theme_reload", False)
+            logger.info("Force theme reload signal sent")
+
         self._trigger_widget_reload()
         self.engine.retranslate()
+
     
     def _trigger_widget_reload(self):
         """触发 widgets 重新加载"""

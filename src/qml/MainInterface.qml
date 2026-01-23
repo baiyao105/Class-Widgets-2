@@ -4,7 +4,6 @@ import QtQuick as QQ
 import QtQuick.Controls as QQC
 import QtQuick.Layouts
 import QtQuick.Window as QQW
-import Widgets
 import RinUI
 import ClassWidgets.Components
 import ClassWidgets.Windows
@@ -133,8 +132,14 @@ QQW.Window {
 
     Component.onCompleted: {
         updateLayer()
-        Theme.setThemeColor("#4099b2")
-        // origin #5CDCFF; 因为RinUI自带在暗色模式中的主题色补偿（这不夸夸（bushi），所以这里改成了更深的色调
+        // 应用当前主题的主题色
+        var currentTheme = CWThemeManager.getThemeById(CWThemeManager.currentTheme)
+        if (currentTheme && currentTheme.color) {
+            // Theme.setThemeColor(currentTheme.color)
+        } else {
+            // origin #5CDCFF; 因为RinUI自带在暗色模式中的主题色补偿（这不夸夸（bushi），所以这里改成了更深的色调
+            Theme.setThemeColor("#4099b2")
+        }
     }
 
 
@@ -142,6 +147,17 @@ QQW.Window {
         target: Configs
         function onDataChanged() {
             updateLayer()
+        }
+    }
+
+    Connections {
+        target: CWThemeManager
+        function onThemeChanged() {
+            // 主题切换时应用主题色
+            var currentTheme = CWThemeManager.getThemeById(CWThemeManager.currentTheme)
+            if (currentTheme && currentTheme.color) {
+                Theme.setThemeColor(currentTheme.color)
+            }
         }
     }
 

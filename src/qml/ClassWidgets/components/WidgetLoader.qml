@@ -1,6 +1,4 @@
 import QtQuick
-import RinUI
-
 
 Loader {
     id: loader

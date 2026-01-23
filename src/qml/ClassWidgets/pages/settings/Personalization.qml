@@ -39,7 +39,7 @@ FluentPage {
             DropDownColorPicker {
                 position: Position.Left
 
-                color: Theme.getThemeColor()
+                color: Utils.primaryColor
                 onColorChanged: {
                     Theme.setThemeColor(color)
                 }
@@ -126,30 +126,28 @@ FluentPage {
                                 maximumLineCount: 1
                             }
 
-                            Text {
-                                visible: modelData._compatible
-                                text: modelData.author || ""
-                                typography: Typography.Caption
-                                color: "#DDFFFFFF"
-                                elide: Text.ElideRight
-                                maximumLineCount: 1
-                            }
-
                             RowLayout {
-                                visible: !modelData._compatible
-                                opacity: compatibilityHoverHandler.hovered ? 0.8 : 1
-                                spacing: 4
-
-                                Icon {
-                                    name: "ic_fluent_warning_20_filled"
-                                    size: 14
-                                    color: Colors.proxy.systemCriticalColor
+                                // visible: modelData._compatible
+                                InfoBadge {
+                                    // 内置标记
+                                    severity: Severity.Info
+                                    text: qsTr("Built-in")
+                                    visible: modelData._type === "builtin"
+                                    solid: false
                                 }
-
-                                Text {
+                                InfoBadge {
+                                    // 不兼容标记
+                                    severity: Severity.Error
                                     text: qsTr("Incompatible")
+                                    visible: !modelData._compatible
+                                    solid: false
+                                }
+                                Text {
+                                    text: modelData.author || ""
                                     typography: Typography.Caption
-                                    color: Colors.proxy.systemCriticalColor
+                                    color: "#DDFFFFFF"
+                                    elide: Text.ElideRight
+                                    maximumLineCount: 1
                                 }
                             }
                         }
@@ -168,13 +166,15 @@ FluentPage {
 
                     TapHandler {
                         onTapped: {
-                            onTapped: {
-                                if (modelData._compatible) {
-                                    CWThemeManager.themeChange(modelData.id)
-                                } else {
-                                    pendingThemeId = modelData.id
-                                    incompatibleDialog.open()
+                            if (modelData._compatible) {
+                                CWThemeManager.themeChange(modelData.id)
+                                // 应用主题色
+                                if (modelData.color) {
+                                    Theme.setThemeColor(modelData.color)
                                 }
+                            } else {
+                                pendingThemeId = modelData.id
+                                incompatibleDialog.open()
                             }
                         }
                     }
