@@ -891,26 +891,6 @@ You can continue to open another one, or close this window.</source>
         <source>https://discord.gg/nNZxaCBh</source>
         <translation type="unfinished"></translation>
     </message>
-    <message>
-        <location filename="../../src/qml/ClassWidgets/pages/plaza/Home.qml" line="29"/>
-        <source>插件</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../../src/qml/ClassWidgets/pages/plaza/Home.qml" line="34"/>
-        <source>为你推荐</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../../src/qml/ClassWidgets/pages/plaza/Home.qml" line="46"/>
-        <source>所有扩展</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../../src/qml/ClassWidgets/pages/plaza/Home.qml" line="52"/>
-        <source>查看全部</source>
-        <translation type="unfinished"></translation>
-    </message>
 </context>
 <context>
     <name>IconPicker</name>
@@ -1392,52 +1372,15 @@ If translations are missing after a theme change, please restart</source>
     </message>
 </context>
 <context>
-    <name>PluginCard</name>
-    <message>
-        <location filename="../../src/qml/ClassWidgets/components/plaza/PluginCard.qml" line="113"/>
-        <location filename="../../src/qml/ClassWidgets/components/plaza/PluginCard.qml" line="121"/>
-        <source>Unknown</source>
-        <translation type="unfinished"></translation>
-    </message>
-</context>
-<context>
     <name>PluginManager</name>
     <message>
-        <location filename="../../src/core/plugin/manager.py" line="82"/>
+        <location filename="../../src/core/plugin/manager.py" line="88"/>
         <source>Incompatible</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/core/plugin/manager.py" line="83"/>
+        <location filename="../../src/core/plugin/manager.py" line="89"/>
         <source>{count} incompatible plugin(s) have been loaded, which may cause unknown issues.</source>
-        <translation type="unfinished"></translation>
-    </message>
-</context>
-<context>
-    <name>PluginPlaza</name>
-    <message>
-        <location filename="../../src/qml/ClassWidgets/windows/PluginPlaza.qml" line="12"/>
-        <source>Plugin Plaza</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../../src/qml/ClassWidgets/windows/PluginPlaza.qml" line="35"/>
-        <source>Refresh</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../../src/qml/ClassWidgets/windows/PluginPlaza.qml" line="53"/>
-        <source>Error</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../../src/qml/ClassWidgets/windows/PluginPlaza.qml" line="63"/>
-        <source>Home</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../../src/qml/ClassWidgets/windows/PluginPlaza.qml" line="68"/>
-        <source>Plugins</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -1536,19 +1479,8 @@ Do you want to %3 this plugin?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/qml/ClassWidgets/pages/plaza/Plugins.qml" line="25"/>
         <location filename="../../src/qml/ClassWidgets/pages/settings/Plugins.qml" line="148"/>
         <source>Search for plugins</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../../src/qml/ClassWidgets/pages/plaza/Plugins.qml" line="38"/>
-        <source>Popular</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../../src/qml/ClassWidgets/pages/plaza/Plugins.qml" line="41"/>
-        <source>Latest</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -1604,7 +1536,6 @@ It&apos;s incompatible and may cause unexpected issues.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/qml/ClassWidgets/pages/plaza/Plugins.qml" line="35"/>
         <location filename="../../src/qml/ClassWidgets/pages/settings/Plugins.qml" line="189"/>
         <source>All</source>
         <translation type="unfinished"></translation>
@@ -2410,19 +2341,6 @@ If it takes place in another location, such as a sport field, lab, or another cl
     </message>
 </context>
 <context>
-    <name>Theme</name>
-    <message>
-        <location filename="../../src/themes/__init__.py" line="10"/>
-        <source>Default</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../../src/themes/__init__.py" line="11"/>
-        <source>Class Widgets Builtin Default Theme</source>
-        <translation type="unfinished"></translation>
-    </message>
-</context>
-<context>
     <name>Time</name>
     <message>
         <location filename="../../src/qml/ClassWidgets/pages/settings/notificationAndTime/Time.qml" line="13"/>
@@ -3107,27 +3025,27 @@ then tap &quot;Edit Widget Screen&quot; in the menu to experience it.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/plugins/cw_widgets/widgets.py" line="26"/>
+        <location filename="../../src/plugins/cw_widgets/widgets.py" line="27"/>
         <source>Current Activity</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/plugins/cw_widgets/widgets.py" line="32"/>
+        <location filename="../../src/plugins/cw_widgets/widgets.py" line="33"/>
         <source>Time</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/plugins/cw_widgets/widgets.py" line="38"/>
+        <location filename="../../src/plugins/cw_widgets/widgets.py" line="39"/>
         <source>Event Countdown</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/plugins/cw_widgets/widgets.py" line="44"/>
+        <location filename="../../src/plugins/cw_widgets/widgets.py" line="45"/>
         <source>Upcoming Activities</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/plugins/cw_widgets/widgets.py" line="56"/>
+        <location filename="../../src/plugins/cw_widgets/widgets.py" line="57"/>
         <source>Dynamic Notification</source>
         <translation type="unfinished"></translation>
     </message>

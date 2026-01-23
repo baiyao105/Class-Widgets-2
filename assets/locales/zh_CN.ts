@@ -1001,26 +1001,6 @@ Please try again later.</source>
         <source>https://discord.gg/nNZxaCBh</source>
         <translation>https://discord.gg/nNZxaCBh</translation>
     </message>
-    <message>
-        <location filename="../../src/qml/ClassWidgets/pages/plaza/Home.qml" line="29"/>
-        <source>插件</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../../src/qml/ClassWidgets/pages/plaza/Home.qml" line="34"/>
-        <source>为你推荐</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../../src/qml/ClassWidgets/pages/plaza/Home.qml" line="46"/>
-        <source>所有扩展</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../../src/qml/ClassWidgets/pages/plaza/Home.qml" line="52"/>
-        <source>查看全部</source>
-        <translation type="unfinished"></translation>
-    </message>
 </context>
 <context>
     <name>IconPicker</name>
@@ -1578,21 +1558,19 @@ Applying an incompatible theme may cause serious errors, crashes, or unexpected 
 <context>
     <name>PluginCard</name>
     <message>
-        <location filename="../../src/qml/ClassWidgets/components/plaza/PluginCard.qml" line="113"/>
-        <location filename="../../src/qml/ClassWidgets/components/plaza/PluginCard.qml" line="121"/>
         <source>Unknown</source>
-        <translation>未知</translation>
+        <translation type="vanished">未知</translation>
     </message>
 </context>
 <context>
     <name>PluginManager</name>
     <message>
-        <location filename="../../src/core/plugin/manager.py" line="82"/>
+        <location filename="../../src/core/plugin/manager.py" line="88"/>
         <source>Incompatible</source>
         <translation>不兼容</translation>
     </message>
     <message>
-        <location filename="../../src/core/plugin/manager.py" line="83"/>
+        <location filename="../../src/core/plugin/manager.py" line="89"/>
         <source>{count} incompatible plugin(s) have been loaded, which may cause unknown issues.</source>
         <translation>发现 {count} 个插件可能不兼容，运行过程中可能出现异常。</translation>
     </message>
@@ -1600,29 +1578,16 @@ Applying an incompatible theme may cause serious errors, crashes, or unexpected 
 <context>
     <name>PluginPlaza</name>
     <message>
-        <location filename="../../src/qml/ClassWidgets/windows/PluginPlaza.qml" line="12"/>
         <source>Plugin Plaza</source>
-        <translation>插件广场</translation>
+        <translation type="vanished">插件广场</translation>
     </message>
     <message>
-        <location filename="../../src/qml/ClassWidgets/windows/PluginPlaza.qml" line="35"/>
-        <source>Refresh</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../../src/qml/ClassWidgets/windows/PluginPlaza.qml" line="53"/>
-        <source>Error</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../../src/qml/ClassWidgets/windows/PluginPlaza.qml" line="63"/>
         <source>Home</source>
-        <translation type="unfinished">首页</translation>
+        <translation type="obsolete">首页</translation>
     </message>
     <message>
-        <location filename="../../src/qml/ClassWidgets/windows/PluginPlaza.qml" line="68"/>
         <source>Plugins</source>
-        <translation type="unfinished">插件</translation>
+        <translation type="obsolete">插件</translation>
     </message>
 </context>
 <context>
@@ -1739,20 +1704,9 @@ Do you want to %3 this plugin?</source>
         <translation type="vanished">前往插件广场</translation>
     </message>
     <message>
-        <location filename="../../src/qml/ClassWidgets/pages/plaza/Plugins.qml" line="25"/>
         <location filename="../../src/qml/ClassWidgets/pages/settings/Plugins.qml" line="148"/>
         <source>Search for plugins</source>
         <translation>搜索插件</translation>
-    </message>
-    <message>
-        <location filename="../../src/qml/ClassWidgets/pages/plaza/Plugins.qml" line="38"/>
-        <source>Popular</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../../src/qml/ClassWidgets/pages/plaza/Plugins.qml" line="41"/>
-        <source>Latest</source>
-        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../../src/qml/ClassWidgets/pages/settings/Plugins.qml" line="168"/>
@@ -1806,7 +1760,6 @@ Do you want to %3 this plugin?</source>
         <translation>正在导入所选插件。请稍后……</translation>
     </message>
     <message>
-        <location filename="../../src/qml/ClassWidgets/pages/plaza/Plugins.qml" line="35"/>
         <location filename="../../src/qml/ClassWidgets/pages/settings/Plugins.qml" line="189"/>
         <source>All</source>
         <translation>全部</translation>
@@ -2773,14 +2726,12 @@ If it takes place in another location, such as a sport field, lab, or another cl
 <context>
     <name>Theme</name>
     <message>
-        <location filename="../../src/themes/__init__.py" line="10"/>
         <source>Default</source>
-        <translation>默认</translation>
+        <translation type="vanished">默认</translation>
     </message>
     <message>
-        <location filename="../../src/themes/__init__.py" line="11"/>
         <source>Class Widgets Builtin Default Theme</source>
-        <translation>Class Widgets 内置默认主题</translation>
+        <translation type="vanished">Class Widgets 内置默认主题</translation>
     </message>
 </context>
 <context>
@@ -3551,27 +3502,27 @@ then tap &quot;Edit Widget Screen&quot; in the menu to experience it.</source>
         <translation>Y 轴偏移</translation>
     </message>
     <message>
-        <location filename="../../src/plugins/cw_widgets/widgets.py" line="26"/>
+        <location filename="../../src/plugins/cw_widgets/widgets.py" line="27"/>
         <source>Current Activity</source>
         <translation>当前活动</translation>
     </message>
     <message>
-        <location filename="../../src/plugins/cw_widgets/widgets.py" line="32"/>
+        <location filename="../../src/plugins/cw_widgets/widgets.py" line="33"/>
         <source>Time</source>
         <translation>时间</translation>
     </message>
     <message>
-        <location filename="../../src/plugins/cw_widgets/widgets.py" line="38"/>
+        <location filename="../../src/plugins/cw_widgets/widgets.py" line="39"/>
         <source>Event Countdown</source>
         <translation>事件倒计时</translation>
     </message>
     <message>
-        <location filename="../../src/plugins/cw_widgets/widgets.py" line="44"/>
+        <location filename="../../src/plugins/cw_widgets/widgets.py" line="45"/>
         <source>Upcoming Activities</source>
         <translation>即将到来的活动</translation>
     </message>
     <message>
-        <location filename="../../src/plugins/cw_widgets/widgets.py" line="56"/>
+        <location filename="../../src/plugins/cw_widgets/widgets.py" line="57"/>
         <source>Dynamic Notification</source>
         <translation>灵动通知</translation>
     </message>
