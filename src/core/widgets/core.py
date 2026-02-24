@@ -9,6 +9,7 @@ from loguru import logger
 from src.core import QML_PATH, SRC_PATH
 from src.core.directories import CW_PATH
 
+from src.core.themes.manager import DEFAULT_THEME_ID
 
 from src.core.themes.interceptor import ThemeUrlInterceptor
 from src.core.themes.manager import DEFAULT_THEME_ID
