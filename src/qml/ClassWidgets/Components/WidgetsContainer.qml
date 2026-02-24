@@ -146,6 +146,7 @@ Flow {
 
             WidgetLoader {
                 id: loader
+                transformOrigin: Item.TopLeft
                 scale: tapHandler.pressed ? scaleFactor * 0.975 : scaleFactor
 
                 TapHandler {
