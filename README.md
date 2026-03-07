@@ -23,7 +23,7 @@
 > 网盘中的文件会自动随版本发行而更新。
 > 
 > <div align="center">
-> <a href="https://github.com/RinLit-233-shiroko/Class-Widgets-2/releases">Release 页面</a> | <a href="https://dl.gemen.pp.ua">OneDrive</a> | <a href="https://www.123865.com/s/DCyBTd-3iWxH">123 网盘</a>
+> <a href="https://github.com/RinLit-233-shiroko/Class-Widgets-2/releases">Release 页面</a> | <a href="https://dl.gemen.pp.ua">OneDrive</a> | <s><a href="https://www.123865.com/s/DCyBTd-3iWxH">123 网盘</a></s>
 > </div>
 
 
