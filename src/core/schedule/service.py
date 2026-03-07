@@ -43,11 +43,15 @@ class ScheduleServices:
                         for override in schedule.overrides:
                             if override.entryId != entry.id:
                                 continue
-                            if self._override_applies(override, weekday, current_week):
+                            if self._override_applies(override, weekday, current_week, max_week_cycle):
                                 if override.subjectId:
                                     entry.subjectId = override.subjectId
                                 if override.title:
                                     entry.title = override.title
+                                if override.startTime:
+                                    entry.startTime = override.startTime
+                                if override.endTime:
+                                    entry.endTime = override.endTime
 
                     return day_copy
         return None
