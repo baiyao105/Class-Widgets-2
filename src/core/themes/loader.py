@@ -55,7 +55,16 @@ class ThemeLoader:
             meta["name"] = QCoreApplication.translate("Theme", meta["name"])
             meta["description"] = QCoreApplication.translate("Theme", meta["description"])
             meta["_type"] = "builtin"
-            meta["_path"] = str((Path(__file__).resolve().parents[2] / "themes" / meta["id"]))
+            
+            # Determine theme path
+            theme_root = Path(__file__).resolve().parents[2] / "themes"
+            theme_path = theme_root / meta["id"]
+            if not theme_path.exists():
+                plus_path = theme_root / meta['id']
+                if plus_path.exists():
+                    theme_path = plus_path
+            
+            meta["_path"] = str(theme_path)
             meta["_compatible"] = is_compatible(meta.get("api_version", "*"))
             
             # Convert preview path to QUrl

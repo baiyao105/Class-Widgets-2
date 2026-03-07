@@ -104,6 +104,7 @@ class PreferencesConfig(ConfigBaseModel):
 
     display: Optional[str] = None  # 指定显示器
     mini_mode: bool = False  # 迷你
+    lighting_effect: bool = True  # 光影效果
 
     widgets_presets: Dict[str, List[WidgetEntry]] = Field(
         default_factory=lambda: {
@@ -145,6 +146,7 @@ class ScheduleConfig(ConfigBaseModel):
     default_duration: ScheduleDefaultDurationConfig = Field(default_factory=ScheduleDefaultDurationConfig)  # 默认时长
     time_offset: int = 0  # 时差偏移
     reschedule_day: dict = {}  # 调整日程
+    class_swap: dict = Field(default_factory=dict)  # 临时换课记录
 
 
 class NetworkConfig(ConfigBaseModel):

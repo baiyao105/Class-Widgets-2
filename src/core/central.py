@@ -18,6 +18,7 @@ from src.core.plugin.api import PluginAPI
 from src.core.plugin.manager import PluginManager
 from src.core.schedule import ScheduleRuntime, ScheduleManager
 from src.core.schedule.editor import ScheduleEditor
+from src.core.schedule.swapper import ClassSwapManager
 from src.core.themes import ThemeManager
 from src.core.timer import UnionUpdateTimer
 from src.core.updater import UpdaterBridge
@@ -26,7 +27,7 @@ from src.core.utils.debugger import DebuggerWindow
 from src.core.utils.instance_locker import SingleInstanceGuard
 from src.core.widgets import WidgetsWindow, WidgetListModel
 from src.core.automations.manager import AutomationManager
-from src.core.windows import Settings, Editor, Tutorial, WhatsNew, CheckSingleInstanceDialog, PluginPlaza
+from src.core.windows import Settings, Editor, Tutorial, WhatsNew, CheckSingleInstanceDialog, PluginPlaza, ClassSwapWindow, ClassSwapRestoreDialog
 
 
 class AppCentral(QObject):  # Class Widgets 的中枢
@@ -47,6 +48,7 @@ class AppCentral(QObject):  # Class Widgets 的中枢
         AppCentral._instance = self
        
         self._check_single_instance()
+        self._startup_swap_restore_pending = False
         self._initialize_cores()
         self._initialize_notification()
         self._initialize_schedule_components()
@@ -101,6 +103,7 @@ class AppCentral(QObject):  # Class Widgets 的中枢
 
         self.runtime = ScheduleRuntime(self)
         self._schedule_editor: ScheduleEditor = ScheduleEditor(self.schedule_manager)
+        self._class_swap_manager = ClassSwapManager(self)
 
     def _initialize_ui_components(self):
         """初始化UI组件"""
@@ -109,6 +112,8 @@ class AppCentral(QObject):  # Class Widgets 的中枢
         self.whatsnew = WhatsNew(self)
         self.widgets_window: WidgetsWindow = WidgetsWindow(self)  # 简化参数传递
         self.plugin_plaza = PluginPlaza(self)
+        self.class_swap_window = ClassSwapWindow(self)
+        self.class_swap_restore_dialog_window = ClassSwapRestoreDialog(self)
         if self.multi_instances:
             self.single_dialog_window = CheckSingleInstanceDialog(self)
 
@@ -141,6 +146,17 @@ class AppCentral(QObject):  # Class Widgets 的中枢
 
         self._setup_logging()  # 设置日志
         self._load_schedule()  # 加载课程表
+        self._load_class_swap()  # 加载换课记录（跨天清理）
+
+        # 启动时：若检测到今天存在临时课表，先询问用户是否继续使用
+        if self._class_swap_manager.checkAndPromptRestore():
+            self._startup_swap_restore_pending = True
+            self.openClassSwapRestoreDialog()
+            return
+
+        self._continue_init()
+
+    def _continue_init(self):
         self._load_runtime()  # 加载运行时(以及插件)
         self._init_tray_icon()  # 初始化托盘图标
         self._run_utils()
@@ -152,6 +168,10 @@ class AppCentral(QObject):  # Class Widgets 的中枢
     def _load_config(self):
         """加载和验证配置"""
         self.configs.load_config()
+
+    def _load_class_swap(self):
+        """加载换课记录，跨天时自动清理"""
+        self._class_swap_manager.loadSwapRecords()
 
     def update(self):
         self.runtime.refresh()
@@ -170,9 +190,15 @@ class AppCentral(QObject):  # Class Widgets 的中枢
     def notification(self):
         return self._notification
 
+    notification: "NotificationManager[ConfigManager]"
+
     @Property(QObject, notify=initialized)
     def scheduleEditor(self):  # 课程表编辑器
         return self._schedule_editor
+
+    @Property(QObject, notify=initialized)
+    def classSwapManager(self):  # 换课管理器
+        return self._class_swap_manager
 
     @Property(QObject, notify=updated)
     def scheduleManager(self):  # 课程表管理器
@@ -214,6 +240,7 @@ class AppCentral(QObject):  # Class Widgets 的中枢
         context.setContextProperty("PluginManager", self.plugin_manager)
         context.setContextProperty("AppCentral", self)
         context.setContextProperty("PathManager", self.path_manager)
+        context.setContextProperty("ClassSwapManager", self._class_swap_manager)
 
     @staticmethod
     def clean_qml_context(window):
@@ -251,6 +278,7 @@ class AppCentral(QObject):  # Class Widgets 的中枢
         self.union_update_timer.tick.connect(self.update)
         self.union_update_timer.tick.connect(self.automation_manager.update)
         self.schedule_manager.scheduleModified.connect(self.runtime.refresh)
+        self._class_swap_manager.updated.connect(self.update)
 
         self.app_instance.aboutToQuit.connect(self.cleanup)
 
@@ -318,6 +346,11 @@ class AppCentral(QObject):  # Class Widgets 的中枢
     @Slot()
     def openEditor(self):
         """显示课程表编辑器"""
+        if self._class_swap_manager.hasTodaySwaps():
+            logger.warning("Blocked opening editor because temporary class swaps exist today")
+            self.openClassSwapRestoreDialog()
+            return
+
         if self.editor and self.editor.root_window:
             self.editor.root_window.show()
             self.editor.root_window.raise_()
@@ -354,6 +387,45 @@ class AppCentral(QObject):  # Class Widgets 的中枢
             self.single_dialog_window.root_window.requestActivate()
         else:
             logger.error("Single Instance Dialog not initialized correctly.")
+
+    @Slot()
+    def openClassSwap(self):
+        """显示换课窗口"""
+        if self.class_swap_window and self.class_swap_window.root_window:
+            self.class_swap_window.root_window.show()
+            self.class_swap_window.root_window.raise_()
+            self.class_swap_window.root_window.requestActivate()
+        else:
+            logger.error("ClassSwap window not initialized correctly.")
+
+    @Slot()
+    def openClassSwapRestoreDialog(self):
+        """显示启动时的临时课表恢复确认窗口"""
+        if self.class_swap_restore_dialog_window and self.class_swap_restore_dialog_window.root_window:
+            self.class_swap_restore_dialog_window.root_window.show()
+            self.class_swap_restore_dialog_window.root_window.raise_()
+            self.class_swap_restore_dialog_window.root_window.requestActivate()
+        else:
+            logger.error("ClassSwap restore dialog window not initialized correctly.")
+
+    @Slot()
+    def classSwapRestoreContinue(self):
+        """继续使用今天的临时课表"""
+        if self.class_swap_restore_dialog_window and self.class_swap_restore_dialog_window.root_window:
+            self.class_swap_restore_dialog_window.root_window.hide()
+        if self._startup_swap_restore_pending:
+            self._startup_swap_restore_pending = False
+            self._continue_init()
+
+    @Slot()
+    def classSwapRestoreDiscard(self):
+        """丢弃今天的临时课表并继续启动"""
+        self._class_swap_manager.discardTodaySwaps()
+        if self.class_swap_restore_dialog_window and self.class_swap_restore_dialog_window.root_window:
+            self.class_swap_restore_dialog_window.root_window.hide()
+        if self._startup_swap_restore_pending:
+            self._startup_swap_restore_pending = False
+            self._continue_init()
 
     @Slot()
     def openDebugger(self):
