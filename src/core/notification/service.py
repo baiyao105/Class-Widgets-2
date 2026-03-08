@@ -65,7 +65,7 @@ class NotificationService(QObject):
         """设置通知级别对应的声音文件"""
         if not hasattr(self.config_manager.notifications, 'level_sounds'):
             self.config_manager.notifications.level_sounds = {}
-        self.config_manager.notifications.level_sounds[str(level)] = sound
+        self.config_manager.notifications.level_sounds[level] = sound
         logger.debug(f"Set sound for level {level}: {sound}")
 
     @Slot(int, result=str)
@@ -73,7 +73,8 @@ class NotificationService(QObject):
         """获取通知级别对应的声音文件"""
         if not hasattr(self.config_manager.notifications, 'level_sounds'):
             return ""
-        return self.config_manager.notifications.level_sounds.get(str(level), "")
+        level_sounds = self.config_manager.notifications.level_sounds
+        return level_sounds.get(level) or level_sounds.get(str(level), "")
 
     @Slot(int, result=float)
     def getNotificationVolume(self) -> float:
@@ -151,7 +152,8 @@ class NotificationService(QObject):
 
             # 获取全局级别声音配置
             global_level_sounds = getattr(self.config_manager.notifications, 'level_sounds', {})
-            custom_sound = global_level_sounds.get(str(level), "")
+            # 同时尝试整数键和字符串键，确保持有配置都能正常工作
+            custom_sound = global_level_sounds.get(level) or global_level_sounds.get(str(level), "")
 
             # 根据级别设置默认声音文件
             level_audio_mapping = {
@@ -164,7 +166,11 @@ class NotificationService(QObject):
 
             # 如果配置了自定义声音文件路径，使用自定义路径
             if custom_sound:
-                sound_file = custom_sound
+                sound_path = Path(custom_sound)
+                if sound_path.is_absolute():
+                    sound_file = str(sound_path)
+                else:
+                    sound_file = str(ASSETS_PATH / "audio" / sound_path)
             else:
                 sound_file = str(ASSETS_PATH / "audio" / audio_filename)
 
@@ -217,9 +223,10 @@ class NotificationService(QObject):
                     import shutil
                     shutil.copy2(source_path, target_path)
                     
-                    # 设置为默认声音
-                    self.setLevelSound(1, str(target_path))
-                    logger.debug(f"Copied notification sound from {source_path} to {target_path}")
+                    # 设置为默认声音（使用相对路径）
+                    relative_path = target_path.relative_to(ASSETS_PATH / "audio")
+                    self.setLevelSound(1, str(relative_path))
+                    logger.debug(f"Copied notification sound from {source_path} to {target_path}, saved as relative path: {relative_path}")
                     return True
             return False
             
