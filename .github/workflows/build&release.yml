@@ -65,6 +65,7 @@ jobs:
             --icon "assets/images/logo.ico" \
             --add-data "src/qml:src/qml" \
             --add-data "src/plugins:src/plugins" \
+            --add-data "src/themes:src/themes" \
             --add-data "assets:assets" \
             --add-data "LICENSE:." \
             --paths=. \
@@ -80,6 +81,7 @@ jobs:
             --icon "assets/images/logo.icns" \
             --add-data "src/qml:src/qml" \
             --add-data "src/plugins:src/plugins" \
+            --add-data "src/themes:src/themes" \
             --add-data "assets:assets" \
             --add-data "LICENSE:." \
             --paths=. \
