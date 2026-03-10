@@ -16,7 +16,7 @@ Widget {
     // property color notificationColor: "#605ed2"
     property bool hasNotification: false   // 新增，是否有通知
 
-    property int notificationDuration: 4000 // 默认通知显示时间 4s
+    property int notificationDuration: Configs.data.notifications.default_duration || 8000 // 默认通知显示时间 4s
 
     // 目标显示状态（用于逻辑判断）
     readonly property bool shouldShow: editMode || !enabled || hasNotification

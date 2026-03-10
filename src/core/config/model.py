@@ -171,6 +171,7 @@ class NotificationsConfig(ConfigBaseModel):
     default_sound: Optional[str] = None  # 默认铃声
     volume: float = 0.7  # 通知音量 (0.0-1.0)
     providers: dict[str, NotificationProviderConfig] = Field(default_factory=dict)
+    default_duration: int = 8000 # ms 默认通知时长
     
     # 按通知级别设置的默认音频文件（默认为空字符串）
     level_sounds: dict[int, str] = Field(default_factory=lambda: {
