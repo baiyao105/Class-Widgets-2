@@ -6,12 +6,12 @@ from pathlib import Path
 from typing import Any, Optional, TYPE_CHECKING, Protocol
 
 from PySide6.QtCore import QObject, Property, Signal, Slot, QPoint
-from PySide6.QtGui import QFont
+from PySide6.QtGui import QFont, QIcon
 from PySide6.QtWidgets import QApplication
 from loguru import logger
 
 from src.core import CONFIGS_PATH, QML_PATH
-from src.core.directories import PathManager, LOGS_PATH
+from src.core.directories import PathManager, ASSETS_PATH, LOGS_PATH
 
 if TYPE_CHECKING:
     from src.core.notification.manager import NotificationManager, NotificationService
@@ -80,6 +80,8 @@ class AppCentral(QObject):  # Class Widgets 的中枢
         self._check_single_instance()
         self._startup_swap_restore_pending: bool = False
         self._initialize_cores()
+        self._initialize_app_icon()
+        self._initialize_windows_appid()
         self._initialize_notification()
         self._initialize_schedule_components()
         self._initialize_utils()
@@ -134,6 +136,20 @@ class AppCentral(QObject):  # Class Widgets 的中枢
         self.runtime: ScheduleRuntime = ScheduleRuntime(self)
         self._schedule_editor: ScheduleEditor = ScheduleEditor(self.schedule_manager)
         self._class_swap_manager: ClassSwapManager = ClassSwapManager(self)
+
+    def _initialize_app_icon(self) -> None:
+        """设置图标"""
+        icon_path = ASSETS_PATH / "images" / "logo.ico"
+        self.app_instance.setWindowIcon(QIcon(str(icon_path)))
+
+    def _initialize_windows_appid(self) -> None:
+        """解决 Windows 默认图标问题"""
+        if sys.platform == 'win32':
+            try:
+                import ctypes
+                ctypes.windll.shell32.SetCurrentProcessExplicitAppUserModelID('org.classwidgets.app')
+            except Exception as e:
+                logger.error(f"Failed to set AppUserModelID: {e}")
 
     def _initialize_ui_components(self):
         """初始化UI组件"""
