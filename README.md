@@ -10,6 +10,8 @@
 [![当前测试版](https://img.shields.io/github/v/tag/rinlit-233-shiroko/class-widgets-2?include_prereleases&label=%E5%BD%93%E5%89%8D%E6%B5%8B%E8%AF%95%E7%89%88&color=yellow&style=for-the-badge)](https://github.com/rinlit-233-shiroko/class-widgets-2/releases)
 [![开源许可](https://img.shields.io/github/license/RinLit-233-shiroko/Class-Widgets-2?label=%E5%BC%80%E6%BA%90%E8%AE%B8%E5%8F%AF%E8%AF%81&style=for-the-badge)](https://github.com/rinlit-233-shiroko/class-widgets-2)
 [![下载量](https://img.shields.io/github/downloads/rinlit-233-shiroko/class-widgets-2/total.svg?label=%E4%B8%8B%E8%BD%BD%E9%87%8F&color=green&style=for-the-badge)](https://github.com/rinlit-233-shiroko/class-widgets-2)
+[![翻译状态](https://hosted.weblate.org/widget/class-widgets/language-badge.svg)](https://hosted.weblate.org/engage/class-widgets/)
+[![翻译状态](https://hosted.weblate.org/widget/class-widgets/svg-badge.svg)](https://hosted.weblate.org/engage/class-widgets/)
 
 <b>简体中文</b> | <a href="/docs/lang/en_US.md">English</a> | <a href="/docs/lang/ja.md">日本語</a>
 
@@ -77,6 +79,12 @@ Class Widgets 2 是新一代的电子化课程表展示工具，基于比前代�
 [![Contributors](http://contrib.nn.ci/api?repo=rinlit-233-shiroko/class-widgets-2)](https://github.com/rinlit-233-shiroko/class-widgets-2/graphs/contributors)
 
 ![Repobeats](https://repobeats.axiom.co/api/embed/804be9d62a4ed9c120de1e7b6e3919e8a3dd3c92.svg "Repobeats analytics image")
+
+### 组织
+
+感谢 Weblate 提供的免费翻译平台
+
+[![翻译状态](https://hosted.weblate.org/widget/class-widgets/open-graph.png)](https://hosted.weblate.org/engage/class-widgets/)
 
 ## 星标历史
 
