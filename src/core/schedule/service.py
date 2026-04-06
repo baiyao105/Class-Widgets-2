@@ -117,9 +117,20 @@ class ScheduleServices:
         return timedelta(0)
 
     @staticmethod
-    def get_current_status(day: Timeline, now: Optional[datetime] = None) -> EntryType:
-        current = ScheduleServices.get_current_entry(day, now)
-        return current.type if current else EntryType.FREE
+    def get_current_status(day: Timeline, now: Optional[datetime] = None, prep_min: int = 2) -> EntryType:
+        now = now or datetime.now()
+        if (current := ScheduleServices.get_current_entry(day, now)):
+            match current.type:
+                case EntryType.BREAK | EntryType.FREE:
+                    if (upcoming := ScheduleServices.get_next_entries(day, now)):
+                        next_start = datetime.strptime(upcoming[0].startTime, "%H:%M")
+                        next_start = datetime.combine(now.date(), next_start.time())
+                        if next_start - timedelta(minutes=prep_min) <= now.replace(microsecond=0):
+                            return EntryType.PREPARATION
+                    return current.type
+                case _:
+                    return current.type
+        return EntryType.FREE
 
     @staticmethod
     def get_current_subject(day: Timeline, subjects: list[Subject], now: Optional[datetime] = None) -> Optional[Subject]:
@@ -171,4 +182,3 @@ class ScheduleServices:
             return current_week in weeks
 
         return False
-
