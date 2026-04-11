@@ -80,6 +80,26 @@ Class Widgets 2 是新一代的电子化课程表展示工具，基于比前代�
 
 ![Repobeats](https://repobeats.axiom.co/api/embed/804be9d62a4ed9c120de1e7b6e3919e8a3dd3c92.svg "Repobeats analytics image")
 
+<table>
+  <tr>
+    <td>
+      <img alt="SignPath" src="https://signpath.org/assets/favicon-50x50.png" />
+    </td>
+    <td>
+    Free code signing on Windows provided by <a href="https://signpath.io">SignPath.io</a>, certificate by <a href="https://signpath.org/">SignPath Foundation</a><br/>
+    由 <a href="https://signpath.io">SignPath.io</a> 提供 Windows 上的免费代码签名，由 <a href="https://signpath.org">SignPath Foundation</a> 提供证书
+    </td>
+  </tr>
+</table>
+
+### 代码签名策略
+
+- 由 [SignPath.io](https://about.signpath.io/) 提供代码签名，由 [SignPath Foundation](https://signpath.org/) 提供证书
+
+- 提交者和审阅者：[团队成员](https://github.com/orgs/Class-Widgets/people)
+
+- 审批者：[所有者](https://github.com/orgs/Class-Widgets/people?query=role%3Aowner)
+
 ### 组织
 
 感谢 Weblate 提供的免费翻译平台
