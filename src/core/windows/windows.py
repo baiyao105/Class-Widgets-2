@@ -3,11 +3,22 @@ from PySide6.QtCore import QObject, Signal
 
 from RinUI import RinUIWindow
 from src.core.directories import CW_PATH, DEFAULT_THEME
-from src.core.plaza import PlazaBridge
+from src.core.plaza import MarkdownRenderBridge, PlazaBridge
 from src.core.plugin.bridge import PluginBackendBridge
 
 
-class Settings(RinUIWindow, QObject):
+class ReleasableWindow(RinUIWindow):
+    def release(self):
+        root_window = getattr(self, "root_window", None)
+        if root_window:
+            root_window.hide()
+            root_window.deleteLater()
+            self.root_window = None
+        self.engine.clearComponentCache()
+        self.engine.collectGarbage()
+
+
+class Settings(ReleasableWindow, QObject):
     extraSettingsChanged = Signal()
 
     def __init__(self, parent):
@@ -32,7 +43,7 @@ class Settings(RinUIWindow, QObject):
         logger.info("Settings window initialized")
 
 
-class Editor(RinUIWindow):
+class Editor(ReleasableWindow):
     def __init__(self, parent):
         super().__init__()
         self.central = parent
@@ -43,14 +54,16 @@ class Editor(RinUIWindow):
         self.load(CW_PATH / "Windows" / "Editor.qml")
 
 
-class PluginPlaza(RinUIWindow):
+class PluginPlaza(ReleasableWindow):
     def __init__(self, parent):
         super().__init__()
         self.central = parent
         self.plaza_bridge = PlazaBridge()
+        self.markdown_render_bridge = MarkdownRenderBridge()
 
         self.central.setup_qml_context(self)
         self.engine.rootContext().setContextProperty("PlazaBridge", self.plaza_bridge)
+        self.engine.rootContext().setContextProperty("MarkdownRenderBridge", self.markdown_render_bridge)
         self.central.retranslate.connect(self.engine.retranslate)
 
         self.load(CW_PATH / "Windows" / "PluginPlaza.qml")
@@ -67,7 +80,7 @@ class Tutorial(RinUIWindow):
         self.load(CW_PATH / "Windows" / "Tutorial.qml")
 
 
-class WhatsNew(RinUIWindow):
+class WhatsNew(ReleasableWindow):
     def __init__(self, parent):
         super().__init__()
         self.central = parent
@@ -81,13 +94,12 @@ class WhatsNew(RinUIWindow):
         self.load(CW_PATH / "Windows" / "WhatsNew.qml")
 
 
-class CheckSingleInstanceDialog(RinUIWindow):
+class CheckSingleInstanceDialog(ReleasableWindow):
     def __init__(self, parent):
         super().__init__()
         self.central = parent
 
         self.central.setup_qml_context(self)
-        self.engine.rootContext().setContextProperty("AppCentral", self.central)
         self.central.retranslate.connect(self.engine.retranslate)
 
         self.load(
@@ -99,7 +111,7 @@ class CheckSingleInstanceDialog(RinUIWindow):
         )
 
 
-class ClassSwapWindow(RinUIWindow):
+class ClassSwapWindow(ReleasableWindow):
     def __init__(self, parent):
         super().__init__()
         self.central = parent
@@ -115,13 +127,12 @@ class ClassSwapWindow(RinUIWindow):
         )
 
 
-class ClassSwapRestoreDialog(RinUIWindow):
+class ClassSwapRestoreDialog(ReleasableWindow):
     def __init__(self, parent):
         super().__init__()
         self.central = parent
 
         self.central.setup_qml_context(self)
-        self.engine.rootContext().setContextProperty("AppCentral", self.central)
         self.central.retranslate.connect(self.engine.retranslate)
 
         self.load(

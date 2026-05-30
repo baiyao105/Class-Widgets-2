@@ -15,7 +15,7 @@ Window {
 
     onClosing: function(event) {
         event.accepted = false
-        classSwapWindow.hide()
+        WindowManager.closeClassSwap()
     }
 
     // ── 状态机 ──────────────────────────────────────────────
@@ -482,7 +482,7 @@ Window {
                 onClicked: {
                     if (swapState === "idle") {
                         // 没有进行中的操作 → 关闭窗口
-                        classSwapWindow.hide()
+                        WindowManager.closeClassSwap()
                     } else {
                         // 有进行中的操作 → 还原选择
                         resetSelection()
