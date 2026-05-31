@@ -2,7 +2,7 @@ from __future__ import annotations
 
 from typing import TYPE_CHECKING, Any, Callable
 
-from PySide6.QtCore import QObject, Slot
+from PySide6.QtCore import QObject, QTimer, Slot
 from loguru import logger
 
 if TYPE_CHECKING:
@@ -163,6 +163,17 @@ class AppWindowManager(QObject):
         return window
 
     def release(self, name: str) -> None:
+        window = self._windows.get(name)
+        if not window:
+            return
+
+        root_window = getattr(window, "root_window", None)
+        if root_window:
+            root_window.hide()
+
+        QTimer.singleShot(0, lambda window_name=name: self._release_now(window_name))
+
+    def _release_now(self, name: str) -> None:
         window = self._windows.pop(name, None)
         if not window:
             return

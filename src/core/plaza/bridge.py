@@ -65,6 +65,7 @@ class PlazaBridge(QObject):
         self._plugins = []
         self._fetch_banners_worker = None
         self._fetch_plugins_worker = None
+        self._closed = False
 
     @Property(str, notify=statusChanged)
     def status(self):
@@ -85,15 +86,23 @@ class PlazaBridge(QObject):
 
     @Slot()
     def fetchBanners(self):
+        if self._closed:
+            return
+
         self._set_status("FetchingBanners")
         if self._fetch_banners_worker and self._fetch_banners_worker.isRunning():
             return
 
         self._fetch_banners_worker = FetchBannersWorker()
         self._fetch_banners_worker.finished.connect(self._on_banners_finished)
+        self._fetch_banners_worker.finished.connect(self._fetch_banners_worker.deleteLater)
         self._fetch_banners_worker.start()
 
     def _on_banners_finished(self, success, data, error):
+        if self._closed:
+            return
+
+        self._fetch_banners_worker = None
         if success:
             self._banners = data
             self.bannersChanged.emit()
@@ -104,15 +113,23 @@ class PlazaBridge(QObject):
 
     @Slot()
     def fetchPlugins(self):
+        if self._closed:
+            return
+
         self._set_status("FetchingPlugins")
         if self._fetch_plugins_worker and self._fetch_plugins_worker.isRunning():
             return
 
         self._fetch_plugins_worker = FetchPluginsWorker()
         self._fetch_plugins_worker.finished.connect(self._on_plugins_finished)
+        self._fetch_plugins_worker.finished.connect(self._fetch_plugins_worker.deleteLater)
         self._fetch_plugins_worker.start()
 
     def _on_plugins_finished(self, success, data, error):
+        if self._closed:
+            return
+
+        self._fetch_plugins_worker = None
         if success:
             self._plugins = data
             self.pluginsChanged.emit()
@@ -123,5 +140,32 @@ class PlazaBridge(QObject):
 
     @Slot()
     def refreshAll(self):
+        if self._closed:
+            return
+
         self.fetchBanners()
         self.fetchPlugins()
+
+    def shutdown(self):
+        self._closed = True
+        self._stop_worker(self._fetch_banners_worker)
+        self._stop_worker(self._fetch_plugins_worker)
+        self._fetch_banners_worker = None
+        self._fetch_plugins_worker = None
+
+    @staticmethod
+    def _stop_worker(worker):
+        if not worker:
+            return
+
+        try:
+            worker.finished.disconnect()
+        except (RuntimeError, TypeError):
+            pass
+
+        if worker.isRunning():
+            worker.requestInterruption()
+            worker.quit()
+            if not worker.wait(3000):
+                worker.terminate()
+                worker.wait(1000)

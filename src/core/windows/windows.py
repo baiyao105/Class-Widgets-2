@@ -1,5 +1,5 @@
 from loguru import logger
-from PySide6.QtCore import QObject, Signal
+from PySide6.QtCore import QObject, QTimer, Signal
 
 from RinUI import RinUIWindow
 from src.core.directories import CW_PATH, DEFAULT_THEME
@@ -14,6 +14,9 @@ class ReleasableWindow(RinUIWindow):
             root_window.hide()
             root_window.deleteLater()
             self.root_window = None
+        QTimer.singleShot(0, self._cleanup_engine)
+
+    def _cleanup_engine(self):
         self.engine.clearComponentCache()
         self.engine.collectGarbage()
 
@@ -67,6 +70,10 @@ class PluginPlaza(ReleasableWindow):
         self.central.retranslate.connect(self.engine.retranslate)
 
         self.load(CW_PATH / "Windows" / "PluginPlaza.qml")
+
+    def release(self):
+        self.plaza_bridge.shutdown()
+        super().release()
 
 
 class Tutorial(RinUIWindow):
