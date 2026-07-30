@@ -8,6 +8,27 @@ Clip {
     id: root
     property var plugin: ({})
     property bool isLoading: false
+    property bool transparentNormalBackground: false
+    property bool navigationEnabled: true
+    property url detailPage: Qt.resolvedUrl("../../pages/plaza/Plugin.qml")
+
+    function resourceUrl(pluginId, resource) {
+        return pluginId ? "https://plaza.cw.rinlit.cn/api/plugins/" + encodeURIComponent(pluginId) + "/resources/" + resource : ""
+    }
+
+    onClicked: {
+        if (navigationEnabled && !isLoading && plugin && plugin.id)
+            navigationView.push(detailPage, { pluginId: plugin.id })
+    }
+
+    background: Rectangle {
+        anchors.fill: parent
+        radius: root.radius
+        color: root.down ? Colors.proxy.controlPressedColor
+             : root.hovered ? Colors.proxy.controlFillColor
+             : root.transparentNormalBackground ? "transparent"
+                                                : root.backgroundColor
+    }
 
     Loader {
         anchors.fill: parent
@@ -80,14 +101,14 @@ Clip {
                     id: pluginIcon
                     anchors.fill: parent
                     anchors.margins: 1
-                    source: root.plugin && root.plugin.id ? ("https://plaza.cw.rinlit.cn/api/plugins/" + root.plugin.id + "/resources/icon") : ""
+                    source: root.resourceUrl(root.plugin && root.plugin.id ? root.plugin.id : "", "icon")
                     fillMode: Image.PreserveAspectFit
                     asynchronous: true
                     cache: true
 
                     onStatusChanged: {
                         if (status === Image.Error) {
-                            source = "https://plaza.cw.rinlit.cn/api/plugins/default/resources/icon"
+                            source = root.resourceUrl("default", "icon")
                         }
                     }
 

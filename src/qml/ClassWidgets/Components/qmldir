@@ -38,3 +38,4 @@ BannerCarousel 1.0 plaza/BannerCarousel.qml
 PluginSection 1.0 plaza/PluginSection.qml
 PluginGrid 1.0 plaza/PluginGrid.qml
 PluginCard 1.0 plaza/PluginCard.qml
+MarkdownViewer 1.0 plaza/MarkdownViewer.qml

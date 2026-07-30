@@ -106,6 +106,7 @@ Frame {
                     Layout.preferredHeight: 90
                     plugin: !loading ? modelData : null
                     isLoading: loading
+                    transparentNormalBackground: true
                 }
             }
         }

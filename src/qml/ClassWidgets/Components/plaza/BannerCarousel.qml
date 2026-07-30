@@ -21,6 +21,10 @@ Item {
 
     property var slides: []
 
+    function resourceUrl(pluginId, resource) {
+        return pluginId ? "https://plaza.cw.rinlit.cn/api/plugins/" + encodeURIComponent(pluginId) + "/resources/" + resource : ""
+    }
+
     onPluginsChanged: rebuildSlides()
     onBannersChanged: rebuildSlides()
     Component.onCompleted: rebuildSlides()
@@ -56,7 +60,7 @@ Item {
                 return {
                     id: p.id,
                     name: p.name,
-                    icon: "https://plaza.cw.rinlit.cn/api/plugins/" + p.id + "/resources/icon"
+                    icon: resourceUrl(p.id, "icon")
                 }
             })
 
@@ -163,7 +167,8 @@ Item {
                                 spacing: 8
                                 Text {
                                     text: slideData.title || ""
-                                    typography: Typography.Subtitle
+                                    font.pixelSize: 28
+                                    font.bold: true
                                     Layout.fillWidth: true
                                     horizontalAlignment: Text.AlignHCenter
                                 }
@@ -171,6 +176,7 @@ Item {
                                 Text {
                                     text: slideData.subtitle || ""
                                     Layout.fillWidth: true
+                                    font.pixelSize: 16
                                     horizontalAlignment: Text.AlignHCenter
                                 }
                             }
@@ -190,7 +196,14 @@ Item {
                                         property var pluginData: slideData.plugins ? slideData.plugins[index] : null
                                         property bool iconLoaded: false
 
-                                        // 插件图标容器
+                                        Rectangle {
+                                            anchors.fill: parent
+                                            radius: 12
+                                            color: "#B3FFFFFF"
+                                            border.color: "#0D000000"
+                                            border.width: 1
+                                        }
+
                                         Skeleton {
                                             anchors.fill: parent
                                             radius: 12
@@ -198,7 +211,6 @@ Item {
                                             visible: !pluginData || !pluginData.icon || !iconLoaded
                                         }
 
-                                        // 插件图标
                                         Image {
                                             anchors.fill: parent
                                             source: pluginData && pluginData.icon ? pluginData.icon : ""
@@ -229,7 +241,7 @@ Item {
                                             enabled: pluginData && pluginData.id
                                             cursorShape: enabled ? Qt.PointingHandCursor : Qt.ArrowCursor
                                             onClicked: Qt.openUrlExternally(
-                                                "https://plaza.cw.rinlit.cn/plugins/" + pluginData.id
+                                                "https://plaza.cw.rinlit.cn/plugins/" + encodeURIComponent(pluginData.id)
                                             )
                                         }
 
@@ -270,7 +282,7 @@ Item {
                             anchors.horizontalCenter: parent.horizontalCenter
                             anchors.bottomMargin: 24
                             width: parent.width - 100
-                            text: slideData.banner && slideData.banner.desc ? slideData.banner.desc : ""
+                            text: slideData.banner ? (slideData.banner.subtitle || slideData.banner.desc || slideData.banner.title || "") : ""
                             color: "white"
                             horizontalAlignment: Text.AlignHCenter
                             elide: Text.ElideRight
@@ -289,6 +301,11 @@ Item {
             visible: count > 1 && !loading
             interactive: true
             count: view.count
+
+            onCurrentIndexChanged: {
+                if (view.currentIndex !== currentIndex)
+                    view.currentIndex = currentIndex
+            }
         }
     }
 }
