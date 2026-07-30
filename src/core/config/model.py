@@ -7,7 +7,6 @@ from collections.abc import Callable
 from pydantic import BaseModel, Field, Extra, PrivateAttr
 from PySide6.QtCore import QLocale, QCoreApplication, Property
 
-from ..directories import DEFAULT_THEME
 from src import __version__, __version_type__
 from ..notification import NotificationProviderConfig
 
@@ -98,7 +97,7 @@ class PreferencesConfig(ConfigBaseModel):
     """
     偏好设置
     """
-    current_theme: str = Field(default_factory=lambda: DEFAULT_THEME.as_uri())
+    current_theme: str = "com.classwidgets.default"
     scale_factor: float = 1.0  # 缩放比例
     opacity: float = 1.0  # 不透明度
     widgets_anchor: LayoutAnchor = LayoutAnchor.TOP_CENTER  # 对齐方式
