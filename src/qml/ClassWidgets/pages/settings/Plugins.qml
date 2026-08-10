@@ -10,6 +10,8 @@ FluentPage {
     id: root
     title: qsTr("Plugins")
 
+    Component.onCompleted: PluginManager.checkPlazaUpdates()
+
     InfoBar {
         Layout.fillWidth: true
         title: qsTr("Warning")
@@ -122,15 +124,63 @@ FluentPage {
             text: qsTr("Your plugins")
         }
 
+        // SettingCard {
+        //     Layout.fillWidth: true
+        //     title: qsTr("Get Plugins")
+        //     description: qsTr("Find and install plugins from the Extension Plaza (WEB)")
+        //
+        //     Hyperlink {
+        //         text: qsTr("Go to Extension Plaza")
+        //         // enabled: false
+        //         openUrl: Configs.data.network.plaza_url
+        //     }
+        // }
+
         SettingCard {
             Layout.fillWidth: true
-            title: qsTr("Get Plugins")
-            description: qsTr("Find and install plugins from the Extension Plaza (WEB)")
+            icon.name: "ic_fluent_apps_20_regular"
+            title: qsTr("Plugin Plaza")
+            description: qsTr("Manage plugin downloads and updates")
 
-            Hyperlink {
-                text: qsTr("Go to Extension Plaza")
-                // enabled: false
-                openUrl: Configs.data.network.plaza_url
+            RowLayout {
+                spacing: 8
+
+                InfoBadge {
+                    visible: PluginManager.plazaUpdateCount > 0
+                    text: PluginManager.plazaUpdateCount
+                    severity: Severity.Warning
+                }
+
+                Button {
+                    icon.name: "ic_fluent_arrow_download_20_regular"
+                    text: qsTr("Downloads")
+                    onClicked: PluginManager.openPlazaDownloads()
+                }
+            }
+        }
+
+        SettingCard {
+            Layout.fillWidth: true
+            icon.name: "ic_fluent_arrow_sync_checkmark_20_regular"
+            title: qsTr("Automatically check for plugin updates")
+            description: qsTr("Check Plugin Plaza in the background")
+
+            Switch {
+                onCheckedChanged: Configs.set("plugins.auto_check_plaza_updates", checked)
+                Component.onCompleted: checked = Configs.data.plugins.auto_check_plaza_updates
+            }
+        }
+
+        SettingCard {
+            Layout.fillWidth: true
+            icon.name: "ic_fluent_arrow_download_20_regular"
+            title: qsTr("Automatically install plugin updates")
+            description: qsTr("Install updates after they are found")
+
+            Switch {
+                enabled: Configs.data.plugins.auto_check_plaza_updates
+                onCheckedChanged: Configs.set("plugins.auto_install_plaza_updates", checked)
+                Component.onCompleted: checked = Configs.data.plugins.auto_install_plaza_updates
             }
         }
     }
@@ -341,6 +391,17 @@ FluentPage {
 
                                 Menu {
                                     id: actionMenu
+
+                                    MenuItem {
+                                        icon.name: "ic_fluent_arrow_sync_20_regular"
+                                        text: qsTr("Update")
+                                        enabled: !PluginManager.plazaInstallActive
+                                        visible: {
+                                            var state = PluginManager.pluginUpdateStates[modelData.id]
+                                            return state && state.update_available
+                                        }
+                                        onTriggered: PluginManager.installPlazaUpdate(modelData.id)
+                                    }
 
                                     Menu {
                                         icon.name: "ic_fluent_open_20_regular"

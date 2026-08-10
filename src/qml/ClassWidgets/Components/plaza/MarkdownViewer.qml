@@ -19,11 +19,16 @@ Item {
         anchors.right: parent.right
         spacing: 0
 
-        Skeleton {
+        Item {
             Layout.fillWidth: true
             Layout.preferredHeight: 180
-            running: root.loading
             visible: root.loading
+
+            ProgressRing {
+                anchors.centerIn: parent
+                size: 38
+                indeterminate: true
+            }
         }
 
         TextEdit {

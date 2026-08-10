@@ -30,6 +30,14 @@ FluentPage {
     // 响应式窄窗口时侧栏折叠
     property bool wideLayout: width >= 1000
     property bool wideScreen: width >= 1350
+    readonly property bool pluginInstalled: {
+        var plugins = PluginManager.plugins || []
+        for (var i = 0; i < plugins.length; ++i) {
+            if (plugins[i].id === pluginId)
+                return true
+        }
+        return false
+    }
 
     // 评论对话框
     property bool commentsDialogOpen: false
@@ -101,6 +109,19 @@ FluentPage {
 
     function releaseZipUrl() {
         return pluginId ? resourceUrl(pluginId, "release?format=zip") : ""
+    }
+
+    function storePageUrl() {
+        return pluginId ? baseUrl + "/plugins/" + encodeURIComponent(pluginId) : ""
+    }
+
+    function formatBytes(bytes) {
+        var value = Number(bytes) || 0
+        if (value < 1024)
+            return qsTr("%1 B").arg(value)
+        if (value < 1024 * 1024)
+            return qsTr("%1 KB").arg((value / 1024).toFixed(1))
+        return qsTr("%1 MB").arg((value / 1024 / 1024).toFixed(1))
     }
 
     function githubReleasesUrl() {
@@ -424,6 +445,7 @@ FluentPage {
                                 Layout.fillWidth: true
                                 spacing: 0
                                 visible: manifest !== null
+                                Layout.leftMargin: root.ratingTotal ? 0 : -12
 
                                 RowLayout {
                                     spacing: 6
@@ -442,7 +464,7 @@ FluentPage {
                                     }
 
                                     ToolSeparator {
-                                        Layout.fillHeight:true
+                                        // Layout.fillHeight:true
                                     }
 
                                     Text {
@@ -452,7 +474,7 @@ FluentPage {
                                     }
 
                                     ToolSeparator {
-                                        Layout.fillHeight:true
+                                        // Layout.fillHeight:true
                                         visible: manifest && manifest.tags && manifest.tags.length > 0
                                     }
                                 }
@@ -488,17 +510,67 @@ FluentPage {
 
                         Button {
                             id: downloadButton
+                            Layout.preferredWidth: 128
+                            Layout.preferredHeight: 38
                             highlighted: true
-                            icon.name: "ic_fluent_arrow_download_20_regular"
-                            text: qsTr("Download")
-                            enabled: !!root.releasePageUrl()
-                            onClicked: root.openUrl(root.releasePageUrl())
+                            readonly property bool isCurrentTransfer: PluginManager.installPluginId === root.pluginId
+                            readonly property string transferStatus: isCurrentTransfer
+                                                                  ? PluginManager.installStatus : "Idle"
+                            icon.name: transferStatus === "Downloading"
+                                       ? "ic_fluent_pause_20_regular"
+                                       : transferStatus === "Paused"
+                                         ? "ic_fluent_play_20_regular"
+                                         : root.pluginInstalled
+                                           ? "ic_fluent_checkmark_20_regular"
+                                         : "ic_fluent_arrow_download_20_regular"
+                            text: transferStatus === "Downloading"
+                                  ? qsTr("Pause")
+                                  : transferStatus === "Paused"
+                                    ? qsTr("Resume")
+                                    : transferStatus === "Installing"
+                                      ? qsTr("Installing")
+                                      : root.pluginInstalled
+                                        ? qsTr("Installed")
+                                      : qsTr("Get")
+                            enabled: !!root.pluginId
+                                     && (transferStatus === "Downloading"
+                                         || transferStatus === "Paused"
+                                         || (!root.pluginInstalled
+                                             && !PluginManager.plazaInstallActive))
+                            onClicked: {
+                                if (transferStatus === "Downloading")
+                                    PluginManager.pausePluginInstall()
+                                else if (transferStatus === "Paused")
+                                    PluginManager.resumePluginInstall()
+                                else
+                                    PluginManager.installFromPlaza(root.pluginId)
+                            }
+                        }
+
+                        ProgressBar {
+                            visible: downloadButton.isCurrentTransfer
+                                     && (downloadButton.transferStatus === "Downloading"
+                                         || downloadButton.transferStatus === "Paused"
+                                         || downloadButton.transferStatus === "Installing")
+                            Layout.preferredWidth: 125
+                            value: PluginManager.installProgress / 100
+                            indeterminate: downloadButton.transferStatus === "Installing"
+
+                            ToolTip {
+                                visible: parent.hovered
+                                text: downloadButton.transferStatus === "Paused"
+                                      ? qsTr("Paused")
+                                      : PluginManager.installTotalBytes > 0
+                                        ? qsTr("Downloaded: %1 / %2")
+                                          .arg(root.formatBytes(PluginManager.installDownloadedBytes))
+                                          .arg(root.formatBytes(PluginManager.installTotalBytes))
+                                        : qsTr("Downloading")
+                            }
                         }
 
                         ToolButton {
                             flat: true
-                            icon.name: "ic_fluent_share_20_regular"
-                            enabled: !!root.releasePageUrl()
+                            icon.name: "ic_fluent_more_horizontal_20_regular"
                             onClicked: downloadMenu.open()
 
                             Menu {
@@ -506,20 +578,36 @@ FluentPage {
                                 MenuItem {
                                     icon.name: "ic_fluent_open_20_regular"
                                     text: qsTr("Open in Web")
-                                    enabled: !!root.githubReleasesUrl()
-                                    onTriggered: root.openUrl(root.baseUrl + "/plugins/" + encodeURIComponent(root.pluginId))
+                                    enabled: !!root.storePageUrl()
+                                    onTriggered: root.openUrl(root.storePageUrl())
                                 }
                                 MenuItem {
-                                    icon.name: "ic_fluent_open_20_regular"
-                                    text: qsTr("Open in Web")
-                                    enabled: !!root.githubReleasesUrl()
-                                    onTriggered: root.openUrl(root.githubReleasesUrl())
+                                    icon.name: "ic_fluent_copy_20_regular"
+                                    text: qsTr("Copy link")
+                                    enabled: !!root.storePageUrl()
+                                    onTriggered: {
+                                        if (UtilsBackend.copyToClipboard(root.storePageUrl())) {
+                                            floatLayer.createInfoBar({
+                                                severity: Severity.Success,
+                                                text: qsTr("Link copied"),
+                                            })
+                                        }
+                                    }
+                                }
+                                MenuSeparator { }
+                                MenuItem {
+                                    icon.name: "ic_fluent_dismiss_20_regular"
+                                    text: qsTr("Cancel download")
+                                    visible: downloadButton.isCurrentTransfer
+                                             && (downloadButton.transferStatus === "Downloading"
+                                                 || downloadButton.transferStatus === "Paused")
+                                    onTriggered: PluginManager.cancelPluginInstall()
                                 }
                             }
 
                             ToolTip {
                                 visible: parent.hovered
-                                text: qsTr("Share")
+                                text: qsTr("More options")
                             }
                         }
                     }
@@ -674,11 +762,16 @@ FluentPage {
                             itemHeight: 96
                         }
 
-                        Skeleton {
+                        Item {
                             Layout.fillWidth: true
-                            Layout.preferredHeight: 250
-                            running: otherPluginsLoading
+                            Layout.preferredHeight: 160
                             visible: otherPluginsLoading
+
+                            ProgressRing {
+                                anchors.centerIn: parent
+                                size: 38
+                                indeterminate: true
+                            }
                         }
 
                         Text {

@@ -47,6 +47,7 @@ Pagination 1.0 plaza/Pagination.qml
 PluginList 1.0 plaza/PluginList.qml
 PluginMeta 1.0 plaza/PluginMeta.qml
 PluginRating 1.0 plaza/PluginRating.qml
+PlazaStatusCard 1.0 plaza/PlazaStatusCard.qml
 PluginCommentsDialog 1.0 plaza/PluginCommentsDialog.qml
 TagShowcase 1.0 plaza/TagShowcase.qml
 FilterToolbar 1.0 plaza/FilterToolbar.qml

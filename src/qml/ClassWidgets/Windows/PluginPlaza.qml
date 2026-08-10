@@ -8,7 +8,7 @@ import ClassWidgets.Components
 
 FluentWindow {
     id: plazaWindow
-    icon: PathManager.assets("images/icons/cw2_settings.png")
+    icon: PathManager.assets("images/icons/cw2_plugin.png")
     title: qsTr("Plugin Plaza")
     width: Screen.width * 0.7
     height: Screen.height * 0.8
@@ -56,6 +56,14 @@ FluentWindow {
             }
         }
 
+        ProgressRing {
+            visible: PluginManager.plazaInstallActive
+            Layout.alignment: Qt.AlignVCenter
+            size: 20
+            value: PluginManager.installProgress / 100
+            indeterminate: PluginManager.installStatus === "Installing"
+        }
+
         ToolButton {
             flat: true
             Layout.alignment: Qt.AlignRight
@@ -89,6 +97,52 @@ FluentWindow {
         }
     }
 
+    Connections {
+        target: PluginManager
+
+        function pluginName(pluginId) {
+            var plugins = PluginManager.plugins || []
+            for (var index = 0; index < plugins.length; ++index) {
+                if (plugins[index].id === pluginId)
+                    return plugins[index].name || pluginId
+            }
+            return pluginId
+        }
+
+        function onPlazaTransferSucceeded(pluginId, version, kind) {
+            var action = kind === "update" ? qsTr("Plugin updated") : qsTr("Plugin installed")
+            floatLayer.createInfoBar({
+                title: action,
+                text: qsTr("%1 v%2 is ready to use.").arg(pluginName(pluginId)).arg(version),
+                severity: Severity.Success,
+                timeout: 5000
+            })
+        }
+
+        function onPlazaTransferFailed(pluginId, message, kind) {
+            var title = kind === "update" ? qsTr("Plugin update failed") : qsTr("Plugin installation failed")
+            floatLayer.createInfoBar({
+                title: title,
+                text: message,
+                severity: Severity.Error,
+                timeout: -1
+            })
+        }
+
+        function onPlazaTransferCancelled(pluginId) {
+            floatLayer.createInfoBar({
+                title: qsTr("Download cancelled"),
+                text: qsTr("The download for %1 was cancelled.").arg(pluginName(pluginId)),
+                severity: Severity.Info,
+                timeout: 4000
+            })
+        }
+
+        function onShowPlazaDownloadsRequested() {
+            navigationView.push(PathManager.qml("pages/plaza/Downloads.qml"))
+        }
+    }
+
     navigationItems: [
         {
             title: qsTr("Home"),
@@ -104,6 +158,11 @@ FluentWindow {
             title: qsTr("Search"),
             page: PathManager.qml("pages/plaza/Search.qml"),
             icon: "ic_fluent_search_20_regular",
+        },
+        {
+            title: qsTr("Downloads"),
+            page: PathManager.qml("pages/plaza/Downloads.qml"),
+            icon: "ic_fluent_cloud_arrow_down_20_regular",
         }
     ]
 

@@ -101,7 +101,22 @@ Item {
                 Layout.preferredWidth: 64
                 Layout.preferredHeight: 64
                 radius: 16
-                color: Colors.proxy.controlBorderColor
+                clip: true
+
+                Skeleton {
+                    anchors.fill: parent
+                    radius: parent.radius
+                    running: true
+
+                    layer.enabled: true
+                    layer.effect: OpacityMask {
+                        maskSource: Rectangle {
+                            width: 64
+                            height: 64
+                            radius: 16
+                        }
+                    }
+                }
             }
 
             ColumnLayout {
@@ -110,9 +125,9 @@ Item {
                 Layout.alignment: Qt.AlignVCenter
                 spacing: 4
 
-                Rectangle { Layout.fillWidth: true; Layout.preferredHeight: 18; radius: 6; color: Colors.proxy.controlBorderColor }
-                Rectangle { Layout.preferredWidth: parent.width * 0.55; Layout.preferredHeight: 14; radius: 6; color: Colors.proxy.controlBorderColor }
-                Rectangle { Layout.fillWidth: true; Layout.preferredHeight: 14; radius: 6; color: Colors.proxy.controlBorderColor }
+                Skeleton { Layout.fillWidth: true; Layout.preferredHeight: 18; radius: 6; running: true }
+                Skeleton { Layout.preferredWidth: parent.width * 0.55; Layout.preferredHeight: 14; radius: 6; running: true }
+                Skeleton { Layout.fillWidth: true; Layout.preferredHeight: 14; radius: 6; running: true }
             }
         }
     }
@@ -142,6 +157,15 @@ Item {
                     radius: 16
                     running: !pluginIcon.iconLoaded && !pluginIcon.iconFailed
                     visible: !pluginIcon.iconLoaded && !pluginIcon.iconFailed
+
+                    layer.enabled: visible
+                    layer.effect: OpacityMask {
+                        maskSource: Rectangle {
+                            width: 64
+                            height: 64
+                            radius: 16
+                        }
+                    }
                 }
 
                 Image {
