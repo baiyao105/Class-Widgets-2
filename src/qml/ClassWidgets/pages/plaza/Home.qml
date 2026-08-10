@@ -1,142 +1,102 @@
 import QtQuick
-import QtQuick.Controls
 import QtQuick.Layouts
 import RinUI
 import ClassWidgets.Components
 
 FluentPage {
     id: root
-    // title: qsTr("Plugin Plaza")
     horizontalPadding: 0
     wrapperWidth: width - 42 * 2
 
     property var plugins: PlazaBridge.plugins || []
     property var banners: PlazaBridge.banners || []
-    property bool loadingPlugins: PlazaBridge.status === "FetchingPlugins" && plugins.length === 0
-    property bool loadingBanners: PlazaBridge.status === "FetchingBanners" && banners.length === 0
-    property bool loading: loadingPlugins || loadingBanners
+    property bool initialLoad: plugins.length === 0
+        && PlazaBridge.status !== "PluginsLoaded"
+        && PlazaBridge.status !== "Error"
+    property bool loading: initialLoad
+        || PlazaBridge.status === "FetchingPlugins"
+        || PlazaBridge.status === "FetchingBanners"
 
-    function tagId(tag) {
-        if (!tag)
-            return ""
-        if (typeof tag === "string")
-            return tag
-        return tag.id || tag.name || ""
-    }
+    function tagId(tag) { return typeof tag === "string" ? tag : (tag && (tag.id || tag.name) || "") }
+    function tagName(tag) { return typeof tag === "string" ? tag : (tag && (tag.name || tag.id) || "") }
 
-    function tagName(tag) {
-        if (!tag)
-            return ""
-        if (typeof tag === "string")
-            return tag
-        return tag.name || tag.id || ""
-    }
-
-    function hasTag(plugin, tag) {
-        var tags = plugin && plugin.tags instanceof Array ? plugin.tags : []
-        for (var i = 0; i < tags.length; i++) {
-            if (tagId(tags[i]) === tag || tagName(tags[i]) === tag)
-                return true
-        }
-        return false
-    }
-
-    function pluginSlice(start, count) {
-        if (!plugins || plugins.length <= start)
-            return []
-        return plugins.slice(start, start + count)
-    }
-
-    function pluginsByTag(tag, count) {
-        if (!plugins || plugins.length === 0)
-            return []
-
+    function pluginsForTag(tag, count) {
         var result = []
         for (var i = 0; i < plugins.length; i++) {
-            var plugin = plugins[i]
-            if (hasTag(plugin, tag))
-                result.push(plugin)
-            if (result.length >= count)
-                break
+            var pluginTags = plugins[i] && plugins[i].tags instanceof Array ? plugins[i].tags : []
+            for (var j = 0; j < pluginTags.length; j++) {
+                if (tagId(pluginTags[j]) === tag.id || tagName(pluginTags[j]) === tag.name) {
+                    result.push(plugins[i])
+                    break
+                }
+            }
+            if (result.length >= count) break
         }
         return result
     }
 
+    function featuredTags() {
+        var counts = ({})
+        var names = ({})
+        for (var i = 0; i < plugins.length; i++) {
+            var values = plugins[i] && plugins[i].tags instanceof Array ? plugins[i].tags : []
+            for (var j = 0; j < values.length; j++) {
+                var id = tagId(values[j])
+                if (!id) continue
+                counts[id] = (counts[id] || 0) + 1
+                names[id] = tagName(values[j])
+            }
+        }
+        var result = []
+        for (var key in counts) result.push({ id: key, name: names[key], count: counts[key] })
+        result.sort(function(a, b) { return b.count - a.count })
+        return result.slice(0, 3)
+    }
+
     contentHeader: Item {
         width: parent.width
-        height: Math.max(260, Math.min(380, root.width * 0.32))
-
-        BannerCarousel {
-            anchors.fill: parent
-            plugins: root.plugins
-            banners: root.banners
-            loading: root.loading
-        }
+        height: root.initialLoad ? 0 : (root.width >= 900 ? 320 : root.width >= 620 ? 256 : 224)
+        visible: !root.initialLoad
+        BannerCarousel { anchors.fill: parent; plugins: root.plugins; banners: root.banners; loading: root.loading }
     }
 
     ColumnLayout {
         Layout.fillWidth: true
-        spacing: 16
-
-        RowLayout {
-            Layout.fillWidth: true
-            spacing: 12
-
-            Text {
-                Layout.fillWidth: true
-                text: qsTr("Plugins")
-                typography: Typography.Subtitle
-            }
-
-            // Button {
-            //     flat: true
-            //     text: qsTr("Open Web Plaza")
-            //     icon.name: "ic_fluent_open_20_regular"
-            //     onClicked: Qt.openUrlExternally("https://plaza.cw.rinlit.cn")
-            // }
-        }
+        spacing: 20
 
         PluginSection {
             Layout.fillWidth: true
+            visible: !root.initialLoad
             title: qsTr("Recommended for you")
-            plugins: root.pluginSlice(0, 9)
-            loading: root.loadingPlugins
+            plugins: root.plugins.slice(0, 6)
+            loading: false
             pageSize: 6
         }
 
-        PluginSection {
-            id: devtoolsSection
-            Layout.fillWidth: true
-            visible: devtoolsSection.plugins.length > 0 || root.loadingPlugins
-            title: qsTr("Developer tools")
-            plugins: root.pluginsByTag("开发者工具", 9)
-            loading: root.loadingPlugins
-            pageSize: 6
-        }
-
-        RowLayout {
-            Layout.fillWidth: true
-            spacing: 12
-
-            Text {
+        Repeater {
+            model: root.initialLoad ? [] : root.featuredTags()
+            delegate: TagShowcase {
                 Layout.fillWidth: true
-                text: qsTr("All")
-                typography: Typography.BodyLarge
+                tagId: modelData.id
+                title: modelData.name
+                plugins: root.pluginsForTag(modelData, 6)
+                total: modelData.count
+                loading: false
+                showRating: true
             }
         }
 
-        PluginGrid {
+        PlazaLoading {
             Layout.fillWidth: true
-            plugins: root.pluginSlice(0, 12)
-            loading: root.loadingPlugins
+            visible: root.initialLoad
         }
 
-        InfoBar {
+        ErrorState {
             Layout.fillWidth: true
-            visible: !root.loadingPlugins && root.plugins.length === 0
-            severity: Severity.Warning
-            title: qsTr("No plugins loaded")
-            text: qsTr("Please check your network connection or use the refresh button in the title bar to reload the plaza.")
+            visible: !root.initialLoad && root.plugins.length === 0
+            title: qsTr("The plaza is unavailable")
+            description: qsTr("Check your connection and try loading the plaza again.")
+            onRetryRequested: PlazaBridge.refreshAll()
         }
     }
 }

@@ -130,7 +130,7 @@ FluentPage {
             Hyperlink {
                 text: qsTr("Go to Extension Plaza")
                 // enabled: false
-                openUrl: "https://plaza.cw.rinlit.cn"
+                openUrl: Configs.data.network.plaza_url
             }
         }
     }

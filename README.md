@@ -107,7 +107,7 @@ Class Widgets 2 是新一代的电子化课程表展示工具，基于比前代�
 
 感谢 Weblate 提供的免费翻译平台
 
-[![翻译状态](https://hosted.weblate.org/widget/class-widgets/open-graph.png)](https://hosted.weblate.org/engage/class-widgets/)
+[![翻译状态](https://hosted.weblate.org/widget/class-widgets/open-graph.png)](https://hosted.weblate.org/engage/class-widgets/)b
 
 ## 星标历史
 

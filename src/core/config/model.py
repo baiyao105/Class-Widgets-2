@@ -162,6 +162,8 @@ class NetworkConfig(ConfigBaseModel):
     releases_url: str = "https://classwidgets.rinlit.cn/2/releases.json"  # 版本更新地址
     auto_check_updates: bool = True  # 自动检查更新
 
+    plaza_url: str = "https://plaza.cw.rinlit.cn"
+
 class NotificationsConfig(ConfigBaseModel):
     """
     所有通知配置，包括全局设置和各提供者配置

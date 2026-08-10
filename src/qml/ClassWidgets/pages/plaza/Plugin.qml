@@ -8,25 +8,61 @@ FluentPage {
     id: root
     property string pluginId: ""
 
-    title: manifest && manifest.name ? manifest.name : qsTr("Plugin Detail")
+    topPadding: 72
     horizontalPadding: 0
-    wrapperWidth: width - 42 * 2
+    wrapperWidth: wideScreen ? width - 169 * 2 : width - 89 * 2
 
-    property string baseUrl: "https://plaza.cw.rinlit.cn"
+    readonly property string baseUrl: PlazaBridge.baseUrl
     property var manifest: null
     property string readme: ""
     property string readmeHtml: ""
     property var tagsMap: ({})
     property var otherPlugins: []
+    property var ratings: []
     property bool manifestLoading: false
     property bool readmeLoading: false
     property bool tagsLoading: false
     property bool otherPluginsLoading: false
+    property bool ratingsLoading: false
+    property bool initialLoad: manifest === null && errorMessage.length === 0
     property string errorMessage: ""
     property string iconSource: pluginId ? resourceUrl(pluginId, "icon") : ""
+    // 响应式窄窗口时侧栏折叠
+    property bool wideLayout: width >= 1000
+    property bool wideScreen: width >= 1350
 
-    Component.onCompleted: loadPlugin()
-    onPluginIdChanged: loadPlugin()
+    // 评论对话框
+    property bool commentsDialogOpen: false
+
+    readonly property int ratingTotal: ratings instanceof Array ? ratings.length : 0
+    readonly property real ratingAverage: {
+        if (ratingTotal === 0)
+            return 0
+        var sum = 0
+        for (var i = 0; i < ratings.length; i++)
+            sum += Number(ratings[i].rating) || 0
+        return sum / ratingTotal
+    }
+    readonly property color starColor: Theme.isDark() ? "#FFD780" : "#d39300"
+
+    // 有文字评论的数量
+    readonly property int totalWithComment: {
+        var count = 0
+        for (var i = 0; i < ratingTotal; i++) {
+            if (ratings[i].comment)
+                count++
+        }
+        return count
+    }
+
+    Component.onCompleted: {
+        if (pluginId && !manifestLoading)
+            loadPlugin()
+    }
+    onPluginIdChanged: {
+        if (pluginId)
+            loadPlugin()
+    }
 
     function loadPlugin() {
         if (!pluginId)
@@ -36,6 +72,7 @@ FluentPage {
         readme = ""
         readmeHtml = ""
         otherPlugins = []
+        ratings = []
         errorMessage = ""
         iconSource = resourceUrl(pluginId, "icon")
         fetchManifest()
@@ -56,6 +93,22 @@ FluentPage {
 
     function repoUrl() {
         return manifest ? (manifest.repo_url || manifest.url || "") : ""
+    }
+
+    function releasePageUrl() {
+        return pluginId ? resourceUrl(pluginId, "release?format=cwplugin") : ""
+    }
+
+    function releaseZipUrl() {
+        return pluginId ? resourceUrl(pluginId, "release?format=zip") : ""
+    }
+
+    function githubReleasesUrl() {
+        var url = repoUrl()
+        if (!url)
+            return ""
+        var match = url.match(/^https?:\/\/github\.com\/([^\/]+\/[^\/#?]+)/i)
+        return match ? "https://github.com/" + match[1].replace(/\.git$/, "") + "/releases" : ""
     }
 
     function tagId(tag) {
@@ -89,6 +142,26 @@ FluentPage {
         return map
     }
 
+    function categoryText() {
+        var tags = manifest && manifest.tags instanceof Array ? manifest.tags : []
+        var names = []
+        for (var i = 0; i < tags.length; i++) {
+            var name = tagDisplayName(tags[i])
+            if (name)
+                names.push(name)
+        }
+        return names.join(", ")
+    }
+
+    function formatDate(value) {
+        if (!value)
+            return qsTr("No data")
+        var date = new Date(value)
+        if (isNaN(date.getTime()))
+            return String(value)
+        return date.toLocaleDateString(Qt.locale(), "yyyy/M/d")
+    }
+
     function requestText(url, success, failure) {
         var xhr = new XMLHttpRequest()
         xhr.onreadystatechange = function() {
@@ -113,6 +186,7 @@ FluentPage {
                 manifestLoading = false
                 fetchReadme()
                 fetchOtherPlugins()
+                fetchRatings()
             } catch (e) {
                 manifestLoading = false
                 errorMessage = qsTr("Failed to parse plugin information.")
@@ -175,6 +249,22 @@ FluentPage {
         })
     }
 
+    function fetchRatings() {
+        ratingsLoading = true
+        requestText(pluginApiUrl(pluginId, "/comments"), function(text) {
+            try {
+                var response = JSON.parse(text)
+                ratings = response && response.ok && response.data instanceof Array ? response.data : []
+            } catch (e) {
+                ratings = []
+            }
+            ratingsLoading = false
+        }, function() {
+            ratings = []
+            ratingsLoading = false
+        })
+    }
+
     function pickRelatedPlugins(list) {
         var result = []
         var tags = manifest && manifest.tags instanceof Array ? manifest.tags : []
@@ -220,10 +310,6 @@ FluentPage {
         return tag || id
     }
 
-    function releasePageUrl() {
-        return pluginId ? resourceUrl(pluginId, "release?format=cwplugin") : ""
-    }
-
     function openPlugin(plugin) {
         if (!plugin || !plugin.id)
             return
@@ -235,106 +321,173 @@ FluentPage {
             Qt.openUrlExternally(url)
     }
 
+    // 应用内跳转插件分类页（与 TagShowcase 的“查看全部”行为一致）
+    function openTag(tag) {
+        var id = tagId(tag)
+        if (!id)
+            return
+        navigationView.push(Qt.resolvedUrl("Plugins.qml"), { initialTag: id })
+    }
+
     ColumnLayout {
         Layout.fillWidth: true
-        spacing: 20
+        spacing: 24
 
-        Frame {
+        PlazaLoading {
             Layout.fillWidth: true
-            padding: 24
+            visible: root.initialLoad
+        }
 
-            RowLayout {
-                width: parent.width
+        ErrorState {
+            Layout.fillWidth: true
+            visible: !root.initialLoad && root.errorMessage.length > 0
+            title: qsTr("Load failed")
+            description: root.errorMessage
+            onRetryRequested: root.loadPlugin()
+        }
+
+        GridLayout {
+            Layout.fillWidth: true
+            visible: !root.initialLoad && root.errorMessage.length === 0
+            columns: root.wideLayout ? 2 : 1
+            columnSpacing: 40
+            rowSpacing: 24
+
+            // 主内容区：头部信息、说明、其他信息
+            ColumnLayout {
+                Layout.fillWidth: true
+                Layout.alignment: Qt.AlignTop
                 spacing: 20
 
-                Rectangle {
-                    Layout.preferredWidth: 96
-                    Layout.preferredHeight: 96
-                    Layout.alignment: Qt.AlignTop
-                    radius: 24
-                    color: Colors.proxy.backgroundColor
-                    border.color: Colors.proxy.controlBorderColor
-                    border.width: 1
-                    clip: true
-
-                    Skeleton {
-                        anchors.fill: parent
-                        radius: parent.radius
-                        running: manifestLoading
-                        visible: manifestLoading
-                    }
-
-                    Image {
-                        id: pluginIcon
-                        anchors.fill: parent
-                        anchors.margins: 2
-                        source: root.iconSource
-                        fillMode: Image.PreserveAspectFit
-                        asynchronous: true
-                        visible: !manifestLoading
-
-                        onStatusChanged: {
-                            if (status === Image.Error)
-                                root.iconSource = root.resourceUrl("default", "icon")
-                        }
-                    }
-                }
-
+                // 头部信息区：上半部分为图标和附加信息，下方为描述
                 ColumnLayout {
                     Layout.fillWidth: true
-                    spacing: 8
-
-                    Text {
-                        Layout.fillWidth: true
-                        text: manifest && manifest.name ? manifest.name : qsTr("Loading plugin...")
-                        typography: Typography.Title
-                        wrapMode: Text.Wrap
-                    }
+                    spacing: 12
 
                     RowLayout {
                         Layout.fillWidth: true
-                        spacing: 8
+                        spacing: root.wideLayout ? 20 : 14
 
-                        Text {
-                            text: manifest && manifest.author ? manifest.author : qsTr("Unknown author")
-                            typography: Typography.BodyStrong
-                            color: Colors.proxy.primaryColor
+                        Rectangle {
+                            Layout.preferredWidth: 84
+                            Layout.preferredHeight: 84
+                            Layout.alignment: Qt.AlignTop
+                            radius: root.wideLayout ? 24 : 18
+                            color: Colors.proxy.backgroundColor
+                            border.color: Colors.proxy.controlBorderColor
+                            border.width: 1
+                            clip: true
+
+                            Skeleton {
+                                anchors.fill: parent
+                                radius: parent.radius
+                                running: manifestLoading
+                                visible: manifestLoading
+                            }
+
+                            Image {
+                                id: pluginIcon
+                                anchors.fill: parent
+                                anchors.margins: 2
+                                source: root.iconSource
+                                fillMode: Image.PreserveAspectFit
+                                asynchronous: true
+                                visible: !manifestLoading
+
+                                onStatusChanged: {
+                                    if (status === Image.Error)
+                                        root.iconSource = root.resourceUrl("default", "icon")
+                                }
+                            }
                         }
 
-                        Item { Layout.fillWidth: true }
-                    }
+                        ColumnLayout {
+                            Layout.fillWidth: true
+                            spacing: 6
 
-                    Flow {
-                        Layout.fillWidth: true
-                        spacing: 8
-                        visible: manifest && manifest.tags && manifest.tags.length > 0
+                            Text {
+                                Layout.fillWidth: true
+                                text: manifest && manifest.name ? manifest.name : qsTr("Loading plugin...")
+                                typography: root.wideLayout ? Typography.Title : Typography.Subtitle
+                                wrapMode: Text.Wrap
+                            }
 
-                        Repeater {
-                            model: manifest && manifest.tags ? manifest.tags : []
+                            Text {
+                                Layout.fillWidth: true
+                                text: manifest && manifest.author ? manifest.author : qsTr("Unknown author")
+                                typography: Typography.BodyStrong
+                                color: Colors.proxy.primaryColor
+                            }
 
-                            delegate: InfoBadge {
-                                text: root.tagDisplayName(modelData)
-                                severity: Severity.Info
-                                solid: false
+                            // 评级 + 标签行
+                            RowLayout {
+                                Layout.fillWidth: true
+                                spacing: 0
+                                visible: manifest !== null
+
+                                RowLayout {
+                                    spacing: 6
+                                    visible: root.ratingTotal > 0
+
+                                    Text {
+                                        text: root.ratingAverage.toFixed(1)
+                                        typography: Typography.Body
+                                        color: root.starColor
+                                    }
+
+                                    Icon {
+                                        name: "ic_fluent_star_20_filled"
+                                        size: 12
+                                        color: root.starColor
+                                    }
+
+                                    ToolSeparator {
+                                        Layout.fillHeight:true
+                                    }
+
+                                    Text {
+                                        text: qsTr("%1 Ratings").arg(root.ratingTotal)
+                                        typography: Typography.Body
+                                        color: Colors.proxy.textSecondaryColor
+                                    }
+
+                                    ToolSeparator {
+                                        Layout.fillHeight:true
+                                        visible: manifest && manifest.tags && manifest.tags.length > 0
+                                    }
+                                }
+
+                                Repeater {
+                                    model: manifest && manifest.tags ? manifest.tags : []
+
+                                    delegate: Hyperlink {
+                                        text: root.tagDisplayName(modelData)
+                                        onClicked: root.openTag(modelData)
+                                    }
+                                }
                             }
                         }
                     }
 
+                    // 描述（两行，宽度最大 600，超出省略）
                     Text {
                         Layout.fillWidth: true
+                        Layout.maximumWidth: 600
+                        visible: text.length > 0
                         text: manifest && manifest.description ? manifest.description : ""
-                        typography: Typography.Body
-                        color: Colors.proxy.textSecondaryColor
+                        typography: Typography.Caption
                         wrapMode: Text.Wrap
-                        maximumLineCount: 3
+                        maximumLineCount: 2
                         elide: Text.ElideRight
                     }
 
+                    // 操作按钮
                     RowLayout {
                         Layout.fillWidth: true
                         spacing: 8
 
                         Button {
+                            id: downloadButton
                             highlighted: true
                             icon.name: "ic_fluent_arrow_download_20_regular"
                             text: qsTr("Download")
@@ -342,37 +495,37 @@ FluentPage {
                             onClicked: root.openUrl(root.releasePageUrl())
                         }
 
-                        Button {
+                        ToolButton {
                             flat: true
                             icon.name: "ic_fluent_share_20_regular"
-                            text: qsTr("Share")
-                            onClicked: root.openUrl(root.baseUrl + "/plugins/" + encodeURIComponent(root.pluginId))
+                            enabled: !!root.releasePageUrl()
+                            onClicked: downloadMenu.open()
+
+                            Menu {
+                                id: downloadMenu
+                                MenuItem {
+                                    icon.name: "ic_fluent_open_20_regular"
+                                    text: qsTr("Open in Web")
+                                    enabled: !!root.githubReleasesUrl()
+                                    onTriggered: root.openUrl(root.baseUrl + "/plugins/" + encodeURIComponent(root.pluginId))
+                                }
+                                MenuItem {
+                                    icon.name: "ic_fluent_open_20_regular"
+                                    text: qsTr("Open in Web")
+                                    enabled: !!root.githubReleasesUrl()
+                                    onTriggered: root.openUrl(root.githubReleasesUrl())
+                                }
+                            }
+
+                            ToolTip {
+                                visible: parent.hovered
+                                text: qsTr("Share")
+                            }
                         }
                     }
                 }
-            }
-        }
 
-        InfoBar {
-            Layout.fillWidth: true
-            visible: root.errorMessage.length > 0
-            severity: Severity.Error
-            title: qsTr("Load failed")
-            text: root.errorMessage
-        }
-
-        GridLayout {
-            Layout.fillWidth: true
-            columns: width >= 980 ? 3 : 1
-            columnSpacing: 20
-            rowSpacing: 20
-
-            ColumnLayout {
-                Layout.fillWidth: true
-                Layout.columnSpan: parent.columns === 3 ? 2 : 1
-                Layout.alignment: Qt.AlignTop
-                spacing: 20
-
+                // 说明
                 Frame {
                     Layout.fillWidth: true
                     padding: 24
@@ -404,9 +557,11 @@ FluentPage {
                     }
                 }
 
+                // 其他信息
                 Frame {
                     Layout.fillWidth: true
                     padding: 24
+                    visible: root.manifest !== null
 
                     ColumnLayout {
                         width: parent.width
@@ -414,7 +569,7 @@ FluentPage {
 
                         Text {
                             Layout.fillWidth: true
-                            text: qsTr("More information")
+                            text: qsTr("Other information")
                             typography: Typography.BodyLarge
                         }
 
@@ -424,125 +579,128 @@ FluentPage {
                             color: Colors.proxy.controlBorderColor
                         }
 
-                        GridLayout {
+                        PluginMeta {
                             Layout.fillWidth: true
-                            columns: width >= 520 ? 2 : 1
-                            columnSpacing: 20
-                            rowSpacing: 16
-
-                            Repeater {
-                                model: [
-                                    { icon: "ic_fluent_tag_20_regular", label: qsTr("Plugin ID"), value: manifest && manifest.id ? manifest.id : pluginId },
-                                    { icon: "ic_fluent_info_20_regular", label: qsTr("Version"), value: manifest && manifest.version ? manifest.version : qsTr("Unknown") },
-                                    { icon: "ic_fluent_code_20_regular", label: qsTr("API version"), value: manifest && manifest.api_version ? manifest.api_version : qsTr("Unknown") },
-                                    { icon: "ic_fluent_branch_20_regular", label: qsTr("Branch"), value: manifest && manifest.branch ? manifest.branch : "main" },
-                                    { icon: "ic_fluent_person_20_regular", label: qsTr("Author"), value: manifest && manifest.author ? manifest.author : qsTr("Unknown") },
-                                    { icon: "ic_fluent_link_20_regular", label: qsTr("Repository"), value: root.repoUrl() || qsTr("No data") }
-                                ]
-
-                                delegate: RowLayout {
-                                    Layout.fillWidth: true
-                                    spacing: 10
-
-                                    Icon {
-                                        Layout.alignment: Qt.AlignTop
-                                        name: modelData.icon
-                                        size: 20
-                                        color: Colors.proxy.textSecondaryColor
-                                    }
-
-                                    ColumnLayout {
-                                        Layout.fillWidth: true
-                                        spacing: 2
-
-                                        Text {
-                                            Layout.fillWidth: true
-                                            text: modelData.label
-                                            typography: Typography.Caption
-                                            color: Colors.proxy.textSecondaryColor
-                                        }
-
-                                        Text {
-                                            Layout.fillWidth: true
-                                            text: modelData.value
-                                            wrapMode: Text.Wrap
-                                            elide: Text.ElideRight
-                                            maximumLineCount: 2
-                                        }
-                                    }
-                                }
-                            }
+                            minimumColumnWidth: 220
+                            items: [
+                                { icon: "ic_fluent_tag_20_regular", label: qsTr("Plugin ID"), value: manifest && manifest.id ? manifest.id : pluginId },
+                                { icon: "ic_fluent_info_20_regular", label: qsTr("Version"), value: manifest && manifest.version ? manifest.version : qsTr("Unknown") },
+                                { icon: "ic_fluent_code_20_regular", label: qsTr("API version"), value: manifest && manifest.api_version ? manifest.api_version : qsTr("Unknown") },
+                                { icon: "ic_fluent_branch_20_regular", label: qsTr("Branch"), value: manifest && manifest.branch ? manifest.branch : "main" },
+                                { icon: "ic_fluent_clock_20_regular", label: qsTr("Last updated"), value: root.formatDate(manifest ? (manifest.updated_at || manifest.updated) : "") },
+                                { icon: "ic_fluent_link_20_regular", label: qsTr("Repository"), value: root.repoUrl() || qsTr("No data"), valueUrl: root.repoUrl() }
+                            ]
                         }
                     }
                 }
             }
 
-            Frame {
-                Layout.fillWidth: true
+            // 右侧栏：评分和评价、发现更多（窄窗口时折叠为主内容下方的全宽区块）
+            ColumnLayout {
+                Layout.fillWidth: !root.wideLayout
+                Layout.preferredWidth: root.wideLayout ? 300 : -1
                 Layout.alignment: Qt.AlignTop
-                padding: 24
+                spacing: 20
 
-                ColumnLayout {
-                    width: parent.width
-                    spacing: 12
+                Frame {
+                    Layout.fillWidth: true
+                    padding: 24
 
-                    RowLayout {
-                        Layout.fillWidth: true
+                    ColumnLayout {
+                        width: parent.width
+                        spacing: 16
 
                         Text {
                             Layout.fillWidth: true
-                            text: qsTr("Discover more")
+                            text: qsTr("Ratings and reviews")
                             typography: Typography.BodyLarge
+                        }
+
+                        PluginRating {
+                            Layout.fillWidth: true
+                            ratings: root.ratings
+                            loading: root.ratingsLoading
                         }
 
                         Button {
                             flat: true
-                            visible: manifest && manifest.tags && manifest.tags.length > 0
-                            text: qsTr("More")
-                            icon.name: "ic_fluent_open_20_regular"
-                            onClicked: root.openUrl(root.baseUrl + "/search?q=" + encodeURIComponent(root.tagId(manifest.tags[0])))
+                            visible: root.ratingTotal > 0
+                            text: qsTr("See all (%1)").arg(root.totalWithComment)
+                            onClicked: root.commentsDialogOpen = true
+                            highlighted: true
                         }
                     }
+                }
 
-                    Rectangle {
-                        Layout.fillWidth: true
-                        Layout.preferredHeight: 1
-                        color: Colors.proxy.controlBorderColor
-                    }
+                Frame {
+                    Layout.fillWidth: true
+                    padding: 24
 
                     ColumnLayout {
-                        Layout.fillWidth: true
-                        spacing: 8
-                        visible: !otherPluginsLoading && otherPlugins.length > 0
+                        width: parent.width
+                        spacing: 12
 
-                        Repeater {
-                            model: otherPlugins
+                        // 区块标题（原 SectionHeader 组件内联，此处为唯一使用方）
+                        RowLayout {
+                            Layout.fillWidth: true
+                            spacing: 12
 
-                            delegate: PluginCard {
+                            Text {
                                 Layout.fillWidth: true
-                                Layout.preferredHeight: 82
-                                plugin: modelData
-                                transparentNormalBackground: true
+                                text: qsTr("Discover more")
+                                typography: Typography.BodyLarge
+                                wrapMode: Text.Wrap
+                            }
+
+                            Button {
+                                flat: true
+                                visible: manifest && manifest.tags && manifest.tags.length > 0
+                                text: qsTr("More")
+                                icon.name: "ic_fluent_chevron_right_20_regular"
+                                onClicked: root.openTag(manifest.tags[0])
                             }
                         }
-                    }
 
-                    Skeleton {
-                        Layout.fillWidth: true
-                        Layout.preferredHeight: 250
-                        running: otherPluginsLoading
-                        visible: otherPluginsLoading
-                    }
+                        Rectangle {
+                            Layout.fillWidth: true
+                            Layout.preferredHeight: 1
+                            color: Colors.proxy.controlBorderColor
+                        }
 
-                    Text {
-                        Layout.fillWidth: true
-                        visible: !otherPluginsLoading && otherPlugins.length === 0
-                        text: qsTr("No recommendations")
-                        horizontalAlignment: Text.AlignHCenter
-                        color: Colors.proxy.textSecondaryColor
+                        PluginList {
+                            Layout.fillWidth: true
+                            visible: !otherPluginsLoading && otherPlugins.length > 0
+                            plugins: root.otherPlugins
+                            itemHeight: 96
+                        }
+
+                        Skeleton {
+                            Layout.fillWidth: true
+                            Layout.preferredHeight: 250
+                            running: otherPluginsLoading
+                            visible: otherPluginsLoading
+                        }
+
+                        Text {
+                            Layout.fillWidth: true
+                            visible: !otherPluginsLoading && otherPlugins.length === 0
+                            text: qsTr("No recommendations")
+                            horizontalAlignment: Text.AlignHCenter
+                            color: Colors.proxy.textSecondaryColor
+                        }
                     }
                 }
             }
         }
+    }
+
+    // 查看全部评论对话框
+    PluginCommentsDialog {
+        id: commentsDialog
+        parent: Overlay.overlay
+        ratings: root.ratings
+        loading: root.ratingsLoading
+        visible: root.commentsDialogOpen
+        onVisibleChanged: root.commentsDialogOpen = visible
     }
 }

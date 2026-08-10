@@ -21,9 +21,40 @@ FluentWindow {
 
     titleBarArea: RowLayout {
         anchors.fill: parent
-        spacing: 24
+        // spacing: 24
 
-        Item { Layout.fillWidth: true }
+
+        // search field
+        AutoSuggestBox {
+            id: searchField
+            Layout.alignment: Qt.AlignHCenter
+            Layout.maximumWidth: 600
+            Layout.fillWidth: true
+            placeholderText: qsTr("Search plugins...")
+            suggestions: PlazaBridge.plugins || []
+            textRole: "name"
+
+            // 选中建议项或按回车：名称精确匹配则直达插件详情页，否则进入搜索页
+            onAccepted: {
+                var keyword = searchField.text.trim()
+                if (!keyword)
+                    return
+                var plugins = PlazaBridge.plugins || []
+                var matched = null
+                for (var i = 0; i < plugins.length; i++) {
+                    var p = plugins[i]
+                    if (p && p.name && p.name.toLowerCase() === keyword.toLowerCase()) {
+                        matched = p
+                        break
+                    }
+                }
+                if (matched && matched.id) {
+                    navigationView.push(PathManager.qml("pages/plaza/Plugin.qml"), { pluginId: matched.id })
+                } else {
+                    navigationView.push(PathManager.qml("pages/plaza/Search.qml"), { query: keyword })
+                }
+            }
+        }
 
         ToolButton {
             flat: true
@@ -68,6 +99,11 @@ FluentWindow {
             title: qsTr("Plugins"),
             page: PathManager.qml("pages/plaza/Plugins.qml"),
             icon: "ic_fluent_apps_list_20_regular",
+        },
+        {
+            title: qsTr("Search"),
+            page: PathManager.qml("pages/plaza/Search.qml"),
+            icon: "ic_fluent_search_20_regular",
         }
     ]
 
