@@ -334,7 +334,7 @@ FluentPage {
     function openPlugin(plugin) {
         if (!plugin || !plugin.id)
             return
-        navigationView.push(Qt.resolvedUrl("Plugin.qml"), { pluginId: plugin.id })
+        navigationView.safePush(Qt.resolvedUrl("Plugin.qml"), true, false, { pluginId: plugin.id })
     }
 
     function openUrl(url) {
@@ -762,7 +762,6 @@ FluentPage {
                             Button {
                                 flat: true
                                 visible: manifest && manifest.tags && manifest.tags.length > 0
-                                text: qsTr("More")
                                 icon.name: "ic_fluent_chevron_right_20_regular"
                                 onClicked: root.openTag(manifest.tags[0])
                             }

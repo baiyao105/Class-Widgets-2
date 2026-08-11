@@ -1793,7 +1793,7 @@ Applying an incompatible theme may cause serious errors, crashes, or unexpected 
     </message>
     <message>
         <location filename="../../src/qml/ClassWidgets/Components/plaza/PlazaStatusCard.qml" line="191"/>
-        <source>Open with Plugin Plaza</source>
+        <source>Open in Plugin Plaza</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -1826,7 +1826,7 @@ Applying an incompatible theme may cause serious errors, crashes, or unexpected 
     </message>
     <message>
         <location filename="../../src/qml/ClassWidgets/pages/plaza/Plugin.qml" line="179"/>
-        <location filename="../../src/qml/ClassWidgets/pages/plaza/Plugin.qml" line="679"/>
+        <location filename="../../src/qml/ClassWidgets/pages/plaza/Plugin.qml" line="698"/>
         <source>No data</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1911,98 +1911,98 @@ Applying an incompatible theme may cause serious errors, crashes, or unexpected 
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/qml/ClassWidgets/pages/plaza/Plugin.qml" line="580"/>
+        <location filename="../../src/qml/ClassWidgets/pages/plaza/Plugin.qml" line="585"/>
         <source>Open in Web</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/qml/ClassWidgets/pages/plaza/Plugin.qml" line="586"/>
+        <location filename="../../src/qml/ClassWidgets/pages/plaza/Plugin.qml" line="591"/>
         <source>Copy link</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/qml/ClassWidgets/pages/plaza/Plugin.qml" line="592"/>
+        <location filename="../../src/qml/ClassWidgets/pages/plaza/Plugin.qml" line="597"/>
         <source>Link copied</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/qml/ClassWidgets/pages/plaza/Plugin.qml" line="600"/>
+        <location filename="../../src/qml/ClassWidgets/pages/plaza/Plugin.qml" line="608"/>
         <source>Cancel download</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/qml/ClassWidgets/pages/plaza/Plugin.qml" line="610"/>
+        <location filename="../../src/qml/ClassWidgets/pages/plaza/Plugin.qml" line="629"/>
         <source>More options</source>
         <translation type="unfinished">その他のオプション</translation>
     </message>
     <message>
-        <location filename="../../src/qml/ClassWidgets/pages/plaza/Plugin.qml" line="627"/>
+        <location filename="../../src/qml/ClassWidgets/pages/plaza/Plugin.qml" line="646"/>
         <source>Description</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/qml/ClassWidgets/pages/plaza/Plugin.qml" line="660"/>
+        <location filename="../../src/qml/ClassWidgets/pages/plaza/Plugin.qml" line="679"/>
         <source>Other information</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/qml/ClassWidgets/pages/plaza/Plugin.qml" line="674"/>
+        <location filename="../../src/qml/ClassWidgets/pages/plaza/Plugin.qml" line="693"/>
         <source>Plugin ID</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/qml/ClassWidgets/pages/plaza/Plugin.qml" line="675"/>
+        <location filename="../../src/qml/ClassWidgets/pages/plaza/Plugin.qml" line="694"/>
         <source>Version</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/qml/ClassWidgets/pages/plaza/Plugin.qml" line="675"/>
-        <location filename="../../src/qml/ClassWidgets/pages/plaza/Plugin.qml" line="676"/>
+        <location filename="../../src/qml/ClassWidgets/pages/plaza/Plugin.qml" line="694"/>
+        <location filename="../../src/qml/ClassWidgets/pages/plaza/Plugin.qml" line="695"/>
         <source>Unknown</source>
         <translation type="unfinished">不明</translation>
     </message>
     <message>
-        <location filename="../../src/qml/ClassWidgets/pages/plaza/Plugin.qml" line="676"/>
+        <location filename="../../src/qml/ClassWidgets/pages/plaza/Plugin.qml" line="695"/>
         <source>API version</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/qml/ClassWidgets/pages/plaza/Plugin.qml" line="677"/>
+        <location filename="../../src/qml/ClassWidgets/pages/plaza/Plugin.qml" line="696"/>
         <source>Branch</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/qml/ClassWidgets/pages/plaza/Plugin.qml" line="678"/>
+        <location filename="../../src/qml/ClassWidgets/pages/plaza/Plugin.qml" line="697"/>
         <source>Last updated</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/qml/ClassWidgets/pages/plaza/Plugin.qml" line="679"/>
+        <location filename="../../src/qml/ClassWidgets/pages/plaza/Plugin.qml" line="698"/>
         <source>Repository</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/qml/ClassWidgets/pages/plaza/Plugin.qml" line="703"/>
+        <location filename="../../src/qml/ClassWidgets/pages/plaza/Plugin.qml" line="722"/>
         <source>Ratings and reviews</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/qml/ClassWidgets/pages/plaza/Plugin.qml" line="716"/>
+        <location filename="../../src/qml/ClassWidgets/pages/plaza/Plugin.qml" line="735"/>
         <source>See all (%1)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/qml/ClassWidgets/pages/plaza/Plugin.qml" line="738"/>
+        <location filename="../../src/qml/ClassWidgets/pages/plaza/Plugin.qml" line="757"/>
         <source>Discover more</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/qml/ClassWidgets/pages/plaza/Plugin.qml" line="746"/>
+        <location filename="../../src/qml/ClassWidgets/pages/plaza/Plugin.qml" line="765"/>
         <source>More</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/qml/ClassWidgets/pages/plaza/Plugin.qml" line="780"/>
+        <location filename="../../src/qml/ClassWidgets/pages/plaza/Plugin.qml" line="799"/>
         <source>No recommendations</source>
         <translation type="unfinished"></translation>
     </message>
@@ -2093,103 +2093,128 @@ Applying an incompatible theme may cause serious errors, crashes, or unexpected 
 <context>
     <name>PluginPlaza</name>
     <message>
-        <location filename="../../src/core/plaza/notifications.py" line="43"/>
+        <location filename="../../src/core/plaza/notifications.py" line="51"/>
         <location filename="../../src/qml/ClassWidgets/Windows/PluginPlaza.qml" line="12"/>
         <source>Plugin Plaza</source>
         <translation type="unfinished">プラグインプラザ</translation>
     </message>
     <message>
-        <location filename="../../src/core/plaza/notifications.py" line="44"/>
+        <location filename="../../src/core/plaza/notifications.py" line="52"/>
         <source>{action} {name} (v{version}).</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/core/plaza/notifications.py" line="57"/>
+        <location filename="../../src/core/plaza/notifications.py" line="65"/>
         <source>Plugin Plaza {action} failed</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/core/plaza/notifications.py" line="60"/>
+        <location filename="../../src/core/plaza/notifications.py" line="68"/>
         <source>{name}: {error}</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/core/plaza/notifications.py" line="69"/>
+        <location filename="../../src/core/plaza/notifications.py" line="77"/>
         <source>Plugin updates available</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/core/plaza/notifications.py" line="70"/>
+        <location filename="../../src/core/plaza/notifications.py" line="78"/>
         <source>{count} plugin update(s) are ready in Plugin Plaza.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/qml/ClassWidgets/Windows/PluginPlaza.qml" line="33"/>
+        <location filename="../../src/qml/ClassWidgets/Windows/PluginPlaza.qml" line="20"/>
+        <source>%1 B</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../src/qml/ClassWidgets/Windows/PluginPlaza.qml" line="22"/>
+        <source>%1 KB</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../src/qml/ClassWidgets/Windows/PluginPlaza.qml" line="23"/>
+        <source>%1 MB</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../src/qml/ClassWidgets/Windows/PluginPlaza.qml" line="42"/>
         <source>Search plugins...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/qml/ClassWidgets/Windows/PluginPlaza.qml" line="74"/>
+        <location filename="../../src/qml/ClassWidgets/Windows/PluginPlaza.qml" line="77"/>
         <source>Refresh</source>
         <translation type="unfinished">再読み込み</translation>
     </message>
     <message>
-        <location filename="../../src/qml/ClassWidgets/Windows/PluginPlaza.qml" line="92"/>
+        <location filename="../../src/qml/ClassWidgets/Windows/PluginPlaza.qml" line="102"/>
+        <source>Downloaded: %1 / %2</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../src/qml/ClassWidgets/Windows/PluginPlaza.qml" line="105"/>
+        <source>Downloading</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../src/qml/ClassWidgets/Windows/PluginPlaza.qml" line="119"/>
         <source>Error</source>
         <translation type="unfinished">エラー</translation>
     </message>
     <message>
-        <location filename="../../src/qml/ClassWidgets/Windows/PluginPlaza.qml" line="113"/>
+        <location filename="../../src/qml/ClassWidgets/Windows/PluginPlaza.qml" line="140"/>
         <source>Plugin updated</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/qml/ClassWidgets/Windows/PluginPlaza.qml" line="113"/>
+        <location filename="../../src/qml/ClassWidgets/Windows/PluginPlaza.qml" line="140"/>
         <source>Plugin installed</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/qml/ClassWidgets/Windows/PluginPlaza.qml" line="116"/>
+        <location filename="../../src/qml/ClassWidgets/Windows/PluginPlaza.qml" line="143"/>
         <source>%1 v%2 is ready to use.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/qml/ClassWidgets/Windows/PluginPlaza.qml" line="123"/>
+        <location filename="../../src/qml/ClassWidgets/Windows/PluginPlaza.qml" line="150"/>
         <source>Plugin update failed</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/qml/ClassWidgets/Windows/PluginPlaza.qml" line="123"/>
+        <location filename="../../src/qml/ClassWidgets/Windows/PluginPlaza.qml" line="150"/>
         <source>Plugin installation failed</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/qml/ClassWidgets/Windows/PluginPlaza.qml" line="134"/>
+        <location filename="../../src/qml/ClassWidgets/Windows/PluginPlaza.qml" line="161"/>
         <source>Download cancelled</source>
         <translation type="unfinished">ダウンロードがキャンセルされました</translation>
     </message>
     <message>
-        <location filename="../../src/qml/ClassWidgets/Windows/PluginPlaza.qml" line="135"/>
+        <location filename="../../src/qml/ClassWidgets/Windows/PluginPlaza.qml" line="162"/>
         <source>The download for %1 was cancelled.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/qml/ClassWidgets/Windows/PluginPlaza.qml" line="148"/>
+        <location filename="../../src/qml/ClassWidgets/Windows/PluginPlaza.qml" line="175"/>
         <source>Home</source>
         <translation type="unfinished">ホーム</translation>
     </message>
     <message>
-        <location filename="../../src/qml/ClassWidgets/Windows/PluginPlaza.qml" line="153"/>
+        <location filename="../../src/qml/ClassWidgets/Windows/PluginPlaza.qml" line="180"/>
         <source>Plugins</source>
         <translation type="unfinished">プラグイン</translation>
     </message>
     <message>
-        <location filename="../../src/qml/ClassWidgets/Windows/PluginPlaza.qml" line="158"/>
+        <location filename="../../src/qml/ClassWidgets/Windows/PluginPlaza.qml" line="185"/>
         <source>Search</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/qml/ClassWidgets/Windows/PluginPlaza.qml" line="163"/>
+        <location filename="../../src/qml/ClassWidgets/Windows/PluginPlaza.qml" line="190"/>
         <source>Downloads</source>
         <translation type="unfinished"></translation>
     </message>

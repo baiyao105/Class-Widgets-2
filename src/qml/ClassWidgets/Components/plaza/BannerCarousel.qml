@@ -257,8 +257,11 @@ ColumnLayout {
                                             anchors.fill: parent
                                             enabled: pluginData && pluginData.id
                                             cursorShape: enabled ? Qt.PointingHandCursor : Qt.ArrowCursor
-                                            onClicked: Qt.openUrlExternally(
-                                                PlazaBridge.baseUrl + "/plugins/" + encodeURIComponent(pluginData.id)
+                                            onClicked: navigationView.safePush(
+                                                Qt.resolvedUrl("../../pages/plaza/Plugin.qml"),
+                                                true,
+                                                false,
+                                                { pluginId: pluginData.id }
                                             )
                                         }
 

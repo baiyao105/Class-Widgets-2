@@ -64,7 +64,7 @@ Item {
 
         onClicked: {
             if (root.navigationEnabled && root.pluginId)
-                navigationView.push(root.detailPage, { pluginId: root.pluginId })
+                navigationView.safePush(root.detailPage, true, false, { pluginId: root.pluginId })
         }
 
         background: Rectangle {

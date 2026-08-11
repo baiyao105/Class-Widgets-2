@@ -70,7 +70,7 @@ Item {
 
         onClicked: {
             if (root.navigationEnabled && !root.isLoading && root.plugin && root.plugin.id)
-                navigationView.push(root.detailPage, { pluginId: root.plugin.id })
+                navigationView.safePush(root.detailPage, true, false, { pluginId: root.plugin.id })
         }
 
         background: Rectangle {
