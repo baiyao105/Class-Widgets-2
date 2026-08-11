@@ -6,12 +6,13 @@ import QtQuick.Shapes
 import RinUI
 import ClassWidgets.Components
 
-SwipeView {
+ColumnLayout {
     id: root
     width: 600
     height: 240
-    clip: true
-    interactive: slides.length > 1
+
+    property alias currentIndex: swipeView.currentIndex
+    property alias count: swipeView.count
 
     property var plugins: []
     property var banners: []
@@ -21,6 +22,14 @@ SwipeView {
     property int autoplayInterval: 4000
 
     property var slides: []
+
+    Timer {
+        id: autoplayTimer
+        interval: root.autoplayInterval
+        repeat: true
+        running: root.autoplayEnabled && root.slides.length > 1
+        onTriggered: root.currentIndex = (root.currentIndex + 1) % root.slides.length
+    }
 
     function resourceUrl(pluginId, resource) {
         return pluginId ? PlazaBridge.baseUrl + "/api/plugins/" + encodeURIComponent(pluginId) + "/resources/" + resource : ""
@@ -89,222 +98,233 @@ SwipeView {
         }
 
         slides = result
-        currentIndex = 0
+        root.currentIndex = 0
+        pageIndicator.currentIndex = root.currentIndex
     }
 
     // ── 幻灯片页面 ──
     // 注：SwipeView 的直接子对象都会被视为页面，因此 Repeater/Component 需声明在 delegate 内部
-    Repeater {
-        model: slides
+    SwipeView {
+        id: swipeView
+        Layout.fillWidth: true
+        Layout.fillHeight: true
+        clip: true
+        interactive: root.slides.length > 1
 
-        // 每个 delegate 只有一个内容子元素（Loader），避免多 Item 同时参与布局
-        delegate: Item {
-            // 直接引用 root 尺寸，避免初次加载时 SwipeView.view 尚未就绪导致排版错乱
-            width: root.width
-            height: root.height
-
-            // 自动播放定时器：声明在 delegate 内（SwipeView 不允许非 Item 直接子对象），
-            // 仅第一页的实例运行，避免多个 Timer 重复触发
-            Timer {
-                interval: autoplayInterval
-                repeat: true
-                running: index === 0 && autoplayEnabled && slides.length > 1
-                onTriggered: root.currentIndex = (root.currentIndex + 1) % slides.length
+        onCurrentIndexChanged: {
+            if (root.slides.length > 0 && currentIndex >= root.slides.length) {
+                currentIndex = root.slides.length - 1
+                return
             }
 
-            Loader {
+            if (pageIndicator.currentIndex !== currentIndex)
+                pageIndicator.currentIndex = currentIndex
+
+            if (root.autoplayEnabled && root.slides.length > 1)
+                autoplayTimer.restart()
+        }
+
+        Repeater {
+            model: slides
+
+            // 每个 delegate 只有一个内容子元素（Loader），避免多 Item 同时参与布局
+            delegate: Loader {
                 id: slideLoader
-                anchors.fill: parent
+                // 直接引用 root 尺寸，避免初次加载时 SwipeView.view 尚未就绪导致排版错乱
+                width: swipeView.width
+                height: swipeView.height
+
+                // 自动播放定时器：声明在 delegate 内（SwipeView 不允许非 Item 直接子对象），
+                // 仅第一页的实例运行，避免多个 Timer 重复触发
                 property var slideData: modelData || ({})
                 sourceComponent: slideData.kind === "icons" ? iconsSlide : imageSlide
 
-                // 通过 onLoaded 显式传参，避免加载组件内跨作用域引用出错
+                    // 通过 onLoaded 显式传参，避免加载组件内跨作用域引用出错
                 onLoaded: item.slideData = slideData
-            }
 
-            // ── 页码指示器（叠加在每个页面底部，随 SwipeView 根控件化无法再外挂）──
-            PageIndicator {
-                anchors.bottom: parent.bottom
-                anchors.horizontalCenter: parent.horizontalCenter
-                anchors.bottomMargin: 8
-                currentIndex: root.currentIndex
-                count: root.count
-                visible: count > 1 && !loading
-                interactive: true
+                // ── 页码指示器（叠加在每个页面底部，随 SwipeView 根控件化无法再外挂）──
+                // ── 插件图标欢迎页 ──（声明在 delegate 内：SwipeView 的直接子对象均被视为页面）
+                Component {
+                    id: iconsSlide
 
-                onCurrentIndexChanged: {
-                    if (root.currentIndex !== currentIndex)
-                        root.currentIndex = currentIndex
-                }
-            }
+                    Item {
+                        property var slideData: ({})
 
-            // ── 插件图标欢迎页 ──（声明在 delegate 内：SwipeView 的直接子对象均被视为页面）
-            Component {
-                id: iconsSlide
-
-                Item {
-                    property var slideData: ({})
-
-                    // 亮色模式背景（linear to bottom-right）
-                    Rectangle {
-                        anchors.fill: parent
-                        visible: !Theme.isDark()
-                        gradient: LinearGradient {
-                            x1: 0; y1: 0
-                            x2: parent.width; y2: parent.height
-                            GradientStop { position: 0.0; color: "#68C6E9" }
-                            GradientStop { position: 1.0; color: "#62F9BD" }
+                        // 亮色模式背景（linear to bottom-right）
+                        Rectangle {
+                            anchors.fill: parent
+                            visible: !Theme.isDark()
+                            gradient: LinearGradient {
+                                x1: 0; y1: 0
+                                x2: parent.width; y2: parent.height
+                                GradientStop { position: 0.0; color: "#68C6E9" }
+                                GradientStop { position: 1.0; color: "#62F9BD" }
+                            }
                         }
-                    }
 
-                    // 暗色模式背景（radial at bottom-center）
-                    Rectangle {
-                        anchors.fill: parent
-                        visible: Theme.isDark()
-                        gradient: RadialGradient {
-                            centerX: parent.width * 0.5
-                            centerY: parent.height * 1.0
-                            focalRadius: Math.max(parent.width, parent.height) * 0.9
-                            GradientStop { position: 1.0; color: "#1CCFD5" }
-                            GradientStop { position: 0.0; color: "#143E73" }
+                        // 暗色模式背景（radial at bottom-center）
+                        Rectangle {
+                            anchors.fill: parent
+                            visible: Theme.isDark()
+                            gradient: RadialGradient {
+                                centerX: parent.width * 0.5
+                                centerY: parent.height * 1.0
+                                focalRadius: Math.max(parent.width, parent.height) * 0.9
+                                GradientStop { position: 1.0; color: "#1CCFD5" }
+                                GradientStop { position: 0.0; color: "#143E73" }
+                            }
                         }
-                    }
-
-                    ColumnLayout {
-                        anchors.fill: parent
-                        anchors.margins: 32
-                        spacing: 8
 
                         ColumnLayout {
+                            anchors.fill: parent
+                            anchors.margins: 32
                             spacing: 8
-                            Text {
-                                text: slideData.title || ""
-                                font.pixelSize: 28
-                                font.bold: true
-                                Layout.fillWidth: true
-                                horizontalAlignment: Text.AlignHCenter
+
+                            ColumnLayout {
+                                spacing: 8
+                                Text {
+                                    text: slideData.title || ""
+                                    font.pixelSize: 28
+                                    font.bold: true
+                                    Layout.fillWidth: true
+                                    horizontalAlignment: Text.AlignHCenter
+                                }
+
+                                Text {
+                                    text: slideData.subtitle || ""
+                                    Layout.fillWidth: true
+                                    font.pixelSize: 16
+                                    horizontalAlignment: Text.AlignHCenter
+                                }
                             }
 
-                            Text {
-                                text: slideData.subtitle || ""
-                                Layout.fillWidth: true
-                                font.pixelSize: 16
-                                horizontalAlignment: Text.AlignHCenter
-                            }
-                        }
+                            Flow {
+                                Layout.alignment: Qt.AlignHCenter | Qt.AlignTop
+                                spacing: 12
 
-                        Flow {
-                            Layout.alignment: Qt.AlignHCenter | Qt.AlignTop
-                            spacing: 12
+                                Repeater {
+                                    model: slideData.plugins ? slideData.plugins : [1, 2, 3, 4, 5, 6]
 
-                            Repeater {
-                                model: slideData.plugins ? slideData.plugins : [1, 2, 3, 4, 5, 6]
+                                    delegate: Item {
+                                        id: pluginIcon
+                                        width: 54
+                                        height: 54
 
-                                delegate: Item {
-                                    id: pluginIcon
-                                    width: 54
-                                    height: 54
+                                        property var pluginData: slideData.plugins ? slideData.plugins[index] : null
+                                        property bool iconLoaded: false
 
-                                    property var pluginData: slideData.plugins ? slideData.plugins[index] : null
-                                    property bool iconLoaded: false
+                                        Rectangle {
+                                            anchors.fill: parent
+                                            radius: 12
+                                            color: "#B3FFFFFF"
+                                            border.color: "#0D000000"
+                                            border.width: 1
+                                        }
 
-                                    Rectangle {
-                                        anchors.fill: parent
-                                        radius: 12
-                                        color: "#B3FFFFFF"
-                                        border.color: "#0D000000"
-                                        border.width: 1
-                                    }
+                                        Skeleton {
+                                            anchors.fill: parent
+                                            radius: 12
+                                            running: !pluginData || !pluginData.icon || !iconLoaded
+                                            visible: !pluginData || !pluginData.icon || !iconLoaded
+                                        }
 
-                                    Skeleton {
-                                        anchors.fill: parent
-                                        radius: 12
-                                        running: !pluginData || !pluginData.icon || !iconLoaded
-                                        visible: !pluginData || !pluginData.icon || !iconLoaded
-                                    }
+                                        Image {
+                                            anchors.fill: parent
+                                            source: pluginData && pluginData.icon ? pluginData.icon : ""
+                                            fillMode: Image.PreserveAspectFit
+                                            visible: pluginData && pluginData.icon
 
-                                    Image {
-                                        anchors.fill: parent
-                                        source: pluginData && pluginData.icon ? pluginData.icon : ""
-                                        fillMode: Image.PreserveAspectFit
-                                        visible: pluginData && pluginData.icon
-
-                                        onStatusChanged: {
-                                            if (status === Image.Ready) {
-                                                iconLoaded = true
-                                            } else if (status === Image.Error) {
-                                                iconLoaded = true
+                                            onStatusChanged: {
+                                                if (status === Image.Ready) {
+                                                    iconLoaded = true
+                                                } else if (status === Image.Error) {
+                                                    iconLoaded = true
+                                                }
                                             }
                                         }
-                                    }
 
-                                    layer.enabled: true
-                                    layer.effect: OpacityMask {
-                                        anchors.fill: pluginIcon
-                                        maskSource: Rectangle {
-                                            width: pluginIcon.width
-                                            height: pluginIcon.height
-                                            radius: 12
+                                        layer.enabled: true
+                                        layer.effect: OpacityMask {
+                                            anchors.fill: pluginIcon
+                                            maskSource: Rectangle {
+                                                width: pluginIcon.width
+                                                height: pluginIcon.height
+                                                radius: 12
+                                            }
                                         }
-                                    }
 
-                                    MouseArea {
-                                        anchors.fill: parent
-                                        enabled: pluginData && pluginData.id
-                                        cursorShape: enabled ? Qt.PointingHandCursor : Qt.ArrowCursor
-                                        onClicked: Qt.openUrlExternally(
-                                            PlazaBridge.baseUrl + "/plugins/" + encodeURIComponent(pluginData.id)
-                                        )
-                                    }
+                                        MouseArea {
+                                            anchors.fill: parent
+                                            enabled: pluginData && pluginData.id
+                                            cursorShape: enabled ? Qt.PointingHandCursor : Qt.ArrowCursor
+                                            onClicked: Qt.openUrlExternally(
+                                                PlazaBridge.baseUrl + "/plugins/" + encodeURIComponent(pluginData.id)
+                                            )
+                                        }
 
-                                    ToolTip {
-                                        visible: hoverHandler.hovered
-                                        text: pluginData && pluginData.name ? pluginData.name : ""
-                                    }
+                                        ToolTip {
+                                            visible: hoverHandler.hovered
+                                            text: pluginData && pluginData.name ? pluginData.name : ""
+                                        }
 
-                                    HoverHandler {
-                                        id: hoverHandler
+                                        HoverHandler {
+                                            id: hoverHandler
+                                        }
                                     }
                                 }
                             }
                         }
                     }
                 }
-            }
 
-            // ── 图片横幅页 ──
-            Component {
-                id: imageSlide
+                // ── 图片横幅页 ──
+                Component {
+                    id: imageSlide
 
-                Item {
-                    property var slideData: ({})
+                    Item {
+                        property var slideData: ({})
 
-                    Image {
-                        anchors.fill: parent
-                        source: slideData.banner && slideData.banner.image ? slideData.banner.image : ""
-                        fillMode: Image.PreserveAspectCrop
-                    }
-
-                    Rectangle {
-                        anchors.fill: parent
-                        gradient: Gradient {
-                            GradientStop { position: 0.6; color: "transparent" }
-                            GradientStop { position: 1.0; color: "#CC000000" }
+                        Image {
+                            anchors.fill: parent
+                            source: slideData.banner && slideData.banner.image ? slideData.banner.image : ""
+                            fillMode: Image.PreserveAspectCrop
                         }
-                    }
 
-                    Text {
-                        anchors.bottom: parent.bottom
-                        anchors.horizontalCenter: parent.horizontalCenter
-                        anchors.bottomMargin: 24
-                        width: parent.width - 100
-                        text: slideData.banner ? (slideData.banner.subtitle || slideData.banner.desc || slideData.banner.title || "") : ""
-                        color: "white"
-                        horizontalAlignment: Text.AlignHCenter
-                        elide: Text.ElideRight
+                        Rectangle {
+                            anchors.fill: parent
+                            gradient: Gradient {
+                                GradientStop { position: 0.6; color: "transparent" }
+                                GradientStop { position: 1.0; color: "#CC000000" }
+                            }
+                        }
+
+                        Text {
+                            anchors.bottom: parent.bottom
+                            anchors.horizontalCenter: parent.horizontalCenter
+                            anchors.bottomMargin: 24
+                            width: parent.width - 100
+                            text: slideData.banner ? (slideData.banner.subtitle || slideData.banner.desc || slideData.banner.title || "") : ""
+                            color: "white"
+                            horizontalAlignment: Text.AlignHCenter
+                            elide: Text.ElideRight
+                        }
                     }
                 }
             }
+        }
+    }
+
+    PageIndicator {
+        id: pageIndicator
+        Layout.alignment: Qt.AlignHCenter
+        Layout.bottomMargin: 8
+        count: root.slides.length
+        visible: count > 1 && !root.loading
+        interactive: true
+
+        onCurrentIndexChanged: {
+            if (root.currentIndex !== currentIndex)
+                root.currentIndex = currentIndex
         }
     }
 }

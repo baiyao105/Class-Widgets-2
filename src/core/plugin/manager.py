@@ -163,18 +163,17 @@ class PluginManager(QObject):
         download_thread = self._download_thread
         if download_thread and download_thread.isRunning():
             download_thread.cancel()
-            download_thread.wait(2000)
+            download_thread.wait(500)
         if self._install_thread and self._install_thread.isRunning():
             self._install_thread.quit()
-            self._install_thread.wait(2000)
+            self._install_thread.wait(500)
         if not download_thread or not download_thread.isRunning():
             remove_plugin_download_directory(self._download_dir)
             self._download_dir = None
             self._download_cleanup_pending = False
         if self._plaza_update_thread and self._plaza_update_thread.isRunning():
             self._plaza_update_thread.cancel()
-            self._plaza_update_thread.quit()
-            self._plaza_update_thread.wait(2000)
+            self._plaza_update_thread.wait(500)
         for pid, plugin in list(self._plugins.items()):
             try:
                 plugin.on_unload()
@@ -228,9 +227,6 @@ class PluginManager(QObject):
         self.scan()
         self.pluginListChanged.emit()
         if track_plaza:
-            self.app_central.configs.plugins.plaza_sources[result.plugin_id] = result.version
-            self.app_central.configs.configChanged.emit()
-            self.app_central.configs.save(silent=True)
             self.plazaPluginsChanged.emit()
             meta = self._plugin_meta(result.plugin_id)
             name = str(meta.get("name", result.plugin_id)) if meta else result.plugin_id
@@ -435,9 +431,8 @@ class PluginManager(QObject):
 
     @Property("QVariant", notify=plazaPluginsChanged)
     def plazaPlugins(self) -> list[dict]:
-        """Return local records for plugins installed from the plaza."""
-        records = getattr(self.app_central.configs.plugins, "plaza_sources", {})
-        known_ids = set(records) | {
+        """Return installed external plugins that are available in the Plaza."""
+        known_ids = {
             plugin_id
             for plugin_id, state in self._plaza_update_state.items()
             if state.get("available")
@@ -460,7 +455,7 @@ class PluginManager(QObject):
                 "id": plugin_id,
                 "name": meta.get("name", plugin_id),
                 "author": meta.get("author", ""),
-                "version": meta.get("version") or records.get(plugin_id, ""),
+                "version": meta.get("version", ""),
                 "icon": meta.get("icon", ""),
                 "local_updated_at": local_updated_at,
             }
@@ -729,11 +724,6 @@ class PluginManager(QObject):
             # 移除 enabled
             self.enabled_plugins.discard(pid)
             self.app_central.configs.plugins.enabled = list(self.enabled_plugins)
-            if pid in self.app_central.configs.plugins.plaza_sources:
-                self.app_central.configs.plugins.plaza_sources.pop(pid, None)
-                self.app_central.configs.configChanged.emit()
-                self.app_central.configs.save(silent=True)
-                self.plazaPluginsChanged.emit()
             if self._plaza_update_state.pop(pid, None) is not None:
                 self.pluginUpdateStatesChanged.emit()
 

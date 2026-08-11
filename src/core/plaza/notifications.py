@@ -2,7 +2,7 @@ from __future__ import annotations
 
 from PySide6.QtCore import QCoreApplication, QObject
 
-from src.core.notification import NotificationData, NotificationLevel, NotificationProvider
+from src.core.notification import NotificationData, NotificationLevel, NotificationProvider, NotificationProviderConfig
 
 
 class PlazaNotificationPublisher(QObject):
@@ -33,6 +33,14 @@ class PlazaNotificationPublisher(QObject):
             manager=self._manager,
         )
         self._provider.setParent(self)
+
+        # Default to system notifications only; keep any user override.
+        cfg = self._manager.configs.notifications.providers.get(self.PROVIDER_ID)
+        if cfg is None:
+            self._manager.configs.notifications.providers[self.PROVIDER_ID] = NotificationProviderConfig(
+                use_system_notify=True,
+                use_app_notify=False,
+            )
 
     def transfer_succeeded(self, name: str, version: str, kind: str) -> None:
         action = QCoreApplication.translate(

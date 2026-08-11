@@ -1,8 +1,14 @@
 from __future__ import annotations
 
+from collections.abc import Callable
 from urllib.parse import parse_qsl, quote, urlencode, urljoin, urlsplit, urlunsplit
 
 import requests
+
+from src.core.utils.http_stream import call_interruptibly
+
+
+PollCallback = Callable[[], None]
 
 
 class PlazaClientError(RuntimeError):
@@ -18,11 +24,15 @@ class PlazaClient:
             raise PlazaClientError("Plugin plaza URL is not configured.")
         self.timeout = timeout
 
-    def get_plugin(self, plugin_id: str) -> dict:
+    def get_plugin(self, plugin_id: str, *, poll: PollCallback | None = None) -> dict:
         endpoint = f"{self.base_url}/api/plugins/{quote(plugin_id, safe='')}"
-        response = requests.get(endpoint, timeout=self.timeout)
-        response.raise_for_status()
-        data = response.json()
+        request = lambda: requests.get(endpoint, timeout=self.timeout)
+        response = call_interruptibly(request, poll=poll) if poll else request()
+        try:
+            response.raise_for_status()
+            data = response.json()
+        finally:
+            response.close()
         if isinstance(data, dict) and data.get("ok") is False:
             raise PlazaClientError(data.get("error", "The plaza rejected the request."))
         plugin = data.get("data", data) if isinstance(data, dict) else None

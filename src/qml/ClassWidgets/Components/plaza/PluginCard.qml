@@ -246,15 +246,15 @@ Item {
                             Text {
                                 text: root.ratingAverage.toFixed(1)
                                 typography: Typography.Caption
-                                lineHeight: 20
                                 lineHeightMode: Text.FixedHeight
                                 color: Colors.proxy.textSecondaryColor
                             }
 
                             Icon {
                                 name: "ic_fluent_star_20_filled"
-                                size: 12
-                                color: Theme.isDark() ? "#FFD780" : "#d39300"
+                                size: 14
+                                color: Colors.proxy.textSecondaryColor
+                                // color: Theme.isDark() ? "#FFD780" : "#d39300"
                             }
                         }
 

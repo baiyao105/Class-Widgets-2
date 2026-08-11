@@ -4,7 +4,7 @@ from enum import Enum
 from typing import Optional
 from collections.abc import Callable
 
-from pydantic import BaseModel, Field, Extra, PrivateAttr, field_validator
+from pydantic import BaseModel, Field, Extra, PrivateAttr, field_validator, model_validator
 from PySide6.QtCore import QLocale, QCoreApplication, Property
 
 from src import __version__, __version_type__
@@ -143,27 +143,15 @@ class PluginsConfig(ConfigBaseModel):
     configs: dict[str, dict[str, JsonData]] = Field(default_factory=dict)
     auto_check_plaza_updates: bool = True
     auto_install_plaza_updates: bool = False
-    # plugin_id -> version last installed from the Plugin Plaza.
-    # The Plaza address is configured once in ``network.plaza_url``.
-    plaza_sources: dict[str, str] = Field(default_factory=dict)
 
-    @field_validator("plaza_sources", mode="before")
+    @model_validator(mode="before")
     @classmethod
-    def migrate_plaza_sources(cls, value):
-        """Accept the old per-plugin URL records while loading existing config."""
-        if not isinstance(value, dict):
-            return {}
-        return {
-            str(plugin_id): (
-                str(record.get("installed_version", ""))
-                if isinstance(record, dict)
-                else str(record)
-            )
-            for plugin_id, record in value.items()
-            if isinstance(record, (str, int, float))
-            or (isinstance(record, dict) and record.get("installed_version"))
-        }
-
+    def remove_legacy_plaza_sources(cls, values):
+        if not isinstance(values, dict) or "plaza_sources" not in values:
+            return values
+        migrated = dict(values)
+        migrated.pop("plaza_sources", None)
+        return migrated
 
 class ScheduleConfig(ConfigBaseModel):
     current_schedule: str = QCoreApplication.translate("Configs", "New Schedule 1")

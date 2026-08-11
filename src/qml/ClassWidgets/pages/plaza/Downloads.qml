@@ -157,7 +157,7 @@ FluentPage {
 
             ColumnLayout {
                 Layout.fillWidth: true
-                spacing: 0
+                spacing: 4
 
                 PlazaStatusCard {
                     visible: root.taskActive
@@ -240,7 +240,7 @@ FluentPage {
         ColumnLayout {
             Layout.fillWidth: true
             visible: !PluginManager.plazaUpdatesChecking
-            spacing: 0
+            spacing: 4
 
             Repeater {
                 model: root.installedPlazaItems()

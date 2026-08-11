@@ -424,21 +424,21 @@ FluentPage {
 
                         ColumnLayout {
                             Layout.fillWidth: true
-                            spacing: 6
+                            spacing: 4
 
                             Text {
                                 Layout.fillWidth: true
                                 text: manifest && manifest.name ? manifest.name : qsTr("Loading plugin...")
                                 typography: root.wideLayout ? Typography.Title : Typography.Subtitle
                                 wrapMode: Text.Wrap
-                            }
+                            } // title
 
                             Text {
                                 Layout.fillWidth: true
                                 text: manifest && manifest.author ? manifest.author : qsTr("Unknown author")
                                 typography: Typography.BodyStrong
                                 color: Colors.proxy.primaryColor
-                            }
+                            }  // 作者
 
                             // 评级 + 标签行
                             RowLayout {
@@ -575,6 +575,11 @@ FluentPage {
 
                             Menu {
                                 id: downloadMenu
+
+                                // 每次菜单弹出前强制刷新“取消下载”的可见性，
+                                // 避免依赖绑定求值在个别情况下未及时更新。
+                                onAboutToShow: cancelDownloadItem.refreshVisibility()
+
                                 MenuItem {
                                     icon.name: "ic_fluent_open_20_regular"
                                     text: qsTr("Open in Web")
@@ -594,13 +599,27 @@ FluentPage {
                                         }
                                     }
                                 }
-                                MenuSeparator { }
+                                MenuSeparator {
+                                    visible: cancelDownloadItem.visible
+                                }
                                 MenuItem {
+                                    id: cancelDownloadItem
                                     icon.name: "ic_fluent_dismiss_20_regular"
                                     text: qsTr("Cancel download")
-                                    visible: downloadButton.isCurrentTransfer
-                                             && (downloadButton.transferStatus === "Downloading"
-                                                 || downloadButton.transferStatus === "Paused")
+                                    visible: !!PluginManager
+                                             && PluginManager.installPluginId === root.pluginId
+                                             && (PluginManager.installStatus === "Downloading"
+                                                 || PluginManager.installStatus === "Paused")
+
+                                    function refreshVisibility() {
+                                        visible = Qt.binding(function() {
+                                            return !!PluginManager
+                                                   && PluginManager.installPluginId === root.pluginId
+                                                   && (PluginManager.installStatus === "Downloading"
+                                                       || PluginManager.installStatus === "Paused")
+                                        })
+                                    }
+
                                     onTriggered: PluginManager.cancelPluginInstall()
                                 }
                             }

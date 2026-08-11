@@ -83,7 +83,7 @@ class PlazaDownloadWorker(QThread):
         try:
             self._raise_if_cancelled()
             self._raise_if_paused()
-            plugin = self.client.get_plugin(self.plugin_id)
+            plugin = self.client.get_plugin(self.plugin_id, poll=self._poll)
             self.pluginResolved.emit(plugin)
             self._raise_if_cancelled()
             self._raise_if_paused()
@@ -124,6 +124,10 @@ class PlazaDownloadWorker(QThread):
     def _raise_if_paused(self) -> None:
         if self._pause_event.is_set():
             raise PluginDownloadPaused()
+
+    def _poll(self) -> None:
+        self._raise_if_cancelled()
+        self._raise_if_paused()
 
 
 class PluginInstallWorker(QThread):
@@ -187,7 +191,7 @@ class PlazaUpdateWorker(QThread):
                 "available": False,
             }
             try:
-                plugin = self.client.get_plugin(plugin_id)
+                plugin = self.client.get_plugin(plugin_id, poll=self._raise_if_cancelled)
                 result["available"] = True
                 latest_version = str(plugin.get("version", ""))
                 result["latest_version"] = latest_version
@@ -202,6 +206,10 @@ class PlazaUpdateWorker(QThread):
 
     def cancel(self) -> None:
         self._cancel_event.set()
+
+    def _raise_if_cancelled(self) -> None:
+        if self._cancel_event.is_set():
+            raise PluginDownloadCancelled()
 
     @staticmethod
     def _is_newer(latest: str, installed: str) -> bool:

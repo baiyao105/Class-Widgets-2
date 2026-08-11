@@ -1,4 +1,4 @@
-from __future__ import annotations
+﻿from __future__ import annotations
 
 import threading
 import time
@@ -6,6 +6,11 @@ from pathlib import Path
 from typing import Callable
 
 import requests
+
+from src.core.utils.http_stream import call_interruptibly, iter_response_chunks
+
+
+PROGRESS_INTERVAL = 0.1
 
 
 class PluginDownloadCancelled(Exception):
@@ -19,10 +24,20 @@ class PluginDownloadPaused(Exception):
 class PluginDownloader:
     """Stream one remote plugin archive to a local file."""
 
-    def __init__(self, url: str, destination: Path, *, max_size: int = 100 * 1024 * 1024):
+    def __init__(
+        self,
+        url: str,
+        destination: Path,
+        *,
+        max_size: int = 100 * 1024 * 1024,
+        stall_timeout: float = 30.0,
+    ):
+        # self.url = "https://qqdl.gtimg.cn/qqfile/QQNT/9.9.33/release/a0ce07ad/QQ_9.9.33_260730_x64_01.exe"
         self.url = url
         self.destination = Path(destination)
         self.max_size = max_size
+        # self.max_size = 9999999999999
+        self.stall_timeout = stall_timeout
         self._cancel_event = threading.Event()
         self._pause_event = threading.Event()
         self._response: requests.Response | None = None
@@ -55,13 +70,17 @@ class PluginDownloader:
         headers = {"Range": f"bytes={resumed_bytes}-"} if resumed_bytes else {}
 
         try:
-            with requests.get(
-                self.url,
-                stream=True,
-                timeout=(10, 60),
-                allow_redirects=True,
-                headers=headers,
-            ) as response:
+            response = call_interruptibly(
+                lambda: requests.get(
+                    self.url,
+                    stream=True,
+                    timeout=(10, 60),
+                    allow_redirects=True,
+                    headers=headers,
+                ),
+                poll=self._raise_if_interrupted,
+            )
+            with response:
                 self._set_response(response)
                 self._raise_if_interrupted()
                 response.raise_for_status()
@@ -74,20 +93,43 @@ class PluginDownloader:
                     raise ValueError("Plugin download is too large.")
 
                 started_at = time.monotonic()
+                last_progress_at = started_at
                 with temporary.open(mode) as output:
-                    for chunk in response.iter_content(chunk_size=1024 * 32):
-                        self._raise_if_interrupted()
+                    for chunk in iter_response_chunks(
+                        response,
+                        poll=self._raise_if_interrupted,
+                        stall_timeout=self.stall_timeout,
+                    ):
                         if not chunk:
                             continue
                         downloaded += len(chunk)
                         if downloaded > self.max_size:
                             raise ValueError("Plugin download is too large.")
                         output.write(chunk)
-                        if progress_callback:
-                            elapsed = max(time.monotonic() - started_at, 0.001)
+                        now = time.monotonic()
+                        if progress_callback and (
+                            now - last_progress_at >= PROGRESS_INTERVAL
+                            or (total_bytes and downloaded >= total_bytes)
+                        ):
+                            elapsed = max(now - started_at, 0.001)
                             speed = (downloaded - resumed_bytes) / elapsed
                             percent = downloaded / total_bytes * 100 if total_bytes else 0.0
                             progress_callback(percent, speed, downloaded, total_bytes)
+                            last_progress_at = now
+                        if total_bytes and downloaded >= total_bytes:
+                            break
+
+                # A stream can end without an exception even though the body is
+                # incomplete: pause/cancel close the response from another
+                # thread, which urllib3 reports as a plain EOF, and a server
+                # can also drop the connection early.  Never install a
+                # truncated archive.
+                self._raise_if_interrupted()
+                if total_bytes and downloaded < total_bytes:
+                    raise requests.exceptions.ConnectionError(
+                        f"Download ended before the archive was complete "
+                        f"({downloaded}/{total_bytes} bytes)."
+                    )
 
             temporary.replace(self.destination)
             if progress_callback:

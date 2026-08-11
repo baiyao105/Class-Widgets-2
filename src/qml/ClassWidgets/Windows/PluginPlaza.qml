@@ -7,12 +7,21 @@ import ClassWidgets.Components
 
 
 FluentWindow {
-    id: plazaWindow
+    id: root
     icon: PathManager.assets("images/icons/cw2_plugin.png")
     title: qsTr("Plugin Plaza")
-    width: Screen.width * 0.7
-    height: Screen.height * 0.8
+    width: Screen.width * 0.67
+    height: Screen.height * 0.69
     minimumWidth: 900
+
+    function formatBytes(bytes) {
+        var value = Number(bytes) || 0
+        if (value < 1024)
+            return qsTr("%1 B").arg(value)
+        if (value < 1024 * 1024)
+            return qsTr("%1 KB").arg((value / 1024).toFixed(1))
+        return qsTr("%1 MB").arg((value / 1024 / 1024).toFixed(1))
+    }
 
     onClosing: function(event) {
         event.accepted = false
@@ -56,18 +65,12 @@ FluentWindow {
             }
         }
 
-        ProgressRing {
-            visible: PluginManager.plazaInstallActive
-            Layout.alignment: Qt.AlignVCenter
-            size: 20
-            value: PluginManager.installProgress / 100
-            indeterminate: PluginManager.installStatus === "Installing"
-        }
+
 
         ToolButton {
             flat: true
             Layout.alignment: Qt.AlignRight
-            icon.name: "ic_fluent_refresh_20_regular"
+            icon.name: "ic_fluent_arrow_sync_20_regular"
             size: 18
 
             ToolTip {
@@ -77,6 +80,30 @@ FluentWindow {
 
             onClicked: {
                 PlazaBridge.refreshAll()
+            }
+
+            ProgressRing {
+                visible: PluginManager.plazaInstallActive
+                // Layout.alignment: Qt.AlignVCenter
+                strokeWidth: 3
+                anchors {
+                    right: parent.left
+                    verticalCenter: parent.verticalCenter
+                    rightMargin: 12
+                }
+                size: 20
+                value: PluginManager.installProgress / 100
+                backgroundColor: indeterminate ? "transparent" : Colors.proxy.controlAltTertiaryColor
+                indeterminate: PluginManager.installStatus === "Installing"
+
+                ToolTip {
+                    visible: parent.hovered
+                    text: PluginManager.installTotalBytes > 0
+                            ? qsTr("Downloaded: %1 / %2")
+                              .arg(root.formatBytes(PluginManager.installDownloadedBytes))
+                              .arg(root.formatBytes(PluginManager.installTotalBytes))
+                            : qsTr("Downloading")
+                }
             }
         }
     }
@@ -163,6 +190,7 @@ FluentWindow {
             title: qsTr("Downloads"),
             page: PathManager.qml("pages/plaza/Downloads.qml"),
             icon: "ic_fluent_cloud_arrow_down_20_regular",
+            position: Position.Bottom
         }
     ]
 

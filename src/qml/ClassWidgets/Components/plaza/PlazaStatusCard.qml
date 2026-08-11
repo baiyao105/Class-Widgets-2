@@ -188,7 +188,7 @@ Clip {
 
                     MenuItem {
                         icon.name: "ic_fluent_open_20_regular"
-                        text: qsTr("Open with Plugin Plaza")
+                        text: qsTr("Open in Plugin Plaza")
                         onTriggered: root.openStoreRequested()
                     }
                     MenuItem {

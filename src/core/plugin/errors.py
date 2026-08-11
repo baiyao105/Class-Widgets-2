@@ -1,4 +1,4 @@
-from __future__ import annotations
+﻿from __future__ import annotations
 
 import re
 
@@ -20,15 +20,15 @@ def plugin_install_error_message(error: str) -> str:
     message = error.strip()
     version_mismatch = _VERSION_MISMATCH.match(message)
     if version_mismatch:
-        return QCoreApplication.translate("PluginPlaza", "The downloaded plugin package is version {package_version}, but Plugin Plaza published version {release_version}.").format(
+        return QCoreApplication.translate("PluginPlaza", "The package version ({package_version}) does not match the Plugin Plaza version ({release_version}).").format(
             package_version=version_mismatch.group(1),
             release_version=version_mismatch.group(2),
         )
 
     if message.startswith("Archive contains '"):
-        return QCoreApplication.translate("PluginPlaza", "The downloaded plugin package does not match the selected plugin.")
+        return QCoreApplication.translate("PluginPlaza", "The plugin package does not match the selected plugin.")
     if message.startswith("Plugin archive does not exist:"):
-        return QCoreApplication.translate("PluginPlaza", "The downloaded plugin package could not be found.")
+        return QCoreApplication.translate("PluginPlaza", "The plugin package could not be found.")
     if message in {
         "Plugin archive is too large.",
         "Extracted plugin is too large.",
@@ -36,13 +36,13 @@ def plugin_install_error_message(error: str) -> str:
     }:
         return QCoreApplication.translate("PluginPlaza", "The plugin package is too large.")
     if message == "Plugin archive is not a valid ZIP file.":
-        return QCoreApplication.translate("PluginPlaza", "The downloaded plugin package is invalid.")
+        return QCoreApplication.translate("PluginPlaza", "The plugin package is invalid.")
     if (
         "cwplugin.json" in message
         or message.startswith("Invalid plugin version:")
         or message.startswith("Invalid plugin ID:")
     ):
-        return QCoreApplication.translate("PluginPlaza", "The plugin package manifest is invalid.")
+        return QCoreApplication.translate("PluginPlaza", "The plugin manifest is invalid.")
     if message.startswith((
         "Symbolic links are not allowed:",
         "Unsafe path in plugin archive:",
@@ -51,9 +51,9 @@ def plugin_install_error_message(error: str) -> str:
         "Plugin archive contains files outside its plugin root.",
         "Extracted manifest ID changed during installation.",
     )):
-        return QCoreApplication.translate("PluginPlaza", "The plugin package failed security validation.")
+        return QCoreApplication.translate("PluginPlaza", "The plugin package failed security checks.")
     if _is_download_or_plaza_error(message):
-        return QCoreApplication.translate("PluginPlaza", "Unable to download the plugin package. Please check your connection and try again.")
+        return QCoreApplication.translate("PluginPlaza", "Unable to download the plugin. Check your connection and try again.")
     return QCoreApplication.translate("PluginPlaza", "Plugin installation failed.")
 
 
@@ -69,6 +69,7 @@ def _is_download_or_plaza_error(message: str) -> bool:
         "ReadTimeout(",
         "ConnectTimeout(",
         "Max retries exceeded",
+        "Download ended before the archive was complete",
         "404 Client Error:",
         "403 Client Error:",
         "500 Server Error:",
