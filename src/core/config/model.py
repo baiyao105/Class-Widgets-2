@@ -148,6 +148,13 @@ class PreferencesConfig(ConfigBaseModel):
     display: Optional[str] = None  # 指定显示器
     mini_mode: bool = False  # 迷你
     lighting_effect: bool = True  # 光影效果
+    shortcuts: list[str] = Field(default_factory=lambda: [
+        "com.classwidgets.settings",
+        "com.classwidgets.schedules",
+        "com.classwidgets.plugin-plaza",
+        "com.classwidgets.reschedule-day",
+        "com.classwidgets.class-swap",
+    ])
 
     widgets_presets: dict[str, list[WidgetEntry]] = Field(
         default_factory=lambda: {

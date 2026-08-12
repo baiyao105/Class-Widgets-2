@@ -179,6 +179,7 @@ class PluginManager(QObject):
                 plugin.on_unload()
             except Exception as e:
                 logger.error(f"Failed to unload plugin {pid}: {e}")
+            self.api.ui.unregister_plugin_shortcuts(pid)
             # 尝试从 sys.modules 移除对应模块（使用标准模块前缀 cw_plugin_{id}）
             mod_name = f"cw_plugin_{pid}"
             if mod_name in sys.modules:
@@ -212,6 +213,7 @@ class PluginManager(QObject):
                 plugin.on_unload()
             except Exception as error:
                 logger.warning(f"Failed to unload plugin {plugin_id} before replacement: {error}")
+        self.api.ui.unregister_plugin_shortcuts(plugin_id)
         sys.modules.pop(f"cw_plugin_{plugin_id}", None)
 
     def _complete_install(
@@ -712,6 +714,7 @@ class PluginManager(QObject):
                 except Exception as e:
                     logger.error(f"Error while unloading plugin {pid}: {e}")
                 self._plugins.pop(pid, None)
+            self.api.ui.unregister_plugin_shortcuts(pid)
 
             # 尝试清理模块
             mod_name = f"cw_plugin_{pid}"

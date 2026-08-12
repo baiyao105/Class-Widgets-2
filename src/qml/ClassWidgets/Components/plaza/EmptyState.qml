@@ -5,7 +5,8 @@ import RinUI
 Item {
     id: root
 
-    property string iconName: "ic_fluent_box_24_regular"
+    property alias icon: icon
+    // property string iconName: "ic_fluent_document_sparkle_20_regular"
     property string title: qsTr("Nothing here yet")
     property string description: ""
 
@@ -19,8 +20,9 @@ Item {
         opacity: 0.5
 
         Icon {
+            id: icon
             Layout.alignment: Qt.AlignHCenter
-            name: root.iconName
+            name: "ic_fluent_document_sparkle_20_regular"
             size: 46
         }
 

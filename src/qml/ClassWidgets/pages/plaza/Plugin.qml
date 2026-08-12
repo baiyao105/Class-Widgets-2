@@ -350,14 +350,14 @@ FluentPage {
         navigationView.push(Qt.resolvedUrl("Plugins.qml"), { initialTag: id })
     }
 
+    PlazaLoading {
+        Layout.fillWidth: true
+        visible: root.initialLoad
+    }
+
     ColumnLayout {
         Layout.fillWidth: true
         spacing: 24
-
-        PlazaLoading {
-            Layout.fillWidth: true
-            visible: root.initialLoad
-        }
 
         ErrorState {
             Layout.fillWidth: true
@@ -729,12 +729,24 @@ FluentPage {
                             loading: root.ratingsLoading
                         }
 
-                        Button {
-                            flat: true
-                            visible: root.ratingTotal > 0
-                            text: qsTr("See all (%1)").arg(root.totalWithComment)
-                            onClicked: root.commentsDialogOpen = true
-                            highlighted: true
+                        RowLayout {
+                            Layout.leftMargin: -12
+                            spacing: 6
+                            Button {
+                                flat: true
+                                visible: root.ratingTotal > 0
+                                text: qsTr("See all (%1)").arg(root.totalWithComment)
+                                onClicked: root.commentsDialogOpen = true
+                                highlighted: true
+                            }
+
+                            Button {
+                                flat: true
+                                icon.name: "ic_fluent_star_edit_20_regular"
+                                text: qsTr("Write a review").arg(root.totalWithComment)
+                                onClicked: root.commentsDialogOpen = true
+                                highlighted: true
+                            }
                         }
                     }
                 }

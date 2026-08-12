@@ -12,6 +12,7 @@ class PlazaNotificationPublisher(QObject):
 
     def __init__(self, app_central, parent: QObject | None = None) -> None:
         super().__init__(parent)
+        self._app_central = app_central
         self._manager = app_central.notification
         self._provider: NotificationProvider | None = None
         self._register_provider()

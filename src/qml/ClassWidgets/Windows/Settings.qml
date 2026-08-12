@@ -73,11 +73,13 @@ FluentWindow {
             title: qsTr("About"),
             page: PathManager.qml("pages/settings/About.qml"),
             icon: "ic_fluent_info_20_regular",
+            position: Position.Bottom
         },
         {
             title: qsTr("Update"),
             page: PathManager.qml("pages/settings/Update.qml"),
             icon: "ic_fluent_arrow_sync_20_regular",
+            position: Position.Bottom
         }
     ]
 

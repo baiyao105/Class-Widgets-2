@@ -59,6 +59,14 @@ class SettingsPagePayload(TypedDict):
     icon: str
 
 
+class ShortcutPayload(TypedDict):
+    id: str
+    name: str
+    icon: str
+    iconIsSource: bool
+    owner: str
+
+
 class ApplicationInfoPayload(TypedDict):
     name: str
     version: str

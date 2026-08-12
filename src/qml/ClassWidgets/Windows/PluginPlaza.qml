@@ -40,28 +40,92 @@ FluentWindow {
             Layout.maximumWidth: 600
             Layout.fillWidth: true
             placeholderText: qsTr("Search plugins...")
-            suggestions: PlazaBridge.plugins || []
-            textRole: "name"
+            property var suggestionItems: []
+            property var chosenSuggestion: null
+            property int requestSerial: 0
+            property bool updatingSuggestions: false
+            suggestions: suggestionItems
+            textRole: "label"
 
-            // 选中建议项或按回车：名称精确匹配则直达插件详情页，否则进入搜索页
-            onAccepted: {
-                var keyword = searchField.text.trim()
-                if (!keyword)
+            function refreshSuggestions() {
+                var keyword = text.trim()
+                if (!keyword) {
+                    suggestionItems = []
                     return
-                var plugins = PlazaBridge.plugins || []
-                var matched = null
-                for (var i = 0; i < plugins.length; i++) {
-                    var p = plugins[i]
-                    if (p && p.name && p.name.toLowerCase() === keyword.toLowerCase()) {
-                        matched = p
-                        break
+                }
+
+                var serial = ++requestSerial
+                var xhr = new XMLHttpRequest()
+                xhr.onreadystatechange = function() {
+                    if (xhr.readyState !== XMLHttpRequest.DONE || serial !== requestSerial)
+                        return
+                    if (xhr.status < 200 || xhr.status >= 300) {
+                        suggestionItems = []
+                        return
+                    }
+                    try {
+                        var response = JSON.parse(xhr.responseText)
+                        var items = response.ok !== false && response.data instanceof Array
+                                ? response.data : []
+                        if (text.trim() !== keyword)
+                            return
+                        suggestionItems = items
+
+                        // AutoSuggestBox filters when its text changes, so refresh the
+                        // built-in filtered model after the asynchronous response arrives.
+                        updatingSuggestions = true
+                        userInput = false
+                        text = ""
+                        userInput = true
+                        text = keyword
+                        updatingSuggestions = false
+                    } catch (error) {
+                        suggestionItems = []
                     }
                 }
-                if (matched && matched.id) {
-                    navigationView.push(PathManager.qml("pages/plaza/Plugin.qml"), { pluginId: matched.id })
-                } else {
-                    navigationView.push(PathManager.qml("pages/plaza/Search.qml"), { query: keyword })
+                xhr.open("GET", PlazaBridge.baseUrl + "/api/plugins/suggest?q="
+                         + encodeURIComponent(keyword) + "&limit=8")
+                xhr.send()
+            }
+
+            function submitSearch(keyword) {
+                var query = keyword.trim()
+                if (query)
+                    navigationView.push(PathManager.qml("pages/plaza/Search.qml"), { query: query })
+            }
+
+            onTextChanged: {
+                if (updatingSuggestions)
+                    return
+                chosenSuggestion = null
+                if (text.trim())
+                    refreshSuggestions()
+                else {
+                    ++requestSerial
+                    suggestionItems = []
                 }
+            }
+
+            onSuggestionChosen: function(label) {
+                for (var i = 0; i < suggestionItems.length; ++i) {
+                    if (suggestionItems[i] && suggestionItems[i].label === label) {
+                        chosenSuggestion = suggestionItems[i]
+                        return
+                    }
+                }
+            }
+
+            onAccepted: {
+                var keyword = text.trim()
+                if (!keyword)
+                    return
+
+                if (chosenSuggestion && chosenSuggestion.type === "plugin" && chosenSuggestion.pluginId) {
+                    navigationView.push(PathManager.qml("pages/plaza/Plugin.qml"), { pluginId: chosenSuggestion.pluginId })
+                } else {
+                    submitSearch(chosenSuggestion && chosenSuggestion.value ? chosenSuggestion.value : keyword)
+                }
+                chosenSuggestion = null
             }
         }
 

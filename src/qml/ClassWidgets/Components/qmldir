@@ -5,6 +5,7 @@ WidgetLoader 1.0 WidgetLoader.qml
 Watermark 1.0 Watermark.qml
 Introduction 1.0 Introduction.qml
 Skeleton 1.0 Skeleton.qml
+TrayShortcuts 1.0 TrayShortcuts.qml
 
 # Dialogs
 AddWidgetsDialog 1.0 dialogs/AddWidgetsDialog.qml

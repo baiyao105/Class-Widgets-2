@@ -57,23 +57,23 @@ Frame {
 
             Item { Layout.fillWidth: true }
 
-            ToolButton {
-                visible: root.showControls
-                flat: true
-                enabled: canPrev
-                icon.name: "ic_fluent_chevron_left_20_regular"
-                onClicked: currentPage = Math.max(0, currentPage - 1)
-            }
-
-            ToolButton {
-                visible: root.showControls
-                flat: true
-                enabled: canNext
-                icon.name: "ic_fluent_chevron_right_20_regular"
-                onClicked: {
-                    if (canNext) currentPage++
-                }
-            }
+            // ToolButton {
+            //     visible: root.showControls
+            //     flat: true
+            //     enabled: canPrev
+            //     icon.name: "ic_fluent_chevron_left_20_regular"
+            //     onClicked: currentPage = Math.max(0, currentPage - 1)
+            // }
+            //
+            // ToolButton {
+            //     visible: root.showControls
+            //     flat: true
+            //     enabled: canNext
+            //     icon.name: "ic_fluent_chevron_right_20_regular"
+            //     onClicked: {
+            //         if (canNext) currentPage++
+            //     }
+            // }
         }
 
         Rectangle {

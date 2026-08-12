@@ -59,8 +59,6 @@ ColumnLayout {
     }
 
     PlazaLoading {
-        Layout.fillWidth: true
-        Layout.preferredHeight: 224
         visible: root.loading
     }
 }

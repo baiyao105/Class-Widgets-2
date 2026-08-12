@@ -12,11 +12,11 @@ FluentPage {
     // 由导航 push 传入的搜索关键词
     property string query: ""
     // 页内搜索框当前输入（提交后才更新 query）
-    property string pendingQuery: query
-
     readonly property string baseUrl: PlazaBridge.baseUrl
     property var plugins: []
     property var tags: []
+    property var suggestions: []
+    property var recommendedPlugins: []
     property string activeTag: ""
     property string sort: "relevance"
     property int page: 1
@@ -24,11 +24,21 @@ FluentPage {
     property int total: 0
     property int totalPages: 1
     property bool loading: false
+    property bool suggestionsLoading: false
+    property bool recommendedPluginsLoading: false
     property string errorMessage: ""
 
     readonly property bool hasQuery: query.trim().length > 0
 
-    onQueryChanged: pendingQuery = query
+    onQueryChanged: {
+        activeTag = ""
+        if (hasQuery)
+            search(1)
+        else {
+            loadSuggestions()
+            loadRecommendedPlugins()
+        }
+    }
 
     function request(url, callback, failure) {
         var xhr = new XMLHttpRequest()
@@ -87,11 +97,38 @@ FluentPage {
         }, function() { tags = [] })
     }
 
-    function submitSearch() {
-        var next = pendingQuery.trim()
-        activeTag = ""
-        query = next
-        search(1)
+    function loadSuggestions() {
+        suggestions = []
+        suggestionsLoading = true
+        request(baseUrl + "/api/plugins/suggest?limit=12", function(response) {
+            suggestions = response.ok !== false && response.data instanceof Array ? response.data : []
+            suggestionsLoading = false
+        }, function() {
+            suggestions = []
+            suggestionsLoading = false
+        })
+    }
+
+    function loadRecommendedPlugins() {
+        recommendedPlugins = []
+        recommendedPluginsLoading = true
+        request(baseUrl + "/api/plugins/random?limit=6", function(response) {
+            recommendedPlugins = response.ok !== false && response.data instanceof Array ? response.data : []
+            recommendedPluginsLoading = false
+        }, function() {
+            recommendedPlugins = []
+            recommendedPluginsLoading = false
+        })
+    }
+
+    function chooseSuggestion(item) {
+        if (!item)
+            return
+        if (item.type === "plugin" && item.pluginId) {
+            navigationView.push(PathManager.qml("pages/plaza/Plugin.qml"), { pluginId: item.pluginId })
+        } else if (item.value) {
+            query = item.value
+        }
     }
 
     function selectTag(tagId) {
@@ -104,33 +141,81 @@ FluentPage {
         search(1)
     }
 
-    Component.onCompleted: { loadTags(); search(1) }
+    Component.onCompleted: {
+        loadTags()
+        if (hasQuery)
+            search(1)
+        else {
+            loadSuggestions()
+            loadRecommendedPlugins()
+        }
+    }
 
     ColumnLayout {
         Layout.fillWidth: true
         spacing: 16
 
-        // 搜索框（页内可再次搜索）
-        RowLayout {
+        Grid {
             Layout.fillWidth: true
-            spacing: 8
+            columns: Math.floor(width / (300 + 6))
+            rowSpacing: 12
+            columnSpacing: 12
+            layoutDirection: GridLayout.LeftToRight
+            visible: !root.hasQuery && !root.suggestionsLoading && root.suggestions.length > 0
 
-            TextField {
-                id: searchField
-                Layout.fillWidth: true
-                placeholderText: qsTr("Search plugins, authors, descriptions or tags")
-                text: root.pendingQuery
-                enabled: !root.loading
-                onTextChanged: root.pendingQuery = text
-                onAccepted: root.submitSearch()
-            }
+            Repeater {
+                model: root.suggestions
 
-            Button {
-                highlighted: true
-                text: qsTr("Search")
-                enabled: !root.loading
-                onClicked: root.submitSearch()
+                delegate: Button {
+                    width: 300
+                    required property var modelData
+                    flat: true
+                    highlighted: true
+                    contentItem: RowLayout {
+                        anchors.fill: parent
+                        anchors.verticalCenter: parent.verticalCenter
+                        anchors.margins: 12
+                        spacing: 6
+
+                        Icon {
+                            name: "ic_fluent_search_20_regular"
+                            color: Colors.proxy.primaryColor
+                            Layout.alignment: Qt.AlignLeft | Qt.AlignVCenter
+                        }
+
+                        Text {
+                            text: modelData.label || modelData.value || ""
+                            color: Colors.proxy.primaryColor
+                            Layout.alignment: Qt.AlignLeft | Qt.AlignVCenter
+                        }
+
+                        Item { Layout.fillWidth: true }
+                    }
+                    // icon.name: "ic_fluent_search_20_regular"
+                    // text: modelData.label || modelData.value || ""
+                    onClicked: root.chooseSuggestion(modelData)
+                }
             }
+        }
+
+        PlazaLoading {
+            Layout.fillWidth: true
+            visible: !root.hasQuery && (root.suggestionsLoading || root.recommendedPluginsLoading)
+        }
+
+        Text {
+            Layout.fillWidth: true
+            Layout.topMargin: 12
+            visible: !root.hasQuery && !root.recommendedPluginsLoading && root.recommendedPlugins.length > 0
+            text: qsTr("Suggested plugins")
+            typography: Typography.BodyLarge
+        }
+
+        PluginGrid {
+            Layout.fillWidth: true
+            visible: !root.hasQuery && !root.recommendedPluginsLoading && root.recommendedPlugins.length > 0
+            plugins: root.recommendedPlugins
+            loading: false
         }
 
         // 头部：标题（左）+ 排序（右），下方标签筛选
@@ -214,9 +299,13 @@ FluentPage {
         EmptyState {
             Layout.fillWidth: true
             visible: !root.hasQuery
+                && !root.suggestionsLoading
+                && !root.recommendedPluginsLoading
+                && root.suggestions.length === 0
+                && root.recommendedPlugins.length === 0
             iconName: "ic_fluent_search_24_regular"
             title: qsTr("Search the plaza")
-            description: qsTr("Enter keywords to search plugins.")
+            description: qsTr("No suggested keywords are available.")
         }
 
         EmptyState {

@@ -1,6 +1,7 @@
 import sys
 from pathlib import Path
-from typing import Optional, cast, TYPE_CHECKING
+from typing import Callable, Optional, cast, TYPE_CHECKING
+from urllib.parse import urlparse
 from datetime import datetime
 from PySide6.QtCore import Signal, QObject
 from loguru import logger
@@ -21,6 +22,7 @@ from src.core.plugin.models import (
     RuntimeSubjectPayload,
     RuntimeRemainingTimePayload,
     SettingsPagePayload,
+    ShortcutPayload,
 )
 
 if TYPE_CHECKING:
@@ -318,14 +320,124 @@ class AutomationAPI(BaseAPI):
 
 class UiAPI(BaseAPI):
     settingsPageRegistered = Signal()
+    shortcutsChanged = Signal()
     
     def __init__(self, plugin_api):
         super().__init__(plugin_api)
         self._registered_pages: list[SettingsPagePayload] = []
+        self._registered_shortcuts: dict[str, ShortcutPayload] = {}
+        self._shortcut_actions: dict[str, Callable[[], object]] = {}
 
     @property
     def pages(self):
         return self._registered_pages
+
+    @property
+    def shortcuts(self) -> list[ShortcutPayload]:
+        return list(self._registered_shortcuts.values())
+
+    def _normalize_shortcut_icon(self, icon: str | Path) -> tuple[str, bool]:
+        if isinstance(icon, Path):
+            return self._resolve_path(icon).resolve().as_uri(), True
+
+        value = str(icon)
+        path = Path(value)
+        if path.is_absolute():
+            return self._resolve_path(path).resolve().as_uri(), True
+        if urlparse(value).scheme:
+            return value, True
+        if value.startswith((".", "/", "\\")) or "/" in value or "\\" in value or path.suffix:
+            return self._resolve_path(path).resolve().as_uri(), True
+        return value, False
+
+    def _register_shortcut(
+        self,
+        shortcut_id: str,
+        name: str,
+        icon: str | Path,
+        action: Callable[[], object],
+        owner: str,
+    ) -> str:
+        shortcut_id = shortcut_id.strip()
+        if not shortcut_id:
+            raise ValueError("Shortcut ID cannot be empty")
+        if not callable(action):
+            raise TypeError("Shortcut action must be callable")
+        if shortcut_id in self._registered_shortcuts:
+            raise ValueError(f"Shortcut ID is already registered: {shortcut_id}")
+
+        icon_value, icon_is_source = self._normalize_shortcut_icon(icon)
+        self._registered_shortcuts[shortcut_id] = {
+            "id": shortcut_id,
+            "name": name,
+            "icon": icon_value,
+            "iconIsSource": icon_is_source,
+            "owner": owner,
+        }
+        self._shortcut_actions[shortcut_id] = action
+        self.shortcutsChanged.emit()
+        logger.debug(f"Registered shortcut: {shortcut_id} ({owner})")
+        return shortcut_id
+
+    def register_shortcut(
+        self,
+        shortcut_id: str,
+        name: str,
+        icon: str | Path,
+        action: Callable[[], object],
+    ) -> str:
+        """Register a tray shortcut.
+
+        In a plugin lifecycle hook, ``shortcut_id`` is local to that plugin and
+        is namespaced as ``<plugin id>.<shortcut_id>``. Application callers
+        pass their full ID directly. The registered ID is returned.
+        """
+        plugin = self.current_plugin
+        if plugin:
+            plugin_id = plugin.meta.get("id")
+            if not plugin_id:
+                raise ValueError("Plugin initialization failed, missing meta.id")
+            shortcut_id = f"{plugin_id}.{shortcut_id.strip()}"
+            owner = plugin_id
+        else:
+            owner = "builtin"
+        return self._register_shortcut(shortcut_id, name, icon, action, owner)
+
+    def set_shortcut_name(self, shortcut_id: str, name: str) -> bool:
+        shortcut = self._registered_shortcuts.get(shortcut_id)
+        if shortcut is None:
+            return False
+        if shortcut["name"] == name:
+            return True
+
+        shortcut["name"] = name
+        self.shortcutsChanged.emit()
+        return True
+
+    def unregister_plugin_shortcuts(self, plugin_id: str) -> None:
+        shortcut_ids = [
+            shortcut_id
+            for shortcut_id, shortcut in self._registered_shortcuts.items()
+            if shortcut["owner"] == plugin_id
+        ]
+        for shortcut_id in shortcut_ids:
+            self._registered_shortcuts.pop(shortcut_id, None)
+            self._shortcut_actions.pop(shortcut_id, None)
+        if shortcut_ids:
+            self.shortcutsChanged.emit()
+            logger.debug(f"Unregistered shortcuts for plugin: {plugin_id}")
+
+    def invoke_shortcut(self, shortcut_id: str) -> bool:
+        action = self._shortcut_actions.get(shortcut_id)
+        if not action:
+            logger.warning(f"Shortcut action not found: {shortcut_id}")
+            return False
+        try:
+            # Returning False lets actions such as in-panel dialogs keep the tray open.
+            return action() is not False
+        except Exception as error:
+            logger.exception(f"Shortcut action failed: {shortcut_id}: {error}")
+            return False
 
     def unregister_settings_page(self, qml_path: str | Path) -> None:
         # 使用统一的路径解析方法

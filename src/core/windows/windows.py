@@ -8,16 +8,22 @@ from src.core.plugin.bridge import PluginBackendBridge
 
 
 class ReleasableWindow(RinUIWindow):
+    def __init__(self, parent=None):
+        super().__init__(parent)
+        logger.info(f"ReleasableWindow created")
+
     def release(self):
         root_window = getattr(self, "root_window", None)
         if root_window:
             root_window.hide()
+            root_window.releaseResources()
             root_window.deleteLater()
             self.root_window = None
+            logger.info(f"ReleasableWindow released")
         QTimer.singleShot(0, self._cleanup_engine)
 
     def _cleanup_engine(self):
-        self.engine.clearComponentCache()
+        # self.engine.clearComponentCache()
         self.engine.collectGarbage()
 
 

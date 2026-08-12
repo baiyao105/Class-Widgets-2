@@ -60,8 +60,15 @@ FluentPage {
         BannerCarousel { anchors.fill: parent; plugins: root.plugins; banners: root.banners; loading: root.loading }
     }
 
+    PlazaLoading {
+        id: loadingp
+        Layout.fillHeight: true
+        visible: root.initialLoad
+    }
+
     ColumnLayout {
         Layout.fillWidth: true
+        Layout.fillHeight: loadingp.visible
         spacing: 20
 
         PluginSection {
@@ -84,11 +91,6 @@ FluentPage {
                 loading: false
                 showRating: true
             }
-        }
-
-        PlazaLoading {
-            Layout.fillWidth: true
-            visible: root.initialLoad
         }
 
         ErrorState {

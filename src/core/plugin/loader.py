@@ -292,8 +292,12 @@ class PluginLoader:
                         plugin_instance.on_unload()
                     except Exception:
                         pass
+                    self.api.ui.unregister_plugin_shortcuts(plugin_id)
                     cleanup()
                     raise
+                finally:
+                    # Plugin context is only valid while its lifecycle hook runs.
+                    self.api.set_current_plugin(None)
 
             # with 块结束后 sys.path 已恢复，此时持久化插件路径供运行时使用
             self._persist_plugin_paths(plugin_dir)

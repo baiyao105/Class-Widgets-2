@@ -228,15 +228,17 @@ AutomationAPI允许插件注册自动化任务。
 
 ### 7. UiAPI - UI 管理
 
-UiAPI提供设置页面注册和管理功能。
+UiAPI提供设置页面和托盘快捷方式的注册、管理功能。
 
 #### 信号
 
 - `settingsPageRegistered`: 设置页面注册信号
+- `shortcutsChanged`: 托盘快捷方式列表变化信号
 
 #### 属性
 
 - `pages`: 已注册的设置页面列表
+- `shortcuts`: 已注册的托盘快捷方式列表
 
 #### 方法
 
@@ -265,6 +267,26 @@ self.api.ui.register_settings_page(
 
 **参数：**
 - `qml_path`: QML文件路径
+
+##### register_shortcut(shortcut_id, name, icon, action)
+
+注册托盘快捷方式。注册只会让快捷方式出现在用户可管理的列表中；是否在托盘面板显示及显示顺序由用户设置决定。
+
+**参数：**
+- `shortcut_id`: 唯一 ID。在插件上下文调用时会自动注册为 `<plugin id>.<shortcut_id>`；应用内部调用时使用传入 ID。
+- `name`: 显示名称。
+- `icon`: RinUI 图标名称，或图标 URL / 相对于插件目录的路径。
+- `action`: 无参数的可调用对象。返回 `False` 时托盘面板保持打开，其他返回值会关闭面板。
+
+**示例：**
+```python
+self.api.ui.register_shortcut(
+    shortcut_id="open-dashboard",
+    name="Open dashboard",
+    icon="assets/dashboard.png",
+    action=self.open_dashboard,
+)
+```
 
 ## 路径解析
 

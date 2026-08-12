@@ -14,6 +14,7 @@ class UtilsBackend(QObject):
     extraSettingsChanged = Signal()
     licenseLoaded = Signal()
     notificationProvidersChanged = Signal()
+    shortcutsChanged = Signal()
 
     MAX_LOG_LINES = 200
 
@@ -25,6 +26,8 @@ class UtilsBackend(QObject):
         self._license_text: str = ""
         self._logs: list = []
         self.app.plugin_api.ui.settingsPageRegistered.connect(lambda: self.extraSettingsChanged.emit())
+        self.app.plugin_api.ui.shortcutsChanged.connect(self.shortcutsChanged.emit)
+        self.app.configs.configChanged.connect(self.shortcutsChanged.emit)
         self.debugPostProvider = None
         self._register_debug_provider()
 
@@ -115,6 +118,71 @@ class UtilsBackend(QObject):
     @Property(list, notify=extraSettingsChanged)
     def extraSettings(self):
         return self.app.plugin_api.ui.pages
+
+    @Property(list, notify=shortcutsChanged)
+    def shortcuts(self):
+        configured_ids = self.app.configs.preferences.shortcuts
+        registered = {shortcut["id"]: shortcut for shortcut in self.app.plugin_api.ui.shortcuts}
+        return [dict(registered[shortcut_id]) for shortcut_id in configured_ids if shortcut_id in registered]
+
+    @Property(list, notify=shortcutsChanged)
+    def availableShortcuts(self):
+        configured_ids = set(self.app.configs.preferences.shortcuts)
+        return [
+            dict(shortcut)
+            for shortcut in self.app.plugin_api.ui.shortcuts
+            if shortcut["id"] not in configured_ids
+        ]
+
+    @Slot(str, result=bool)
+    def executeShortcut(self, shortcut_id: str) -> bool:
+        return self.app.plugin_api.ui.invoke_shortcut(shortcut_id)
+
+    @Slot(str, bool, result=bool)
+    def setShortcutEnabled(self, shortcut_id: str, enabled: bool) -> bool:
+        config_key = "preferences.shortcuts"
+        if self.app.configs.isKeyLocked(config_key):
+            logger.warning(f"Attempt to modify locked config key: {config_key}. Blocked.")
+            return False
+
+        shortcuts = list(self.app.configs.preferences.shortcuts)
+        if enabled and shortcut_id not in shortcuts:
+            shortcuts.append(shortcut_id)
+        elif not enabled and shortcut_id in shortcuts:
+            shortcuts.remove(shortcut_id)
+        else:
+            return True
+
+        self.app.configs.preferences.shortcuts = shortcuts
+        return True
+
+    @Slot(str, int, result=bool)
+    def moveShortcutTo(self, shortcut_id: str, target_index: int) -> bool:
+        """Move an enabled shortcut to a visible shortcut index."""
+        config_key = "preferences.shortcuts"
+        if self.app.configs.isKeyLocked(config_key):
+            return False
+
+        shortcuts = list(self.app.configs.preferences.shortcuts)
+        registered_ids = {shortcut["id"] for shortcut in self.app.plugin_api.ui.shortcuts}
+        visible_ids = [shortcut for shortcut in shortcuts if shortcut in registered_ids]
+        try:
+            source_index = visible_ids.index(shortcut_id)
+        except ValueError:
+            return False
+
+        target_index = max(0, min(target_index, len(visible_ids) - 1))
+        if source_index == target_index:
+            return True
+
+        target_id = visible_ids[target_index]
+        shortcuts.remove(shortcut_id)
+        target_position = shortcuts.index(target_id)
+        if target_index > source_index:
+            target_position += 1
+        shortcuts.insert(target_position, shortcut_id)
+        self.app.configs.preferences.shortcuts = shortcuts
+        return True
 
     # 设置功能
     @Property(str, notify=licenseLoaded)

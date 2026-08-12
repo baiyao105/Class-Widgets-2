@@ -5,7 +5,7 @@ import sys
 from pathlib import Path
 from typing import Any, Optional, TYPE_CHECKING, Protocol
 
-from PySide6.QtCore import QObject, Property, Signal, Slot, QPoint
+from PySide6.QtCore import QCoreApplication, QObject, Property, Signal, Slot, QPoint
 from PySide6.QtGui import QFont, QIcon
 from PySide6.QtWidgets import QApplication
 from loguru import logger
@@ -57,12 +57,20 @@ class QmlContextWindow(Protocol):
 
 class AppCentral(QObject):  # Class Widgets 的中枢
     _instance: Optional[AppCentral] = None
+    _BUILTIN_SHORTCUT_NAMES = {
+        "com.classwidgets.settings": "Settings",
+        "com.classwidgets.schedules": "Schedules",
+        "com.classwidgets.plugin-plaza": "Plugin Plaza",
+        "com.classwidgets.reschedule-day": "Reschedule Day",
+        "com.classwidgets.class-swap": "Class Swap",
+    }
     
     updated = Signal()
     initialized = Signal()
     togglePanel = Signal(QPoint)
     widgetRegistered = Signal(str)  # 新增：widget注册信号
     retranslate = Signal()  # 新增：翻译信号
+    trayShortcutRequested = Signal(str)
 
     def __init__(self) -> None:  # 初始化
         super().__init__()
@@ -118,11 +126,49 @@ class AppCentral(QObject):  # Class Widgets 的中枢
 
     def _initialize_utils(self) -> None:
         self.plugin_api: PluginAPI = PluginAPI(self)
+        self._register_shortcuts()
         self.plugin_manager: PluginManager = PluginManager(self.plugin_api, self)
         self.app_translator: AppTranslator = AppTranslator(self)
         self.utils_backend: UtilsBackend = UtilsBackend(self)
         self.automation_manager: AutomationManager = AutomationManager(self)
         self.updater_bridge: UpdaterBridge = UpdaterBridge(self)
+
+    def _register_shortcuts(self) -> None:
+        shortcuts = self.plugin_api.ui
+        shortcuts.register_shortcut(
+            "com.classwidgets.settings",
+            QCoreApplication.translate("Settings", "Shortcuts"),
+            self.path_manager.images("icons/cw2_settings.png"),
+            self.window_manager.open_settings,
+        )
+        shortcuts.register_shortcut(
+            "com.classwidgets.schedules",
+            QCoreApplication.translate("Schedules", "Shortcuts"),
+            self.path_manager.images("icons/cw2_editor.png"),
+            self.window_manager.open_editor,
+        )
+        shortcuts.register_shortcut(
+            "com.classwidgets.plugin-plaza",
+            QCoreApplication.translate("Plugin Plaza", "Shortcuts"),
+            self.path_manager.images("icons/cw2_plugin.png"),
+            self.window_manager.open_plugin_plaza,
+        )
+        shortcuts.register_shortcut(
+            "com.classwidgets.reschedule-day",
+            QCoreApplication.translate("Reschedule Day", "Shortcuts"),
+            "ic_fluent_calendar_arrow_counterclockwise_20_regular",
+            self._request_reschedule_day_shortcut,
+        )
+        shortcuts.register_shortcut(
+            "com.classwidgets.class-swap",
+            QCoreApplication.translate("Class Swap", "Shortcuts"),
+            "ic_fluent_arrow_swap_20_regular",
+            self.window_manager.open_class_swap,
+        )
+
+    def _request_reschedule_day_shortcut(self) -> bool:
+        self.trayShortcutRequested.emit("com.classwidgets.reschedule-day")
+        return False
 
     def _initialize_schedule_components(self):
         """初始化调度相关组件"""
@@ -196,7 +242,7 @@ class AppCentral(QObject):  # Class Widgets 的中枢
         self._run_utils()
         self.initialized.emit()  # 发送信号
         logger.info(f"Initialization completed.")
-        
+
 
 
     def _load_config(self) -> None:
@@ -278,6 +324,7 @@ class AppCentral(QObject):  # Class Widgets 的中枢
         context.setContextProperty("WindowManager", self.window_manager)
         context.setContextProperty("PathManager", self.path_manager)
         context.setContextProperty("ClassSwapManager", self._class_swap_manager)
+        context.setContextProperty("UtilsBackend", self.utils_backend)
 
     @staticmethod
     def clean_qml_context(window):
@@ -292,6 +339,7 @@ class AppCentral(QObject):  # Class Widgets 的中枢
         context.setContextProperty("AppCentral", None)
         context.setContextProperty("WindowManager", None)
         context.setContextProperty("PathManager", None)
+        context.setContextProperty("UtilsBackend", None)
         context.setContextProperty("backend", None)
 
     def _load_schedule(self) -> None:
