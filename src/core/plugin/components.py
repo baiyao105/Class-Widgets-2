@@ -22,7 +22,7 @@ from src.core.plugin.models import (
     RuntimeEntryChangedPayload,
     RuntimeSubjectPayload,
     RuntimeRemainingTimePayload,
-    SettingsPagePayload,
+    SettingsPagePayload, ShortcutPayload,
 )
 
 if TYPE_CHECKING:
