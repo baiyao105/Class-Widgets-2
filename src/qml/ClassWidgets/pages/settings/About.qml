@@ -142,10 +142,10 @@ FluentPage {
             }
             SettingItem {
                 title: qsTr("License")
-                description: qsTr("This project is licensed under the GPL-3 license")
+                description: qsTr("This project is licensed under the MIT license")
 
                 Hyperlink {
-                    text: qsTr("GPL-3 License")
+                    text: qsTr("MIT License")
                     onClicked: {
                         licenseDialog.open()
                     }
