@@ -26,6 +26,7 @@ class PlazaBridge(QObject):
         self._pending_replies: list[QNetworkReply] = []
         self._fetching_banners = False
         self._fetching_plugins = False
+        self._shutting_down = False
         if self._config_manager:
             self._config_manager.configChanged.connect(self._on_config_changed)
 
@@ -41,11 +42,13 @@ class PlazaBridge(QObject):
 
     def shutdown(self):
         """Clean up all pending network requests."""
-        for reply in self._pending_replies:
+        self._shutting_down = True
+        pending_replies = list(self._pending_replies)
+        self._pending_replies.clear()
+        for reply in pending_replies:
             if reply.isRunning():
                 reply.abort()
             reply.deleteLater()
-        self._pending_replies.clear()
         self._fetching_banners = False
         self._fetching_plugins = False
         self._set_status("Idle")
@@ -81,6 +84,8 @@ class PlazaBridge(QObject):
 
     @Slot()
     def fetchBanners(self):
+        if self._shutting_down:
+            return
         if self._fetching_banners:
             return
         self._fetching_banners = True
@@ -97,8 +102,13 @@ class PlazaBridge(QObject):
         reply.finished.connect(lambda: self._on_banners_finished(reply))
 
     def _on_banners_finished(self, reply: QNetworkReply):
-        self._pending_replies.remove(reply)
+        if reply in self._pending_replies:
+            self._pending_replies.remove(reply)
         self._fetching_banners = False
+
+        if self._shutting_down:
+            reply.deleteLater()
+            return
 
         if reply.error() != QNetworkReply.NoError:
             error_msg = reply.errorString()
@@ -126,6 +136,8 @@ class PlazaBridge(QObject):
 
     @Slot()
     def fetchPlugins(self):
+        if self._shutting_down:
+            return
         if self._fetching_plugins:
             return
         self._fetching_plugins = True
@@ -144,8 +156,13 @@ class PlazaBridge(QObject):
         reply.finished.connect(lambda: self._on_plugins_finished(reply))
 
     def _on_plugins_finished(self, reply: QNetworkReply):
-        self._pending_replies.remove(reply)
+        if reply in self._pending_replies:
+            self._pending_replies.remove(reply)
         self._fetching_plugins = False
+
+        if self._shutting_down:
+            reply.deleteLater()
+            return
 
         if reply.error() != QNetworkReply.NoError:
             error_msg = reply.errorString()

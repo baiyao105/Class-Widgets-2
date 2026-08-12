@@ -48,6 +48,13 @@ FluentWindow {
             suggestions: suggestionItems
             textRole: "label"
 
+            Timer {
+                id: suggestionDebounce
+                interval: 250
+                repeat: false
+                onTriggered: searchField.refreshSuggestions()
+            }
+
             function refreshSuggestions() {
                 var keyword = text.trim()
                 if (!keyword) {
@@ -104,8 +111,9 @@ FluentWindow {
                     return
                 chosenSuggestion = null
                 if (text.trim())
-                    refreshSuggestions()
+                    suggestionDebounce.restart()
                 else {
+                    suggestionDebounce.stop()
                     ++requestSerial
                     if (activeSuggestionRequest)
                         activeSuggestionRequest.abort()

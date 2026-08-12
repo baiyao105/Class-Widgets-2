@@ -11,7 +11,7 @@ RowLayout {
     property bool showRelevance: false
     property bool busy: false
     property var menuTags: []
-    property bool openMenuWhenReady: false
+    property bool menuOpenPending: false
     signal tagSelected(string tagId)
     signal sortSelected(string sortValue)
 
@@ -41,6 +41,9 @@ RowLayout {
     readonly property var hiddenTags: root.remainingTags()
     readonly property int selectedTagIndex: root.visibleTagIndex() + 1
 
+    onSelectedTagChanged: scheduleSelectorSync()
+    onVisibleTagsChanged: scheduleSelectorSync()
+
     function tagId(tag) {
         return tag.id || tag.name || ""
     }
@@ -50,17 +53,22 @@ RowLayout {
     }
 
     function openMoreTagsMenu() {
-        moreTagsMenu.close()
         menuTags = hiddenTags.slice()
-        openMenuWhenReady = menuTags.length > 0
-        openMoreTagsWhenReady()
+        if (menuOpenPending || moreTagsMenu.opened)
+            return
+
+        menuOpenPending = true
+        Qt.callLater(function() {
+            menuOpenPending = false
+            if (root.menuTags.length > 0 && !moreTagsMenu.opened)
+                moreTagsMenu.open()
+        })
     }
 
-    function openMoreTagsWhenReady() {
-        if (openMenuWhenReady && moreTagsMenu.count === menuTags.length) {
-            openMenuWhenReady = false
-            moreTagsMenu.open()
-        }
+    function scheduleSelectorSync() {
+        Qt.callLater(function() {
+            tagSelector.currentIndex = root.selectedTagIndex
+        })
     }
 
     function visibleTagIndex() {
@@ -106,7 +114,7 @@ RowLayout {
         SelectorBar {
             id: tagSelector
             enabled: !root.busy
-            currentIndex: root.selectedTagIndex
+            Component.onCompleted: root.scheduleSelectorSync()
 
             SelectorBarItem {
                 text: qsTr("All")
@@ -152,29 +160,57 @@ RowLayout {
                         duration: 100
                     }
                 }
-            }
-        }
 
-        Instantiator {
-            id: tagMenuItems
-            model: root.menuTags
-
-            delegate: MenuItem {
-                required property var modelData
-                text: modelData.name || modelData.id || ""
-                onTriggered: {
-                    root.tagSelected(root.tagId(modelData))
-                    moreTagsMenu.close()
+                MenuItem {
+                    visible: root.menuTags.length > 0
+                    text: root.menuTags.length > 0 ? root.menuTags[0].name || root.menuTags[0].id || "" : ""
+                    onTriggered: { moreTagsMenu.close(); root.tagSelected(root.tagId(root.menuTags[0])) }
                 }
-            }
-
-            onObjectAdded: function(index, object) {
-                moreTagsMenu.insertItem(index, object)
-                root.openMoreTagsWhenReady()
-            }
-
-            onObjectRemoved: function(index, object) {
-                moreTagsMenu.removeItem(object)
+                MenuItem {
+                    visible: root.menuTags.length > 1
+                    text: root.menuTags.length > 1 ? root.menuTags[1].name || root.menuTags[1].id || "" : ""
+                    onTriggered: { moreTagsMenu.close(); root.tagSelected(root.tagId(root.menuTags[1])) }
+                }
+                MenuItem {
+                    visible: root.menuTags.length > 2
+                    text: root.menuTags.length > 2 ? root.menuTags[2].name || root.menuTags[2].id || "" : ""
+                    onTriggered: { moreTagsMenu.close(); root.tagSelected(root.tagId(root.menuTags[2])) }
+                }
+                MenuItem {
+                    visible: root.menuTags.length > 3
+                    text: root.menuTags.length > 3 ? root.menuTags[3].name || root.menuTags[3].id || "" : ""
+                    onTriggered: { moreTagsMenu.close(); root.tagSelected(root.tagId(root.menuTags[3])) }
+                }
+                MenuItem {
+                    visible: root.menuTags.length > 4
+                    text: root.menuTags.length > 4 ? root.menuTags[4].name || root.menuTags[4].id || "" : ""
+                    onTriggered: { moreTagsMenu.close(); root.tagSelected(root.tagId(root.menuTags[4])) }
+                }
+                MenuItem {
+                    visible: root.menuTags.length > 5
+                    text: root.menuTags.length > 5 ? root.menuTags[5].name || root.menuTags[5].id || "" : ""
+                    onTriggered: { moreTagsMenu.close(); root.tagSelected(root.tagId(root.menuTags[5])) }
+                }
+                MenuItem {
+                    visible: root.menuTags.length > 6
+                    text: root.menuTags.length > 6 ? root.menuTags[6].name || root.menuTags[6].id || "" : ""
+                    onTriggered: { moreTagsMenu.close(); root.tagSelected(root.tagId(root.menuTags[6])) }
+                }
+                MenuItem {
+                    visible: root.menuTags.length > 7
+                    text: root.menuTags.length > 7 ? root.menuTags[7].name || root.menuTags[7].id || "" : ""
+                    onTriggered: { moreTagsMenu.close(); root.tagSelected(root.tagId(root.menuTags[7])) }
+                }
+                MenuItem {
+                    visible: root.menuTags.length > 8
+                    text: root.menuTags.length > 8 ? root.menuTags[8].name || root.menuTags[8].id || "" : ""
+                    onTriggered: { moreTagsMenu.close(); root.tagSelected(root.tagId(root.menuTags[8])) }
+                }
+                MenuItem {
+                    visible: root.menuTags.length > 9
+                    text: root.menuTags.length > 9 ? root.menuTags[9].name || root.menuTags[9].id || "" : ""
+                    onTriggered: { moreTagsMenu.close(); root.tagSelected(root.tagId(root.menuTags[9])) }
+                }
             }
         }
     }
