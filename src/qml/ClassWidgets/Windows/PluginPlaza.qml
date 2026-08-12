@@ -43,6 +43,7 @@ FluentWindow {
             property var suggestionItems: []
             property var chosenSuggestion: null
             property int requestSerial: 0
+            property var activeSuggestionRequest: null
             property bool updatingSuggestions: false
             suggestions: suggestionItems
             textRole: "label"
@@ -55,10 +56,14 @@ FluentWindow {
                 }
 
                 var serial = ++requestSerial
+                if (activeSuggestionRequest)
+                    activeSuggestionRequest.abort()
                 var xhr = new XMLHttpRequest()
+                activeSuggestionRequest = xhr
                 xhr.onreadystatechange = function() {
                     if (xhr.readyState !== XMLHttpRequest.DONE || serial !== requestSerial)
                         return
+                    activeSuggestionRequest = null
                     if (xhr.status < 200 || xhr.status >= 300) {
                         suggestionItems = []
                         return
@@ -102,8 +107,18 @@ FluentWindow {
                     refreshSuggestions()
                 else {
                     ++requestSerial
+                    if (activeSuggestionRequest)
+                        activeSuggestionRequest.abort()
+                    activeSuggestionRequest = null
                     suggestionItems = []
                 }
+            }
+
+            Component.onDestruction: {
+                ++requestSerial
+                if (activeSuggestionRequest)
+                    activeSuggestionRequest.abort()
+                activeSuggestionRequest = null
             }
 
             onSuggestionChosen: function(label) {

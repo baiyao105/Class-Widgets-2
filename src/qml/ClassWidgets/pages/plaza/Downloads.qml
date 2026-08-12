@@ -271,7 +271,7 @@ FluentPage {
             EmptyState {
                 Layout.fillWidth: true
                 visible: root.installedPlazaItems().length === 0
-                iconName: "ic_fluent_apps_24_regular"
+                icon.name: "ic_fluent_uninstall_app_20_regular"
                 title: qsTr("No installed Plugin Plaza plugins")
             }
         }

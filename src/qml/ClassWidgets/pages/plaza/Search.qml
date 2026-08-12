@@ -27,6 +27,13 @@ FluentPage {
     property bool suggestionsLoading: false
     property bool recommendedPluginsLoading: false
     property string errorMessage: ""
+    property int searchSerial: 0
+    property int suggestionsSerial: 0
+    property int recommendationsSerial: 0
+    property var activeSearchRequest: null
+    property var activeTagsRequest: null
+    property var activeSuggestionsRequest: null
+    property var activeRecommendationsRequest: null
 
     readonly property bool hasQuery: query.trim().length > 0
 
@@ -54,9 +61,13 @@ FluentPage {
         }
         xhr.open("GET", url)
         xhr.send()
+        return xhr
     }
 
     function search(nextPage) {
+        var serial = ++searchSerial
+        if (activeSearchRequest)
+            activeSearchRequest.abort()
         if (!hasQuery) {
             plugins = []
             total = 0
@@ -70,7 +81,9 @@ FluentPage {
             + "&page=" + page + "&per_page=" + perPage
             + "&sort=" + encodeURIComponent(sort)
         if (activeTag) params += "&tag=" + encodeURIComponent(activeTag)
-        request(baseUrl + "/api/plugins/search" + params, function(response) {
+        activeSearchRequest = request(baseUrl + "/api/plugins/search" + params, function(response) {
+            if (serial !== searchSerial)
+                return
             if (response.ok === false) {
                 plugins = []
                 total = 0
@@ -83,6 +96,8 @@ FluentPage {
             }
             loading = false
         }, function(error) {
+            if (serial !== searchSerial)
+                return
             plugins = []
             total = 0
             totalPages = 1
@@ -92,30 +107,46 @@ FluentPage {
     }
 
     function loadTags() {
-        request(baseUrl + "/api/plugins/tags", function(response) {
+        if (activeTagsRequest)
+            activeTagsRequest.abort()
+        activeTagsRequest = request(baseUrl + "/api/plugins/tags", function(response) {
             tags = response.data instanceof Array ? response.data : []
         }, function() { tags = [] })
     }
 
     function loadSuggestions() {
+        var serial = ++suggestionsSerial
+        if (activeSuggestionsRequest)
+            activeSuggestionsRequest.abort()
         suggestions = []
         suggestionsLoading = true
-        request(baseUrl + "/api/plugins/suggest?limit=12", function(response) {
+        activeSuggestionsRequest = request(baseUrl + "/api/plugins/suggest?limit=12", function(response) {
+            if (serial !== suggestionsSerial)
+                return
             suggestions = response.ok !== false && response.data instanceof Array ? response.data : []
             suggestionsLoading = false
         }, function() {
+            if (serial !== suggestionsSerial)
+                return
             suggestions = []
             suggestionsLoading = false
         })
     }
 
     function loadRecommendedPlugins() {
+        var serial = ++recommendationsSerial
+        if (activeRecommendationsRequest)
+            activeRecommendationsRequest.abort()
         recommendedPlugins = []
         recommendedPluginsLoading = true
-        request(baseUrl + "/api/plugins/random?limit=6", function(response) {
+        activeRecommendationsRequest = request(baseUrl + "/api/plugins/random?limit=6", function(response) {
+            if (serial !== recommendationsSerial)
+                return
             recommendedPlugins = response.ok !== false && response.data instanceof Array ? response.data : []
             recommendedPluginsLoading = false
         }, function() {
+            if (serial !== recommendationsSerial)
+                return
             recommendedPlugins = []
             recommendedPluginsLoading = false
         })
@@ -149,6 +180,20 @@ FluentPage {
             loadSuggestions()
             loadRecommendedPlugins()
         }
+    }
+
+    Component.onDestruction: {
+        ++searchSerial
+        ++suggestionsSerial
+        ++recommendationsSerial
+        if (activeSearchRequest)
+            activeSearchRequest.abort()
+        if (activeSuggestionsRequest)
+            activeSuggestionsRequest.abort()
+        if (activeRecommendationsRequest)
+            activeRecommendationsRequest.abort()
+        if (activeTagsRequest)
+            activeTagsRequest.abort()
     }
 
     ColumnLayout {
@@ -303,7 +348,7 @@ FluentPage {
                 && !root.recommendedPluginsLoading
                 && root.suggestions.length === 0
                 && root.recommendedPlugins.length === 0
-            iconName: "ic_fluent_search_24_regular"
+            // iconName: "ic_fluent_search_24_regular"
             title: qsTr("Search the plaza")
             description: qsTr("No suggested keywords are available.")
         }
@@ -311,7 +356,7 @@ FluentPage {
         EmptyState {
             Layout.fillWidth: true
             visible: root.hasQuery && !root.loading && root.errorMessage.length === 0 && root.plugins.length === 0
-            iconName: "ic_fluent_search_info_24_regular"
+            // iconName: "ic_fluent_search_info_24_regular"
             title: qsTr("No plugins found")
             description: qsTr("Try another search or category.")
         }

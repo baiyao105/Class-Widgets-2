@@ -137,31 +137,31 @@ class AppCentral(QObject):  # Class Widgets 的中枢
         shortcuts = self.plugin_api.ui
         shortcuts.register_shortcut(
             "com.classwidgets.settings",
-            QCoreApplication.translate("Settings", "Shortcuts"),
+            QCoreApplication.translate("Shortcuts", "Settings"),
             self.path_manager.images("icons/cw2_settings.png"),
             self.window_manager.open_settings,
         )
         shortcuts.register_shortcut(
             "com.classwidgets.schedules",
-            QCoreApplication.translate("Schedules", "Shortcuts"),
+            QCoreApplication.translate("Shortcuts", "Schedules"),
             self.path_manager.images("icons/cw2_editor.png"),
             self.window_manager.open_editor,
         )
         shortcuts.register_shortcut(
             "com.classwidgets.plugin-plaza",
-            QCoreApplication.translate("Plugin Plaza", "Shortcuts"),
+            QCoreApplication.translate("Shortcuts", "Plugin Plaza"),
             self.path_manager.images("icons/cw2_plugin.png"),
             self.window_manager.open_plugin_plaza,
         )
         shortcuts.register_shortcut(
             "com.classwidgets.reschedule-day",
-            QCoreApplication.translate("Reschedule Day", "Shortcuts"),
+            QCoreApplication.translate("Shortcuts", "Reschedule Day"),
             "ic_fluent_calendar_arrow_counterclockwise_20_regular",
             self._request_reschedule_day_shortcut,
         )
         shortcuts.register_shortcut(
             "com.classwidgets.class-swap",
-            QCoreApplication.translate("Class Swap", "Shortcuts"),
+            QCoreApplication.translate("Shortcuts", "Class Swap"),
             "ic_fluent_arrow_swap_20_regular",
             self.window_manager.open_class_swap,
         )

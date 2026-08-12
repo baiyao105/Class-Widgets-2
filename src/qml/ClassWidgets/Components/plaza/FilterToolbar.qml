@@ -10,30 +10,171 @@ RowLayout {
     property string sortValue: "latest"
     property bool showRelevance: false
     property bool busy: false
+    property var menuTags: []
+    property bool openMenuWhenReady: false
     signal tagSelected(string tagId)
     signal sortSelected(string sortValue)
 
-    spacing: 8
+    readonly property var tagItems: root.tags instanceof Array ? root.tags : []
+    readonly property int visibleTagCount: {
+        var availableWidth = Math.max(120, root.width - 216)
+        var usedWidth = root.estimatedTagWidth(qsTr("All"))
+        var count = 0
 
-    // 标签筛选（原 TagPills 组件内联，此处为唯一使用方）
-    Segmented {
-        enabled: !root.busy
-
-        SegmentedItem {
-            text: qsTr("All")
-            checked: root.selectedTag === ""
-            onClicked: root.tagSelected("")
+        for (var i = 0; i < root.tagItems.length; ++i) {
+            var tag = root.tagItems[i]
+            var label = tag.name || tag.id || ""
+            var nextWidth = root.estimatedTagWidth(label)
+            if (usedWidth + nextWidth > availableWidth)
+                break
+            usedWidth += nextWidth
+            ++count
         }
 
-        Repeater {
-            model: root.tags instanceof Array ? root.tags.slice(0, 5) : []
+        return Math.max(1, count)
+    }
+    readonly property var baseVisibleTags: root.tagItems.slice(0, root.visibleTagCount)
+    readonly property var activeHiddenTag: root.selectedTag === "" ? null : root.hiddenSelectedTag()
+    readonly property var visibleTags: root.activeHiddenTag && root.baseVisibleTags.length > 0
+        ? root.baseVisibleTags.slice(0, -1).concat([root.activeHiddenTag])
+        : root.baseVisibleTags
+    readonly property var hiddenTags: root.remainingTags()
+    readonly property int selectedTagIndex: root.visibleTagIndex() + 1
 
-            delegate: SegmentedItem {
+    function tagId(tag) {
+        return tag.id || tag.name || ""
+    }
+
+    function estimatedTagWidth(label) {
+        return Math.ceil(String(label).length * 14 + 32)
+    }
+
+    function openMoreTagsMenu() {
+        moreTagsMenu.close()
+        menuTags = hiddenTags.slice()
+        openMenuWhenReady = menuTags.length > 0
+        openMoreTagsWhenReady()
+    }
+
+    function openMoreTagsWhenReady() {
+        if (openMenuWhenReady && moreTagsMenu.count === menuTags.length) {
+            openMenuWhenReady = false
+            moreTagsMenu.open()
+        }
+    }
+
+    function visibleTagIndex() {
+        for (var i = 0; i < root.visibleTags.length; ++i) {
+            if (root.tagId(root.visibleTags[i]) === root.selectedTag)
+                return i
+        }
+        return -1
+    }
+
+    function hiddenSelectedTag() {
+        for (var i = 0; i < root.tagItems.length; ++i) {
+            var tag = root.tagItems[i]
+            if (root.tagId(tag) === root.selectedTag && i >= root.baseVisibleTags.length)
+                return tag
+        }
+        return null
+    }
+
+    function isVisibleTag(tag) {
+        var id = root.tagId(tag)
+        for (var i = 0; i < root.visibleTags.length; ++i) {
+            if (root.tagId(root.visibleTags[i]) === id)
+                return true
+        }
+        return false
+    }
+
+    function remainingTags() {
+        var result = []
+        for (var i = 0; i < root.tagItems.length; ++i) {
+            if (!root.isVisibleTag(root.tagItems[i]))
+                result.push(root.tagItems[i])
+        }
+        return result
+    }
+
+    spacing: 8
+
+    RowLayout {
+        spacing: 4
+
+        SelectorBar {
+            id: tagSelector
+            enabled: !root.busy
+            currentIndex: root.selectedTagIndex
+
+            SelectorBarItem {
+                text: qsTr("All")
+                onClicked: root.tagSelected("")
+            }
+
+            Repeater {
+                model: root.visibleTags
+
+                delegate: SelectorBarItem {
+                    width: implicitWidth
+                    required property var modelData
+                    readonly property string tagId: root.tagId(modelData)
+                    text: modelData.name || modelData.id || ""
+                    onClicked: root.tagSelected(tagId)
+                }
+            }
+        }
+
+        ToolButton {
+            visible: root.hiddenTags.length > 0
+            enabled: !root.busy
+            flat: true
+            icon.name: "ic_fluent_more_horizontal_20_regular"
+            onClicked: root.openMoreTagsMenu()
+
+            ToolTip {
+                visible: parent.hovered
+                text: qsTr("More categories")
+            }
+
+            Menu {
+                id: moreTagsMenu
+                height: implicitHeight
+
+                // RinUI's default enter transition snapshots implicitHeight before
+                // dynamically inserted menu items have completed layout.
+                enter: Transition {
+                    NumberAnimation {
+                        property: "opacity"
+                        from: 0
+                        to: 1
+                        duration: 100
+                    }
+                }
+            }
+        }
+
+        Instantiator {
+            id: tagMenuItems
+            model: root.menuTags
+
+            delegate: MenuItem {
                 required property var modelData
-                readonly property string tagId: modelData.id || modelData.name || ""
                 text: modelData.name || modelData.id || ""
-                checked: root.selectedTag === tagId
-                onClicked: root.tagSelected(tagId)
+                onTriggered: {
+                    root.tagSelected(root.tagId(modelData))
+                    moreTagsMenu.close()
+                }
+            }
+
+            onObjectAdded: function(index, object) {
+                moreTagsMenu.insertItem(index, object)
+                root.openMoreTagsWhenReady()
+            }
+
+            onObjectRemoved: function(index, object) {
+                moreTagsMenu.removeItem(object)
             }
         }
     }

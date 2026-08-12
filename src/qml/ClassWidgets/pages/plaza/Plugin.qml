@@ -41,6 +41,8 @@ FluentPage {
 
     // 评论对话框
     property bool commentsDialogOpen: false
+    property int requestSerial: 0
+    property var activeRequests: []
 
     readonly property int ratingTotal: ratings instanceof Array ? ratings.length : 0
     readonly property real ratingAverage: {
@@ -76,6 +78,8 @@ FluentPage {
         if (!pluginId)
             return
 
+        ++requestSerial
+        abortActiveRequests()
         manifest = null
         readme = ""
         readmeHtml = ""
@@ -185,8 +189,12 @@ FluentPage {
 
     function requestText(url, success, failure) {
         var xhr = new XMLHttpRequest()
+        activeRequests.push(xhr)
         xhr.onreadystatechange = function() {
             if (xhr.readyState === XMLHttpRequest.DONE) {
+                var index = activeRequests.indexOf(xhr)
+                if (index >= 0)
+                    activeRequests.splice(index, 1)
                 if (xhr.status >= 200 && xhr.status < 300) {
                     success(xhr.responseText)
                 } else if (failure) {
@@ -198,9 +206,19 @@ FluentPage {
         xhr.send()
     }
 
+    function abortActiveRequests() {
+        var requests = activeRequests.slice()
+        activeRequests = []
+        for (var i = 0; i < requests.length; ++i)
+            requests[i].abort()
+    }
+
     function fetchManifest() {
+        var serial = requestSerial
         manifestLoading = true
         requestText(pluginApiUrl(pluginId, ""), function(text) {
+            if (serial !== requestSerial)
+                return
             try {
                 var response = JSON.parse(text)
                 manifest = response && response.ok && response.data ? response.data : response
@@ -213,18 +231,25 @@ FluentPage {
                 errorMessage = qsTr("Failed to parse plugin information.")
             }
         }, function(error) {
+            if (serial !== requestSerial)
+                return
             manifestLoading = false
             errorMessage = qsTr("Failed to load plugin information: ") + error
         })
     }
 
     function fetchReadme() {
+        var serial = requestSerial
         readmeLoading = true
         requestText(resourceUrl(pluginId, "readme"), function(text) {
+            if (serial !== requestSerial)
+                return
             readme = preprocessReadme(text)
             readmeHtml = MarkdownRenderBridge.render(readme)
             readmeLoading = false
         }, function() {
+            if (serial !== requestSerial)
+                return
             readme = "# " + qsTr("No description") + "\n" + qsTr("This plugin does not provide README content.")
             readmeHtml = MarkdownRenderBridge.render(readme)
             readmeLoading = false
@@ -232,8 +257,11 @@ FluentPage {
     }
 
     function fetchTags() {
+        var serial = requestSerial
         tagsLoading = true
         requestText(baseUrl + "/api/plugins/tags", function(text) {
+            if (serial !== requestSerial)
+                return
             try {
                 var response = JSON.parse(text)
                 var map = ({})
@@ -248,14 +276,19 @@ FluentPage {
             }
             tagsLoading = false
         }, function() {
+            if (serial !== requestSerial)
+                return
             tagsMap = ({})
             tagsLoading = false
         })
     }
 
     function fetchOtherPlugins() {
+        var serial = requestSerial
         otherPluginsLoading = true
         requestText(baseUrl + "/api/plugins?per_page=50", function(text) {
+            if (serial !== requestSerial)
+                return
             try {
                 var response = JSON.parse(text)
                 var list = response && response.data instanceof Array ? response.data : []
@@ -265,14 +298,19 @@ FluentPage {
             }
             otherPluginsLoading = false
         }, function() {
+            if (serial !== requestSerial)
+                return
             otherPlugins = []
             otherPluginsLoading = false
         })
     }
 
     function fetchRatings() {
+        var serial = requestSerial
         ratingsLoading = true
         requestText(pluginApiUrl(pluginId, "/comments"), function(text) {
+            if (serial !== requestSerial)
+                return
             try {
                 var response = JSON.parse(text)
                 ratings = response && response.ok && response.data instanceof Array ? response.data : []
@@ -281,9 +319,16 @@ FluentPage {
             }
             ratingsLoading = false
         }, function() {
+            if (serial !== requestSerial)
+                return
             ratings = []
             ratingsLoading = false
         })
+    }
+
+    Component.onDestruction: {
+        ++requestSerial
+        abortActiveRequests()
     }
 
     function pickRelatedPlugins(list) {

@@ -22,6 +22,9 @@ FluentPage {
     property bool loading: false
     property bool initialLoad: true
     property string errorMessage: ""
+    property int requestSerial: 0
+    property var activePluginRequest: null
+    property var activeTagsRequest: null
 
     function request(url, callback, failure) {
         var xhr = new XMLHttpRequest()
@@ -37,16 +40,22 @@ FluentPage {
         }
         xhr.open("GET", url)
         xhr.send()
+        return xhr
     }
 
     function loadPlugins(nextPage) {
+        var serial = ++requestSerial
+        if (activePluginRequest)
+            activePluginRequest.abort()
         page = nextPage || 1
         loading = true
         errorMessage = ""
         var endpoint = activeTag ? "/api/plugins/category" : "/api/plugins"
         var params = "?page=" + page + "&per_page=" + perPage + "&sort=" + encodeURIComponent(sort)
         if (activeTag) params += "&tag=" + encodeURIComponent(activeTag)
-        request(baseUrl + endpoint + params, function(response) {
+        activePluginRequest = request(baseUrl + endpoint + params, function(response) {
+            if (serial !== requestSerial)
+                return
             if (response.ok === false) {
                 plugins = []
                 total = 0
@@ -60,6 +69,8 @@ FluentPage {
             loading = false
             initialLoad = false
         }, function(error) {
+            if (serial !== requestSerial)
+                return
             plugins = []
             total = 0
             totalPages = 1
@@ -70,7 +81,9 @@ FluentPage {
     }
 
     function loadTags() {
-        request(baseUrl + "/api/plugins/tags", function(response) {
+        if (activeTagsRequest)
+            activeTagsRequest.abort()
+        activeTagsRequest = request(baseUrl + "/api/plugins/tags", function(response) {
             tags = response.data instanceof Array ? response.data : []
         }, function() { tags = [] })
     }
@@ -86,6 +99,14 @@ FluentPage {
     }
 
     Component.onCompleted: { loadPlugins(1); loadTags() }
+
+    Component.onDestruction: {
+        ++requestSerial
+        if (activePluginRequest)
+            activePluginRequest.abort()
+        if (activeTagsRequest)
+            activeTagsRequest.abort()
+    }
 
     ColumnLayout {
         Layout.fillWidth: true
@@ -125,7 +146,7 @@ FluentPage {
         EmptyState {
             Layout.fillWidth: true
             visible: !root.initialLoad && !root.loading && root.errorMessage.length === 0 && root.plugins.length === 0
-            iconName: "ic_fluent_search_info_24_regular"
+            // icon.name: "ic_fluent_search_info_24_regular"
             title: qsTr("No plugins found")
             description: root.activeTag ? qsTr("Try another category.") : qsTr("The plaza is empty right now.")
         }
