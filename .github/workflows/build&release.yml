@@ -33,7 +33,7 @@ on:
       is_signing:
         description: 'Sign Windows executable (SignPath)'
         required: false
-        default: false
+        default: true
         type: boolean
       release:
         description: 'Create GitHub Release'
