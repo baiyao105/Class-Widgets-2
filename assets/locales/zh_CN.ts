@@ -1842,16 +1842,14 @@ Please try again later.</source>
         <translation>个性化</translation>
     </message>
     <message>
-        <location filename="../../src/qml/ClassWidgets/pages/settings/Personalization.qml" line="16"/>
         <source>Warning</source>
-        <translation>警告</translation>
+        <translation type="vanished">警告</translation>
     </message>
     <message>
-        <location filename="../../src/qml/ClassWidgets/pages/settings/Personalization.qml" line="17"/>
         <source>The theme system is still under development. 
 
 If translations are missing after a theme change, please restart</source>
-        <translation>主题系统正在开发。
+        <translation type="vanished">主题系统正在开发。
 
 若在切换主题后应用翻译丢失，请重新启动</translation>
     </message>
@@ -4620,27 +4618,27 @@ then tap &quot;Edit Widget Screen&quot; in the menu to experience it.</source>
 <context>
     <name>currentActivity</name>
     <message>
-        <location filename="../../src/qml/widgets/currentActivity.qml" line="10"/>
+        <location filename="../../src/qml/widgets/currentActivity.qml" line="12"/>
         <source>Current Activity</source>
         <translation>当前活动</translation>
     </message>
     <message>
-        <location filename="../../src/qml/widgets/currentActivity.qml" line="83"/>
+        <location filename="../../src/qml/widgets/currentActivity.qml" line="86"/>
         <source>Class</source>
         <translation>课程</translation>
     </message>
     <message>
-        <location filename="../../src/qml/widgets/currentActivity.qml" line="85"/>
+        <location filename="../../src/qml/widgets/currentActivity.qml" line="88"/>
         <source>Activity</source>
         <translation>活动</translation>
     </message>
     <message>
-        <location filename="../../src/qml/widgets/currentActivity.qml" line="87"/>
+        <location filename="../../src/qml/widgets/currentActivity.qml" line="90"/>
         <source>Take a break</source>
         <translation>课间</translation>
     </message>
     <message>
-        <location filename="../../src/qml/widgets/currentActivity.qml" line="88"/>
+        <location filename="../../src/qml/widgets/currentActivity.qml" line="91"/>
         <source>Nothing right now</source>
         <translation>当前无课程</translation>
     </message>
@@ -4653,7 +4651,7 @@ then tap &quot;Edit Widget Screen&quot; in the menu to experience it.</source>
         <translation>尚无通知</translation>
     </message>
     <message>
-        <location filename="../../src/qml/widgets/dynamicNotification.qml" line="266"/>
+        <location filename="../../src/qml/widgets/dynamicNotification.qml" line="268"/>
         <source>Dynamic Notification</source>
         <translation>灵动通知</translation>
     </message>
@@ -4661,7 +4659,7 @@ then tap &quot;Edit Widget Screen&quot; in the menu to experience it.</source>
 <context>
     <name>eventCountdown</name>
     <message>
-        <location filename="../../src/qml/widgets/eventCountdown.qml" line="10"/>
+        <location filename="../../src/qml/widgets/eventCountdown.qml" line="12"/>
         <source>Remaining</source>
         <translation>距结束还有</translation>
     </message>
@@ -4702,17 +4700,17 @@ then tap &quot;Edit Widget Screen&quot; in the menu to experience it.</source>
         <translation>显示活动完整名称</translation>
     </message>
     <message>
-        <location filename="../../src/qml/widgets/upcomingActivities.qml" line="10"/>
+        <location filename="../../src/qml/widgets/upcomingActivities.qml" line="12"/>
         <source>Upcoming</source>
         <translation>即将进行</translation>
     </message>
     <message>
-        <location filename="../../src/qml/widgets/upcomingActivities.qml" line="29"/>
+        <location filename="../../src/qml/widgets/upcomingActivities.qml" line="32"/>
         <source>Class</source>
         <translation>课程</translation>
     </message>
     <message>
-        <location filename="../../src/qml/widgets/upcomingActivities.qml" line="30"/>
+        <location filename="../../src/qml/widgets/upcomingActivities.qml" line="33"/>
         <source>Activity</source>
         <translation>活动</translation>
     </message>
@@ -4721,12 +4719,12 @@ then tap &quot;Edit Widget Screen&quot; in the menu to experience it.</source>
         <translation type="vanished">未知</translation>
     </message>
     <message>
-        <location filename="../../src/qml/widgets/upcomingActivities.qml" line="35"/>
+        <location filename="../../src/qml/widgets/upcomingActivities.qml" line="38"/>
         <source>Nothing ahead</source>
         <translation>接下来暂无课程</translation>
     </message>
     <message>
-        <location filename="../../src/qml/widgets/upcomingActivities.qml" line="31"/>
+        <location filename="../../src/qml/widgets/upcomingActivities.qml" line="34"/>
         <source>Unset</source>
         <translation>未设置</translation>
     </message>

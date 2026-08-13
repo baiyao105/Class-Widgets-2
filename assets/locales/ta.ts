@@ -1684,9 +1684,8 @@ Do you want to continue using them, or discard and restore the original schedule
         <translation>தனிப்பயனாக்கம்</translation>
     </message>
     <message>
-        <location filename="../../src/qml/ClassWidgets/pages/settings/Personalization.qml" line="16"/>
         <source>Warning</source>
-        <translation>எச்சரிக்கை</translation>
+        <translation type="vanished">எச்சரிக்கை</translation>
     </message>
     <message>
         <location filename="../../src/qml/ClassWidgets/pages/settings/Personalization.qml" line="30"/>
@@ -1739,11 +1738,10 @@ Applying an incompatible theme may cause serious errors, crashes, or unexpected 
         <translation>விளக்கம் இல்லை</translation>
     </message>
     <message>
-        <location filename="../../src/qml/ClassWidgets/pages/settings/Personalization.qml" line="17"/>
         <source>The theme system is still under development. 
 
 If translations are missing after a theme change, please restart</source>
-        <translation>கருப்பொருள் அமைப்பு இன்னும் வளர்ச்சியில் உள்ளது. 
+        <translation type="vanished">கருப்பொருள் அமைப்பு இன்னும் வளர்ச்சியில் உள்ளது. 
 
 தீம் மாற்றத்திற்குப் பிறகு மொழிபெயர்ப்புகள் இல்லை என்றால், மீண்டும் தொடங்கவும்</translation>
     </message>
@@ -4186,27 +4184,27 @@ then tap &quot;Edit Widget Screen&quot; in the menu to experience it.</source>
 <context>
     <name>currentActivity</name>
     <message>
-        <location filename="../../src/qml/widgets/currentActivity.qml" line="10"/>
+        <location filename="../../src/qml/widgets/currentActivity.qml" line="12"/>
         <source>Current Activity</source>
         <translation>தற்போதைய செயல்பாடு</translation>
     </message>
     <message>
-        <location filename="../../src/qml/widgets/currentActivity.qml" line="83"/>
+        <location filename="../../src/qml/widgets/currentActivity.qml" line="86"/>
         <source>Class</source>
         <translation>வகுப்பு</translation>
     </message>
     <message>
-        <location filename="../../src/qml/widgets/currentActivity.qml" line="85"/>
+        <location filename="../../src/qml/widgets/currentActivity.qml" line="88"/>
         <source>Activity</source>
         <translation>செய்கைப்பாடு</translation>
     </message>
     <message>
-        <location filename="../../src/qml/widgets/currentActivity.qml" line="87"/>
+        <location filename="../../src/qml/widgets/currentActivity.qml" line="90"/>
         <source>Take a break</source>
         <translation>ஓய்வு எடுங்கள்</translation>
     </message>
     <message>
-        <location filename="../../src/qml/widgets/currentActivity.qml" line="88"/>
+        <location filename="../../src/qml/widgets/currentActivity.qml" line="91"/>
         <source>Nothing right now</source>
         <translation>இப்போது எதுவும் இல்லை</translation>
     </message>
@@ -4219,7 +4217,7 @@ then tap &quot;Edit Widget Screen&quot; in the menu to experience it.</source>
         <translation>இதுவரை எந்த அறிவிப்பும் இல்லை</translation>
     </message>
     <message>
-        <location filename="../../src/qml/widgets/dynamicNotification.qml" line="266"/>
+        <location filename="../../src/qml/widgets/dynamicNotification.qml" line="268"/>
         <source>Dynamic Notification</source>
         <translation>மாறும் அறிவிப்பு</translation>
     </message>
@@ -4227,7 +4225,7 @@ then tap &quot;Edit Widget Screen&quot; in the menu to experience it.</source>
 <context>
     <name>eventCountdown</name>
     <message>
-        <location filename="../../src/qml/widgets/eventCountdown.qml" line="10"/>
+        <location filename="../../src/qml/widgets/eventCountdown.qml" line="12"/>
         <source>Remaining</source>
         <translation>மீதமுள்ளவை</translation>
     </message>
@@ -4268,27 +4266,27 @@ then tap &quot;Edit Widget Screen&quot; in the menu to experience it.</source>
         <translation>செயல்பாடுகளின் முழுப் பெயரைக் காட்டு</translation>
     </message>
     <message>
-        <location filename="../../src/qml/widgets/upcomingActivities.qml" line="10"/>
+        <location filename="../../src/qml/widgets/upcomingActivities.qml" line="12"/>
         <source>Upcoming</source>
         <translation>வரவிருக்கிறது</translation>
     </message>
     <message>
-        <location filename="../../src/qml/widgets/upcomingActivities.qml" line="29"/>
+        <location filename="../../src/qml/widgets/upcomingActivities.qml" line="32"/>
         <source>Class</source>
         <translation>வகுப்பு</translation>
     </message>
     <message>
-        <location filename="../../src/qml/widgets/upcomingActivities.qml" line="30"/>
+        <location filename="../../src/qml/widgets/upcomingActivities.qml" line="33"/>
         <source>Activity</source>
         <translation>செய்கைப்பாடு</translation>
     </message>
     <message>
-        <location filename="../../src/qml/widgets/upcomingActivities.qml" line="35"/>
+        <location filename="../../src/qml/widgets/upcomingActivities.qml" line="38"/>
         <source>Nothing ahead</source>
         <translation>முன்னால் எதுவும் இல்லை</translation>
     </message>
     <message>
-        <location filename="../../src/qml/widgets/upcomingActivities.qml" line="31"/>
+        <location filename="../../src/qml/widgets/upcomingActivities.qml" line="34"/>
         <source>Unset</source>
         <translation>அமைக்கப்படவில்லை</translation>
     </message>

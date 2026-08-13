@@ -1682,9 +1682,8 @@ Do you want to continue using them, or discard and restore the original schedule
         <translation>学你</translation>
     </message>
     <message>
-        <location filename="../../src/qml/ClassWidgets/pages/settings/Personalization.qml" line="16"/>
         <source>Warning</source>
-        <translation>FBI Warning</translation>
+        <translation type="vanished">FBI Warning</translation>
     </message>
     <message>
         <location filename="../../src/qml/ClassWidgets/pages/settings/Personalization.qml" line="30"/>
@@ -1737,11 +1736,10 @@ Applying an incompatible theme may cause serious errors, crashes, or unexpected 
         <translation>请输入文本。</translation>
     </message>
     <message>
-        <location filename="../../src/qml/ClassWidgets/pages/settings/Personalization.qml" line="17"/>
         <source>The theme system is still under development. 
 
 If translations are missing after a theme change, please restart</source>
-        <translation>BETA。
+        <translation type="vanished">BETA。
 
 东西丢了我建议你用重启大法</translation>
     </message>
@@ -4184,27 +4182,27 @@ then tap &quot;Edit Widget Screen&quot; in the menu to experience it.</source>
 <context>
     <name>currentActivity</name>
     <message>
-        <location filename="../../src/qml/widgets/currentActivity.qml" line="10"/>
+        <location filename="../../src/qml/widgets/currentActivity.qml" line="12"/>
         <source>Current Activity</source>
         <translation>当前激活</translation>
     </message>
     <message>
-        <location filename="../../src/qml/widgets/currentActivity.qml" line="83"/>
+        <location filename="../../src/qml/widgets/currentActivity.qml" line="86"/>
         <source>Class</source>
         <translation>类</translation>
     </message>
     <message>
-        <location filename="../../src/qml/widgets/currentActivity.qml" line="85"/>
+        <location filename="../../src/qml/widgets/currentActivity.qml" line="88"/>
         <source>Activity</source>
         <translation>运行</translation>
     </message>
     <message>
-        <location filename="../../src/qml/widgets/currentActivity.qml" line="87"/>
+        <location filename="../../src/qml/widgets/currentActivity.qml" line="90"/>
         <source>Take a break</source>
         <translation>休息</translation>
     </message>
     <message>
-        <location filename="../../src/qml/widgets/currentActivity.qml" line="88"/>
+        <location filename="../../src/qml/widgets/currentActivity.qml" line="91"/>
         <source>Nothing right now</source>
         <translation>放飞自我</translation>
     </message>
@@ -4217,7 +4215,7 @@ then tap &quot;Edit Widget Screen&quot; in the menu to experience it.</source>
         <translation>无人在意</translation>
     </message>
     <message>
-        <location filename="../../src/qml/widgets/dynamicNotification.qml" line="266"/>
+        <location filename="../../src/qml/widgets/dynamicNotification.qml" line="268"/>
         <source>Dynamic Notification</source>
         <translation>更优雅的QQ消息</translation>
     </message>
@@ -4225,7 +4223,7 @@ then tap &quot;Edit Widget Screen&quot; in the menu to experience it.</source>
 <context>
     <name>eventCountdown</name>
     <message>
-        <location filename="../../src/qml/widgets/eventCountdown.qml" line="10"/>
+        <location filename="../../src/qml/widgets/eventCountdown.qml" line="12"/>
         <source>Remaining</source>
         <translation>死期</translation>
     </message>
@@ -4266,27 +4264,27 @@ then tap &quot;Edit Widget Screen&quot; in the menu to experience it.</source>
         <translation>全拼</translation>
     </message>
     <message>
-        <location filename="../../src/qml/widgets/upcomingActivities.qml" line="10"/>
+        <location filename="../../src/qml/widgets/upcomingActivities.qml" line="12"/>
         <source>Upcoming</source>
         <translation>死到临头</translation>
     </message>
     <message>
-        <location filename="../../src/qml/widgets/upcomingActivities.qml" line="29"/>
+        <location filename="../../src/qml/widgets/upcomingActivities.qml" line="32"/>
         <source>Class</source>
         <translation>门牌号</translation>
     </message>
     <message>
-        <location filename="../../src/qml/widgets/upcomingActivities.qml" line="30"/>
+        <location filename="../../src/qml/widgets/upcomingActivities.qml" line="33"/>
         <source>Activity</source>
         <translation>运行</translation>
     </message>
     <message>
-        <location filename="../../src/qml/widgets/upcomingActivities.qml" line="35"/>
+        <location filename="../../src/qml/widgets/upcomingActivities.qml" line="38"/>
         <source>Nothing ahead</source>
         <translation>没事了，吃点溜溜梅吗？</translation>
     </message>
     <message>
-        <location filename="../../src/qml/widgets/upcomingActivities.qml" line="31"/>
+        <location filename="../../src/qml/widgets/upcomingActivities.qml" line="34"/>
         <source>Unset</source>
         <translation>滚木</translation>
     </message>

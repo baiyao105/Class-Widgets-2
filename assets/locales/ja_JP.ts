@@ -1736,16 +1736,14 @@ Do you want to continue using them, or discard and restore the original schedule
         <translation type="unfinished">パーソナライズ</translation>
     </message>
     <message>
-        <location filename="../../src/qml/ClassWidgets/pages/settings/Personalization.qml" line="16"/>
         <source>Warning</source>
-        <translation type="unfinished">警告</translation>
+        <translation type="obsolete">警告</translation>
     </message>
     <message>
-        <location filename="../../src/qml/ClassWidgets/pages/settings/Personalization.qml" line="17"/>
         <source>The theme system is still under development. 
 
 If translations are missing after a theme change, please restart</source>
-        <translation type="unfinished">テーマシステムはまだ開発中です。
+        <translation type="obsolete">テーマシステムはまだ開発中です。
 
 テーマを変更した後に翻訳が欠落している場合は、アプリを再起動してください。</translation>
     </message>
@@ -4381,27 +4379,27 @@ then tap &quot;Edit Widget Screen&quot; in the menu to experience it.</source>
 <context>
     <name>currentActivity</name>
     <message>
-        <location filename="../../src/qml/widgets/currentActivity.qml" line="10"/>
+        <location filename="../../src/qml/widgets/currentActivity.qml" line="12"/>
         <source>Current Activity</source>
         <translation>現在のアクティビティ</translation>
     </message>
     <message>
-        <location filename="../../src/qml/widgets/currentActivity.qml" line="83"/>
+        <location filename="../../src/qml/widgets/currentActivity.qml" line="86"/>
         <source>Class</source>
         <translation>Class</translation>
     </message>
     <message>
-        <location filename="../../src/qml/widgets/currentActivity.qml" line="85"/>
+        <location filename="../../src/qml/widgets/currentActivity.qml" line="88"/>
         <source>Activity</source>
         <translation>活動</translation>
     </message>
     <message>
-        <location filename="../../src/qml/widgets/currentActivity.qml" line="87"/>
+        <location filename="../../src/qml/widgets/currentActivity.qml" line="90"/>
         <source>Take a break</source>
         <translation>休息一下</translation>
     </message>
     <message>
-        <location filename="../../src/qml/widgets/currentActivity.qml" line="88"/>
+        <location filename="../../src/qml/widgets/currentActivity.qml" line="91"/>
         <source>Nothing right now</source>
         <translation>当前无内容</translation>
     </message>
@@ -4414,7 +4412,7 @@ then tap &quot;Edit Widget Screen&quot; in the menu to experience it.</source>
         <translation type="unfinished">通知はありません</translation>
     </message>
     <message>
-        <location filename="../../src/qml/widgets/dynamicNotification.qml" line="266"/>
+        <location filename="../../src/qml/widgets/dynamicNotification.qml" line="268"/>
         <source>Dynamic Notification</source>
         <translation type="unfinished">動的な通知</translation>
     </message>
@@ -4422,7 +4420,7 @@ then tap &quot;Edit Widget Screen&quot; in the menu to experience it.</source>
 <context>
     <name>eventCountdown</name>
     <message>
-        <location filename="../../src/qml/widgets/eventCountdown.qml" line="10"/>
+        <location filename="../../src/qml/widgets/eventCountdown.qml" line="12"/>
         <source>Remaining</source>
         <translation>剩余</translation>
     </message>
@@ -4463,17 +4461,17 @@ then tap &quot;Edit Widget Screen&quot; in the menu to experience it.</source>
         <translation>活動のフルネームを表示</translation>
     </message>
     <message>
-        <location filename="../../src/qml/widgets/upcomingActivities.qml" line="10"/>
+        <location filename="../../src/qml/widgets/upcomingActivities.qml" line="12"/>
         <source>Upcoming</source>
         <translation>今後の</translation>
     </message>
     <message>
-        <location filename="../../src/qml/widgets/upcomingActivities.qml" line="29"/>
+        <location filename="../../src/qml/widgets/upcomingActivities.qml" line="32"/>
         <source>Class</source>
         <translation type="unfinished">クラス</translation>
     </message>
     <message>
-        <location filename="../../src/qml/widgets/upcomingActivities.qml" line="30"/>
+        <location filename="../../src/qml/widgets/upcomingActivities.qml" line="33"/>
         <source>Activity</source>
         <translation type="unfinished">アクティビティ</translation>
     </message>
@@ -4482,12 +4480,12 @@ then tap &quot;Edit Widget Screen&quot; in the menu to experience it.</source>
         <translation type="vanished">不明</translation>
     </message>
     <message>
-        <location filename="../../src/qml/widgets/upcomingActivities.qml" line="35"/>
+        <location filename="../../src/qml/widgets/upcomingActivities.qml" line="38"/>
         <source>Nothing ahead</source>
         <translation>前方にない</translation>
     </message>
     <message>
-        <location filename="../../src/qml/widgets/upcomingActivities.qml" line="31"/>
+        <location filename="../../src/qml/widgets/upcomingActivities.qml" line="34"/>
         <source>Unset</source>
         <translation>Unset</translation>
     </message>
