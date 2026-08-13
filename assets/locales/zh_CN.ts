@@ -3811,8 +3811,17 @@ If it takes place in another location, such as a sport field, lab, or another cl
     </message>
     <message>
         <location filename="../../src/qml/ClassWidgets/pages/settings/notificationAndTime/Time.qml" line="26"/>
+        <source>Time Offset (Seconds)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../src/qml/ClassWidgets/pages/settings/notificationAndTime/Time.qml" line="35"/>
+        <source>Seconds</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <source>Time Offset (minutes)</source>
-        <translation>时差偏移（秒）</translation>
+        <translation type="vanished">时差偏移（秒）</translation>
     </message>
     <message>
         <location filename="../../src/qml/ClassWidgets/pages/settings/notificationAndTime/Time.qml" line="27"/>
@@ -3824,9 +3833,8 @@ If it takes place in another location, such as a sport field, lab, or another cl
         <translation type="vanished">调整时差偏移以匹配学校的广播提醒。增加偏移量以抵消提前时间，减少偏移量以抵消晚点时间。</translation>
     </message>
     <message>
-        <location filename="../../src/qml/ClassWidgets/pages/settings/notificationAndTime/Time.qml" line="35"/>
         <source>minutes</source>
-        <translation>分钟</translation>
+        <translation type="vanished">分钟</translation>
     </message>
 </context>
 <context>

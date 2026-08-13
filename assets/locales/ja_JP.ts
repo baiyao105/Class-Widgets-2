@@ -3618,8 +3618,17 @@ If it takes place in another location, such as a sport field, lab, or another cl
     </message>
     <message>
         <location filename="../../src/qml/ClassWidgets/pages/settings/notificationAndTime/Time.qml" line="26"/>
+        <source>Time Offset (Seconds)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../src/qml/ClassWidgets/pages/settings/notificationAndTime/Time.qml" line="35"/>
+        <source>Seconds</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <source>Time Offset (minutes)</source>
-        <translation type="unfinished">時差（分）</translation>
+        <translation type="obsolete">時差（分）</translation>
     </message>
     <message>
         <location filename="../../src/qml/ClassWidgets/pages/settings/notificationAndTime/Time.qml" line="27"/>
@@ -3627,9 +3636,8 @@ If it takes place in another location, such as a sport field, lab, or another cl
         <translation type="unfinished">スケジュールの時間を学校の放送に合わせて調整してください。ベルが早すぎる場合はオフセットを増やし、遅すぎる場合は減少させます。</translation>
     </message>
     <message>
-        <location filename="../../src/qml/ClassWidgets/pages/settings/notificationAndTime/Time.qml" line="35"/>
         <source>minutes</source>
-        <translation type="unfinished">分</translation>
+        <translation type="obsolete">分</translation>
     </message>
 </context>
 <context>

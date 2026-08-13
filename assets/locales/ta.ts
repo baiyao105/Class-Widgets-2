@@ -3431,8 +3431,17 @@ If it takes place in another location, such as a sport field, lab, or another cl
     </message>
     <message>
         <location filename="../../src/qml/ClassWidgets/pages/settings/notificationAndTime/Time.qml" line="26"/>
+        <source>Time Offset (Seconds)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../src/qml/ClassWidgets/pages/settings/notificationAndTime/Time.qml" line="35"/>
+        <source>Seconds</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <source>Time Offset (minutes)</source>
-        <translation>நேர ஆஃப்செட் (நிமிடங்கள்)</translation>
+        <translation type="vanished">நேர ஆஃப்செட் (நிமிடங்கள்)</translation>
     </message>
     <message>
         <location filename="../../src/qml/ClassWidgets/pages/settings/notificationAndTime/Time.qml" line="27"/>
@@ -3440,9 +3449,8 @@ If it takes place in another location, such as a sport field, lab, or another cl
         <translation>உங்கள் பள்ளியின் ஒலிபரப்புடன் பொருந்த, அட்டவணை நேரத்தைச் சரிசெய்யவும்; ஆரம்ப மணிகளுக்கு ஈடுசெய்ய ஆஃப்செட்டை அதிகரிக்கவும், தாமதமான மணிகளுக்கு ஈடுசெய்ய குறைக்கவும்</translation>
     </message>
     <message>
-        <location filename="../../src/qml/ClassWidgets/pages/settings/notificationAndTime/Time.qml" line="35"/>
         <source>minutes</source>
-        <translation>நிமிடங்கள்</translation>
+        <translation type="vanished">நிமிடங்கள்</translation>
     </message>
 </context>
 <context>

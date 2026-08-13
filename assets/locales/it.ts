@@ -3462,7 +3462,12 @@ If it takes place in another location, such as a sport field, lab, or another cl
     </message>
     <message>
         <location filename="../../src/qml/ClassWidgets/pages/settings/notificationAndTime/Time.qml" line="26"/>
-        <source>Time Offset (minutes)</source>
+        <source>Time Offset (Seconds)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../src/qml/ClassWidgets/pages/settings/notificationAndTime/Time.qml" line="35"/>
+        <source>Seconds</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -3471,9 +3476,8 @@ If it takes place in another location, such as a sport field, lab, or another cl
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/qml/ClassWidgets/pages/settings/notificationAndTime/Time.qml" line="35"/>
         <source>minutes</source>
-        <translation type="unfinished">minutes</translation>
+        <translation type="obsolete">minutes</translation>
     </message>
 </context>
 <context>

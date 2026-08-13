@@ -3427,8 +3427,17 @@ If it takes place in another location, such as a sport field, lab, or another cl
     </message>
     <message>
         <location filename="../../src/qml/ClassWidgets/pages/settings/notificationAndTime/Time.qml" line="26"/>
+        <source>Time Offset (Seconds)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../src/qml/ClassWidgets/pages/settings/notificationAndTime/Time.qml" line="35"/>
+        <source>Seconds</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <source>Time Offset (minutes)</source>
-        <translation>Tim Cook老了多少？（秒）</translation>
+        <translation type="vanished">Tim Cook老了多少？（秒）</translation>
     </message>
     <message>
         <location filename="../../src/qml/ClassWidgets/pages/settings/notificationAndTime/Time.qml" line="27"/>
@@ -3436,9 +3445,8 @@ If it takes place in another location, such as a sport field, lab, or another cl
         <translation>让我们校准Tim Cook的年龄。</translation>
     </message>
     <message>
-        <location filename="../../src/qml/ClassWidgets/pages/settings/notificationAndTime/Time.qml" line="35"/>
         <source>minutes</source>
-        <translation>最小</translation>
+        <translation type="vanished">最小</translation>
     </message>
 </context>
 <context>
