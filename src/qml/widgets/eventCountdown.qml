@@ -7,7 +7,10 @@ import Qt5Compat.GraphicalEffects
 
 Widget {
     id: root
-    text: qsTr("Remaining")
+    text: {
+        AppCentral.translator.language
+        return qsTr("Remaining")
+    }
     property var countdown: AppCentral.scheduleRuntime.remainingTime || { "minutes": 0, "seconds": 0 }
 
     // 统一布局，用 RowLayout 并根据 miniMode 控制内部排列

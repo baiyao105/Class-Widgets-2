@@ -7,7 +7,10 @@ import Qt5Compat.GraphicalEffects
 
 Widget {
     id: root
-    text: qsTr("Current Activity")
+    text: {
+        AppCentral.translator.language
+        return qsTr("Current Activity")
+    }
 
     // property color currentColor: AppCentral.scheduleRuntime.currentSubject.color
     //     ? AppCentral.scheduleRuntime.currentSubject.color

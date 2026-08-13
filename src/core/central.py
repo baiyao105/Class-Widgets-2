@@ -137,9 +137,9 @@ class AppCentral(QObject):  # Class Widgets 的中枢
 
     def _initialize_utils(self) -> None:
         self.plugin_api: PluginAPI = PluginAPI(self)
+        self.app_translator: AppTranslator = AppTranslator(self)
         self._register_shortcuts()
         self.plugin_manager: PluginManager = PluginManager(self.plugin_api, self)
-        self.app_translator: AppTranslator = AppTranslator(self)
         self.utils_backend: UtilsBackend = UtilsBackend(self)
         self.automation_manager: AutomationManager = AutomationManager(self)
         self.updater_bridge: UpdaterBridge = UpdaterBridge(self)
@@ -180,6 +180,14 @@ class AppCentral(QObject):  # Class Widgets 的中枢
     def _request_reschedule_day_shortcut(self) -> bool:
         self.trayShortcutRequested.emit("com.classwidgets.reschedule-day")
         return False
+
+    def _retranslate_builtin_shortcuts(self) -> None:
+        shortcuts = self.plugin_api.ui
+        for shortcut_id, source_text in self._BUILTIN_SHORTCUT_NAMES.items():
+            shortcuts.set_shortcut_name(
+                shortcut_id,
+                QCoreApplication.translate("Shortcuts", source_text),
+            )
 
     def _initialize_schedule_components(self):
         """初始化调度相关组件"""
@@ -413,6 +421,7 @@ class AppCentral(QObject):  # Class Widgets 的中枢
 
     def _load_translator(self) -> None:
         """加载翻译"""
+        self.app_translator.languageChanged.connect(self._retranslate_builtin_shortcuts)
         self.app_translator.languageChanged.connect(lambda: self.retranslate.emit())
         self.app_translator.setLanguage(self.configs.locale.language)
 

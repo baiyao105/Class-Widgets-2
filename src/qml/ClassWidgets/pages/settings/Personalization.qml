@@ -11,15 +11,15 @@ FluentPage {
     title: qsTr("Personalization")
     property string pendingThemeId: ""
 
-    InfoBar {
-        Layout.fillWidth: true
-        title: qsTr("Warning")
-        text: qsTr(
-            "The theme system is still under development. \n\n" +
-            "If translations are missing after a theme change, please restart"
-        )
-        severity: Severity.Warning
-    }
+    // InfoBar {
+    //     Layout.fillWidth: true
+    //     title: qsTr("Warning")
+    //     text: qsTr(
+    //         "The theme system is still under development. \n\n" +
+    //         "If translations are missing after a theme change, please restart"
+    //     )
+    //     severity: Severity.Warning
+    // }
 
     ColumnLayout {
         Layout.fillWidth: true

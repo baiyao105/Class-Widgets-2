@@ -263,7 +263,10 @@ Widget {
     subtitle: Subtitle {
         id: subtitleLabel
         color: "#FFF"
-        text: qsTr("Dynamic Notification")
+        text: {
+            AppCentral.translator.language
+            return qsTr("Dynamic Notification")
+        }
     }
 
     // 关闭按钮

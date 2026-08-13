@@ -7,7 +7,10 @@ import Qt5Compat.GraphicalEffects
 
 Widget {
     id: root
-    text: qsTr("Upcoming")
+    text: {
+        AppCentral.translator.language
+        return qsTr("Upcoming")
+    }
     property bool isExternalClass: AppCentral.scheduleRuntime.currentSubject.isLocalClassroom === false
     property bool showLeaveHint: false
 
