@@ -315,12 +315,12 @@ You can continue to open another one, or close this window.</source>
 <context>
     <name>ClassSwapRestoreDialog</name>
     <message>
-        <location filename="../../src/qml/ClassWidgets/Components/dialogs/ClassSwapRestoreDialog.qml" line="19"/>
+        <location filename="../../src/qml/ClassWidgets/Components/dialogs/ClassSwapRestoreDialog.qml" line="23"/>
         <source>Temporary schedule detected</source>
         <translation>தற்காலிக அட்டவணை கண்டறியப்பட்டது</translation>
     </message>
     <message>
-        <location filename="../../src/qml/ClassWidgets/Components/dialogs/ClassSwapRestoreDialog.qml" line="33"/>
+        <location filename="../../src/qml/ClassWidgets/Components/dialogs/ClassSwapRestoreDialog.qml" line="39"/>
         <source>Class Widgets found temporary class swaps for today.
 
 Do you want to continue using them, or discard and restore the original schedule?</source>
@@ -329,12 +329,12 @@ Do you want to continue using them, or discard and restore the original schedule
 அவற்றைத் தொடர்ந்து பயன்படுத்த விரும்புகிறீர்களா அல்லது அசல் அட்டவணையை நிராகரித்து மீட்டமைக்க விரும்புகிறீர்களா?</translation>
     </message>
     <message>
-        <location filename="../../src/qml/ClassWidgets/Components/dialogs/ClassSwapRestoreDialog.qml" line="47"/>
+        <location filename="../../src/qml/ClassWidgets/Components/dialogs/ClassSwapRestoreDialog.qml" line="53"/>
         <source>Discard</source>
         <translation>நிராகரி</translation>
     </message>
     <message>
-        <location filename="../../src/qml/ClassWidgets/Components/dialogs/ClassSwapRestoreDialog.qml" line="57"/>
+        <location filename="../../src/qml/ClassWidgets/Components/dialogs/ClassSwapRestoreDialog.qml" line="62"/>
         <source>Continue</source>
         <translation>தொடரவும்</translation>
     </message>
@@ -3025,27 +3025,27 @@ It&apos;s incompatible and may cause unexpected issues.</source>
 <context>
     <name>Shortcuts</name>
     <message>
-        <location filename="../../src/core/central.py" line="140"/>
+        <location filename="../../src/core/central.py" line="151"/>
         <source>Settings</source>
         <translation type="unfinished">அமைப்புகள்</translation>
     </message>
     <message>
-        <location filename="../../src/core/central.py" line="146"/>
+        <location filename="../../src/core/central.py" line="157"/>
         <source>Schedules</source>
         <translation type="unfinished">அட்டவணைகள்</translation>
     </message>
     <message>
-        <location filename="../../src/core/central.py" line="152"/>
+        <location filename="../../src/core/central.py" line="163"/>
         <source>Plugin Plaza</source>
         <translation type="unfinished">செருகுநிரல் பிளாசா</translation>
     </message>
     <message>
-        <location filename="../../src/core/central.py" line="158"/>
+        <location filename="../../src/core/central.py" line="169"/>
         <source>Reschedule Day</source>
         <translation type="unfinished">மறு அட்டவணை நாள்</translation>
     </message>
     <message>
-        <location filename="../../src/core/central.py" line="164"/>
+        <location filename="../../src/core/central.py" line="175"/>
         <source>Class Swap</source>
         <translation type="unfinished">வகுப்பு இடமாற்று</translation>
     </message>
@@ -4155,22 +4155,22 @@ then tap &quot;Edit Widget Screen&quot; in the menu to experience it.</source>
 <context>
     <name>WidgetsContainer</name>
     <message>
-        <location filename="../../src/qml/ClassWidgets/Components/WidgetsContainer.qml" line="202"/>
+        <location filename="../../src/qml/ClassWidgets/Components/WidgetsContainer.qml" line="205"/>
         <source>Edit </source>
         <translation>திருத்தவும் </translation>
     </message>
     <message>
-        <location filename="../../src/qml/ClassWidgets/Components/WidgetsContainer.qml" line="217"/>
+        <location filename="../../src/qml/ClassWidgets/Components/WidgetsContainer.qml" line="220"/>
         <source>Delete</source>
         <translation>நீக்கு</translation>
     </message>
     <message>
-        <location filename="../../src/qml/ClassWidgets/Components/WidgetsContainer.qml" line="226"/>
+        <location filename="../../src/qml/ClassWidgets/Components/WidgetsContainer.qml" line="229"/>
         <source>Edit Widgets Screen</source>
         <translation>விட்செட்கள் திரையைத் திருத்து</translation>
     </message>
     <message>
-        <location filename="../../src/qml/ClassWidgets/Components/WidgetsContainer.qml" line="301"/>
+        <location filename="../../src/qml/ClassWidgets/Components/WidgetsContainer.qml" line="304"/>
         <source>Add</source>
         <translation>கூட்டு</translation>
     </message>
