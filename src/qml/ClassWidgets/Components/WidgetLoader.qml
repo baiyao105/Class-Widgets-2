@@ -6,6 +6,8 @@ Loader {
     property bool reloading: false
     source: widgetSource
     asynchronous: true
+    // width: item ? item.implicitWidth : 0
+    // height: item ? item.height : 0
     onStatusChanged: {
         if (status === Loader.Ready) {
             reloading = false
@@ -19,6 +21,8 @@ Loader {
                 item.editMode = widgetsContainer.editMode
             }
             anim.start()
+        } else if (status === Loader.Error) {
+            console.error("Unable to load widget:", model.typeId, widgetSource)
         }
     }
 

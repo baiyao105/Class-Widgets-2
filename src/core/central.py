@@ -2,10 +2,11 @@ from __future__ import annotations
 
 import os
 import sys
+from enum import Enum, auto
 from pathlib import Path
 from typing import Any, Optional, TYPE_CHECKING, Protocol
 
-from PySide6.QtCore import QCoreApplication, QObject, Property, Signal, Slot, QPoint
+from PySide6.QtCore import QCoreApplication, QObject, Property, Signal, Slot, QPoint, QTimer
 from PySide6.QtGui import QFont, QIcon
 from PySide6.QtWidgets import QApplication
 from loguru import logger
@@ -24,7 +25,6 @@ if TYPE_CHECKING:
     from src.core.timer import UnionUpdateTimer
     from src.core.updater.bridge import UpdaterBridge
     from src.core.utils import TrayIcon, AppTranslator, UtilsBackend
-    from src.core.utils.debugger import DebuggerWindow
     from src.core.utils.instance_locker import SingleInstanceGuard
     from src.core.widgets import WidgetsWindow, WidgetListModel
     from src.core.automations.manager import AutomationManager
@@ -55,6 +55,14 @@ class QmlContextWindow(Protocol):
     engine: Any
 
 
+class StartupState(Enum):
+    CREATED = auto()
+    WAITING_FOR_TUTORIAL = auto()
+    INITIALIZING = auto()
+    RUNNING = auto()
+    FAILED = auto()
+
+
 class AppCentral(QObject):  # Class Widgets 的中枢
     _instance: Optional[AppCentral] = None
     _BUILTIN_SHORTCUT_NAMES = {
@@ -81,7 +89,10 @@ class AppCentral(QObject):  # Class Widgets 的中枢
         AppCentral._instance = self
        
         self._check_single_instance()
+        self._startup_state = StartupState.CREATED
         self._startup_swap_restore_pending: bool = False
+        self._startup_swap_restore_scheduled: bool = False
+        self._cleanup_started = False
         self._initialize_cores()
         self._initialize_app_icon()
         self._initialize_windows_appid()
@@ -89,6 +100,7 @@ class AppCentral(QObject):  # Class Widgets 的中枢
         self._initialize_schedule_components()
         self._initialize_utils()
         self._initialize_ui_components()
+        self.app_instance.aboutToQuit.connect(self.cleanup)
         logger.info("AppCentral initialization completed")
 
     def _check_single_instance(self) -> None:
@@ -115,7 +127,6 @@ class AppCentral(QObject):  # Class Widgets 的中枢
         self.configs: ConfigManager = ConfigManager(path=CONFIGS_PATH, filename="configs.json")
         self.theme_manager: ThemeManager = ThemeManager(self)
         self.widgets_model: WidgetListModel = WidgetListModel(self)
-        self.debugger: Optional[DebuggerWindow] = None
         self.tray_icon: Optional[TrayIcon] = None
         self.window_manager: AppWindowManager = AppWindowManager(self)
 
@@ -196,6 +207,7 @@ class AppCentral(QObject):  # Class Widgets 的中枢
     def _initialize_ui_components(self):
         """初始化启动必需的UI组件"""
         self.widgets_window: WidgetsWindow = WidgetsWindow(self)
+        self.widgets_window.qmlReady.connect(self._schedule_startup_swap_restore_prompt)
         if self.multi_instances:
             self.window_manager.ensure("single_instance")
 
@@ -213,35 +225,72 @@ class AppCentral(QObject):  # Class Widgets 的中枢
 
     @Slot()
     def init(self) -> None:
-        # 如果教程未完成，先显示引导窗口
-        if not getattr(self.configs.app, "tutorial_completed", False):
-            from src.core.windows import Tutorial
-
-            logger.info("Tutorial not completed, showing tutorial window first.")
-            self.tutorial_window = Tutorial(self)
-            self.tutorial_window.root_window.show()
-            return  # 中断后续初始化流程，教程窗口负责完成设置后重启
-
-        self._setup_logging()  # 设置日志
-        self._load_schedule()  # 加载课程表
-        self._load_class_swap()  # 加载换课记录（跨天清理）
-
-        # 启动时：若检测到今天存在临时课表，先询问用户是否继续使用
-        if self._class_swap_manager.hasTodaySwaps():
-            self.window_manager.ensure("class_swap_restore")
-            self._startup_swap_restore_pending = True
-            logger.warning("Detected temporary class swaps for today on startup, prompting user for action")
-            self.window_manager.open_class_swap_restore()
+        if self._startup_state is not StartupState.CREATED:
+            logger.warning(
+                "Ignoring duplicate initialization request in state {}",
+                self._startup_state.name,
+            )
             return
 
-        self._continue_init()
+        # 如果教程未完成，先显示引导窗口
+        if not getattr(self.configs.app, "tutorial_completed", False):
+            logger.info("Tutorial not completed, showing tutorial window first.")
+            self._startup_state = StartupState.WAITING_FOR_TUTORIAL
+            self.window_manager.open_tutorial()
+            return  # 中断后续初始化流程，教程窗口负责完成设置后重启
 
-    def _continue_init(self) -> None:
-        self._load_runtime()  # 加载运行时(以及插件)
-        self._init_tray_icon()  # 初始化托盘图标
-        self._run_utils()
-        self.initialized.emit()  # 发送信号
-        logger.info(f"Initialization completed.")
+        self._startup_state = StartupState.INITIALIZING
+        try:
+            self._setup_logging()  # 设置日志
+            self._load_schedule()  # 加载课程表
+            self._load_class_swap()  # 加载换课记录（跨天清理）
+            self._startup_swap_restore_pending = self._class_swap_manager.hasTodaySwaps()
+
+            self._load_runtime()  # 加载运行时(以及插件)
+            self._init_tray_icon()  # 初始化托盘图标
+            self._run_utils()
+        except Exception:
+            self._startup_state = StartupState.FAILED
+            logger.exception("Application initialization failed")
+            raise
+
+        self._startup_state = StartupState.RUNNING
+        self.initialized.emit()
+        logger.info("Initialization completed.")
+        self._schedule_startup_swap_restore_prompt()
+
+    @Slot()
+    def _schedule_startup_swap_restore_prompt(self) -> None:
+        if (
+            self._startup_state is not StartupState.RUNNING
+            or not self._startup_swap_restore_pending
+            or self._startup_swap_restore_scheduled
+            or not self.widgets_window.is_qml_ready
+        ):
+            return
+
+        self._startup_swap_restore_scheduled = True
+        QTimer.singleShot(0, self._show_startup_swap_restore_prompt)
+
+    def _show_startup_swap_restore_prompt(self) -> None:
+        self._startup_swap_restore_scheduled = False
+        if (
+            self._startup_state is not StartupState.RUNNING
+            or not self._startup_swap_restore_pending
+        ):
+            return
+
+        logger.warning("Detected temporary class swaps for today on startup, prompting user for action")
+        self.window_manager.open_class_swap_restore()
+
+    def resolve_class_swap_restore(self, *, discard: bool) -> None:
+        if discard:
+            self._class_swap_manager.discardTodaySwaps()
+        self._startup_swap_restore_pending = False
+        self._startup_swap_restore_scheduled = False
+
+    def has_today_class_swaps(self) -> bool:
+        return self._class_swap_manager.hasTodaySwaps()
 
 
 
@@ -258,10 +307,23 @@ class AppCentral(QObject):  # Class Widgets 的中枢
         self.updated.emit()  # 发送信号
 
     def cleanup(self) -> None:
-        self.configs.save()
-        self.union_update_timer.stop()
-        self.window_manager.release_all()
-        self.plugin_manager.cleanup()
+        if self._cleanup_started:
+            return
+        self._cleanup_started = True
+
+        cleanup_steps = (
+            ("configuration save", self.configs.save),
+            ("update timer stop", self.union_update_timer.stop),
+            ("auxiliary window release", self.window_manager.release_all),
+            ("main window release", self.widgets_window.release),
+            ("plugin cleanup", self.plugin_manager.cleanup),
+            ("RinUI theme cleanup", self.widgets_window.theme_manager.clean_up),
+        )
+        for step_name, cleanup_step in cleanup_steps:
+            try:
+                cleanup_step()
+            except Exception:
+                logger.exception("Failed during {}", step_name)
         logger.info("Clean up.")
 
     @Property(QObject, notify=initialized)
@@ -366,16 +428,9 @@ class AppCentral(QObject):  # Class Widgets 的中枢
         self.schedule_manager.scheduleModified.connect(self.runtime.refresh)
         self._class_swap_manager.updated.connect(self.update)
 
-        self.app_instance.aboutToQuit.connect(self.cleanup)
-
         self.union_update_timer.start()
 
     def _run_utils(self) -> None:
-        if self.configs.app.debug_mode:
-            from src.core.utils.debugger import DebuggerWindow
-
-            self.debugger = DebuggerWindow(self)
-
         self.automation_manager.init_builtin_tasks()
         self.widgets_window.run()
 
@@ -428,14 +483,7 @@ class AppCentral(QObject):  # Class Widgets 的中枢
         if not self.configs.app.debug_mode:
             logger.error("Looks like you tried to open the debugger without debug mode enabled, zako~")
             return
-
-        instance = self.debugger
-        if self.debugger and instance.root_window:
-            instance.root_window.show()
-            instance.root_window.raise_()
-            instance.root_window.requestActivate()
-        else:
-            logger.error("Debugger window not initialized correctly.")
+        self.window_manager.open_debugger()
 
     @Slot()
     def toggleWidgetsEditMode(self) -> None:

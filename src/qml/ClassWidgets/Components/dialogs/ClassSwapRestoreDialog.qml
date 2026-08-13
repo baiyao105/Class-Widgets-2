@@ -13,10 +13,16 @@ QQW.Window {
 
     flags: Qt.WindowStaysOnTopHint | Qt.FramelessWindowHint | Qt.WA_TranslucentBackground
 
+    onClosing: function(event) {
+        event.accepted = false
+    }
+
     Dialog {
         id: classSwapRestoreDialog
         width: Screen.width * 0.25
         title: qsTr("Temporary schedule detected")
+        modal: true
+        closePolicy: Popup.NoAutoClose
 
         RowLayout {
             spacing: 12
@@ -47,8 +53,7 @@ QQW.Window {
                 text: qsTr("Discard")
                 highlighted: true
                 onClicked: {
-                    classSwapRestoreDialogWindow.close()
-                    AppCentral.classSwapRestoreDiscard()
+                    WindowManager.classSwapRestoreDiscard()
                 }
             }
 
@@ -56,8 +61,7 @@ QQW.Window {
                 Layout.preferredWidth: parent.width * 0.5
                 text: qsTr("Continue")
                 onClicked: {
-                    classSwapRestoreDialogWindow.close()
-                    AppCentral.classSwapRestoreContinue()
+                    WindowManager.classSwapRestoreContinue()
                 }
             }
         }

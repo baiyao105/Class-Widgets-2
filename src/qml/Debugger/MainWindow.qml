@@ -77,6 +77,6 @@ ApplicationWindow {
     // fix
     onClosing: function(event) {
         event.accepted = false
-        mainWindow.hide()
+        WindowManager.closeDebugger()
     }
 }

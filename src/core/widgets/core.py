@@ -1,42 +1,38 @@
 from pathlib import Path
-from PySide6.QtCore import QObject, Slot, Property, Signal, QRect, Qt, QTimer
-from PySide6.QtQml import QQmlComponent
-import RinUI
+from PySide6.QtCore import QObject, Signal, QRect, Qt, QTimer
 from PySide6.QtGui import QRegion, QCursor
-from PySide6.QtWidgets import QApplication
 from loguru import logger
 
-from src.core import QML_PATH, SRC_PATH
+from src.core import QML_PATH
 from src.core.directories import CW_PATH
 
 from src.core.themes.manager import DEFAULT_THEME_ID
 
 from src.core.themes.interceptor import ThemeUrlInterceptor
-from src.core.themes.manager import DEFAULT_THEME_ID
+from src.core.windows.windows import ReleasableWindow
 
-class WidgetsWindow(RinUI.RinUIWindow, QObject):
+
+class WidgetsWindow(ReleasableWindow, QObject):
     themeReadyToReload = Signal()
+    qmlReady = Signal()
 
     def __init__(self, app_central: QObject):
-        super().__init__()
+        super().__init__(app_central)
         self.app_central = app_central
         self.accepts_input = True
         self._theme_reloading = False
 
-        self._setup_qml_context()
+        self.engine.addImportPath(CW_PATH)
         self.qml_main_path = Path(QML_PATH / "MainInterface.qml")
         self.interactive_rect = QRegion()
+        self._mask_update_pending = False
+        self._qml_ready = False
         
         # 初始化主题拦截器
         self.interceptor = ThemeUrlInterceptor(self)
         self.engine.setUrlInterceptor(self.interceptor)
 
         self.engine.objectCreated.connect(self.on_qml_ready, type=Qt.ConnectionType.QueuedConnection)
-
-    def _setup_qml_context(self):
-        """设置QML上下文属性"""
-        self.app_central.setup_qml_context(self)
-        self.engine.addImportPath(CW_PATH)
 
     def _start_listening(self):
         self.timer = QTimer(self)
@@ -48,7 +44,19 @@ class WidgetsWindow(RinUI.RinUIWindow, QObject):
         self.app_central.widgets_model.load_config()
         self._load_with_theme()
         self.app_central.theme_manager.themeChanged.connect(self.on_theme_changed)
-        self.app_central.retranslate.connect(self.engine.retranslate)
+
+    def release(self):
+        if self.is_released:
+            return
+
+        timer = getattr(self, "timer", None)
+        if timer:
+            timer.stop()
+        try:
+            self.app_central.theme_manager.themeChanged.disconnect(self.on_theme_changed)
+        except (RuntimeError, TypeError):
+            pass
+        super().release()
 
     def _load_with_theme(self):
         """加载QML并应用主题"""
@@ -77,6 +85,10 @@ class WidgetsWindow(RinUI.RinUIWindow, QObject):
         self.load(self.qml_main_path)
 
         self._start_listening()
+
+    @property
+    def is_qml_ready(self) -> bool:
+        return self._qml_ready
 
     def on_theme_changed(self):
         """主题变更时重新加载界面"""
@@ -128,19 +140,40 @@ class WidgetsWindow(RinUI.RinUIWindow, QObject):
         self._theme_reloading = False
         logger.debug("Theme reloading flag reset to False")
 
-    def on_qml_ready(self, obj, objUrl):
+    def on_qml_ready(self, obj, obj_url):
         if obj is None:
             logger.error("Main QML Load Failed")
             return
 
-        widgets_loader = self.root_window.findChild(QObject, "widgetsLoader")
+        if Path(obj_url.toLocalFile()).resolve() != self.qml_main_path.resolve():
+            return
+
+        if self._qml_ready:
+            return
+
+        widgets_loader = obj.findChild(QObject, "widgetsLoader")
         if widgets_loader:
-            widgets_loader.geometryChanged.connect(self.update_mask)
+            widgets_loader.geometryChanged.connect(self.schedule_mask_update)
+            widgets_loader.contentGeometryChanged.connect(self.schedule_mask_update)
+            self.schedule_mask_update()
+            self._qml_ready = True
+            self.qmlReady.emit()
             return
         logger.error("'widgetsLoader' object has not found'")
 
+    def schedule_mask_update(self):
+        if self._mask_update_pending:
+            return
+
+        self._mask_update_pending = True
+        QTimer.singleShot(0, self.update_mask)
+
     # 裁剪窗口
     def update_mask(self):
+        self._mask_update_pending = False
+        if not self.root_window:
+            return
+
         mask = QRegion()
         widgets_loader = self.root_window.findChild(QObject, "widgetsLoader")
         if not widgets_loader:
@@ -150,11 +183,14 @@ class WidgetsWindow(RinUI.RinUIWindow, QObject):
         edit_mode = widgets_loader.property("editMode") or False
 
         if menu_show or edit_mode:
+            self.interactive_rect = QRegion()
             self.root_window.setMask(QRegion())
             return
 
         for w in widgets_loader.childItems():
             if w.objectName() == "addWidgetsContainer":
+                continue
+            if w.width() <= 0 or w.height() <= 0 or not w.isVisible():
                 continue
             rect = QRect(
                 int(w.x() + widgets_loader.x()),
@@ -165,6 +201,8 @@ class WidgetsWindow(RinUI.RinUIWindow, QObject):
             mask = mask.united(QRegion(rect))
 
         self.interactive_rect = mask
+        # An empty mask clips the whole transparent window. This is common while
+        # asynchronous widget loaders are still resolving their item sizes.
         self.root_window.setMask(mask)
 
     def update_mouse_state(self):

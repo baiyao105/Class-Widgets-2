@@ -14,6 +14,7 @@ class AppWindowManager(QObject):
         super().__init__(central)
         self.central = central
         self._windows: dict[str, Any] = {}
+        self._pending_releases: list[Any] = []
         self._factories: dict[str, Callable[[], Any]] = {
             "settings": self._create_settings,
             "editor": self._create_editor,
@@ -22,6 +23,8 @@ class AppWindowManager(QObject):
             "class_swap": self._create_class_swap,
             "class_swap_restore": self._create_class_swap_restore,
             "single_instance": self._create_single_instance,
+            "tutorial": self._create_tutorial,
+            "debugger": self._create_debugger,
         }
         self._errors = {
             "settings": "Settings window not initialized correctly.",
@@ -31,6 +34,8 @@ class AppWindowManager(QObject):
             "class_swap": "ClassSwap window not initialized correctly.",
             "class_swap_restore": "ClassSwap restore dialog window not initialized correctly.",
             "single_instance": "Single Instance Dialog not initialized correctly.",
+            "tutorial": "Tutorial window not initialized correctly.",
+            "debugger": "Debugger window not initialized correctly.",
         }
 
     @Slot()
@@ -82,19 +87,18 @@ class AppWindowManager(QObject):
         self.open_class_swap_restore()
 
     @Slot()
+    def closeDebugger(self) -> None:
+        self.close_debugger()
+
+    @Slot()
     def classSwapRestoreContinue(self) -> None:
+        self.central.resolve_class_swap_restore(discard=False)
         self.close_class_swap_restore()
-        if self.central._startup_swap_restore_pending:
-            self.central._startup_swap_restore_pending = False
-            self.central._continue_init()
 
     @Slot()
     def classSwapRestoreDiscard(self) -> None:
-        self.central._class_swap_manager.discardTodaySwaps()
+        self.central.resolve_class_swap_restore(discard=True)
         self.close_class_swap_restore()
-        if self.central._startup_swap_restore_pending:
-            self.central._startup_swap_restore_pending = False
-            self.central._continue_init()
 
     def open_settings(self) -> None:
         self.open("settings")
@@ -103,7 +107,7 @@ class AppWindowManager(QObject):
         self.release("settings")
 
     def open_editor(self) -> None:
-        if self.central._class_swap_manager.hasTodaySwaps():
+        if self.central.has_today_class_swaps():
             logger.warning("Blocked opening editor because temporary class swaps exist today")
             self.open_class_swap_restore()
             return
@@ -139,6 +143,15 @@ class AppWindowManager(QObject):
     def open_single_instance_dialog(self) -> None:
         self.open("single_instance")
 
+    def open_tutorial(self) -> None:
+        self.open("tutorial")
+
+    def open_debugger(self) -> None:
+        self.open("debugger")
+
+    def close_debugger(self) -> None:
+        self.release("debugger")
+
     def open(self, name: str) -> None:
         try:
             window = self.ensure(name)
@@ -163,38 +176,45 @@ class AppWindowManager(QObject):
         return window
 
     def release(self, name: str) -> None:
-        window = self._windows.get(name)
-        if not window:
-            return
-
-        root_window = getattr(window, "root_window", None)
-        if root_window:
-            root_window.hide()
-
-        QTimer.singleShot(0, lambda window_name=name: self._release_now(window_name))
-
-    def _release_now(self, name: str) -> None:
         window = self._windows.pop(name, None)
         if not window:
             return
 
-        try:
-            self.central.retranslate.disconnect(window.engine.retranslate)
-        except (RuntimeError, TypeError):
-            pass
-
-        if hasattr(window, "release"):
-            window.release()
-            return
-
         root_window = getattr(window, "root_window", None)
         if root_window:
             root_window.hide()
-            root_window.deleteLater()
+
+        self._pending_releases.append(window)
+        QTimer.singleShot(0, lambda managed_window=window: self._finish_release(managed_window))
+
+    def _finish_release(self, window: Any) -> None:
+        for index, pending_window in enumerate(self._pending_releases):
+            if pending_window is window:
+                self._pending_releases.pop(index)
+                self._release_now(window)
+                return
+
+    def _release_now(self, window: Any) -> None:
+        try:
+            if hasattr(window, "release"):
+                window.release()
+                return
+
+            root_window = getattr(window, "root_window", None)
+            if root_window:
+                root_window.hide()
+                root_window.deleteLater()
+        except Exception:
+            logger.exception("Failed to release managed window {}", type(window).__name__)
 
     def release_all(self) -> None:
-        for name in list(self._windows):
-            self.release(name)
+        windows = list(self._windows.values()) + self._pending_releases
+        self._windows.clear()
+        self._pending_releases = []
+
+        unique_windows = {id(window): window for window in windows}
+        for window in unique_windows.values():
+            self._release_now(window)
 
     def _create_settings(self):
         from src.core.windows.windows import Settings
@@ -232,6 +252,16 @@ class AppWindowManager(QObject):
         from src.core.windows.windows import CheckSingleInstanceDialog
 
         return CheckSingleInstanceDialog(self.central)
+
+    def _create_tutorial(self):
+        from src.core.windows.windows import Tutorial
+
+        return Tutorial(self.central)
+
+    def _create_debugger(self):
+        from src.core.utils.debugger import DebuggerWindow
+
+        return DebuggerWindow(self.central)
 
     def _apply_settings_window_workarounds(self, window) -> None:
         import platform

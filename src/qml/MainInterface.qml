@@ -125,6 +125,7 @@ QQW.Window {
         onHeightChanged: geometryChanged()
         onEditModeChanged: geometryChanged()
         onMenuVisibleChanged: geometryChanged()
+        onContentGeometryChanged: geometryChanged()
     }
 
     TrayPanel {

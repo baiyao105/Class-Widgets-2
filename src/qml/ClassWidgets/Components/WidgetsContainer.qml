@@ -21,6 +21,7 @@ Flow {
     property real dragOffsetX: 0
     property real dragOffsetY: 0
     property real hideMargin: 24  // 隐藏时保留的可点击空间
+    signal contentGeometryChanged()
 
     Component.onCompleted: {
         editMode = widgetRepeater.count === 0
@@ -141,6 +142,8 @@ Flow {
                 id: loader
                 transformOrigin: Item.TopLeft
                 scale: tapHandler.pressed ? scaleFactor * 0.975 : scaleFactor
+                onWidthChanged: widgetsContainer.contentGeometryChanged()
+                onHeightChanged: widgetsContainer.contentGeometryChanged()
 
                 TapHandler {
                     id: tapHandler
