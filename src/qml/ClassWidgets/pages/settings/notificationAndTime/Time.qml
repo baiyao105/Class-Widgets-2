@@ -23,7 +23,7 @@ FluentPage {
         SettingCard {
             Layout.fillWidth: true
             icon.name: "ic_fluent_timer_20_regular"
-            title: qsTr("Time Offset (minutes)")
+            title: qsTr("Time Offset (Seconds)")
             description: qsTr(
                 "Adjust schedule time to match your school's broadcast; " +
                 "Increase the offset to compensate for early bells, decrease to compensate for late bells"
@@ -32,7 +32,7 @@ FluentPage {
             SpinBox {
                 from: -86400
                 to: 86400
-                property string suffix: qsTr("minutes")
+                property string suffix: qsTr("Seconds")
                 Layout.preferredWidth: 200
                 enabled: !Configs.isKeyLocked("schedule.time_offset")
                 onValueChanged: Configs.set("schedule.time_offset", value)
