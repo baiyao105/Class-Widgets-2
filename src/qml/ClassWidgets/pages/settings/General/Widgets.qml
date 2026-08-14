@@ -89,13 +89,37 @@ FluentPage {
             description: qsTr("Make widgets look bigger or stay compact")
 
             Slider {
+                id: scaleSlider
                 from: 0.5
                 to: 2.0
                 stepSize: 0.05
                 tickmarks: true
                 tickFrequency: 0.5
                 enabled: !Configs.isKeyLocked("preferences.scale_factor")
-                onValueChanged: if (pressed) Configs.set("preferences.scale_factor", value)
+
+                // Keep dragging responsive without broadcasting every pointer event.
+                Timer {
+                    id: scalePreviewTimer
+                    interval: 33
+                    repeat: true
+                    onTriggered: {
+                        if (scaleSlider.pressed) {
+                            Configs.set("preferences.scale_factor", scaleSlider.value)
+                        } else {
+                            stop()
+                        }
+                    }
+                }
+
+                onPressedChanged: {
+                    if (pressed) {
+                        Configs.set("preferences.scale_factor", value)
+                        scalePreviewTimer.start()
+                    } else {
+                        scalePreviewTimer.stop()
+                        Configs.set("preferences.scale_factor", value)
+                    }
+                }
                 Component.onCompleted: value = Configs.data.preferences.scale_factor || 1.0
             }
         }

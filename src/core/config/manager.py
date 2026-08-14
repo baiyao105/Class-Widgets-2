@@ -176,12 +176,14 @@ class ConfigManager(QObject):
 
         # 如果最后一级是 dict，就赋值到 dict 的键
         if isinstance(cfg, dict):
+            if cfg.get(last_key) == value:
+                return
             cfg[last_key] = value
+            self._config._on_change()
         else:
+            if getattr(cfg, last_key) == value:
+                return
             setattr(cfg, last_key, value)
-
-        self._config._on_change()
-        self.configChanged.emit()
 
     @Slot(str, str, "QVariant")
     def setPlugin(self, plugin_id: str, key: str, value) -> None:

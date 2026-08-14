@@ -132,16 +132,24 @@ Flow {
 
         delegate: Item {
             id: widgetContainer
-            width: loader.width * scaleFactor
-            height: loader.height * scaleFactor
+            property real visualScale: scaleFactor
+            width: loader.width * visualScale
+            height: loader.height * visualScale
             rotation: editMode
             z: dragHandler.active ? 1 : 0
             opacity: dragHandler.active ? 0.5 : 1
 
+            Behavior on visualScale {
+                NumberAnimation {
+                    duration: 120
+                    easing.type: Easing.OutCubic
+                }
+            }
+
             WidgetLoader {
                 id: loader
                 transformOrigin: Item.TopLeft
-                scale: tapHandler.pressed ? scaleFactor * 0.975 : scaleFactor
+                scale: tapHandler.pressed ? visualScale * 0.975 : visualScale
                 onWidthChanged: widgetsContainer.contentGeometryChanged()
                 onHeightChanged: widgetsContainer.contentGeometryChanged()
 
@@ -150,12 +158,14 @@ Flow {
                 }
 
                 Behavior on scale {
+                    enabled: tapHandler.pressed
                     NumberAnimation {
-                        duration: 400;
+                        duration: 400
                         easing.type: Easing.Bezier
                         easing.bezierCurve: BezierCurve.liquidBack
                     }
                 }
+
             }
 
             ToolButton {
