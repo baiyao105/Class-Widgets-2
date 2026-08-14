@@ -4016,117 +4016,117 @@ then tap &quot;Edit Widget Screen&quot; in the menu to experience it.</source>
         <translation>விட்செட்களை பெரிதாக்கவும் அல்லது சிறியதாக இருக்கவும்</translation>
     </message>
     <message>
-        <location filename="../../src/qml/ClassWidgets/pages/settings/General/Widgets.qml" line="106"/>
+        <location filename="../../src/qml/ClassWidgets/pages/settings/General/Widgets.qml" line="130"/>
         <source>Opacity</source>
         <translation>ஒளிபுகாநிலை</translation>
     </message>
     <message>
-        <location filename="../../src/qml/ClassWidgets/pages/settings/General/Widgets.qml" line="107"/>
+        <location filename="../../src/qml/ClassWidgets/pages/settings/General/Widgets.qml" line="131"/>
         <source>Change the opacity of the background of widgets</source>
         <translation>விட்செட்களின் பின்னணியின் ஒளிபுகாநிலையை மாற்றவும்</translation>
     </message>
     <message>
-        <location filename="../../src/qml/ClassWidgets/pages/settings/General/Widgets.qml" line="125"/>
+        <location filename="../../src/qml/ClassWidgets/pages/settings/General/Widgets.qml" line="149"/>
         <source>Font</source>
         <translation>எழுத்துரு</translation>
     </message>
     <message>
-        <location filename="../../src/qml/ClassWidgets/pages/settings/General/Widgets.qml" line="126"/>
+        <location filename="../../src/qml/ClassWidgets/pages/settings/General/Widgets.qml" line="150"/>
         <source>Choose a font for the widgets</source>
         <translation>விட்செட்டுகளுக்கான எழுத்துருவைத் தேர்ந்தெடுக்கவும்</translation>
     </message>
     <message>
-        <location filename="../../src/qml/ClassWidgets/pages/settings/General/Widgets.qml" line="153"/>
+        <location filename="../../src/qml/ClassWidgets/pages/settings/General/Widgets.qml" line="177"/>
         <source>Font weight</source>
         <translation>எழுத்துரு எடை</translation>
     </message>
     <message>
-        <location filename="../../src/qml/ClassWidgets/pages/settings/General/Widgets.qml" line="154"/>
+        <location filename="../../src/qml/ClassWidgets/pages/settings/General/Widgets.qml" line="178"/>
         <source>Set the thickness of the font</source>
         <translation>எழுத்துருவின் தடிமன் அமைக்கவும்</translation>
     </message>
     <message>
-        <location filename="../../src/qml/ClassWidgets/pages/settings/General/Widgets.qml" line="159"/>
+        <location filename="../../src/qml/ClassWidgets/pages/settings/General/Widgets.qml" line="183"/>
         <source>Thin</source>
         <translation>மெல்லிய</translation>
     </message>
     <message>
-        <location filename="../../src/qml/ClassWidgets/pages/settings/General/Widgets.qml" line="160"/>
+        <location filename="../../src/qml/ClassWidgets/pages/settings/General/Widgets.qml" line="184"/>
         <source>Extra Light</source>
         <translation>கூடுதல் ஒளி</translation>
     </message>
     <message>
-        <location filename="../../src/qml/ClassWidgets/pages/settings/General/Widgets.qml" line="161"/>
+        <location filename="../../src/qml/ClassWidgets/pages/settings/General/Widgets.qml" line="185"/>
         <source>Light</source>
         <translation>ஒளி</translation>
     </message>
     <message>
-        <location filename="../../src/qml/ClassWidgets/pages/settings/General/Widgets.qml" line="162"/>
+        <location filename="../../src/qml/ClassWidgets/pages/settings/General/Widgets.qml" line="186"/>
         <source>Regular</source>
         <translation>வழக்கமான</translation>
     </message>
     <message>
-        <location filename="../../src/qml/ClassWidgets/pages/settings/General/Widgets.qml" line="163"/>
+        <location filename="../../src/qml/ClassWidgets/pages/settings/General/Widgets.qml" line="187"/>
         <source>Medium</source>
         <translation>சராசரி</translation>
     </message>
     <message>
-        <location filename="../../src/qml/ClassWidgets/pages/settings/General/Widgets.qml" line="164"/>
+        <location filename="../../src/qml/ClassWidgets/pages/settings/General/Widgets.qml" line="188"/>
         <source>Semi Bold</source>
         <translation>அரை தடித்த</translation>
     </message>
     <message>
-        <location filename="../../src/qml/ClassWidgets/pages/settings/General/Widgets.qml" line="165"/>
+        <location filename="../../src/qml/ClassWidgets/pages/settings/General/Widgets.qml" line="189"/>
         <source>Bold</source>
         <translation>தடிமான</translation>
     </message>
     <message>
-        <location filename="../../src/qml/ClassWidgets/pages/settings/General/Widgets.qml" line="166"/>
+        <location filename="../../src/qml/ClassWidgets/pages/settings/General/Widgets.qml" line="190"/>
         <source>Extra Bold</source>
         <translation>கூடுதல் தடித்த</translation>
     </message>
     <message>
-        <location filename="../../src/qml/ClassWidgets/pages/settings/General/Widgets.qml" line="167"/>
+        <location filename="../../src/qml/ClassWidgets/pages/settings/General/Widgets.qml" line="191"/>
         <source>Black</source>
         <translation>கருப்பு</translation>
     </message>
     <message>
-        <location filename="../../src/qml/ClassWidgets/pages/settings/General/Widgets.qml" line="168"/>
+        <location filename="../../src/qml/ClassWidgets/pages/settings/General/Widgets.qml" line="192"/>
         <source>Custom</source>
         <translation>தனிப்பயன்</translation>
     </message>
     <message>
-        <location filename="../../src/qml/ClassWidgets/pages/settings/General/Widgets.qml" line="201"/>
+        <location filename="../../src/qml/ClassWidgets/pages/settings/General/Widgets.qml" line="225"/>
         <source>Preview</source>
         <translation>முன்னோட்டம்</translation>
     </message>
     <message>
-        <location filename="../../src/qml/ClassWidgets/pages/settings/General/Widgets.qml" line="204"/>
+        <location filename="../../src/qml/ClassWidgets/pages/settings/General/Widgets.qml" line="228"/>
         <source>The quick brown fox jumps over the lazy dog</source>
         <translation>விரைவான பழுப்பு நரி சோம்பேறி நாய் மீது குதிக்கிறது</translation>
     </message>
     <message>
-        <location filename="../../src/qml/ClassWidgets/pages/settings/General/Widgets.qml" line="222"/>
+        <location filename="../../src/qml/ClassWidgets/pages/settings/General/Widgets.qml" line="246"/>
         <source>Window</source>
         <translation>சாளரம்</translation>
     </message>
     <message>
-        <location filename="../../src/qml/ClassWidgets/pages/settings/General/Widgets.qml" line="228"/>
+        <location filename="../../src/qml/ClassWidgets/pages/settings/General/Widgets.qml" line="252"/>
         <source>Display</source>
         <translation>காட்சி</translation>
     </message>
     <message>
-        <location filename="../../src/qml/ClassWidgets/pages/settings/General/Widgets.qml" line="229"/>
+        <location filename="../../src/qml/ClassWidgets/pages/settings/General/Widgets.qml" line="253"/>
         <source>Set which screen to display widgets on, and adjust their position</source>
         <translation>எந்தத் திரையில் விட்செட்களைக் காண்பிக்க வேண்டும் என்பதை அமைத்து, அவற்றின் நிலையைச் சரிசெய்யவும்</translation>
     </message>
     <message>
-        <location filename="../../src/qml/ClassWidgets/pages/settings/General/Widgets.qml" line="344"/>
+        <location filename="../../src/qml/ClassWidgets/pages/settings/General/Widgets.qml" line="368"/>
         <source>X-axis offset</source>
         <translation>எக்ச்-அச்சு ஆஃப்செட்</translation>
     </message>
     <message>
-        <location filename="../../src/qml/ClassWidgets/pages/settings/General/Widgets.qml" line="359"/>
+        <location filename="../../src/qml/ClassWidgets/pages/settings/General/Widgets.qml" line="383"/>
         <source>Y-axis offset</source>
         <translation>ஒய்-அச்சு ஆஃப்செட்</translation>
     </message>
@@ -4159,22 +4159,22 @@ then tap &quot;Edit Widget Screen&quot; in the menu to experience it.</source>
 <context>
     <name>WidgetsContainer</name>
     <message>
-        <location filename="../../src/qml/ClassWidgets/Components/WidgetsContainer.qml" line="205"/>
+        <location filename="../../src/qml/ClassWidgets/Components/WidgetsContainer.qml" line="215"/>
         <source>Edit </source>
         <translation>திருத்தவும் </translation>
     </message>
     <message>
-        <location filename="../../src/qml/ClassWidgets/Components/WidgetsContainer.qml" line="220"/>
+        <location filename="../../src/qml/ClassWidgets/Components/WidgetsContainer.qml" line="230"/>
         <source>Delete</source>
         <translation>நீக்கு</translation>
     </message>
     <message>
-        <location filename="../../src/qml/ClassWidgets/Components/WidgetsContainer.qml" line="229"/>
+        <location filename="../../src/qml/ClassWidgets/Components/WidgetsContainer.qml" line="239"/>
         <source>Edit Widgets Screen</source>
         <translation>விட்செட்கள் திரையைத் திருத்து</translation>
     </message>
     <message>
-        <location filename="../../src/qml/ClassWidgets/Components/WidgetsContainer.qml" line="304"/>
+        <location filename="../../src/qml/ClassWidgets/Components/WidgetsContainer.qml" line="314"/>
         <source>Add</source>
         <translation>கூட்டு</translation>
     </message>

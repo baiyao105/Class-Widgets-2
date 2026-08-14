@@ -4012,119 +4012,119 @@ then tap &quot;Edit Widget Screen&quot; in the menu to experience it.</source>
         <translation>大大的❤️或者小小的💦</translation>
     </message>
     <message>
-        <location filename="../../src/qml/ClassWidgets/pages/settings/General/Widgets.qml" line="106"/>
+        <location filename="../../src/qml/ClassWidgets/pages/settings/General/Widgets.qml" line="130"/>
         <source>Opacity</source>
         <translation>鬼魂设置</translation>
     </message>
     <message>
-        <location filename="../../src/qml/ClassWidgets/pages/settings/General/Widgets.qml" line="107"/>
+        <location filename="../../src/qml/ClassWidgets/pages/settings/General/Widgets.qml" line="131"/>
         <source>Change the opacity of the background of widgets</source>
         <translation>让小方块变成鬼魂</translation>
     </message>
     <message>
-        <location filename="../../src/qml/ClassWidgets/pages/settings/General/Widgets.qml" line="125"/>
+        <location filename="../../src/qml/ClassWidgets/pages/settings/General/Widgets.qml" line="149"/>
         <source>Font</source>
         <translation>书法</translation>
     </message>
     <message>
-        <location filename="../../src/qml/ClassWidgets/pages/settings/General/Widgets.qml" line="126"/>
+        <location filename="../../src/qml/ClassWidgets/pages/settings/General/Widgets.qml" line="150"/>
         <source>Choose a font for the widgets</source>
         <translation>让小方块学习书法</translation>
     </message>
     <message>
-        <location filename="../../src/qml/ClassWidgets/pages/settings/General/Widgets.qml" line="153"/>
+        <location filename="../../src/qml/ClassWidgets/pages/settings/General/Widgets.qml" line="177"/>
         <source>Font weight</source>
         <translation>重！</translation>
     </message>
     <message>
-        <location filename="../../src/qml/ClassWidgets/pages/settings/General/Widgets.qml" line="154"/>
+        <location filename="../../src/qml/ClassWidgets/pages/settings/General/Widgets.qml" line="178"/>
         <source>Set the thickness of the font</source>
         <translation>变得粗粗的💦或者细细的❤️</translation>
     </message>
     <message>
-        <location filename="../../src/qml/ClassWidgets/pages/settings/General/Widgets.qml" line="159"/>
+        <location filename="../../src/qml/ClassWidgets/pages/settings/General/Widgets.qml" line="183"/>
         <source>Thin</source>
         <translation>小东西</translation>
     </message>
     <message>
-        <location filename="../../src/qml/ClassWidgets/pages/settings/General/Widgets.qml" line="160"/>
+        <location filename="../../src/qml/ClassWidgets/pages/settings/General/Widgets.qml" line="184"/>
         <source>Extra Light</source>
         <translation>细狗</translation>
     </message>
     <message>
-        <location filename="../../src/qml/ClassWidgets/pages/settings/General/Widgets.qml" line="161"/>
+        <location filename="../../src/qml/ClassWidgets/pages/settings/General/Widgets.qml" line="185"/>
         <source>Light</source>
         <translation>没那么小</translation>
     </message>
     <message>
-        <location filename="../../src/qml/ClassWidgets/pages/settings/General/Widgets.qml" line="162"/>
+        <location filename="../../src/qml/ClassWidgets/pages/settings/General/Widgets.qml" line="186"/>
         <source>Regular</source>
         <translation>尺子</translation>
     </message>
     <message>
-        <location filename="../../src/qml/ClassWidgets/pages/settings/General/Widgets.qml" line="163"/>
+        <location filename="../../src/qml/ClassWidgets/pages/settings/General/Widgets.qml" line="187"/>
         <source>Medium</source>
         <translation>微胖</translation>
     </message>
     <message>
-        <location filename="../../src/qml/ClassWidgets/pages/settings/General/Widgets.qml" line="164"/>
+        <location filename="../../src/qml/ClassWidgets/pages/settings/General/Widgets.qml" line="188"/>
         <source>Semi Bold</source>
         <translation>微月半</translation>
     </message>
     <message>
-        <location filename="../../src/qml/ClassWidgets/pages/settings/General/Widgets.qml" line="165"/>
+        <location filename="../../src/qml/ClassWidgets/pages/settings/General/Widgets.qml" line="189"/>
         <source>Bold</source>
         <translation>月半</translation>
     </message>
     <message>
-        <location filename="../../src/qml/ClassWidgets/pages/settings/General/Widgets.qml" line="166"/>
+        <location filename="../../src/qml/ClassWidgets/pages/settings/General/Widgets.qml" line="190"/>
         <source>Extra Bold</source>
         <translation>牛寺月半</translation>
     </message>
     <message>
-        <location filename="../../src/qml/ClassWidgets/pages/settings/General/Widgets.qml" line="167"/>
+        <location filename="../../src/qml/ClassWidgets/pages/settings/General/Widgets.qml" line="191"/>
         <source>Black</source>
         <translation>黑人</translation>
     </message>
     <message>
-        <location filename="../../src/qml/ClassWidgets/pages/settings/General/Widgets.qml" line="168"/>
+        <location filename="../../src/qml/ClassWidgets/pages/settings/General/Widgets.qml" line="192"/>
         <source>Custom</source>
         <translation>我爱咋咋地</translation>
     </message>
     <message>
-        <location filename="../../src/qml/ClassWidgets/pages/settings/General/Widgets.qml" line="201"/>
+        <location filename="../../src/qml/ClassWidgets/pages/settings/General/Widgets.qml" line="225"/>
         <source>Preview</source>
         <translation>预习</translation>
     </message>
     <message>
-        <location filename="../../src/qml/ClassWidgets/pages/settings/General/Widgets.qml" line="204"/>
+        <location filename="../../src/qml/ClassWidgets/pages/settings/General/Widgets.qml" line="228"/>
         <source>The quick brown fox jumps over the lazy dog</source>
         <translation>PHP is the best language in the world
 是红石菌吖 &amp; Lyang1273 99！
 人生苦短，我用Python</translation>
     </message>
     <message>
-        <location filename="../../src/qml/ClassWidgets/pages/settings/General/Widgets.qml" line="222"/>
+        <location filename="../../src/qml/ClassWidgets/pages/settings/General/Widgets.qml" line="246"/>
         <source>Window</source>
         <translation>窗户</translation>
     </message>
     <message>
-        <location filename="../../src/qml/ClassWidgets/pages/settings/General/Widgets.qml" line="228"/>
+        <location filename="../../src/qml/ClassWidgets/pages/settings/General/Widgets.qml" line="252"/>
         <source>Display</source>
         <translation>迪斯玩</translation>
     </message>
     <message>
-        <location filename="../../src/qml/ClassWidgets/pages/settings/General/Widgets.qml" line="229"/>
+        <location filename="../../src/qml/ClassWidgets/pages/settings/General/Widgets.qml" line="253"/>
         <source>Set which screen to display widgets on, and adjust their position</source>
         <translation>设置显示屏幕，和调整位置</translation>
     </message>
     <message>
-        <location filename="../../src/qml/ClassWidgets/pages/settings/General/Widgets.qml" line="344"/>
+        <location filename="../../src/qml/ClassWidgets/pages/settings/General/Widgets.qml" line="368"/>
         <source>X-axis offset</source>
         <translation>X弹道偏移</translation>
     </message>
     <message>
-        <location filename="../../src/qml/ClassWidgets/pages/settings/General/Widgets.qml" line="359"/>
+        <location filename="../../src/qml/ClassWidgets/pages/settings/General/Widgets.qml" line="383"/>
         <source>Y-axis offset</source>
         <translation>Y弹道偏移</translation>
     </message>
@@ -4157,22 +4157,22 @@ then tap &quot;Edit Widget Screen&quot; in the menu to experience it.</source>
 <context>
     <name>WidgetsContainer</name>
     <message>
-        <location filename="../../src/qml/ClassWidgets/Components/WidgetsContainer.qml" line="205"/>
+        <location filename="../../src/qml/ClassWidgets/Components/WidgetsContainer.qml" line="215"/>
         <source>Edit </source>
         <translation>修改 </translation>
     </message>
     <message>
-        <location filename="../../src/qml/ClassWidgets/Components/WidgetsContainer.qml" line="220"/>
+        <location filename="../../src/qml/ClassWidgets/Components/WidgetsContainer.qml" line="230"/>
         <source>Delete</source>
         <translation>丢掉！</translation>
     </message>
     <message>
-        <location filename="../../src/qml/ClassWidgets/Components/WidgetsContainer.qml" line="229"/>
+        <location filename="../../src/qml/ClassWidgets/Components/WidgetsContainer.qml" line="239"/>
         <source>Edit Widgets Screen</source>
         <translation>调教小方块页面</translation>
     </message>
     <message>
-        <location filename="../../src/qml/ClassWidgets/Components/WidgetsContainer.qml" line="304"/>
+        <location filename="../../src/qml/ClassWidgets/Components/WidgetsContainer.qml" line="314"/>
         <source>Add</source>
         <translation>咖啡不断加加加加到厌倦～</translation>
     </message>

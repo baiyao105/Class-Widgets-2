@@ -4002,117 +4002,117 @@ then tap &quot;Edit Widget Screen&quot; in the menu to experience it.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/qml/ClassWidgets/pages/settings/General/Widgets.qml" line="106"/>
+        <location filename="../../src/qml/ClassWidgets/pages/settings/General/Widgets.qml" line="130"/>
         <source>Opacity</source>
         <translation type="unfinished">Opacità</translation>
     </message>
     <message>
-        <location filename="../../src/qml/ClassWidgets/pages/settings/General/Widgets.qml" line="107"/>
+        <location filename="../../src/qml/ClassWidgets/pages/settings/General/Widgets.qml" line="131"/>
         <source>Change the opacity of the background of widgets</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/qml/ClassWidgets/pages/settings/General/Widgets.qml" line="125"/>
+        <location filename="../../src/qml/ClassWidgets/pages/settings/General/Widgets.qml" line="149"/>
         <source>Font</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/qml/ClassWidgets/pages/settings/General/Widgets.qml" line="126"/>
+        <location filename="../../src/qml/ClassWidgets/pages/settings/General/Widgets.qml" line="150"/>
         <source>Choose a font for the widgets</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/qml/ClassWidgets/pages/settings/General/Widgets.qml" line="153"/>
+        <location filename="../../src/qml/ClassWidgets/pages/settings/General/Widgets.qml" line="177"/>
         <source>Font weight</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/qml/ClassWidgets/pages/settings/General/Widgets.qml" line="154"/>
+        <location filename="../../src/qml/ClassWidgets/pages/settings/General/Widgets.qml" line="178"/>
         <source>Set the thickness of the font</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/qml/ClassWidgets/pages/settings/General/Widgets.qml" line="159"/>
+        <location filename="../../src/qml/ClassWidgets/pages/settings/General/Widgets.qml" line="183"/>
         <source>Thin</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/qml/ClassWidgets/pages/settings/General/Widgets.qml" line="160"/>
+        <location filename="../../src/qml/ClassWidgets/pages/settings/General/Widgets.qml" line="184"/>
         <source>Extra Light</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/qml/ClassWidgets/pages/settings/General/Widgets.qml" line="161"/>
+        <location filename="../../src/qml/ClassWidgets/pages/settings/General/Widgets.qml" line="185"/>
         <source>Light</source>
         <translation type="unfinished">Chiaro</translation>
     </message>
     <message>
-        <location filename="../../src/qml/ClassWidgets/pages/settings/General/Widgets.qml" line="162"/>
+        <location filename="../../src/qml/ClassWidgets/pages/settings/General/Widgets.qml" line="186"/>
         <source>Regular</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/qml/ClassWidgets/pages/settings/General/Widgets.qml" line="163"/>
+        <location filename="../../src/qml/ClassWidgets/pages/settings/General/Widgets.qml" line="187"/>
         <source>Medium</source>
         <translation type="unfinished">Media</translation>
     </message>
     <message>
-        <location filename="../../src/qml/ClassWidgets/pages/settings/General/Widgets.qml" line="164"/>
+        <location filename="../../src/qml/ClassWidgets/pages/settings/General/Widgets.qml" line="188"/>
         <source>Semi Bold</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/qml/ClassWidgets/pages/settings/General/Widgets.qml" line="165"/>
+        <location filename="../../src/qml/ClassWidgets/pages/settings/General/Widgets.qml" line="189"/>
         <source>Bold</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/qml/ClassWidgets/pages/settings/General/Widgets.qml" line="166"/>
+        <location filename="../../src/qml/ClassWidgets/pages/settings/General/Widgets.qml" line="190"/>
         <source>Extra Bold</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/qml/ClassWidgets/pages/settings/General/Widgets.qml" line="167"/>
+        <location filename="../../src/qml/ClassWidgets/pages/settings/General/Widgets.qml" line="191"/>
         <source>Black</source>
         <translation type="unfinished">Nero</translation>
     </message>
     <message>
-        <location filename="../../src/qml/ClassWidgets/pages/settings/General/Widgets.qml" line="168"/>
+        <location filename="../../src/qml/ClassWidgets/pages/settings/General/Widgets.qml" line="192"/>
         <source>Custom</source>
         <translation type="unfinished">Personalizzato</translation>
     </message>
     <message>
-        <location filename="../../src/qml/ClassWidgets/pages/settings/General/Widgets.qml" line="201"/>
+        <location filename="../../src/qml/ClassWidgets/pages/settings/General/Widgets.qml" line="225"/>
         <source>Preview</source>
         <translation type="unfinished">Anteprima</translation>
     </message>
     <message>
-        <location filename="../../src/qml/ClassWidgets/pages/settings/General/Widgets.qml" line="204"/>
+        <location filename="../../src/qml/ClassWidgets/pages/settings/General/Widgets.qml" line="228"/>
         <source>The quick brown fox jumps over the lazy dog</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/qml/ClassWidgets/pages/settings/General/Widgets.qml" line="222"/>
+        <location filename="../../src/qml/ClassWidgets/pages/settings/General/Widgets.qml" line="246"/>
         <source>Window</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/qml/ClassWidgets/pages/settings/General/Widgets.qml" line="228"/>
+        <location filename="../../src/qml/ClassWidgets/pages/settings/General/Widgets.qml" line="252"/>
         <source>Display</source>
         <translation type="unfinished">Visualizza</translation>
     </message>
     <message>
-        <location filename="../../src/qml/ClassWidgets/pages/settings/General/Widgets.qml" line="229"/>
+        <location filename="../../src/qml/ClassWidgets/pages/settings/General/Widgets.qml" line="253"/>
         <source>Set which screen to display widgets on, and adjust their position</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/qml/ClassWidgets/pages/settings/General/Widgets.qml" line="344"/>
+        <location filename="../../src/qml/ClassWidgets/pages/settings/General/Widgets.qml" line="368"/>
         <source>X-axis offset</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/qml/ClassWidgets/pages/settings/General/Widgets.qml" line="359"/>
+        <location filename="../../src/qml/ClassWidgets/pages/settings/General/Widgets.qml" line="383"/>
         <source>Y-axis offset</source>
         <translation type="unfinished"></translation>
     </message>
@@ -4145,22 +4145,22 @@ then tap &quot;Edit Widget Screen&quot; in the menu to experience it.</source>
 <context>
     <name>WidgetsContainer</name>
     <message>
-        <location filename="../../src/qml/ClassWidgets/Components/WidgetsContainer.qml" line="205"/>
+        <location filename="../../src/qml/ClassWidgets/Components/WidgetsContainer.qml" line="215"/>
         <source>Edit </source>
         <translation type="unfinished">Modifica </translation>
     </message>
     <message>
-        <location filename="../../src/qml/ClassWidgets/Components/WidgetsContainer.qml" line="220"/>
+        <location filename="../../src/qml/ClassWidgets/Components/WidgetsContainer.qml" line="230"/>
         <source>Delete</source>
         <translation type="unfinished">Elimina</translation>
     </message>
     <message>
-        <location filename="../../src/qml/ClassWidgets/Components/WidgetsContainer.qml" line="229"/>
+        <location filename="../../src/qml/ClassWidgets/Components/WidgetsContainer.qml" line="239"/>
         <source>Edit Widgets Screen</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/qml/ClassWidgets/Components/WidgetsContainer.qml" line="304"/>
+        <location filename="../../src/qml/ClassWidgets/Components/WidgetsContainer.qml" line="314"/>
         <source>Add</source>
         <translation type="unfinished">Aggiungere</translation>
     </message>

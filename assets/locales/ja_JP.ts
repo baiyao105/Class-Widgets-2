@@ -4211,117 +4211,117 @@ then tap &quot;Edit Widget Screen&quot; in the menu to experience it.</source>
         <translation>ウィジェットを大きく表示するか、コンパクトな表示に保つことができます</translation>
     </message>
     <message>
-        <location filename="../../src/qml/ClassWidgets/pages/settings/General/Widgets.qml" line="106"/>
+        <location filename="../../src/qml/ClassWidgets/pages/settings/General/Widgets.qml" line="130"/>
         <source>Opacity</source>
         <translation>不透明度</translation>
     </message>
     <message>
-        <location filename="../../src/qml/ClassWidgets/pages/settings/General/Widgets.qml" line="107"/>
+        <location filename="../../src/qml/ClassWidgets/pages/settings/General/Widgets.qml" line="131"/>
         <source>Change the opacity of the background of widgets</source>
         <translation>ウィジェットの背景の不透明度を変更できます</translation>
     </message>
     <message>
-        <location filename="../../src/qml/ClassWidgets/pages/settings/General/Widgets.qml" line="125"/>
+        <location filename="../../src/qml/ClassWidgets/pages/settings/General/Widgets.qml" line="149"/>
         <source>Font</source>
         <translation type="unfinished">フォント</translation>
     </message>
     <message>
-        <location filename="../../src/qml/ClassWidgets/pages/settings/General/Widgets.qml" line="126"/>
+        <location filename="../../src/qml/ClassWidgets/pages/settings/General/Widgets.qml" line="150"/>
         <source>Choose a font for the widgets</source>
         <translation type="unfinished">ウィジェット用のフォントを選択</translation>
     </message>
     <message>
-        <location filename="../../src/qml/ClassWidgets/pages/settings/General/Widgets.qml" line="153"/>
+        <location filename="../../src/qml/ClassWidgets/pages/settings/General/Widgets.qml" line="177"/>
         <source>Font weight</source>
         <translation type="unfinished">フォントの太さ</translation>
     </message>
     <message>
-        <location filename="../../src/qml/ClassWidgets/pages/settings/General/Widgets.qml" line="154"/>
+        <location filename="../../src/qml/ClassWidgets/pages/settings/General/Widgets.qml" line="178"/>
         <source>Set the thickness of the font</source>
         <translation type="unfinished">フォントの太さを設定</translation>
     </message>
     <message>
-        <location filename="../../src/qml/ClassWidgets/pages/settings/General/Widgets.qml" line="159"/>
+        <location filename="../../src/qml/ClassWidgets/pages/settings/General/Widgets.qml" line="183"/>
         <source>Thin</source>
         <translation type="unfinished">細い</translation>
     </message>
     <message>
-        <location filename="../../src/qml/ClassWidgets/pages/settings/General/Widgets.qml" line="160"/>
+        <location filename="../../src/qml/ClassWidgets/pages/settings/General/Widgets.qml" line="184"/>
         <source>Extra Light</source>
         <translation type="unfinished">極細</translation>
     </message>
     <message>
-        <location filename="../../src/qml/ClassWidgets/pages/settings/General/Widgets.qml" line="161"/>
+        <location filename="../../src/qml/ClassWidgets/pages/settings/General/Widgets.qml" line="185"/>
         <source>Light</source>
         <translation type="unfinished">ライト</translation>
     </message>
     <message>
-        <location filename="../../src/qml/ClassWidgets/pages/settings/General/Widgets.qml" line="162"/>
+        <location filename="../../src/qml/ClassWidgets/pages/settings/General/Widgets.qml" line="186"/>
         <source>Regular</source>
         <translation type="unfinished">標準</translation>
     </message>
     <message>
-        <location filename="../../src/qml/ClassWidgets/pages/settings/General/Widgets.qml" line="163"/>
+        <location filename="../../src/qml/ClassWidgets/pages/settings/General/Widgets.qml" line="187"/>
         <source>Medium</source>
         <translation type="unfinished">中</translation>
     </message>
     <message>
-        <location filename="../../src/qml/ClassWidgets/pages/settings/General/Widgets.qml" line="164"/>
+        <location filename="../../src/qml/ClassWidgets/pages/settings/General/Widgets.qml" line="188"/>
         <source>Semi Bold</source>
         <translation type="unfinished">中太</translation>
     </message>
     <message>
-        <location filename="../../src/qml/ClassWidgets/pages/settings/General/Widgets.qml" line="165"/>
+        <location filename="../../src/qml/ClassWidgets/pages/settings/General/Widgets.qml" line="189"/>
         <source>Bold</source>
         <translation type="unfinished">太</translation>
     </message>
     <message>
-        <location filename="../../src/qml/ClassWidgets/pages/settings/General/Widgets.qml" line="166"/>
+        <location filename="../../src/qml/ClassWidgets/pages/settings/General/Widgets.qml" line="190"/>
         <source>Extra Bold</source>
         <translation type="unfinished">エクストラボルド</translation>
     </message>
     <message>
-        <location filename="../../src/qml/ClassWidgets/pages/settings/General/Widgets.qml" line="167"/>
+        <location filename="../../src/qml/ClassWidgets/pages/settings/General/Widgets.qml" line="191"/>
         <source>Black</source>
         <translation type="unfinished">ブラック</translation>
     </message>
     <message>
-        <location filename="../../src/qml/ClassWidgets/pages/settings/General/Widgets.qml" line="168"/>
+        <location filename="../../src/qml/ClassWidgets/pages/settings/General/Widgets.qml" line="192"/>
         <source>Custom</source>
         <translation type="unfinished">カスタム</translation>
     </message>
     <message>
-        <location filename="../../src/qml/ClassWidgets/pages/settings/General/Widgets.qml" line="201"/>
+        <location filename="../../src/qml/ClassWidgets/pages/settings/General/Widgets.qml" line="225"/>
         <source>Preview</source>
         <translation type="unfinished">プレビュー</translation>
     </message>
     <message>
-        <location filename="../../src/qml/ClassWidgets/pages/settings/General/Widgets.qml" line="204"/>
+        <location filename="../../src/qml/ClassWidgets/pages/settings/General/Widgets.qml" line="228"/>
         <source>The quick brown fox jumps over the lazy dog</source>
         <translation type="unfinished">素早い茶色の狐狸は怠惰な犬の上を跳び越える</translation>
     </message>
     <message>
-        <location filename="../../src/qml/ClassWidgets/pages/settings/General/Widgets.qml" line="222"/>
+        <location filename="../../src/qml/ClassWidgets/pages/settings/General/Widgets.qml" line="246"/>
         <source>Window</source>
         <translation>ウィンドウ</translation>
     </message>
     <message>
-        <location filename="../../src/qml/ClassWidgets/pages/settings/General/Widgets.qml" line="228"/>
+        <location filename="../../src/qml/ClassWidgets/pages/settings/General/Widgets.qml" line="252"/>
         <source>Display</source>
         <translation type="unfinished">ディスプレイ</translation>
     </message>
     <message>
-        <location filename="../../src/qml/ClassWidgets/pages/settings/General/Widgets.qml" line="229"/>
+        <location filename="../../src/qml/ClassWidgets/pages/settings/General/Widgets.qml" line="253"/>
         <source>Set which screen to display widgets on, and adjust their position</source>
         <translation type="unfinished">ウィジットを表示する画面を設定し、位置を調整します</translation>
     </message>
     <message>
-        <location filename="../../src/qml/ClassWidgets/pages/settings/General/Widgets.qml" line="344"/>
+        <location filename="../../src/qml/ClassWidgets/pages/settings/General/Widgets.qml" line="368"/>
         <source>X-axis offset</source>
         <translation>X軸オフセット</translation>
     </message>
     <message>
-        <location filename="../../src/qml/ClassWidgets/pages/settings/General/Widgets.qml" line="359"/>
+        <location filename="../../src/qml/ClassWidgets/pages/settings/General/Widgets.qml" line="383"/>
         <source>Y-axis offset</source>
         <translation>Y軸オフセット</translation>
     </message>
@@ -4354,22 +4354,22 @@ then tap &quot;Edit Widget Screen&quot; in the menu to experience it.</source>
 <context>
     <name>WidgetsContainer</name>
     <message>
-        <location filename="../../src/qml/ClassWidgets/Components/WidgetsContainer.qml" line="205"/>
+        <location filename="../../src/qml/ClassWidgets/Components/WidgetsContainer.qml" line="215"/>
         <source>Edit </source>
         <translation>編集 </translation>
     </message>
     <message>
-        <location filename="../../src/qml/ClassWidgets/Components/WidgetsContainer.qml" line="220"/>
+        <location filename="../../src/qml/ClassWidgets/Components/WidgetsContainer.qml" line="230"/>
         <source>Delete</source>
         <translation>削除</translation>
     </message>
     <message>
-        <location filename="../../src/qml/ClassWidgets/Components/WidgetsContainer.qml" line="229"/>
+        <location filename="../../src/qml/ClassWidgets/Components/WidgetsContainer.qml" line="239"/>
         <source>Edit Widgets Screen</source>
         <translation>ウィジェット編集画面</translation>
     </message>
     <message>
-        <location filename="../../src/qml/ClassWidgets/Components/WidgetsContainer.qml" line="304"/>
+        <location filename="../../src/qml/ClassWidgets/Components/WidgetsContainer.qml" line="314"/>
         <source>Add</source>
         <translation>追加</translation>
     </message>
