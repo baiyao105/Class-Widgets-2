@@ -4,17 +4,16 @@
 <context>
     <name>About</name>
     <message>
-        <location filename="../../src/qml/ClassWidgets/pages/settings/About.qml" line="52"/>
         <source>Reimagining Your Schedule.</source>
-        <translation>还是你喜爱的课程表，只是更好了。</translation>
+        <translation type="vanished">还是你喜爱的课程表，只是更好了。</translation>
     </message>
     <message>
-        <location filename="../../src/qml/ClassWidgets/pages/settings/About.qml" line="58"/>
         <location filename="../../src/qml/ClassWidgets/pages/settings/About.qml" line="73"/>
         <source>Class Widgets 2</source>
         <translation>西大不丢饿</translation>
     </message>
     <message>
+        <location filename="../../src/qml/ClassWidgets/pages/settings/About.qml" line="58"/>
         <location filename="../../src/qml/ClassWidgets/pages/settings/About.qml" line="68"/>
         <source>About</source>
         <translation>让我们看看这是什么？</translation>
@@ -32,47 +31,46 @@ Licensed under the MIT license</source>
         <translation>视奸此项目</translation>
     </message>
     <message>
-        <location filename="../../src/qml/ClassWidgets/pages/settings/About.qml" line="108"/>
+        <location filename="../../src/qml/ClassWidgets/pages/settings/About.qml" line="115"/>
         <source>File a bug or request new sample</source>
         <translation>提交你失败的药水</translation>
     </message>
     <message>
-        <location filename="../../src/qml/ClassWidgets/pages/settings/About.qml" line="111"/>
         <source>Create an issue on GitHub</source>
-        <translation>在全球最大的男性交友平台创建问题</translation>
+        <translation type="vanished">在全球最大的男性交友平台创建问题</translation>
     </message>
     <message>
-        <location filename="../../src/qml/ClassWidgets/pages/settings/About.qml" line="119"/>
+        <location filename="../../src/qml/ClassWidgets/pages/settings/About.qml" line="129"/>
         <source>Dependencies &amp; references</source>
         <translation>前置模组与参考文献</translation>
     </message>
     <message>
-        <location filename="../../src/qml/ClassWidgets/pages/settings/About.qml" line="122"/>
+        <location filename="../../src/qml/ClassWidgets/pages/settings/About.qml" line="132"/>
         <source>Qt &amp; Qt Quick</source>
         <translation>Qt &amp; Qt 极速版</translation>
     </message>
     <message>
-        <location filename="../../src/qml/ClassWidgets/pages/settings/About.qml" line="126"/>
+        <location filename="../../src/qml/ClassWidgets/pages/settings/About.qml" line="136"/>
         <source>Fluent Design System</source>
         <translation>流畅设计系统</translation>
     </message>
     <message>
-        <location filename="../../src/qml/ClassWidgets/pages/settings/About.qml" line="130"/>
+        <location filename="../../src/qml/ClassWidgets/pages/settings/About.qml" line="140"/>
         <source>RinUI</source>
         <translation>琳丽塔 UI</translation>
     </message>
     <message>
-        <location filename="../../src/qml/ClassWidgets/pages/settings/About.qml" line="134"/>
+        <location filename="../../src/qml/ClassWidgets/pages/settings/About.qml" line="144"/>
         <source>Loguru</source>
         <translation>Loguru</translation>
     </message>
     <message>
-        <location filename="../../src/qml/ClassWidgets/pages/settings/About.qml" line="138"/>
+        <location filename="../../src/qml/ClassWidgets/pages/settings/About.qml" line="148"/>
         <source>Pydantic</source>
         <translation>Pydantic</translation>
     </message>
     <message>
-        <location filename="../../src/qml/ClassWidgets/pages/settings/About.qml" line="144"/>
+        <location filename="../../src/qml/ClassWidgets/pages/settings/About.qml" line="154"/>
         <source>License</source>
         <translation>驾驶证</translation>
     </message>
@@ -85,88 +83,88 @@ Licensed under the MIT license</source>
         <translation type="vanished">GPL-3 许可证</translation>
     </message>
     <message>
-        <location filename="../../src/qml/ClassWidgets/pages/settings/About.qml" line="145"/>
+        <location filename="../../src/qml/ClassWidgets/pages/settings/About.qml" line="155"/>
         <source>This project is licensed under the MIT license</source>
         <translation>此项目根据 MIT 许可证获得许可</translation>
     </message>
     <message>
-        <location filename="../../src/qml/ClassWidgets/pages/settings/About.qml" line="148"/>
+        <location filename="../../src/qml/ClassWidgets/pages/settings/About.qml" line="158"/>
         <source>MIT License</source>
         <translation>MIT 协议</translation>
     </message>
     <message>
-        <location filename="../../src/qml/ClassWidgets/pages/settings/About.qml" line="162"/>
+        <location filename="../../src/qml/ClassWidgets/pages/settings/About.qml" line="172"/>
         <source>Advances</source>
         <translation>我能做什么？</translation>
     </message>
     <message>
-        <location filename="../../src/qml/ClassWidgets/pages/settings/About.qml" line="168"/>
+        <location filename="../../src/qml/ClassWidgets/pages/settings/About.qml" line="178"/>
         <source>Log Storage Disabled</source>
         <translation>不写遗书</translation>
     </message>
     <message>
-        <location filename="../../src/qml/ClassWidgets/pages/settings/About.qml" line="169"/>
+        <location filename="../../src/qml/ClassWidgets/pages/settings/About.qml" line="179"/>
         <source>When enabled, the app will &lt;b&gt;not&lt;/b&gt; save logs.</source>
         <translation>启用后，吸大鼻流鹅将&lt;b&gt;完全放飞自我。&lt;/b&gt;</translation>
     </message>
     <message>
-        <location filename="../../src/qml/ClassWidgets/pages/settings/About.qml" line="178"/>
+        <location filename="../../src/qml/ClassWidgets/pages/settings/About.qml" line="188"/>
         <source>Clear Logs</source>
         <translation>删掉！删掉！全部都要删掉！</translation>
     </message>
     <message>
-        <location filename="../../src/qml/ClassWidgets/pages/settings/About.qml" line="182"/>
+        <location filename="../../src/qml/ClassWidgets/pages/settings/About.qml" line="192"/>
         <source>Clear</source>
         <translation>弄死它</translation>
     </message>
     <message>
-        <location filename="../../src/qml/ClassWidgets/pages/settings/About.qml" line="187"/>
+        <location filename="../../src/qml/ClassWidgets/pages/settings/About.qml" line="197"/>
         <source>Cleared</source>
         <translation>卖掉了~</translation>
     </message>
     <message>
-        <location filename="../../src/qml/ClassWidgets/pages/settings/About.qml" line="188"/>
+        <location filename="../../src/qml/ClassWidgets/pages/settings/About.qml" line="198"/>
         <source>All logs have been cleared about </source>
         <translation>全都被卖掉了！ </translation>
     </message>
     <message>
-        <location filename="../../src/qml/ClassWidgets/pages/settings/About.qml" line="194"/>
+        <location filename="../../src/qml/ClassWidgets/pages/settings/About.qml" line="204"/>
         <source>Failed</source>
         <translation>TRACK LOST</translation>
     </message>
     <message>
-        <location filename="../../src/qml/ClassWidgets/pages/settings/About.qml" line="195"/>
+        <location filename="../../src/qml/ClassWidgets/pages/settings/About.qml" line="205"/>
         <source>Failed to clear logs.</source>
         <translation>卡车丢失。</translation>
     </message>
     <message>
-        <location filename="../../src/qml/ClassWidgets/pages/settings/About.qml" line="208"/>
+        <location filename="../../src/qml/ClassWidgets/pages/settings/About.qml" line="218"/>
         <source>Debug Mode</source>
         <translation>调教模式</translation>
     </message>
     <message>
-        <location filename="../../src/qml/ClassWidgets/pages/settings/About.qml" line="209"/>
+        <location filename="../../src/qml/ClassWidgets/pages/settings/About.qml" line="219"/>
         <source>Enable Debug Mode to access core widget information, and debugging tools 
 * Requires restart</source>
         <translation>你需要重新打开2WC来使用妙妙工具</translation>
     </message>
     <message>
-        <location filename="../../src/qml/ClassWidgets/pages/settings/About.qml" line="225"/>
+        <location filename="../../src/qml/ClassWidgets/pages/settings/About.qml" line="235"/>
         <source>Show Tutorials again</source>
         <translation>我重生了，这一次，我要夺回属于我的一切！…当然你需要重新看一次新手教程。</translation>
     </message>
     <message>
-        <location filename="../../src/qml/ClassWidgets/pages/settings/About.qml" line="228"/>
+        <location filename="../../src/qml/ClassWidgets/pages/settings/About.qml" line="238"/>
         <source>Restart</source>
         <translation>重新访问2WC</translation>
     </message>
     <message>
-        <location filename="../../src/qml/ClassWidgets/pages/settings/About.qml" line="240"/>
+        <location filename="../../src/qml/ClassWidgets/pages/settings/About.qml" line="250"/>
         <source>License Agreement</source>
         <translation>伊甸园条约</translation>
     </message>
     <message>
-        <location filename="../../src/qml/ClassWidgets/pages/settings/About.qml" line="247"/>
+        <location filename="../../src/qml/ClassWidgets/pages/settings/About.qml" line="257"/>
         <source>This project (Class Widgets 2) is licensed under the GPL-3 license. For details, see:</source>
         <translation>本项目（Class Widgets 2）采用 GPL-3 许可证。详细信息请参见：</translation>
     </message>
@@ -1071,7 +1069,7 @@ Do you want to continue using them, or discard and restore the original schedule
     <name>Home</name>
     <message>
         <location filename="../../src/qml/ClassWidgets/pages/editor/Home.qml" line="10"/>
-        <location filename="../../src/qml/ClassWidgets/pages/settings/Home.qml" line="58"/>
+        <location filename="../../src/qml/ClassWidgets/pages/settings/Home.qml" line="60"/>
         <source>Home</source>
         <translation>家</translation>
     </message>
@@ -1179,27 +1177,27 @@ Do you want to continue using them, or discard and restore the original schedule
         <translation>好了！</translation>
     </message>
     <message>
-        <location filename="../../src/qml/ClassWidgets/pages/settings/Home.qml" line="80"/>
+        <location filename="../../src/qml/ClassWidgets/pages/settings/Home.qml" line="82"/>
         <source>Warning</source>
         <translation>FBI Warning</translation>
     </message>
     <message>
-        <location filename="../../src/qml/ClassWidgets/pages/settings/Home.qml" line="81"/>
+        <location filename="../../src/qml/ClassWidgets/pages/settings/Home.qml" line="83"/>
         <source>This version is still under testing and may contain bugs or incomplete features. You are welcome to submit issues on GitHub</source>
         <translation>我是BETA。欢迎在全球最大的男性交友平台上提交问题</translation>
     </message>
     <message>
-        <location filename="../../src/qml/ClassWidgets/pages/settings/Home.qml" line="139"/>
+        <location filename="../../src/qml/ClassWidgets/pages/settings/Home.qml" line="141"/>
         <source>GitHub</source>
         <translation>全球最大的男性交友平台</translation>
     </message>
     <message>
-        <location filename="../../src/qml/ClassWidgets/pages/settings/Home.qml" line="144"/>
+        <location filename="../../src/qml/ClassWidgets/pages/settings/Home.qml" line="146"/>
         <source>Discord</source>
         <translation>一个游戏社区</translation>
     </message>
     <message>
-        <location filename="../../src/qml/ClassWidgets/pages/settings/Home.qml" line="145"/>
+        <location filename="../../src/qml/ClassWidgets/pages/settings/Home.qml" line="147"/>
         <source>https://discord.gg/nNZxaCBh</source>
         <translation>https://discord.gg/nNZxaCBh</translation>
     </message>
