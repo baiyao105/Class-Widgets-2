@@ -4,17 +4,16 @@
 <context>
     <name>About</name>
     <message>
-        <location filename="../../src/qml/ClassWidgets/pages/settings/About.qml" line="52"/>
         <source>Reimagining Your Schedule.</source>
-        <translation>உங்கள் அட்டவணையை மறுவடிவமைத்தல்.</translation>
+        <translation type="vanished">உங்கள் அட்டவணையை மறுவடிவமைத்தல்.</translation>
     </message>
     <message>
-        <location filename="../../src/qml/ClassWidgets/pages/settings/About.qml" line="58"/>
         <location filename="../../src/qml/ClassWidgets/pages/settings/About.qml" line="73"/>
         <source>Class Widgets 2</source>
         <translation>வகுப்பு விட்செட்டுகள் 2</translation>
     </message>
     <message>
+        <location filename="../../src/qml/ClassWidgets/pages/settings/About.qml" line="58"/>
         <location filename="../../src/qml/ClassWidgets/pages/settings/About.qml" line="68"/>
         <source>About</source>
         <translation>பற்றி</translation>
@@ -32,47 +31,46 @@ MIT உரிமத்தின் கீழ் உரிமம் பெற்�
         <translation>இந்தக் களஞ்சியத்தைப் பார்க்க</translation>
     </message>
     <message>
-        <location filename="../../src/qml/ClassWidgets/pages/settings/About.qml" line="108"/>
+        <location filename="../../src/qml/ClassWidgets/pages/settings/About.qml" line="115"/>
         <source>File a bug or request new sample</source>
         <translation>பிழையைப் பதிவு செய்யவும் அல்லது புதிய மாதிரியைக் கோரவும்</translation>
     </message>
     <message>
-        <location filename="../../src/qml/ClassWidgets/pages/settings/About.qml" line="111"/>
         <source>Create an issue on GitHub</source>
-        <translation>GitHub இல் சிக்கலை உருவாக்கவும்</translation>
+        <translation type="vanished">GitHub இல் சிக்கலை உருவாக்கவும்</translation>
     </message>
     <message>
-        <location filename="../../src/qml/ClassWidgets/pages/settings/About.qml" line="119"/>
+        <location filename="../../src/qml/ClassWidgets/pages/settings/About.qml" line="129"/>
         <source>Dependencies &amp; references</source>
         <translation>சார்புகள் மற்றும் குறிப்புகள்</translation>
     </message>
     <message>
-        <location filename="../../src/qml/ClassWidgets/pages/settings/About.qml" line="122"/>
+        <location filename="../../src/qml/ClassWidgets/pages/settings/About.qml" line="132"/>
         <source>Qt &amp; Qt Quick</source>
         <translation>கியுடி மற்றும் கியுடி விரைவு</translation>
     </message>
     <message>
-        <location filename="../../src/qml/ClassWidgets/pages/settings/About.qml" line="126"/>
+        <location filename="../../src/qml/ClassWidgets/pages/settings/About.qml" line="136"/>
         <source>Fluent Design System</source>
         <translation>சரளமான வடிவமைப்பு அமைப்பு</translation>
     </message>
     <message>
-        <location filename="../../src/qml/ClassWidgets/pages/settings/About.qml" line="130"/>
+        <location filename="../../src/qml/ClassWidgets/pages/settings/About.qml" line="140"/>
         <source>RinUI</source>
         <translation>ரினுய்</translation>
     </message>
     <message>
-        <location filename="../../src/qml/ClassWidgets/pages/settings/About.qml" line="134"/>
+        <location filename="../../src/qml/ClassWidgets/pages/settings/About.qml" line="144"/>
         <source>Loguru</source>
         <translation>உள்நுழையவும்</translation>
     </message>
     <message>
-        <location filename="../../src/qml/ClassWidgets/pages/settings/About.qml" line="138"/>
+        <location filename="../../src/qml/ClassWidgets/pages/settings/About.qml" line="148"/>
         <source>Pydantic</source>
         <translation>பிடான்டிக்</translation>
     </message>
     <message>
-        <location filename="../../src/qml/ClassWidgets/pages/settings/About.qml" line="144"/>
+        <location filename="../../src/qml/ClassWidgets/pages/settings/About.qml" line="154"/>
         <source>License</source>
         <translation>உரிமம்</translation>
     </message>
@@ -85,89 +83,89 @@ MIT உரிமத்தின் கீழ் உரிமம் பெற்�
         <translation type="vanished">GPL-3 உரிமம்</translation>
     </message>
     <message>
-        <location filename="../../src/qml/ClassWidgets/pages/settings/About.qml" line="145"/>
+        <location filename="../../src/qml/ClassWidgets/pages/settings/About.qml" line="155"/>
         <source>This project is licensed under the MIT license</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/qml/ClassWidgets/pages/settings/About.qml" line="148"/>
+        <location filename="../../src/qml/ClassWidgets/pages/settings/About.qml" line="158"/>
         <source>MIT License</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/qml/ClassWidgets/pages/settings/About.qml" line="162"/>
+        <location filename="../../src/qml/ClassWidgets/pages/settings/About.qml" line="172"/>
         <source>Advances</source>
         <translation>முன்னேற்றங்கள்</translation>
     </message>
     <message>
-        <location filename="../../src/qml/ClassWidgets/pages/settings/About.qml" line="168"/>
+        <location filename="../../src/qml/ClassWidgets/pages/settings/About.qml" line="178"/>
         <source>Log Storage Disabled</source>
         <translation>பதிவுச் சேமிப்பகம் முடக்கப்பட்டது</translation>
     </message>
     <message>
-        <location filename="../../src/qml/ClassWidgets/pages/settings/About.qml" line="169"/>
+        <location filename="../../src/qml/ClassWidgets/pages/settings/About.qml" line="179"/>
         <source>When enabled, the app will &lt;b&gt;not&lt;/b&gt; save logs.</source>
         <translation>இயக்கப்பட்டால், பயன்பாடு பதிவுகளை &lt;b&gt;இல்லை&lt;/b&gt; சேமிக்கும்.</translation>
     </message>
     <message>
-        <location filename="../../src/qml/ClassWidgets/pages/settings/About.qml" line="178"/>
+        <location filename="../../src/qml/ClassWidgets/pages/settings/About.qml" line="188"/>
         <source>Clear Logs</source>
         <translation>பதிவுகளை அழிக்கவும்</translation>
     </message>
     <message>
-        <location filename="../../src/qml/ClassWidgets/pages/settings/About.qml" line="182"/>
+        <location filename="../../src/qml/ClassWidgets/pages/settings/About.qml" line="192"/>
         <source>Clear</source>
         <translation>தெளிவு</translation>
     </message>
     <message>
-        <location filename="../../src/qml/ClassWidgets/pages/settings/About.qml" line="187"/>
+        <location filename="../../src/qml/ClassWidgets/pages/settings/About.qml" line="197"/>
         <source>Cleared</source>
         <translation>அழிக்கப்பட்டது</translation>
     </message>
     <message>
-        <location filename="../../src/qml/ClassWidgets/pages/settings/About.qml" line="188"/>
+        <location filename="../../src/qml/ClassWidgets/pages/settings/About.qml" line="198"/>
         <source>All logs have been cleared about </source>
         <translation>அனைத்து பதிவுகளும் அழிக்கப்பட்டன </translation>
     </message>
     <message>
-        <location filename="../../src/qml/ClassWidgets/pages/settings/About.qml" line="194"/>
+        <location filename="../../src/qml/ClassWidgets/pages/settings/About.qml" line="204"/>
         <source>Failed</source>
         <translation>தோல்வியடைந்தது</translation>
     </message>
     <message>
-        <location filename="../../src/qml/ClassWidgets/pages/settings/About.qml" line="195"/>
+        <location filename="../../src/qml/ClassWidgets/pages/settings/About.qml" line="205"/>
         <source>Failed to clear logs.</source>
         <translation>பதிவுகளை அழிக்க முடியவில்லை.</translation>
     </message>
     <message>
-        <location filename="../../src/qml/ClassWidgets/pages/settings/About.qml" line="208"/>
+        <location filename="../../src/qml/ClassWidgets/pages/settings/About.qml" line="218"/>
         <source>Debug Mode</source>
         <translation>பிழைத்திருத்த முறை</translation>
     </message>
     <message>
-        <location filename="../../src/qml/ClassWidgets/pages/settings/About.qml" line="209"/>
+        <location filename="../../src/qml/ClassWidgets/pages/settings/About.qml" line="219"/>
         <source>Enable Debug Mode to access core widget information, and debugging tools 
 * Requires restart</source>
         <translation>முக்கிய விட்செட் செய்தி மற்றும் பிழைத்திருத்த கருவிகளை அணுக பிழைத்திருத்த பயன்முறையை இயக்கவும் 
 * மறுதொடக்கம் தேவை</translation>
     </message>
     <message>
-        <location filename="../../src/qml/ClassWidgets/pages/settings/About.qml" line="225"/>
+        <location filename="../../src/qml/ClassWidgets/pages/settings/About.qml" line="235"/>
         <source>Show Tutorials again</source>
         <translation>டுடோரியல்களை மீண்டும் காட்டு</translation>
     </message>
     <message>
-        <location filename="../../src/qml/ClassWidgets/pages/settings/About.qml" line="228"/>
+        <location filename="../../src/qml/ClassWidgets/pages/settings/About.qml" line="238"/>
         <source>Restart</source>
         <translation>மறுதொடக்கம்</translation>
     </message>
     <message>
-        <location filename="../../src/qml/ClassWidgets/pages/settings/About.qml" line="240"/>
+        <location filename="../../src/qml/ClassWidgets/pages/settings/About.qml" line="250"/>
         <source>License Agreement</source>
         <translation>உரிம ஒப்பந்தத்தின்</translation>
     </message>
     <message>
-        <location filename="../../src/qml/ClassWidgets/pages/settings/About.qml" line="247"/>
+        <location filename="../../src/qml/ClassWidgets/pages/settings/About.qml" line="257"/>
         <source>This project (Class Widgets 2) is licensed under the GPL-3 license. For details, see:</source>
         <translation>இந்த திட்டம் (வகுப்பு விட்செட்டுகள் 2) GPL-3 உரிமத்தின் கீழ் உரிமம் பெற்றது. விவரங்களுக்கு, பார்க்கவும்:</translation>
     </message>
@@ -1072,7 +1070,7 @@ Do you want to continue using them, or discard and restore the original schedule
     <name>Home</name>
     <message>
         <location filename="../../src/qml/ClassWidgets/pages/editor/Home.qml" line="10"/>
-        <location filename="../../src/qml/ClassWidgets/pages/settings/Home.qml" line="58"/>
+        <location filename="../../src/qml/ClassWidgets/pages/settings/Home.qml" line="60"/>
         <source>Home</source>
         <translation>வீடு</translation>
     </message>
@@ -1182,27 +1180,27 @@ Do you want to continue using them, or discard and restore the original schedule
         <translation>அருமை! அவ்வளவுதான். ヾ(≧▽≦*)o</translation>
     </message>
     <message>
-        <location filename="../../src/qml/ClassWidgets/pages/settings/Home.qml" line="80"/>
+        <location filename="../../src/qml/ClassWidgets/pages/settings/Home.qml" line="82"/>
         <source>Warning</source>
         <translation>எச்சரிக்கை</translation>
     </message>
     <message>
-        <location filename="../../src/qml/ClassWidgets/pages/settings/Home.qml" line="81"/>
+        <location filename="../../src/qml/ClassWidgets/pages/settings/Home.qml" line="83"/>
         <source>This version is still under testing and may contain bugs or incomplete features. You are welcome to submit issues on GitHub</source>
         <translation>இந்தப் பதிப்பு இன்னும் சோதனையில் உள்ளது மற்றும் பிழைகள் அல்லது முழுமையற்ற அம்சங்களைக் கொண்டிருக்கலாம். GitHub இல் சிக்கல்களைச் சமர்ப்பிக்க உங்களை வரவேற்கிறோம்</translation>
     </message>
     <message>
-        <location filename="../../src/qml/ClassWidgets/pages/settings/Home.qml" line="139"/>
+        <location filename="../../src/qml/ClassWidgets/pages/settings/Home.qml" line="141"/>
         <source>GitHub</source>
         <translation>அறிவிலிமையம்</translation>
     </message>
     <message>
-        <location filename="../../src/qml/ClassWidgets/pages/settings/Home.qml" line="144"/>
+        <location filename="../../src/qml/ClassWidgets/pages/settings/Home.qml" line="146"/>
         <source>Discord</source>
         <translation>கருத்து வேறுபாடு</translation>
     </message>
     <message>
-        <location filename="../../src/qml/ClassWidgets/pages/settings/Home.qml" line="145"/>
+        <location filename="../../src/qml/ClassWidgets/pages/settings/Home.qml" line="147"/>
         <source>https://discord.gg/nNZxaCBh</source>
         <translation>https://discord.gg/nNZxaCBh</translation>
     </message>
