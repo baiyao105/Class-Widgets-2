@@ -85,10 +85,7 @@ FluentPage {
                     text: qsTr("Select sound")
                     enabled: !Configs.isKeyLocked("notifications.level_sounds.0")
                     onClicked: {
-                        let soundPath = UtilsBackend.selectNotificationSound()
-                        if (soundPath) {
-                            UtilsBackend.setGlobalLevelSound(0, soundPath)
-                        }
+                        UtilsBackend.selectNotificationSound(0)
                     }
                 }
             }
@@ -127,10 +124,7 @@ FluentPage {
                     text: qsTr("Select sound")
                     enabled: !Configs.isKeyLocked("notifications.level_sounds.1")
                     onClicked: {
-                        let soundPath = UtilsBackend.selectNotificationSound()
-                        if (soundPath) {
-                            UtilsBackend.setGlobalLevelSound(1, soundPath)
-                        }
+                        UtilsBackend.selectNotificationSound(1)
                     }
                 }
             }
@@ -169,10 +163,7 @@ FluentPage {
                     text: qsTr("Select sound")
                     enabled: !Configs.isKeyLocked("notifications.level_sounds.2")
                     onClicked: {
-                        let soundPath = UtilsBackend.selectNotificationSound()
-                        if (soundPath) {
-                            UtilsBackend.setGlobalLevelSound(2, soundPath)
-                        }
+                        UtilsBackend.selectNotificationSound(2)
                     }
                 }
             }
@@ -211,10 +202,7 @@ FluentPage {
                     text: qsTr("Select sound")
                     enabled: !Configs.isKeyLocked("notifications.level_sounds.3")
                     onClicked: {
-                        let soundPath = UtilsBackend.selectNotificationSound()
-                        if (soundPath) {
-                            UtilsBackend.setGlobalLevelSound(3, soundPath)
-                        }
+                        UtilsBackend.selectNotificationSound(3)
                     }
                 }
             }
