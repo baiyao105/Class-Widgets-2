@@ -1,4 +1,5 @@
 import json
+from collections.abc import Callable
 
 from PySide6.QtCore import QObject, Signal, Slot, Property
 from PySide6.QtNetwork import QNetworkAccessManager, QNetworkRequest, QNetworkReply
@@ -23,7 +24,7 @@ class PlazaBridge(QObject):
         self._banners = []
         self._plugins = []
         self._nam = QNetworkAccessManager(self)
-        self._pending_replies: list[QNetworkReply] = []
+        self._pending_replies: dict[QNetworkReply, Callable[[], None]] = {}
         self._fetching_banners = False
         self._fetching_plugins = False
         self._shutting_down = False
@@ -41,14 +42,16 @@ class PlazaBridge(QObject):
             self.baseUrlChanged.emit()
 
     def shutdown(self):
-        """Clean up all pending network requests."""
+        """Stop requests without letting their completion handlers reach QML."""
+        if self._shutting_down:
+            return
+
         self._shutting_down = True
-        pending_replies = list(self._pending_replies)
+        pending_replies = list(self._pending_replies.items())
         self._pending_replies.clear()
-        for reply in pending_replies:
-            if reply.isRunning():
-                reply.abort()
-            reply.deleteLater()
+        for reply, callback in pending_replies:
+            self._disconnect_reply(reply, callback)
+            self._dispose_reply(reply)
         self._fetching_banners = False
         self._fetching_plugins = False
         self._set_status("Idle")
@@ -82,6 +85,30 @@ class PlazaBridge(QObject):
             return data.get("error")
         return fallback
 
+    def _track_reply(self, reply: QNetworkReply, callback: Callable[[], None]) -> None:
+        self._pending_replies[reply] = callback
+        reply.finished.connect(callback)
+
+    def _take_reply(self, reply: QNetworkReply) -> bool:
+        callback = self._pending_replies.pop(reply, None)
+        if callback is None:
+            return False
+        self._disconnect_reply(reply, callback)
+        return True
+
+    @staticmethod
+    def _disconnect_reply(reply: QNetworkReply, callback: Callable[[], None]) -> None:
+        try:
+            reply.finished.disconnect(callback)
+        except (RuntimeError, TypeError):
+            pass
+
+    @staticmethod
+    def _dispose_reply(reply: QNetworkReply) -> None:
+        if reply.isRunning():
+            reply.abort()
+        reply.deleteLater()
+
     @Slot()
     def fetchBanners(self):
         if self._shutting_down:
@@ -98,12 +125,11 @@ class PlazaBridge(QObject):
         request = QNetworkRequest(url)
         request.setTransferTimeout(10000)
         reply = self._nam.get(request)
-        self._pending_replies.append(reply)
-        reply.finished.connect(lambda: self._on_banners_finished(reply))
+        self._track_reply(reply, lambda: self._on_banners_finished(reply))
 
     def _on_banners_finished(self, reply: QNetworkReply):
-        if reply in self._pending_replies:
-            self._pending_replies.remove(reply)
+        if not self._take_reply(reply):
+            return
         self._fetching_banners = False
 
         if self._shutting_down:
@@ -152,12 +178,11 @@ class PlazaBridge(QObject):
         request = QNetworkRequest(url)
         request.setTransferTimeout(10000)
         reply = self._nam.get(request)
-        self._pending_replies.append(reply)
-        reply.finished.connect(lambda: self._on_plugins_finished(reply))
+        self._track_reply(reply, lambda: self._on_plugins_finished(reply))
 
     def _on_plugins_finished(self, reply: QNetworkReply):
-        if reply in self._pending_replies:
-            self._pending_replies.remove(reply)
+        if not self._take_reply(reply):
+            return
         self._fetching_plugins = False
 
         if self._shutting_down:
