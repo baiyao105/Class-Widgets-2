@@ -8,17 +8,19 @@ import ClassWidgets.Components
 
 FluentPage {
     horizontalPadding: 0
-    wrapperWidth: width - 42*2
+    wrapperWidth: Math.min(width - 42*2, 1200)
 
     // Banner / 横幅 //
     contentHeader: Item {
         width: parent.width
-        height: Math.max(window.height * 0.35, 200)
+        height: Math.max(window.height * 0.26, 200)
 
         Image {
             id: banner
             anchors.fill: parent
-            source: PathManager.assets("images/banner/cw2.png")
+            source: PathManager.images(
+                "banner/4-1_" + (Theme.isDark()? "dark" : "light") + ".png"
+            )
             fillMode: Image.PreserveAspectCrop
             // verticalAlignment: Image.AlignTop
 
@@ -53,7 +55,7 @@ FluentPage {
             // }
 
             Text {
-                color: "#fff"
+                // color: "#fff"
                 typography: Typography.Title
                 text: qsTr("Home")
             }

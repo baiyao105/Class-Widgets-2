@@ -2,7 +2,7 @@
 <img src="assets/images/logo.png" width="15%" alt="Class Widgets 2">
 <h1>Class Widgets 2</h1>
 
-<p>新，是理所当然的不同。</p>
+<p>课程表的终极形态</p>
 
 <!--[![当前版本](https://img.shields.io/github/v/release/rinlit-233-shiroko/class-widgets-2?style=for-the-badge&color=purple&label=%E5%BD%93%E5%89%8D%E7%89%88%E6%9C%AC)](https://github.com/rinlit-233-shiroko/class-widgets-2/releases/latest)--->
 
@@ -18,37 +18,37 @@
 
 <b>简体中文</b> | <a href="/docs/lang/en_US.md">English</a> | <a href="/docs/lang/ja.md">日本語</a>
 
+
+![Banner - 1 (16_9).png](docs/assets/Banner%20-%201%20%2816_9%29.png)
+
+
 </div>
 
 > [!NOTE]
-> 请注意，本项目仍然在积极开发中，大多数功能还未补完。若要在教学环境中使用，请三思而后行。
+> 我们计划在本月的 24 日（即 2026/8/24，发布二周年）正式发布第一个 Stable 版本！
 > 欢迎到我们的 GitHub 页面提交问题反馈，谢谢！
 >
 > 对于在 GitHub 下载过慢的用户，可以在下方的其他第三方链接下载您需要的版本，
-> 网盘中的文件会自动随版本发行而更新。
+> 网盘中的文件会自动随版本发行而更新，也可使用 Class Widgets 中内置的更新功能以更新。
 > 
 > <div align="center">
-> <a href="https://github.com/RinLit-233-shiroko/Class-Widgets-2/releases">Release 页面</a> | <a href="https://dl.gemen.pp.ua">OneDrive</a> | <s><a href="https://www.123865.com/s/DCyBTd-3iWxH">123 网盘</a></s>
+> <a href="https://github.com/RinLit-233-shiroko/Class-Widgets-2/releases">Release 页面</a> | <a href="https://dl.gemen.pp.ua">OneDrive</a> | <s><a href="https://cw.rinlit.cn/">官方网站（在建）</a></s>
 > </div>
 
 
 ## 概述
 Class Widgets 2 是新一代的电子化课程表展示工具，基于比前代更新的架构与设计语言重写。
-相比 [Class Widgets 1](https://github.com/Class-Widgets/Class-Widgets) ，本项目在设计、交互、功能等方面将全面提升。
+相比 [Class Widgets 1](https://github.com/Class-Widgets/Class-Widgets) ，本项目在设计、交互、功能等方面全面提升。
 
 ### 聚焦亮点
 > 本软件尚未发布正式版本
 
-### 未来展望？
-暂时不知道喵
 
 ### 开发文档
 
 欢迎开发者为 Class Widgets 2 开发插件！
-> 当前文档由 AI 生成
-- 📚 [完整插件开发指南](docs/dev/plugin/index.md) - 插件开发概览和导航
-- 🔧 [查看仓库](https://github.com/Class-Widgets/class-widgets-sdk) - Class Widgets SDK
-- 🔧 [查看仓库](https://github.com/Class-Widgets/plugin-template-v2) - Class Widgets 插件模板v2
+- [Class Widgets SDK](https://github.com/Class-Widgets/class-widgets-sdk)
+- [Class Widgets 插件模板v2](https://github.com/Class-Widgets/plugin-template-v2)
 
 ## 社区
 <div align="center">
@@ -66,9 +66,7 @@ Class Widgets 2 是新一代的电子化课程表展示工具，基于比前代�
 ## 开源许可
 
 [//]: # (本项目基于 GNU 通用公共许可证 第 3 版（GPL-3.0） 授权开源。)
-本项目基于 MIT 授权开源。
-
-在 [LICENSE](LICENSE) 文件了解更多。
+本项目基于 MIT 许可证授权开源，在 [LICENSE](LICENSE) 文件了解更多。
 
 ## 致谢
 ### 依赖

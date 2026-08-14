@@ -8,7 +8,7 @@ import Qt5Compat.GraphicalEffects
 FluentPage {
     id: root
     horizontalPadding: 0
-    wrapperWidth: width - 42*2
+    wrapperWidth: Math.min(width - 42*2, 1200)
 
     // Banner / 横幅 //
     contentHeader: Item {
@@ -18,7 +18,9 @@ FluentPage {
         Image {
             id: banner
             anchors.fill: parent
-            source: PathManager.assets("images/banner/cw2.png")
+            source: PathManager.images(
+                "banner/4-1_" + (Theme.isDark()? "dark" : "light") + ".png"
+            )
             fillMode: Image.PreserveAspectCrop
             // verticalAlignment: Image.AlignTop
 
@@ -46,16 +48,14 @@ FluentPage {
             }
             spacing: 8
 
-            Text {
-                color: "#fff"
-                typography: Typography.BodyLarge
-                text: qsTr("Reimagining Your Schedule.")
-            }
+            // Text {
+            //     typography: Typography.BodyLarge
+            //     text: qsTr("Reimagining Your Schedule.")
+            // }
 
             Text {
-                color: "#fff"
                 typography: Typography.Title
-                text: qsTr("Class Widgets 2")
+                text: qsTr("About")
             }
         }
     }
@@ -89,28 +89,38 @@ FluentPage {
             SettingItem {
                 id: repo
                 title: qsTr("To view this repository")
+                actionIcon.name: "ic_fluent_copy_20_regular"
+                clickable: true
 
                 TextInput {
                     id: repoUrl
                     readOnly: true
+                    font.family: "Consolas"
                     text: "https://github.com/RinLit-233-shiroko/Class-Widgets-2"
                     wrapMode: TextInput.Wrap
+                    opacity: 0.8
                 }
-                ToolButton {
-                    flat: true
-                    icon.name: "ic_fluent_open_20_regular"
-                    onClicked: {
-                        Qt.openUrlExternally(repoUrl.text)
-                    }
+                // ToolButton {
+                //     flat: true
+                //     icon.name: "ic_fluent_open_20_regular"
+                //     onClicked: {
+                //         Qt.openUrlExternally(repoUrl.text)
+                //     }
+                // }
+                onClicked: {
+                    Qt.openUrlExternally(repoUrl.text)
                 }
             }
             SettingItem {
                 title: qsTr("File a bug or request new sample")
 
-                Hyperlink {
-                    text: qsTr("Create an issue on GitHub")
-                    openUrl: "https://github.com/RinLit-233-shiroko/Class-Widgets-2/issues/new/choose"
-                }
+                // Hyperlink {
+                //     text: qsTr("Create an issue on GitHub")
+                //     openUrl: "https://github.com/RinLit-233-shiroko/Class-Widgets-2/issues/new/choose"
+                // }
+                actionIcon.name: "ic_fluent_open_20_regular"
+                onClicked: Qt.openUrlExternally("https://github.com/RinLit-233-shiroko/Class-Widgets-2/issues/new/choose")
+                clickable: true
             }
             SettingItem {
                 Column {
