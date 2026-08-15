@@ -111,11 +111,13 @@ Class Widgets 2 是新一代的电子化课程表展示工具，基于比前代�
 
 ## 星标历史
 
-<picture>
-   <source media="(prefers-color-scheme: dark)" srcset="https://api.star-history.com/svg?repos=rinlit-233-shiroko/class-widgets-2&type=Date&theme=dark" />
-   <source media="(prefers-color-scheme: light)" srcset="https://api.star-history.com/svg?repos=rinlit-233-shiroko/class-widgets-2&type=Date" />
-   <img alt="Star History Chart" src="https://api.star-history.com/svg?repos=rinlit-233-shiroko/class-widgets-2&type=Date" />
+<a href="https://www.star-history.com/?repos=RinLit-233-shiroko%2FClass-Widgets-2&type=date&legend=top-left">
+ <picture>
+   <source media="(prefers-color-scheme: dark)" srcset="https://api.star-history.com/chart?repos=RinLit-233-shiroko/Class-Widgets-2&type=date&theme=dark&legend=top-left&sealed_token=VpBd8IQN7yLcxJQiWGDXVDPQAytUqUhysAVGwRlhwzN20XydY6Wqg_sQqPf6FjeGjKRj8TXz6bOXYjslIGML_tMh6dDo0FcKDWYzD5bBQHm_BHPMhdEheiNe76jXW_gltdHlgNKYtaiUTbLxTlpXQ6mfDIAkvOImhJGpZmDIIy928Yml_Q7pPyAZVM0l" />
+   <source media="(prefers-color-scheme: light)" srcset="https://api.star-history.com/chart?repos=RinLit-233-shiroko/Class-Widgets-2&type=date&legend=top-left&sealed_token=VpBd8IQN7yLcxJQiWGDXVDPQAytUqUhysAVGwRlhwzN20XydY6Wqg_sQqPf6FjeGjKRj8TXz6bOXYjslIGML_tMh6dDo0FcKDWYzD5bBQHm_BHPMhdEheiNe76jXW_gltdHlgNKYtaiUTbLxTlpXQ6mfDIAkvOImhJGpZmDIIy928Yml_Q7pPyAZVM0l" />
+   <img alt="Star History Chart" src="https://api.star-history.com/chart?repos=RinLit-233-shiroko/Class-Widgets-2&type=date&legend=top-left&sealed_token=VpBd8IQN7yLcxJQiWGDXVDPQAytUqUhysAVGwRlhwzN20XydY6Wqg_sQqPf6FjeGjKRj8TXz6bOXYjslIGML_tMh6dDo0FcKDWYzD5bBQHm_BHPMhdEheiNe76jXW_gltdHlgNKYtaiUTbLxTlpXQ6mfDIAkvOImhJGpZmDIIy928Yml_Q7pPyAZVM0l" />
  </picture>
+</a>
 
 #
 
