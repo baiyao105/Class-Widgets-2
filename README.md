@@ -1,25 +1,27 @@
 <div align="center">
-<img src="assets/images/logo.png" width="15%" alt="Class Widgets 2">
-<h1>Class Widgets 2</h1>
 
-<p>课程表的终极形态</p>
+<h1>
+  <img src="assets/images/logo.png" height="42" width:"42" align="top">
+  Class Widgets 2
+</h1>
+<p>
+  <span>课程表的终极形态</span> &emsp;&emsp; <b>简体中文</b> | <a href="/docs/lang/en_US.md">English</a> | <a href="/docs/lang/ja.md">日本語</a>
+</p>
+
 
 <!--[![当前版本](https://img.shields.io/github/v/release/rinlit-233-shiroko/class-widgets-2?style=for-the-badge&color=purple&label=%E5%BD%93%E5%89%8D%E7%89%88%E6%9C%AC)](https://github.com/rinlit-233-shiroko/class-widgets-2/releases/latest)--->
 
+![Banner - 1 (16_9).png](docs/assets/Banner%20-%201%20%2816_9%29.png)
+
+
 [![星标](https://img.shields.io/github/stars/rinlit-233-shiroko/class-widgets-2?style=for-the-badge&color=orange&label=%E6%98%9F%E6%A0%87)](https://github.com/rinlit-233-shiroko/class-widgets-2)
 [![当前测试版](https://img.shields.io/github/v/tag/rinlit-233-shiroko/class-widgets-2?include_prereleases&label=%E5%BD%93%E5%89%8D%E6%B5%8B%E8%AF%95%E7%89%88&color=yellow&style=for-the-badge)](https://github.com/rinlit-233-shiroko/class-widgets-2/releases)
-<br>
 [![开源许可](https://img.shields.io/github/license/RinLit-233-shiroko/Class-Widgets-2?label=%E5%BC%80%E6%BA%90%E8%AE%B8%E5%8F%AF%E8%AF%81&style=for-the-badge)](https://github.com/rinlit-233-shiroko/class-widgets-2)
 [![下载量](https://img.shields.io/github/downloads/rinlit-233-shiroko/class-widgets-2/total.svg?label=%E4%B8%8B%E8%BD%BD%E9%87%8F&color=darkgreen&style=for-the-badge)](https://github.com/rinlit-233-shiroko/class-widgets-2)
 [![翻译状态](https://img.shields.io/weblate/progress/class-widgets?server=https%3A%2F%2Fhosted.weblate.org&style=for-the-badge&label=%E7%BF%BB%E8%AF%91%E8%BF%9B%E5%BA%A6&color=darkcyan)](https://hosted.weblate.org/engage/class-widgets/)
 
 [//]: # ([![语言支持]&#40;https://hosted.weblate.org/widget/class-widgets/language-badge.svg&#41;]&#40;https://hosted.weblate.org/engage/class-widgets/&#41;)
 [//]: # (shieldio没这api说是，并且weblate自己提供的这个badge不支持自定义。。。总之就是不好看)
-
-<b>简体中文</b> | <a href="/docs/lang/en_US.md">English</a> | <a href="/docs/lang/ja.md">日本語</a>
-
-
-![Banner - 1 (16_9).png](docs/assets/Banner%20-%201%20%2816_9%29.png)
 
 
 </div>
