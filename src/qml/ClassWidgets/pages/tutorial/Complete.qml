@@ -39,8 +39,8 @@ Item {
 
             Image {
                 Layout.alignment: Qt.AlignCenter
-                Layout.preferredWidth: 72
-                Layout.preferredHeight: 72
+                Layout.preferredWidth: 92
+                Layout.preferredHeight: 92
                 source: PathManager.images("icons/cw2_up_to_date.png")
                 fillMode: Image.PreserveAspectFit
             }

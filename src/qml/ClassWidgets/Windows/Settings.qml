@@ -24,6 +24,7 @@ FluentWindow {
             title: qsTr("Home"),
             page: PathManager.qml("pages/settings/Home.qml"),
             icon: "ic_fluent_board_20_regular",
+            position: Position.Top,
         },
         {
             title: qsTr("General"),
@@ -67,6 +68,7 @@ FluentWindow {
             title: qsTr("Plugins"),
             page: PathManager.qml("pages/settings/Plugins.qml"),
             icon: "ic_fluent_apps_add_in_20_regular",
+            expanded: true,
             subItems: UtilsBackend && UtilsBackend.extraSettings && UtilsBackend.extraSettings.length > 0 ? UtilsBackend.extraSettings : null
         },
         {
