@@ -9,6 +9,7 @@ Item {
 
     property var tutorial
     property real pageTransitionOffset: 0
+    property real visualTransitionOpacity: 1
     property bool completing: false
 
     function finishSetup() {

@@ -26,6 +26,7 @@ Item {
     property bool fillOperationHeight: false
     property alias icon: ricon
     property real pageTransitionOffset: 0
+    property real visualTransitionOpacity: 1
 
     default property alias operationContent: operationContentArea.data
 
@@ -136,8 +137,14 @@ Item {
             Layout.fillHeight: true
 
             Loader {
+                id: rightContentLoader
                 anchors.fill: parent
                 sourceComponent: root.rightContent || defaultRightContent
+
+                onLoaded: {
+                    if (item && item.contentOpacity !== undefined)
+                        item.contentOpacity = Qt.binding(function() { return root.visualTransitionOpacity })
+                }
             }
         }
     }
@@ -153,6 +160,7 @@ Item {
 
         TutorialVisual {
             anchors.fill: parent
+            contentOpacity: root.visualTransitionOpacity
             icon.name: ricon.name
             icon.source: ricon.source
         }

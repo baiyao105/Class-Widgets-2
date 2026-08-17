@@ -168,20 +168,6 @@ Clip {
                 //     }
                 // }
 
-                Rectangle {
-                    visible: root.featured
-                    Layout.preferredHeight: 20
-                    Layout.preferredWidth: featuredText.implicitWidth + 14
-                    radius: 5
-                    color: Theme.isDark() ? Qt.alpha("#FFD780", 0.16) : Qt.alpha("#d39300", 0.16)
-
-                    Text {
-                        id: featuredText
-                        anchors.centerIn: parent
-                        text: qsTr("Featured")
-                        typography: Typography.Caption
-                    }
-                }
             }
 
             Text {

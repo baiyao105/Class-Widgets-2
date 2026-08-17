@@ -1527,7 +1527,7 @@ Do you want to continue using them, or discard and restore the original schedule
     <name>Language</name>
     <message>
         <location filename="../../src/qml/ClassWidgets/pages/tutorial/Language.qml" line="13"/>
-        <source>Make it feel familiar</source>
+        <source>Choose your language</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -2722,22 +2722,22 @@ It&apos;s incompatible and may cause unexpected issues.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/qml/ClassWidgets/pages/tutorial/Preferences.qml" line="42"/>
+        <location filename="../../src/qml/ClassWidgets/pages/tutorial/Preferences.qml" line="52"/>
         <source>Create Desktop Shortcut</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/qml/ClassWidgets/pages/tutorial/Preferences.qml" line="43"/>
+        <location filename="../../src/qml/ClassWidgets/pages/tutorial/Preferences.qml" line="53"/>
         <source>Add a shortcut to your desktop after setup completes</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/qml/ClassWidgets/pages/tutorial/Preferences.qml" line="58"/>
+        <location filename="../../src/qml/ClassWidgets/pages/tutorial/Preferences.qml" line="68"/>
         <source>Enable Notifications</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/qml/ClassWidgets/pages/tutorial/Preferences.qml" line="59"/>
+        <location filename="../../src/qml/ClassWidgets/pages/tutorial/Preferences.qml" line="69"/>
         <source>Allow reminders, schedule updates, and plugin messages</source>
         <translation type="unfinished"></translation>
     </message>
@@ -3808,11 +3808,6 @@ If it takes place in another location, such as a sport field, lab, or another cl
     <message>
         <location filename="../../src/qml/ClassWidgets/Components/tutorial/TutorialPluginCard.qml" line="40"/>
         <source>Unknown plugin</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../../src/qml/ClassWidgets/Components/tutorial/TutorialPluginCard.qml" line="181"/>
-        <source>Featured</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

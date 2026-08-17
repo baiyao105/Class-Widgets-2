@@ -12,6 +12,8 @@ Item {
     property alias icon: icon
     property string title: ""
     property string subtitle: ""
+    property int fadeDuration: 180
+    property real contentOpacity: 1
     // property bool backgroundVisible: false
     property Gradient backgroundGradient: Gradient {
         id: lightGradient
@@ -39,8 +41,21 @@ Item {
         anchors.fill: parent
         color: "transparent"
         gradient: Theme.isDark() ? null : backgroundGradient
-        visible: false
         // color: root.backgroundColor
+
+        layer.enabled: true
+        layer.effect: OpacityMask {
+            maskSource: Rectangle {
+                width: background.width
+                height: background.height
+
+                gradient: Gradient {
+                    orientation: Gradient.Horizontal
+                    GradientStop { position: 0; color: "transparent" }
+                    GradientStop { position: 0.2; color: "white" }
+                }
+            }
+        }
 
         Image {
             anchors.fill: parent
@@ -51,42 +66,44 @@ Item {
         }
     }
     Item {
-        id: backgroundBackdrop
+        id: foreground
         anchors.fill: parent
+        opacity: root.contentOpacity
 
-        OpacityMask {
-            id: bannerContent
+        Loader {
+            id: dynamicContentLoader
             anchors.fill: parent
-            source: background
-            maskSource: Rectangle {
-                width: bannerContent.width
-                height: bannerContent.height
+            sourceComponent: root.dynamicContent
+            visible: opacity > 0
+            opacity: root.dynamicContent !== null && status === Loader.Ready ? 1 : 0
 
-                gradient: Gradient {
-                    orientation: Gradient.Horizontal
-                    GradientStop { position: 0; color: "transparent" }
-                    GradientStop { position: 0.2; color: "white" }
+            Behavior on opacity {
+                NumberAnimation {
+                    duration: root.fadeDuration
+                    easing.type: Easing.OutCubic
                 }
             }
         }
-    }
 
-    Loader {
-        anchors.fill: parent
-        sourceComponent: root.dynamicContent
-        visible: root.dynamicContent !== null
-    }
+        Item {
+            id: fallback
+            anchors.fill: parent
+            visible: opacity > 0
+            opacity: root.dynamicContent === null ? 1 : 0
 
-    Item {
-        id: fallback
-        anchors.fill: parent
-        visible: root.dynamicContent === null
+            Behavior on opacity {
+                NumberAnimation {
+                    duration: root.fadeDuration
+                    easing.type: Easing.OutCubic
+                }
+            }
 
-        Icon {
-            id: icon
-            size: 96
-            anchors.centerIn: parent
-            source: PathManager.images("icons/cw2_whatsnew.png")
+            Icon {
+                id: icon
+                size: 96
+                anchors.centerIn: parent
+                source: PathManager.images("icons/cw2_whatsnew.png")
+            }
         }
     }
 }

@@ -11,6 +11,7 @@ Item {
 
     property var tutorial
     property real pageTransitionOffset: 0
+    property real visualTransitionOpacity: 1
     property var welcomeGreetings: ["欢迎", "歡迎", "ようこそ", "幸會", "Welcome"]
     property int greetingIndex: 0
     property string displayedGreeting: welcomeGreetings[greetingIndex]

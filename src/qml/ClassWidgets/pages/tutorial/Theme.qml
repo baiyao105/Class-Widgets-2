@@ -12,6 +12,7 @@ TutorialComponents.TutorialPage {
     description: qsTr("Set the app appearance and an accent color that feels right to you.")
     currentStep: 2
     totalSteps: 6
+    icon.source: PathManager.images("tutorial/cw2_personalization.png")
 
     readonly property var recommendedColors: [
         "#4099b2", "#0078d4", "#107c10", "#d83b01", "#c239b3", "#8764b8"
@@ -36,6 +37,7 @@ TutorialComponents.TutorialPage {
 
             SettingItem {
                 RowLayout {
+                    id: themeOptionsRow
                     Layout.fillWidth: true
                     spacing: 12
 
@@ -59,11 +61,12 @@ TutorialComponents.TutorialPage {
                         ]
 
                         delegate: ColumnLayout {
-                            Layout.fillWidth: true
+                            Layout.preferredWidth: (themeOptionsRow.width - themeOptionsRow.spacing * 2) / 3
+                            Layout.minimumWidth: 0
                             spacing: 4
 
                             Image {
-                                Layout.fillWidth: true
+                                Layout.preferredWidth: parent.width
                                 Layout.preferredHeight: 72
                                 source: PathManager.images("tutorial/" + modelData.preview)
                                 fillMode: Image.PreserveAspectFit

@@ -10,10 +10,11 @@ TutorialComponents.TutorialPage {
 
     property var languages: [AppCentral.translator.getSystemLanguage(), "en_US", "ja_JP", "zh_CN", "zh_HK"]
     property bool languageReady: false
-    title: qsTr("Make it feel familiar")
+    title: qsTr("Choose your language")
     description: qsTr("Choose a language. You can refine every setting later.")
     currentStep: 1
     totalSteps: 6
+    icon.source: PathManager.images("tutorial/cw2_lang.png")
     // visualTitle: qsTr("A little more you")
     // visualSubtitle: qsTr("Theme and language")
     // visualIconName: "ic_fluent_paint_brush_20_regular"

@@ -1631,75 +1631,75 @@ Please try again later.</source>
     <message>
         <location filename="../../src/qml/ClassWidgets/pages/tutorial/Interactions.qml" line="11"/>
         <source>Choose widget interactions</source>
-        <translation type="unfinished"></translation>
+        <translation>选择小组件的交互方式</translation>
     </message>
     <message>
         <location filename="../../src/qml/ClassWidgets/pages/tutorial/Interactions.qml" line="12"/>
         <source>Decide how widgets get out of your way while you work.</source>
-        <translation type="unfinished"></translation>
+        <translation>选择如何让小组件在你正常使用时避免干扰。</translation>
     </message>
     <message>
         <location filename="../../src/qml/ClassWidgets/pages/tutorial/Interactions.qml" line="28"/>
         <source>Hide Behavior</source>
-        <translation type="unfinished"></translation>
+        <translation>隐藏方式</translation>
     </message>
     <message>
         <location filename="../../src/qml/ClassWidgets/pages/tutorial/Interactions.qml" line="29"/>
         <source>Choose whether widgets disappear or become compact</source>
-        <translation type="unfinished"></translation>
+        <translation>选择小组件隐藏后消失或缩小显示</translation>
     </message>
     <message>
         <location filename="../../src/qml/ClassWidgets/pages/tutorial/Interactions.qml" line="44"/>
         <source>Hide</source>
-        <translation type="unfinished"></translation>
+        <translation>隐藏</translation>
     </message>
     <message>
         <location filename="../../src/qml/ClassWidgets/pages/tutorial/Interactions.qml" line="49"/>
         <source>Mini Mode</source>
-        <translation type="unfinished">迷你模式</translation>
+        <translation>迷你模式</translation>
     </message>
     <message>
         <location filename="../../src/qml/ClassWidgets/pages/tutorial/Interactions.qml" line="84"/>
         <source>Tap to Hide</source>
-        <translation type="unfinished"></translation>
+        <translation>单击隐藏</translation>
     </message>
     <message>
         <location filename="../../src/qml/ClassWidgets/pages/tutorial/Interactions.qml" line="85"/>
         <source>Click on a widget to hide it, click it again to bring it back</source>
-        <translation type="unfinished"></translation>
+        <translation>点击小组件将其隐藏，再次点击即可恢复</translation>
     </message>
     <message>
         <location filename="../../src/qml/ClassWidgets/pages/tutorial/Interactions.qml" line="97"/>
         <source>Hover Fade</source>
-        <translation type="unfinished"></translation>
+        <translation>悬停淡化</translation>
     </message>
     <message>
         <location filename="../../src/qml/ClassWidgets/pages/tutorial/Interactions.qml" line="98"/>
         <source>Hover to make widgets transparent and let clicks pass through</source>
-        <translation type="unfinished"></translation>
+        <translation>悬停时使小组件变为透明，即可穿透点击</translation>
     </message>
 </context>
 <context>
     <name>Language</name>
     <message>
         <location filename="../../src/qml/ClassWidgets/pages/tutorial/Language.qml" line="13"/>
-        <source>Make it feel familiar</source>
-        <translation type="unfinished"></translation>
+        <source>Choose your language</source>
+        <translation>选择你的语言</translation>
     </message>
     <message>
         <location filename="../../src/qml/ClassWidgets/pages/tutorial/Language.qml" line="14"/>
         <source>Choose a language. You can refine every setting later.</source>
-        <translation type="unfinished"></translation>
+        <translation>选择你想使用的语言，之后也可以在设置中更改。</translation>
     </message>
     <message>
         <location filename="../../src/qml/ClassWidgets/pages/tutorial/Language.qml" line="29"/>
         <source>Language</source>
-        <translation type="unfinished">语言</translation>
+        <translation>语言</translation>
     </message>
     <message>
         <location filename="../../src/qml/ClassWidgets/pages/tutorial/Language.qml" line="39"/>
         <source>Use System Language</source>
-        <translation type="unfinished">使用系统语言</translation>
+        <translation>使用系统语言</translation>
     </message>
 </context>
 <context>
@@ -2885,103 +2885,103 @@ It&apos;s incompatible and may cause unexpected issues.</source>
     <message>
         <location filename="../../src/qml/ClassWidgets/pages/tutorial/Plugins.qml" line="21"/>
         <source>Recommended plugins</source>
-        <translation type="unfinished"></translation>
+        <translation>推荐插件</translation>
     </message>
     <message>
         <location filename="../../src/qml/ClassWidgets/pages/tutorial/Plugins.qml" line="22"/>
         <source>Pick certified plugins from Plugin Plaza to install with your first setup.</source>
-        <translation type="unfinished"></translation>
+        <translation>从插件广场中选择推荐插件，在开始使用前安装。</translation>
     </message>
     <message>
         <location filename="../../src/qml/ClassWidgets/pages/tutorial/Plugins.qml" line="28"/>
         <source>Installing plugins</source>
-        <translation type="unfinished"></translation>
+        <translation>正在安装插件</translation>
     </message>
     <message>
         <location filename="../../src/qml/ClassWidgets/pages/tutorial/Plugins.qml" line="30"/>
         <source>Finish</source>
-        <translation type="unfinished"></translation>
+        <translation>完成</translation>
     </message>
     <message>
         <location filename="../../src/qml/ClassWidgets/pages/tutorial/Plugins.qml" line="32"/>
         <source>Skip</source>
-        <translation type="unfinished"></translation>
+        <translation>跳过</translation>
     </message>
     <message>
         <location filename="../../src/qml/ClassWidgets/pages/tutorial/Plugins.qml" line="33"/>
         <source>Finish &amp; Install</source>
-        <translation type="unfinished"></translation>
+        <translation>完成并安装</translation>
     </message>
     <message>
         <location filename="../../src/qml/ClassWidgets/pages/tutorial/Plugins.qml" line="39"/>
         <location filename="../../src/qml/ClassWidgets/pages/tutorial/Plugins.qml" line="475"/>
         <source>Retry</source>
-        <translation type="unfinished">重试</translation>
+        <translation>重试</translation>
     </message>
     <message>
         <location filename="../../src/qml/ClassWidgets/pages/tutorial/Plugins.qml" line="170"/>
         <source>%1 selected</source>
-        <translation type="unfinished"></translation>
+        <translation>已选择 %1 个</translation>
     </message>
     <message>
         <location filename="../../src/qml/ClassWidgets/pages/tutorial/Plugins.qml" line="171"/>
         <source>No plugins selected</source>
-        <translation type="unfinished"></translation>
+        <translation>未选择插件</translation>
     </message>
     <message>
         <location filename="../../src/qml/ClassWidgets/pages/tutorial/Plugins.qml" line="173"/>
         <source>%1/%2 plugins</source>
-        <translation type="unfinished"></translation>
+        <translation>%1/%2 个插件</translation>
     </message>
     <message>
         <location filename="../../src/qml/ClassWidgets/pages/tutorial/Plugins.qml" line="196"/>
         <source>Installation failed</source>
-        <translation type="unfinished"></translation>
+        <translation>安装失败</translation>
     </message>
     <message>
         <location filename="../../src/qml/ClassWidgets/pages/tutorial/Plugins.qml" line="271"/>
         <source>Unable to start installation</source>
-        <translation type="unfinished"></translation>
+        <translation>无法开始安装</translation>
     </message>
     <message>
         <location filename="../../src/qml/ClassWidgets/pages/tutorial/Plugins.qml" line="312"/>
         <source>Installation cancelled</source>
-        <translation type="unfinished"></translation>
+        <translation>安装已取消</translation>
     </message>
     <message>
         <location filename="../../src/qml/ClassWidgets/pages/tutorial/Plugins.qml" line="369"/>
         <source>Select all</source>
-        <translation type="unfinished"></translation>
+        <translation>全选</translation>
     </message>
     <message>
         <location filename="../../src/qml/ClassWidgets/pages/tutorial/Plugins.qml" line="378"/>
         <source>Clear selection</source>
-        <translation type="unfinished"></translation>
+        <translation>取消选择</translation>
     </message>
     <message>
         <location filename="../../src/qml/ClassWidgets/pages/tutorial/Plugins.qml" line="462"/>
         <source>Could not load recommendations</source>
-        <translation type="unfinished"></translation>
+        <translation>无法加载推荐插件</translation>
     </message>
     <message>
         <location filename="../../src/qml/ClassWidgets/pages/tutorial/Plugins.qml" line="463"/>
         <source>No recommendations available</source>
-        <translation type="unfinished"></translation>
+        <translation>暂无推荐插件</translation>
     </message>
     <message>
         <location filename="../../src/qml/ClassWidgets/pages/tutorial/Plugins.qml" line="466"/>
         <source>You can browse Plugin Plaza after setup.</source>
-        <translation type="unfinished"></translation>
+        <translation>你可以在完成后前往插件广场浏览插件。</translation>
     </message>
     <message>
         <location filename="../../src/qml/ClassWidgets/pages/tutorial/Plugins.qml" line="489"/>
         <source>Some plugins were not installed</source>
-        <translation type="unfinished"></translation>
+        <translation>部分插件未能安装</translation>
     </message>
     <message>
         <location filename="../../src/qml/ClassWidgets/pages/tutorial/Plugins.qml" line="490"/>
         <source>%1 installed, %2 failed. Retry the failed plugins or continue without them.</source>
-        <translation type="unfinished"></translation>
+        <translation>已安装 %1 个，%2 个安装失败。你可以重试失败的插件，或继续完成设置。</translation>
     </message>
 </context>
 <context>
@@ -3007,22 +3007,22 @@ It&apos;s incompatible and may cause unexpected issues.</source>
         <translation>登录系统后自动打开 Class Widgets</translation>
     </message>
     <message>
-        <location filename="../../src/qml/ClassWidgets/pages/tutorial/Preferences.qml" line="42"/>
+        <location filename="../../src/qml/ClassWidgets/pages/tutorial/Preferences.qml" line="52"/>
         <source>Create Desktop Shortcut</source>
         <translation>创建桌面快捷方式</translation>
     </message>
     <message>
-        <location filename="../../src/qml/ClassWidgets/pages/tutorial/Preferences.qml" line="43"/>
+        <location filename="../../src/qml/ClassWidgets/pages/tutorial/Preferences.qml" line="53"/>
         <source>Add a shortcut to your desktop after setup completes</source>
         <translation>完成设置后在桌面创建快捷方式</translation>
     </message>
     <message>
-        <location filename="../../src/qml/ClassWidgets/pages/tutorial/Preferences.qml" line="58"/>
+        <location filename="../../src/qml/ClassWidgets/pages/tutorial/Preferences.qml" line="68"/>
         <source>Enable Notifications</source>
         <translation>启用通知</translation>
     </message>
     <message>
-        <location filename="../../src/qml/ClassWidgets/pages/tutorial/Preferences.qml" line="59"/>
+        <location filename="../../src/qml/ClassWidgets/pages/tutorial/Preferences.qml" line="69"/>
         <source>Allow reminders, schedule updates, and plugin messages</source>
         <translation>允许接收提醒、课程表更新和插件消息</translation>
     </message>
@@ -4350,27 +4350,27 @@ If it takes place in another location, such as a sport field, lab, or another cl
     <message>
         <location filename="../../src/qml/ClassWidgets/Windows/Tutorial.qml" line="12"/>
         <source>Getting Started</source>
-        <translation type="unfinished"></translation>
+        <translation>使用引导</translation>
     </message>
     <message>
         <location filename="../../src/qml/ClassWidgets/Windows/Tutorial.qml" line="87"/>
         <source>Skip setup?</source>
-        <translation type="unfinished"></translation>
+        <translation>跳过引导？</translation>
     </message>
     <message>
         <location filename="../../src/qml/ClassWidgets/Windows/Tutorial.qml" line="92"/>
         <source>Are you sure you want to skip the setup?</source>
-        <translation type="unfinished"></translation>
+        <translation>确定要跳过引导吗？</translation>
     </message>
     <message>
         <location filename="../../src/qml/ClassWidgets/Windows/Tutorial.qml" line="105"/>
         <source>Close setup?</source>
-        <translation type="unfinished"></translation>
+        <translation>关闭引导？</translation>
     </message>
     <message>
         <location filename="../../src/qml/ClassWidgets/Windows/Tutorial.qml" line="110"/>
         <source>Are you sure you want to close the setup?</source>
-        <translation type="unfinished"></translation>
+        <translation>确定要关闭引导吗？</translation>
     </message>
 </context>
 <context>
@@ -4378,7 +4378,7 @@ If it takes place in another location, such as a sport field, lab, or another cl
     <message>
         <location filename="../../src/qml/ClassWidgets/Components/tutorial/TutorialPage.qml" line="18"/>
         <source>Continue</source>
-        <translation type="unfinished">继续使用</translation>
+        <translation>继续</translation>
     </message>
 </context>
 <context>
@@ -4386,12 +4386,7 @@ If it takes place in another location, such as a sport field, lab, or another cl
     <message>
         <location filename="../../src/qml/ClassWidgets/Components/tutorial/TutorialPluginCard.qml" line="40"/>
         <source>Unknown plugin</source>
-        <translation type="unfinished">未知插件</translation>
-    </message>
-    <message>
-        <location filename="../../src/qml/ClassWidgets/Components/tutorial/TutorialPluginCard.qml" line="181"/>
-        <source>Featured</source>
-        <translation type="unfinished"></translation>
+        <translation>未知插件</translation>
     </message>
 </context>
 <context>
@@ -4399,7 +4394,7 @@ If it takes place in another location, such as a sport field, lab, or another cl
     <message>
         <location filename="../../src/qml/ClassWidgets/Components/tutorial/TutorialStepFooter.qml" line="13"/>
         <source>Continue</source>
-        <translation type="unfinished">继续使用</translation>
+        <translation>继续</translation>
     </message>
 </context>
 <context>
@@ -4691,22 +4686,22 @@ Go to &quot;Settings&quot; → &quot;Update&quot; for more details.</source>
     <message>
         <location filename="../../src/qml/ClassWidgets/pages/tutorial/Welcome.qml" line="210"/>
         <source>Get started</source>
-        <translation type="unfinished">开始使用</translation>
+        <translation>开始使用</translation>
     </message>
     <message>
         <location filename="../../src/qml/ClassWidgets/pages/tutorial/Welcome.qml" line="223"/>
         <source>Data migration</source>
-        <translation type="unfinished"></translation>
+        <translation>数据迁移</translation>
     </message>
     <message>
         <location filename="../../src/qml/ClassWidgets/pages/tutorial/Welcome.qml" line="229"/>
         <source>View License</source>
-        <translation type="unfinished"></translation>
+        <translation>查看协议</translation>
     </message>
     <message>
         <location filename="../../src/qml/ClassWidgets/pages/tutorial/Welcome.qml" line="234"/>
         <source>Skip tutorial</source>
-        <translation type="unfinished"></translation>
+        <translation>跳过引导</translation>
     </message>
 </context>
 <context>
@@ -4797,17 +4792,17 @@ Go to &quot;Settings&quot; → &quot;Update&quot; for more details.</source>
     <message>
         <location filename="../../src/qml/ClassWidgets/Components/tutorial/WidgetPreview.qml" line="73"/>
         <source>Remaining</source>
-        <translation type="unfinished">距结束还有</translation>
+        <translation>距结束还有</translation>
     </message>
     <message>
         <location filename="../../src/qml/ClassWidgets/Components/tutorial/WidgetPreview.qml" line="157"/>
         <source>Current Activity</source>
-        <translation type="unfinished">当前活动</translation>
+        <translation>当前活动</translation>
     </message>
     <message>
         <location filename="../../src/qml/ClassWidgets/Components/tutorial/WidgetPreview.qml" line="187"/>
         <source>Mathematics</source>
-        <translation type="unfinished">数学</translation>
+        <translation>数学</translation>
     </message>
 </context>
 <context>
@@ -4870,12 +4865,12 @@ then tap &quot;Edit Widget Screen&quot; in the menu to experience it.</source>
     <message>
         <location filename="../../src/qml/ClassWidgets/pages/settings/General/Widgets.qml" line="149"/>
         <source>Corner Radius</source>
-        <translation type="unfinished">圆角半径</translation>
+        <translation>圆角半径</translation>
     </message>
     <message>
         <location filename="../../src/qml/ClassWidgets/pages/settings/General/Widgets.qml" line="150"/>
         <source>Set how rounded widget corners appear</source>
-        <translation type="unfinished">设置小组件圆角的显示方式</translation>
+        <translation>设置小组件圆角的显示方式</translation>
     </message>
     <message>
         <location filename="../../src/qml/ClassWidgets/pages/settings/General/Widgets.qml" line="169"/>

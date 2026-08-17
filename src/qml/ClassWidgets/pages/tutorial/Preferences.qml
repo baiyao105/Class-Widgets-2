@@ -14,6 +14,7 @@ TutorialComponents.TutorialPage {
     currentStep: 5
     totalSteps: 6
     // nextText: qsTr("Choose plugins")
+    icon.source: PathManager.images("icons/cw2_settings.png")
     nextIcon: "ic_fluent_arrow_right_20_regular"
 
     onNextRequested: root.tutorial.goNext()
@@ -29,9 +30,19 @@ TutorialComponents.TutorialPage {
             description: qsTr("Open Class Widgets automatically when you sign in")
 
             Switch {
-                enabled: !Configs.isKeyLocked("app.auto_startup") && UtilsBackend.autostartSupported()
-                onCheckedChanged: Configs.set("app.auto_startup", checked)
-                Component.onCompleted: checked = Configs.data.app.auto_startup
+                enabled: !Configs.isKeyLocked("app.auto_startup") && UtilsBackend.autostartSupported
+                onCheckedChanged: {
+                    Configs.set("app.auto_startup", checked)
+                    UtilsBackend.setAutostart(checked)
+                }
+                Component.onCompleted: {
+                    if (!UtilsBackend.autostartEnabled()) {
+                        checked = false
+                        Configs.set("app.auto_startup", checked)
+                        return
+                    }
+                    checked = Configs.data.app.auto_startup
+                }
             }
         }
 

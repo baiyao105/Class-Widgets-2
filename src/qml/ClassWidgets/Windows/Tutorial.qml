@@ -15,6 +15,7 @@ ApplicationWindow {
     minimumWidth: 700
     minimumHeight: 500
     visible: true
+    maximizeVisible: false
 
     readonly property int currentStep: pageStack.depth - 1
     property bool boundaryTransition: false
@@ -43,6 +44,13 @@ ApplicationWindow {
             duration: 220
             easing.type: Easing.Bezier
             easing.bezierCurve: [1, 0, 1, 1, 1, 1]
+        }
+        NumberAnimation {
+            target: pageStack.currentItem
+            property: "visualTransitionOpacity"
+            to: 0
+            duration: 140
+            easing.type: Easing.OutCubic
         }
         onStopped: {
             if (tutorialWindow.navigationPending)
@@ -226,6 +234,10 @@ ApplicationWindow {
                     property: "opacity"
                     value: tutorialWindow.boundaryTransition ? 0 : 1
                 }
+                PropertyAction {
+                    property: "visualTransitionOpacity"
+                    value: tutorialWindow.boundaryTransition ? 1 : 0
+                }
                 ParallelAnimation {
                 NumberAnimation {
                     property: "pageTransitionOffset"
@@ -254,6 +266,12 @@ ApplicationWindow {
                     duration: tutorialWindow.boundaryTransition ? 300 : 0
                     easing.type: Easing.Bezier
                     easing.bezierCurve: [0.4, 0, 0.2, 1, 1, 1]
+                }
+                NumberAnimation {
+                    property: "visualTransitionOpacity"
+                    to: 1
+                    duration: tutorialWindow.boundaryTransition ? 0 : 180
+                    easing.type: Easing.OutCubic
                 }
                 }
             }
@@ -320,6 +338,10 @@ ApplicationWindow {
                     property: "opacity"
                     value: tutorialWindow.boundaryTransition ? 0 : 1
                 }
+                PropertyAction {
+                    property: "visualTransitionOpacity"
+                    value: tutorialWindow.boundaryTransition ? 1 : 0
+                }
                 ParallelAnimation {
                 NumberAnimation {
                     property: "pageTransitionOffset"
@@ -348,6 +370,12 @@ ApplicationWindow {
                     duration: tutorialWindow.boundaryTransition ? 300 : 0
                     easing.type: Easing.Bezier
                     easing.bezierCurve: [0.4, 0, 0.2, 1, 1, 1]
+                }
+                NumberAnimation {
+                    property: "visualTransitionOpacity"
+                    to: 1
+                    duration: tutorialWindow.boundaryTransition ? 0 : 180
+                    easing.type: Easing.OutCubic
                 }
                 }
             }

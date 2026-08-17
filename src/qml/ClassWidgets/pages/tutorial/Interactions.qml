@@ -12,6 +12,7 @@ TutorialComponents.TutorialPage {
     description: qsTr("Decide how widgets get out of your way while you work.")
     currentStep: 4
     totalSteps: 6
+    icon.source: PathManager.images("icons/cw2_settings.png")
 
     function hidePreviewSource(name) {
         return PathManager.images("tutorial/" + name + (Theme.isDark() ? "-dark.png" : "-light.png"))
