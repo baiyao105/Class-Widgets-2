@@ -27,7 +27,8 @@ Item {
         ? (plugin.description || plugin.desc || plugin.summary || "") : ""
 
     function resourceUrl(pluginId, resource) {
-        return pluginId ? PlazaBridge.baseUrl + "/api/plugins/" + encodeURIComponent(pluginId) + "/resources/" + resource : ""
+        var baseUrl = PlazaBridge ? PlazaBridge.baseUrl : ""
+        return pluginId && baseUrl ? baseUrl + "/api/plugins/" + encodeURIComponent(pluginId) + "/resources/" + resource : ""
     }
 
     function tagName(tag) {

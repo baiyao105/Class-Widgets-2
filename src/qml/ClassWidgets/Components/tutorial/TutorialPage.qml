@@ -14,16 +14,23 @@ Item {
     property int totalSteps: 1
     property bool allowBack: true
     property bool allowNext: true
+    property bool managesNextNavigation: false
     property string nextText: qsTr("Continue")
     property string nextIcon: "ic_fluent_arrow_right_20_regular"
+    property bool footerSecondaryVisible: false
+    property bool footerSecondaryEnabled: true
+    property string footerSecondaryText: ""
+    property string footerSecondaryIcon: ""
     property real leftColumnRatio: 0.55
     property Component rightContent: null
+    property bool fillOperationHeight: false
     property alias icon: ricon
     property real pageTransitionOffset: 0
 
     default property alias operationContent: operationContentArea.data
 
     signal backRequested()
+    signal footerSecondaryRequested()
     signal nextRequested()
 
     function requestBack() {
@@ -59,7 +66,7 @@ Item {
                     id: leftContentArea
                     width: Math.min(parent.width, 600)
                     height: parent.height
-                    anchors.verticalCenter: parent.verticalCenter
+                    anchors.top: parent.top
                     x: (parent.width - width) / 2 + root.pageTransitionOffset
                     spacing: 16
 
@@ -93,6 +100,9 @@ Item {
                         ColumnLayout {
                             id: operationContentArea
                             width: leftOperationArea.width
+                            height: root.fillOperationHeight
+                                    ? Math.max(leftOperationArea.height, implicitHeight)
+                                    : implicitHeight
                             spacing: 0
                         }
 
@@ -110,7 +120,12 @@ Item {
                 nextEnabled: root.allowNext
                 nextText: root.nextText
                 nextIcon: root.nextIcon
+                secondaryVisible: root.footerSecondaryVisible
+                secondaryEnabled: root.footerSecondaryEnabled
+                secondaryText: root.footerSecondaryText
+                secondaryIcon: root.footerSecondaryIcon
                 onBackRequested: root.requestBack()
+                onSecondaryRequested: root.footerSecondaryRequested()
                 onNextRequested: root.requestNext()
             }
         }

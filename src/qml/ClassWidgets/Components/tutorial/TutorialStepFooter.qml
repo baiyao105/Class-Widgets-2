@@ -12,8 +12,13 @@ RowLayout {
     property bool nextEnabled: true
     property string nextText: qsTr("Continue")
     property string nextIcon: "ic_fluent_arrow_right_20_regular"
+    property bool secondaryVisible: false
+    property bool secondaryEnabled: true
+    property string secondaryText: ""
+    property string secondaryIcon: ""
 
     signal backRequested()
+    signal secondaryRequested()
     signal nextRequested()
 
     Layout.fillWidth: true
@@ -30,12 +35,13 @@ RowLayout {
         onClicked: root.backRequested()
     }
 
-    //
-    // Text {
-    //     text: "%1 / %2".arg(root.currentStep).arg(root.totalSteps)
-    //     typography: Typography.Caption
-    //     color: Colors.proxy.textSecondaryColor
-    // }
+    Button {
+        visible: root.secondaryVisible
+        enabled: root.secondaryEnabled
+        icon.name: root.secondaryIcon
+        text: root.secondaryText
+        onClicked: root.secondaryRequested()
+    }
 
     Button {
         highlighted: true

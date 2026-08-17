@@ -201,7 +201,7 @@ class PluginManager(QObject):
         )
 
     def _install_is_active_or_paused(self) -> bool:
-        return self._install_status in {"Downloading", "Paused", "Installing"}
+        return self._install_status in {"Downloading", "Paused", "Installing"} or self._install_task_in_progress()
 
     def _plugin_meta(self, plugin_id: str) -> PluginMeta | None:
         return next((meta for meta in self.metas if meta.get("id") == plugin_id), None)
@@ -329,6 +329,7 @@ class PluginManager(QObject):
 
     def _emit_install_settled_if_idle(self) -> None:
         if not self._install_task_in_progress() and self._install_status != "Paused":
+            self.pluginInstallStatusChanged.emit(self._install_status)
             self.pluginInstallSettled.emit()
 
     def _on_download_progress(

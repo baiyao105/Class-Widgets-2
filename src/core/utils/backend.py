@@ -1,3 +1,6 @@
+import platform
+import subprocess
+import sys
 from pathlib import Path
 
 from PySide6.QtCore import Property, Slot, QObject, Signal, QCoreApplication
@@ -236,6 +239,41 @@ class UtilsBackend(QObject):
     @Slot(result=bool)
     def autostartEnabled(self):
         return autostart_supported() and is_autostart_enabled()
+
+    @Slot(result=bool)
+    def createDesktopShortcut(self) -> bool:
+        """Create a Windows desktop shortcut for the packaged application."""
+        if platform.system() != "Windows":
+            return False
+
+        target = Path(sys.executable) if getattr(sys, "frozen", False) else None
+        if target is None or not target.is_file():
+            logger.warning("Desktop shortcut is only available for packaged builds.")
+            return False
+
+        script = (
+            "$shell = New-Object -ComObject WScript.Shell; "
+            "$desktop = [Environment]::GetFolderPath('Desktop'); "
+            "$shortcut = $shell.CreateShortcut((Join-Path $desktop 'Class Widgets 2.lnk')); "
+            "$shortcut.TargetPath = $args[0]; "
+            "$shortcut.WorkingDirectory = $args[1]; "
+            "$shortcut.IconLocation = $args[2]; "
+            "$shortcut.Save()"
+        )
+        try:
+            subprocess.run(
+                [
+                    "powershell", "-NoProfile", "-NonInteractive", "-Command", script,
+                    str(target), str(target.parent), f"{target},0",
+                ],
+                check=True,
+                capture_output=True,
+                text=True,
+            )
+            return True
+        except (OSError, subprocess.CalledProcessError) as error:
+            logger.exception("Failed to create desktop shortcut: {}", error)
+            return False
 
 
 

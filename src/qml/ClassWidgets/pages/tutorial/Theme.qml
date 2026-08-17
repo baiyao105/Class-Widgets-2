@@ -11,7 +11,7 @@ TutorialComponents.TutorialPage {
     title: qsTr("Choose your look")
     description: qsTr("Set the app appearance and an accent color that feels right to you.")
     currentStep: 2
-    totalSteps: 5
+    totalSteps: 6
 
     readonly property var recommendedColors: [
         "#4099b2", "#0078d4", "#107c10", "#d83b01", "#c239b3", "#8764b8"
@@ -19,7 +19,7 @@ TutorialComponents.TutorialPage {
 
     ColumnLayout {
         width: parent.width
-        spacing: 12
+        spacing: 4
 
         SettingExpander {
             Layout.minimumHeight: 200

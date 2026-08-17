@@ -13,7 +13,7 @@ TutorialComponents.TutorialPage {
     title: qsTr("Make it feel familiar")
     description: qsTr("Choose a language. You can refine every setting later.")
     currentStep: 1
-    totalSteps: 5
+    totalSteps: 6
     // visualTitle: qsTr("A little more you")
     // visualSubtitle: qsTr("Theme and language")
     // visualIconName: "ic_fluent_paint_brush_20_regular"

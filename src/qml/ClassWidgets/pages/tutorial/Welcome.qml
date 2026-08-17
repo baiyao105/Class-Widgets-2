@@ -48,7 +48,7 @@ Item {
 
     Timer {
         id: greetingTimer
-        interval: 3000
+        interval: 2400
         repeat: true
         running: root.visible && root.welcomeGreetings.length > 0
 

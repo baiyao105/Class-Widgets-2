@@ -21,6 +21,7 @@ ApplicationWindow {
     property bool navigationPending: false
     property int pendingStep: -1
     property int normalExitDirection: 0
+    property bool createShortcutOnComplete: Qt.platform.os === "windows"
     property Connections pageNavigation: Connections {
         target: pageStack.currentItem
         ignoreUnknownSignals: true
@@ -30,7 +31,8 @@ ApplicationWindow {
         }
 
         function onNextRequested() {
-            tutorialWindow.goNext()
+            if (!pageStack.currentItem.managesNextNavigation)
+                tutorialWindow.goNext()
         }
     }
     property ParallelAnimation normalPageExit: ParallelAnimation {
@@ -120,7 +122,9 @@ ApplicationWindow {
         Qt.resolvedUrl("../pages/tutorial/Theme.qml"),
         Qt.resolvedUrl("../pages/tutorial/Appearance.qml"),
         Qt.resolvedUrl("../pages/tutorial/Interactions.qml"),
-        Qt.resolvedUrl("../pages/tutorial/Final.qml")
+        Qt.resolvedUrl("../pages/tutorial/FinalSettings.qml"),
+        Qt.resolvedUrl("../pages/tutorial/Plugins.qml"),
+        Qt.resolvedUrl("../pages/tutorial/Complete.qml")
     ]
 
     onClosing: function(event) {

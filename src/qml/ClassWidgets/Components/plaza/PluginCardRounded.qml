@@ -28,7 +28,8 @@ Item {
     readonly property bool iconMissing: pluginIcon.status === Image.Error || root.pluginId.length === 0
 
     function resourceUrl(pluginId, resource) {
-        return pluginId ? PlazaBridge.baseUrl + "/api/plugins/" + encodeURIComponent(pluginId) + "/resources/" + resource : ""
+        var baseUrl = PlazaBridge ? PlazaBridge.baseUrl : ""
+        return pluginId && baseUrl ? baseUrl + "/api/plugins/" + encodeURIComponent(pluginId) + "/resources/" + resource : ""
     }
 
     // ── 悬停上浮 + 阴影 ──

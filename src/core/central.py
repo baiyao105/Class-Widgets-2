@@ -1,12 +1,11 @@
 from __future__ import annotations
 
-import os
 import sys
 from enum import Enum, auto
 from pathlib import Path
 from typing import Any, Optional, TYPE_CHECKING, Protocol
 
-from PySide6.QtCore import QCoreApplication, QObject, Property, Signal, Slot, QPoint, QTimer
+from PySide6.QtCore import QCoreApplication, QObject, Property, Signal, Slot, QPoint, QProcess, QTimer
 from PySide6.QtGui import QFont, QIcon
 from PySide6.QtWidgets import QApplication
 from loguru import logger
@@ -94,6 +93,7 @@ class AppCentral(QObject):  # Class Widgets 的中枢
         self._startup_swap_restore_pending: bool = False
         self._startup_swap_restore_scheduled: bool = False
         self._cleanup_started = False
+        self._restart_requested = False
         self._initialize_cores()
         self._initialize_app_icon()
         self._initialize_windows_appid()
@@ -327,6 +327,7 @@ class AppCentral(QObject):  # Class Widgets 的中枢
             ("main window release", self.widgets_window.release),
             ("plugin cleanup", self.plugin_manager.cleanup),
             ("RinUI theme cleanup", self.widgets_window.theme_manager.clean_up),
+            ("single instance lock release", self.instance_guard.release),
         )
         for step_name, cleanup_step in cleanup_steps:
             try:
@@ -375,8 +376,19 @@ class AppCentral(QObject):  # Class Widgets 的中枢
 
     @Slot()
     def restart(self):
-        self.cleanup()
-        os.execl(sys.executable, sys.executable, *sys.argv)
+        if self._restart_requested:
+            return
+
+        self._restart_requested = True
+        arguments = sys.argv[1:] if getattr(sys, "frozen", False) else sys.argv
+        self.instance_guard.release()
+        if not QProcess.startDetached(sys.executable, arguments):
+            self.instance_guard.try_acquire()
+            self._restart_requested = False
+            logger.error("Failed to start replacement process for restart")
+            return
+
+        self.app_instance.quit()
 
     def setup_qml_context(self, window: QmlContextWindow) -> None:
         """

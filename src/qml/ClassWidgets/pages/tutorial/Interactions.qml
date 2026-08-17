@@ -11,7 +11,7 @@ TutorialComponents.TutorialPage {
     title: qsTr("Choose widget interactions")
     description: qsTr("Decide how widgets get out of your way while you work.")
     currentStep: 4
-    totalSteps: 5
+    totalSteps: 6
 
     function hidePreviewSource(name) {
         return PathManager.images("tutorial/" + name + (Theme.isDark() ? "-dark.png" : "-light.png"))
