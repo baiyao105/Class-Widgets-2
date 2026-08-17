@@ -17,7 +17,7 @@ Item {
 
     implicitWidth: Math.max(headerRow.implicitWidth, contentArea.childrenRect.width) + 48
     height: miniMode ? 56 : 100
-    clip: true
+    clip: false
     opacity: widgetHoverHandler.hovered? 0.8 : 1
 
     // colors
@@ -39,9 +39,29 @@ Item {
     property alias backgroundArea: backgroundArea.children
     default property alias content: contentArea.data
     property real padding: miniMode ? 16 : 24
+    property real cornerRadius: Configs.data.preferences.widget_corner_radius
 
     // 背景
-    readonly property real borderWidth: 1.5
+    readonly property real borderWidth: 1
+
+    Rectangle {
+        id: shadowSource
+        anchors.fill: background
+        radius: background.radius
+        color: "#29000000"
+        visible: false
+    }
+
+    DropShadow {
+        anchors.fill: shadowSource
+        horizontalOffset: 0
+        verticalOffset: 8
+        radius: 28
+        samples: 57
+        color: "#29000000"
+        source: shadowSource
+        transparentBorder: true
+    }
 
     // 动画
     Behavior on implicitWidth {
@@ -79,6 +99,22 @@ Item {
                 }
             }
         }
+        // Rectangle {
+        //     id: borderRect2
+        //     anchors.fill: parent
+        //     radius: background.radius
+        //     layer.enabled: true
+        //     layer.effect: LinearGradient {
+        //         start: Qt.point(0, 0)
+        //         end: Qt.point(width, height)
+        //         gradient: Gradient {
+        //             GradientStop { position: 0; color: Qt.alpha("#000", 0.5) }
+        //             GradientStop { position: 0.5; color: Qt.alpha("#000", 0) }
+        //             GradientStop { position: 0.6; color: Qt.alpha("#000", 0) }
+        //             GradientStop { position: 1; color: Qt.alpha("#000", 0.5) }
+        //         }
+        //     }
+        // }
         layer.enabled: true
         layer.effect: OpacityMask {
             maskSource: Rectangle {
@@ -97,8 +133,7 @@ Item {
     Rectangle {
         id: background
         anchors.fill: parent
-        // radius: 12
-        radius: height * 0.22
+        radius: Math.min(width, height, widgetBase.cornerRadius)
         color: backgroundColor
         opacity: Configs.data.preferences.opacity
     }

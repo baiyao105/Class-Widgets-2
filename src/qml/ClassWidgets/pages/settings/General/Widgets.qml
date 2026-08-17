@@ -143,6 +143,26 @@ FluentPage {
             }
         }
 
+        SettingCard {
+            Layout.fillWidth: true
+            icon.name: "ic_fluent_shape_subtract_20_regular"
+            title: qsTr("Corner Radius")
+            description: qsTr("Set how rounded widget corners appear")
+
+            Slider {
+                from: 0
+                to: 50
+                stepSize: 1
+                tickmarks: true
+                tickFrequency: 10
+                toolTip.text: Math.round(value) + " px"
+                enabled: !Configs.isKeyLocked("preferences.widget_corner_radius")
+                onValueChanged: if (pressed)
+                                    Configs.set("preferences.widget_corner_radius", value)
+                Component.onCompleted: value = Configs.data.preferences.widget_corner_radius
+            }
+        }
+
         SettingExpander {
             Layout.fillWidth: true
             icon.name: "ic_fluent_resize_20_regular"

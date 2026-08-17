@@ -9,6 +9,9 @@ from src.core import AppCentral
 from PySide6.QtWidgets import QApplication
 
 if __name__ == "__main__":
+    import qtlottie
+    print(qtlottie.init_qml())  # 安装Lottie支持
+
     app = QApplication(sys.argv)
     instance = AppCentral()
     instance.run()

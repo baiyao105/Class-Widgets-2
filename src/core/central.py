@@ -10,6 +10,7 @@ from PySide6.QtCore import QCoreApplication, QObject, Property, Signal, Slot, QP
 from PySide6.QtGui import QFont, QIcon
 from PySide6.QtWidgets import QApplication
 from loguru import logger
+import qtlottie
 
 from src.core import CONFIGS_PATH, QML_PATH
 from src.core.directories import PathManager, ASSETS_PATH, LOGS_PATH
@@ -87,7 +88,7 @@ class AppCentral(QObject):  # Class Widgets 的中枢
         if AppCentral._instance is not None:
             raise RuntimeError("AppCentral is a singleton. Use AppCentral.instance() instead.")
         AppCentral._instance = self
-       
+
         self._check_single_instance()
         self._startup_state = StartupState.CREATED
         self._startup_swap_restore_pending: bool = False

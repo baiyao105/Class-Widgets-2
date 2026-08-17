@@ -3,97 +3,391 @@ import QtQuick.Controls
 import QtQuick.Layouts
 import RinUI
 import ClassWidgets.Components
-
+import "../pages/tutorial" as TutorialPages
 
 ApplicationWindow {
     id: tutorialWindow
-    icon: PathManager.assets("images/icons/cw2_settings.png")
-    title: qsTr("Welcome ╰(*°▽°*)╯")
-    width: Screen.width * 0.4
-    height: Screen.height * 0.5
 
-    ColumnLayout {
-        anchors.fill: parent
-        anchors.margins: 32
-        anchors.topMargin: 16
-        anchors.bottomMargin: 48
+    icon: PathManager.images("icons/cw2_whatsnew.png")
+    title: qsTr("Tutorial")
+    width: 960
+    height: 640
+    minimumWidth: 700
+    minimumHeight: 500
+    visible: true
 
+    readonly property int currentStep: pageStack.depth - 1
+    property bool boundaryTransition: false
+    property bool navigationPending: false
+    property int pendingStep: -1
+    property int normalExitDirection: 0
+    property Connections pageNavigation: Connections {
+        target: pageStack.currentItem
+        ignoreUnknownSignals: true
 
-        ColumnLayout {
-            Layout.alignment: Qt.AlignHCenter | Qt.AlignCenter
-            Icon {
-                Layout.alignment: Qt.AlignHCenter
-                source: PathManager.images("logo.png")
-                size: 72
-            }
-            Text {
-                Layout.fillWidth: true
-                typography: Typography.Subtitle
-                horizontalAlignment: Text.AlignHCenter
-                text: qsTr("Welcome to Class Widgets 2")
-            }
+        function onBackRequested() {
+            tutorialWindow.goBack()
         }
 
-        InfoBar {
-            Layout.alignment: Qt.AlignHCenter | Qt.AlignTop
-            closable: false
-            Layout.fillWidth: false
-            Layout.preferredWidth: tutorialWindow.width * 0.7
-            severity: Severity.Warning
-            title: qsTr("注意")
-            text: qsTr(
-                "初始引导窗口还未完工，在做啦在做啦 \n" +
-                "目前版本为测试版，大多数功能还未补完。若要在教学环境中使用，请三思而后行。\n" +
-                "欢迎到我们的 GitHub 页面提交反馈或建议，谢谢！"
-            )
-        }
-
-        RowLayout {
-            Layout.alignment: Qt.AlignHCenter
-            Text {
-                text: qsTr("Select a language")
-            }
-            ComboBox {
-                property var data: [AppCentral.translator.getSystemLanguage(), "en_US", "zh_CN"]
-                property bool initialized: false
-                model: ListModel {
-                    ListElement { text: qsTr("Use System Language") }
-                    ListElement { text: "English (US)" }
-                    ListElement { text: "简体中文" }
-                }
-
-                Component.onCompleted: {
-                    currentIndex = data.indexOf(AppCentral.translator.getLanguage())
-                    console.log("Language: " + AppCentral.translator.getLanguage())
-                    initialized = true
-                }
-
-                onCurrentIndexChanged: {
-                    if (!initialized) return
-                    AppCentral.translator.setLanguage(data[currentIndex])
-                }
-            }
-        }
-
-        RowLayout {
-            Layout.alignment: Qt.AlignHCenter | Qt.AlignBottom
-            Button {
-                text: qsTr("Exit")
-                onClicked: Qt.quit()
-            }
-            Button {
-                highlighted: true
-                text: qsTr("Get started")
-                onClicked: {
-                    Configs.set("app.tutorial_completed", true)
-                    AppCentral.restart()
-                }
-            }
+        function onNextRequested() {
+            tutorialWindow.goNext()
         }
     }
+    property ParallelAnimation normalPageExit: ParallelAnimation {
+        NumberAnimation {
+            target: pageStack.currentItem
+            property: "pageTransitionOffset"
+            to: pageStack.width * 0.25 * tutorialWindow.normalExitDirection
+            duration: 220
+            easing.type: Easing.Bezier
+            easing.bezierCurve: [1, 0, 1, 1, 1, 1]
+        }
+        onStopped: {
+            if (tutorialWindow.navigationPending)
+                tutorialWindow.finishNormalNavigation()
+        }
+    }
+    property ParallelAnimation boundaryPageExit: ParallelAnimation {
+        NumberAnimation {
+            target: pageStack.currentItem
+            property: "y"
+            to: 2
+            duration: 300
+            easing.type: Easing.Bezier
+            easing.bezierCurve: [0.4, 0, 0.2, 1, 1, 1]
+        }
+        NumberAnimation {
+            target: pageStack.currentItem
+            property: "scale"
+            to: 0.96
+            duration: 300
+            easing.type: Easing.Bezier
+            easing.bezierCurve: [0.4, 0, 0.2, 1, 1, 1]
+        }
+        NumberAnimation {
+            target: pageStack.currentItem
+            property: "opacity"
+            to: 0
+            duration: 300
+            easing.type: Easing.Bezier
+            easing.bezierCurve: [0.4, 0, 0.2, 1, 1, 1]
+        }
 
-    // 测试水印
-    Watermark {
+        onStopped: {
+            if (tutorialWindow.navigationPending)
+                tutorialWindow.finishNormalNavigation()
+        }
+    }
+    property Dialog skipDialog: Dialog {
+        parent: Overlay.overlay
         anchors.centerIn: parent
+        modal: true
+        title: qsTr("Skip tutorial?")
+        width: 390
+
+        Text {
+            Layout.fillWidth: true
+            text: qsTr("Are you sure you want to skip the tutorial?")
+            typography: Typography.Body
+            wrapMode: Text.WordWrap
+        }
+
+        standardButtons: Dialog.Ok | Dialog.Cancel
+
+        onAccepted: tutorialWindow.completeTutorial()
     }
+    property Dialog closeDialog: Dialog {
+        parent: Overlay.overlay
+        anchors.centerIn: parent
+        modal: true
+        title: qsTr("Close tutorial?")
+        width: 390
+
+        Text {
+            Layout.fillWidth: true
+            text: qsTr("Are you sure you want to close the tutorial?")
+            typography: Typography.Body
+            wrapMode: Text.WordWrap
+        }
+
+        standardButtons: Dialog.Cancel | Dialog.Ok
+
+        onAccepted: Qt.quit()
+    }
+    readonly property var pageUrls: [
+        Qt.resolvedUrl("../pages/tutorial/Welcome.qml"),
+        Qt.resolvedUrl("../pages/tutorial/Language.qml"),
+        Qt.resolvedUrl("../pages/tutorial/Theme.qml"),
+        Qt.resolvedUrl("../pages/tutorial/Appearance.qml"),
+        Qt.resolvedUrl("../pages/tutorial/Interactions.qml"),
+        Qt.resolvedUrl("../pages/tutorial/Final.qml")
+    ]
+
+    onClosing: function(event) {
+        event.accepted = false
+        closeDialog.open()
+    }
+
+    Component.onCompleted: {
+        Theme.setThemeColor("#4099b2")
+    }
+
+    function switchTo(step) {
+        if (pageStack.busy || navigationPending || step < 0
+                || step >= pageUrls.length || step === currentStep)
+            return
+
+        boundaryTransition = (currentStep === 0 && step === 1)
+                             || (currentStep === 1 && step === 0)
+                             || (currentStep === pageUrls.length - 2
+                                 && step === pageUrls.length - 1)
+                             || (currentStep === pageUrls.length - 1
+                                 && step === pageUrls.length - 2)
+        if (boundaryTransition) {
+            pendingStep = step
+            navigationPending = true
+            boundaryPageExit.start()
+            return
+        }
+
+        pendingStep = step
+        normalExitDirection = step > currentStep ? -1 : 1
+        navigationPending = true
+        normalPageExit.start()
+    }
+
+    function finishNormalNavigation() {
+        var step = pendingStep
+        pendingStep = -1
+        navigationPending = false
+
+        if (step > currentStep) {
+            pageStack.push(pageUrls[step], { "tutorial": tutorialWindow })
+        } else {
+            pageStack.pop()
+        }
+    }
+
+    function goNext() {
+        switchTo(currentStep + 1)
+    }
+
+    function goBack() {
+        switchTo(currentStep - 1)
+    }
+
+    function goToSetup() {
+        switchTo(1)
+    }
+
+    function requestSkip() {
+        skipDialog.open()
+    }
+
+    function completeTutorial() {
+        Configs.set("app.tutorial_completed", true)
+        AppCentral.restart()
+    }
+
+    StackView {
+        id: pageStack
+        anchors.fill: parent
+        clip: true
+
+        initialItem: Component {
+            TutorialPages.Welcome {
+                tutorial: tutorialWindow
+            }
+        }
+
+        pushEnter: Transition {
+            SequentialAnimation {
+                PropertyAction {
+                    property: "z"
+                    value: tutorialWindow.boundaryTransition ? 0 : 1
+                }
+                PropertyAction {
+                    property: "pageTransitionOffset"
+                    value: tutorialWindow.boundaryTransition ? 0 : pageStack.width * 0.25
+                }
+                PropertyAction {
+                    property: "y"
+                    value: tutorialWindow.boundaryTransition ? 2 : 0
+                }
+                PropertyAction {
+                    property: "scale"
+                    value: tutorialWindow.boundaryTransition ? 0.96 : 1
+                }
+                PropertyAction {
+                    property: "opacity"
+                    value: tutorialWindow.boundaryTransition ? 0 : 1
+                }
+                ParallelAnimation {
+                NumberAnimation {
+                    property: "pageTransitionOffset"
+                    to: 0
+                    duration: tutorialWindow.boundaryTransition ? 0 : 220
+                    easing.type: Easing.Bezier
+                    easing.bezierCurve: [0, 0, 0, 1, 1, 1]
+                }
+                NumberAnimation {
+                    property: "y"
+                    to: 0
+                    duration: tutorialWindow.boundaryTransition ? 300 : 0
+                    easing.type: Easing.Bezier
+                    easing.bezierCurve: [0.4, 0, 0.2, 1, 1, 1]
+                }
+                NumberAnimation {
+                    property: "scale"
+                    to: 1
+                    duration: tutorialWindow.boundaryTransition ? 300 : 0
+                    easing.type: Easing.Bezier
+                    easing.bezierCurve: [0.4, 0, 0.2, 1, 1, 1]
+                }
+                NumberAnimation {
+                    property: "opacity"
+                    to: 1
+                    duration: tutorialWindow.boundaryTransition ? 300 : 0
+                    easing.type: Easing.Bezier
+                    easing.bezierCurve: [0.4, 0, 0.2, 1, 1, 1]
+                }
+                }
+            }
+        }
+        pushExit: Transition {
+            ParallelAnimation {
+                PropertyAction {
+                    property: "z"
+                    value: tutorialWindow.boundaryTransition ? 1 : 2
+                }
+                NumberAnimation {
+                    property: "pageTransitionOffset"
+                    from: 0
+                    to: -pageStack.width * 0.25
+                    duration: 0
+                    easing.type: Easing.Bezier
+                    easing.bezierCurve: [1, 0, 1, 1, 1, 1]
+                }
+                NumberAnimation {
+                    property: "y"
+                    from: 0
+                    to: 2
+                    duration: 0
+                    easing.type: Easing.Bezier
+                    easing.bezierCurve: [0.4, 0, 0.2, 1, 1, 1]
+                }
+                NumberAnimation {
+                    property: "scale"
+                    from: 1
+                    to: 0.96
+                    duration: 0
+                    easing.type: Easing.Bezier
+                    easing.bezierCurve: [0.4, 0, 0.2, 1, 1, 1]
+                }
+                NumberAnimation {
+                    property: "opacity"
+                    from: 1
+                    to: 0
+                    duration: 0
+                    easing.type: Easing.Bezier
+                    easing.bezierCurve: [0.4, 0, 0.2, 1, 1, 1]
+                }
+            }
+        }
+        popEnter: Transition {
+            SequentialAnimation {
+                PropertyAction {
+                    property: "z"
+                    value: tutorialWindow.boundaryTransition ? 0 : 1
+                }
+                PropertyAction {
+                    property: "pageTransitionOffset"
+                    value: tutorialWindow.boundaryTransition ? 0 : -pageStack.width * 0.25
+                }
+                PropertyAction {
+                    property: "y"
+                    value: tutorialWindow.boundaryTransition ? 2 : 0
+                }
+                PropertyAction {
+                    property: "scale"
+                    value: tutorialWindow.boundaryTransition ? 0.96 : 1
+                }
+                PropertyAction {
+                    property: "opacity"
+                    value: tutorialWindow.boundaryTransition ? 0 : 1
+                }
+                ParallelAnimation {
+                NumberAnimation {
+                    property: "pageTransitionOffset"
+                    to: 0
+                    duration: tutorialWindow.boundaryTransition ? 0 : 220
+                    easing.type: Easing.Bezier
+                    easing.bezierCurve: [0, 0, 0, 1, 1, 1]
+                }
+                NumberAnimation {
+                    property: "y"
+                    to: 0
+                    duration: tutorialWindow.boundaryTransition ? 300 : 0
+                    easing.type: Easing.Bezier
+                    easing.bezierCurve: [0.4, 0, 0.2, 1, 1, 1]
+                }
+                NumberAnimation {
+                    property: "scale"
+                    to: 1
+                    duration: tutorialWindow.boundaryTransition ? 300 : 0
+                    easing.type: Easing.Bezier
+                    easing.bezierCurve: [0.4, 0, 0.2, 1, 1, 1]
+                }
+                NumberAnimation {
+                    property: "opacity"
+                    to: 1
+                    duration: tutorialWindow.boundaryTransition ? 300 : 0
+                    easing.type: Easing.Bezier
+                    easing.bezierCurve: [0.4, 0, 0.2, 1, 1, 1]
+                }
+                }
+            }
+        }
+        popExit: Transition {
+            ParallelAnimation {
+                PropertyAction {
+                    property: "z"
+                    value: tutorialWindow.boundaryTransition ? 1 : 2
+                }
+                NumberAnimation {
+                    property: "pageTransitionOffset"
+                    from: 0
+                    to: pageStack.width * 0.25
+                    duration: 0
+                    easing.type: Easing.Bezier
+                    easing.bezierCurve: [1, 0, 1, 1, 1, 1]
+                }
+                NumberAnimation {
+                    property: "y"
+                    from: 0
+                    to: 2
+                    duration: 0
+                    easing.type: Easing.Bezier
+                    easing.bezierCurve: [0.4, 0, 0.2, 1, 1, 1]
+                }
+                NumberAnimation {
+                    property: "scale"
+                    from: 1
+                    to: 0.96
+                    duration: 0
+                    easing.type: Easing.Bezier
+                    easing.bezierCurve: [0.4, 0, 0.2, 1, 1, 1]
+                }
+                NumberAnimation {
+                    property: "opacity"
+                    from: 1
+                    to: 0
+                    duration: 0
+                    easing.type: Easing.Bezier
+                    easing.bezierCurve: [0.4, 0, 0.2, 1, 1, 1]
+                }
+            }
+        }
+    }
+
 }

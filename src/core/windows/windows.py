@@ -6,7 +6,7 @@ from PySide6.QtCore import QCoreApplication, QObject, Signal
 
 from RinUI import RinUIWindow
 from src.core.directories import CW_PATH, DEFAULT_THEME
-from src.core.plaza import MarkdownRenderBridge, PlazaBridge
+from src.core.plaza import MarkdownRenderBridge, PlazaBridge, TutorialRecommendationsBridge
 from src.core.plugin.bridge import PluginBackendBridge
 
 
@@ -134,8 +134,22 @@ class PluginPlaza(ReleasableWindow):
 class Tutorial(ReleasableWindow):
     def __init__(self, parent):
         super().__init__(parent)
+        from RinUI import Theme
+        self.setTheme(Theme.Auto)
+        self.recommendations_bridge = TutorialRecommendationsBridge(self.central.configs)
+        self.engine.rootContext().setContextProperty(
+            "TutorialRecommendationsBridge", self.recommendations_bridge
+        )
 
         self.load(CW_PATH / "Windows" / "Tutorial.qml")
+
+    def release(self):
+        if self.is_released:
+            return
+        try:
+            self.recommendations_bridge.shutdown()
+        finally:
+            super().release()
 
 
 class WhatsNew(ReleasableWindow):

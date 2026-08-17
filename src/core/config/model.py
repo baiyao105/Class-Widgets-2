@@ -140,6 +140,7 @@ class PreferencesConfig(ConfigBaseModel):
     current_theme: str = "com.classwidgets.default"
     scale_factor: float = 1.0  # 缩放比例
     opacity: float = 1.0  # 不透明度
+    widget_corner_radius: float = 22.0  # 小组件圆角半径
     widgets_anchor: LayoutAnchor = LayoutAnchor.TOP_CENTER  # 对齐方式
     widgets_offset_x: int = 0  # 水平偏移
     widgets_offset_y: int = 24  # 垂直偏移

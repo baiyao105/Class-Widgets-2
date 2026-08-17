@@ -29,7 +29,7 @@ class PlazaNotificationPublisher(QObject):
         self._provider = NotificationProvider(
             id=self.PROVIDER_ID,
             name=QCoreApplication.translate("NotificationProviders", "Plugin Plaza"),
-            icon="",
+            icon=self._app_central.path_manager.images("icons/cw2_plugin.png"),
             use_system_notify=True,
             manager=self._manager,
         )
