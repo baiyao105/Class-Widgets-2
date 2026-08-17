@@ -9,7 +9,6 @@ from PySide6.QtCore import QCoreApplication, QObject, Property, Signal, Slot, QP
 from PySide6.QtGui import QFont, QIcon
 from PySide6.QtWidgets import QApplication
 from loguru import logger
-import qtlottie
 
 from src.core import CONFIGS_PATH, QML_PATH
 from src.core.directories import PathManager, ASSETS_PATH, LOGS_PATH
