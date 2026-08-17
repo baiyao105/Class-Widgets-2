@@ -9,8 +9,8 @@ TutorialComponents.TutorialPage {
 
     property var tutorial
 
-    title: qsTr("Final settings")
-    description: qsTr("Choose a few final defaults before selecting plugins.")
+    title: qsTr("Preferences")
+    description: qsTr("Choose a few defaults before selecting plugins.")
     currentStep: 5
     totalSteps: 6
     // nextText: qsTr("Choose plugins")

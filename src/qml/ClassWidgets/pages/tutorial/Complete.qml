@@ -65,7 +65,7 @@ Item {
             highlighted: true
             enabled: !root.completing
             // icon.name: "ic_fluent_checkmark_20_regular"
-            text: qsTr(" Get Started")
+            text: qsTr("Get Started")
             onClicked: root.finishSetup()
         }
     }

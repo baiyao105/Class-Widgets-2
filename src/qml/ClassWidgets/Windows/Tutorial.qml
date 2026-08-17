@@ -9,7 +9,7 @@ ApplicationWindow {
     id: tutorialWindow
 
     icon: PathManager.images("icons/cw2_whatsnew.png")
-    title: qsTr("Tutorial")
+    title: qsTr("Getting Started")
     width: 960
     height: 640
     minimumWidth: 700
@@ -84,12 +84,12 @@ ApplicationWindow {
         parent: Overlay.overlay
         anchors.centerIn: parent
         modal: true
-        title: qsTr("Skip tutorial?")
+        title: qsTr("Skip setup?")
         width: 390
 
         Text {
             Layout.fillWidth: true
-            text: qsTr("Are you sure you want to skip the tutorial?")
+            text: qsTr("Are you sure you want to skip the setup?")
             typography: Typography.Body
             wrapMode: Text.WordWrap
         }
@@ -102,12 +102,12 @@ ApplicationWindow {
         parent: Overlay.overlay
         anchors.centerIn: parent
         modal: true
-        title: qsTr("Close tutorial?")
+        title: qsTr("Close setup?")
         width: 390
 
         Text {
             Layout.fillWidth: true
-            text: qsTr("Are you sure you want to close the tutorial?")
+            text: qsTr("Are you sure you want to close the setup?")
             typography: Typography.Body
             wrapMode: Text.WordWrap
         }
@@ -122,7 +122,7 @@ ApplicationWindow {
         Qt.resolvedUrl("../pages/tutorial/Theme.qml"),
         Qt.resolvedUrl("../pages/tutorial/Appearance.qml"),
         Qt.resolvedUrl("../pages/tutorial/Interactions.qml"),
-        Qt.resolvedUrl("../pages/tutorial/FinalSettings.qml"),
+        Qt.resolvedUrl("../pages/tutorial/Preferences.qml"),
         Qt.resolvedUrl("../pages/tutorial/Plugins.qml"),
         Qt.resolvedUrl("../pages/tutorial/Complete.qml")
     ]
