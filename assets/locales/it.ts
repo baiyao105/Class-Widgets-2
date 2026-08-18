@@ -171,6 +171,49 @@ Licensed under the MIT license</source>
     </message>
 </context>
 <context>
+    <name>Appearance</name>
+    <message>
+        <location filename="../../src/qml/ClassWidgets/pages/tutorial/Appearance.qml" line="11"/>
+        <source>Tune your widgets</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../src/qml/ClassWidgets/pages/tutorial/Appearance.qml" line="12"/>
+        <source>Adjust the size and finish of your widgets. The preview updates as you make changes.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../src/qml/ClassWidgets/pages/tutorial/Appearance.qml" line="34"/>
+        <source>Widget Scale</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../src/qml/ClassWidgets/pages/tutorial/Appearance.qml" line="35"/>
+        <source>Make widgets look bigger or stay compact</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../src/qml/ClassWidgets/pages/tutorial/Appearance.qml" line="77"/>
+        <source>Background Opacity</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../src/qml/ClassWidgets/pages/tutorial/Appearance.qml" line="78"/>
+        <source>Change the opacity of widget backgrounds</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../src/qml/ClassWidgets/pages/tutorial/Appearance.qml" line="98"/>
+        <source>Corner Radius</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../src/qml/ClassWidgets/pages/tutorial/Appearance.qml" line="99"/>
+        <source>Set how rounded widget corners appear</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>CheckSingleInstanceDialog</name>
     <message>
         <location filename="../../src/qml/ClassWidgets/Components/dialogs/CheckSingleInstanceDialog.qml" line="23"/>
@@ -315,9 +358,22 @@ Do you want to continue using them, or discard and restore the original schedule
     </message>
 </context>
 <context>
+    <name>Complete</name>
+    <message>
+        <location filename="../../src/qml/ClassWidgets/pages/tutorial/Complete.qml" line="50"/>
+        <source>Welcome to Class Widgets</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../src/qml/ClassWidgets/pages/tutorial/Complete.qml" line="69"/>
+        <source>Get Started</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>Configs</name>
     <message>
-        <location filename="../../src/core/config/model.py" line="205"/>
+        <location filename="../../src/core/config/model.py" line="206"/>
         <source>New Schedule 1</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1073,7 +1129,7 @@ Do you want to continue using them, or discard and restore the original schedule
     <name>Home</name>
     <message>
         <location filename="../../src/qml/ClassWidgets/pages/editor/Home.qml" line="10"/>
-        <location filename="../../src/qml/ClassWidgets/pages/settings/Home.qml" line="60"/>
+        <location filename="../../src/qml/ClassWidgets/pages/settings/Home.qml" line="52"/>
         <source>Home</source>
         <translation type="unfinished">Homepage</translation>
     </message>
@@ -1181,29 +1237,16 @@ Do you want to continue using them, or discard and restore the original schedule
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/qml/ClassWidgets/pages/settings/Home.qml" line="82"/>
         <source>Warning</source>
-        <translation type="unfinished">Avviso</translation>
+        <translation type="obsolete">Avviso</translation>
     </message>
     <message>
-        <location filename="../../src/qml/ClassWidgets/pages/settings/Home.qml" line="83"/>
-        <source>This version is still under testing and may contain bugs or incomplete features. You are welcome to submit issues on GitHub</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../../src/qml/ClassWidgets/pages/settings/Home.qml" line="141"/>
         <source>GitHub</source>
-        <translation type="unfinished">GitHub</translation>
+        <translation type="obsolete">GitHub</translation>
     </message>
     <message>
-        <location filename="../../src/qml/ClassWidgets/pages/settings/Home.qml" line="146"/>
         <source>Discord</source>
-        <translation type="unfinished">Discord</translation>
-    </message>
-    <message>
-        <location filename="../../src/qml/ClassWidgets/pages/settings/Home.qml" line="147"/>
-        <source>https://discord.gg/nNZxaCBh</source>
-        <translation type="unfinished"></translation>
+        <translation type="obsolete">Discord</translation>
     </message>
     <message>
         <location filename="../../src/qml/ClassWidgets/pages/plaza/Home.qml" line="77"/>
@@ -1218,6 +1261,87 @@ Do you want to continue using them, or discard and restore the original schedule
     <message>
         <location filename="../../src/qml/ClassWidgets/pages/plaza/Home.qml" line="100"/>
         <source>Check your connection and try loading the plaza again.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../src/qml/ClassWidgets/pages/settings/Home.qml" line="132"/>
+        <source>Recommended settings</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../src/qml/ClassWidgets/pages/settings/Home.qml" line="138"/>
+        <source>Recent and commonly used settings</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../src/qml/ClassWidgets/pages/settings/Home.qml" line="144"/>
+        <source>Notifications</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../src/qml/ClassWidgets/pages/settings/Home.qml" line="145"/>
+        <source>Plugins</source>
+        <translation type="unfinished">Plugin</translation>
+    </message>
+    <message>
+        <location filename="../../src/qml/ClassWidgets/pages/settings/Home.qml" line="146"/>
+        <source>Widgets</source>
+        <translation type="unfinished">&amp;Widgets</translation>
+    </message>
+    <message>
+        <location filename="../../src/qml/ClassWidgets/pages/settings/Home.qml" line="177"/>
+        <source>Personalize your widgets</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../src/qml/ClassWidgets/pages/settings/Home.qml" line="265"/>
+        <source>Color mode</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../src/qml/ClassWidgets/pages/settings/Home.qml" line="272"/>
+        <source>Light</source>
+        <translation type="unfinished">Chiaro</translation>
+    </message>
+    <message>
+        <location filename="../../src/qml/ClassWidgets/pages/settings/Home.qml" line="273"/>
+        <source>Dark</source>
+        <translation type="unfinished">Scuro</translation>
+    </message>
+    <message>
+        <location filename="../../src/qml/ClassWidgets/pages/settings/Home.qml" line="274"/>
+        <source>Use system setting</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../src/qml/ClassWidgets/pages/settings/Home.qml" line="286"/>
+        <source>Browse more colors, and themes</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../src/qml/ClassWidgets/pages/settings/Home.qml" line="313"/>
+        <source>Getting Started</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../src/qml/ClassWidgets/pages/settings/Home.qml" line="319"/>
+        <source>Complete these steps to get started</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../src/qml/ClassWidgets/pages/settings/Home.qml" line="326"/>
+        <location filename="../../src/qml/ClassWidgets/pages/settings/Home.qml" line="329"/>
+        <source>Open schedule editor</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../src/qml/ClassWidgets/pages/settings/Home.qml" line="337"/>
+        <source>Calibrate time offset</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../src/qml/ClassWidgets/pages/settings/Home.qml" line="344"/>
+        <source>Manage notifications</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -1449,6 +1573,79 @@ Do you want to continue using them, or discard and restore the original schedule
         <source>Hide when a window enters fullscreen</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <location filename="../../src/qml/ClassWidgets/pages/tutorial/Interactions.qml" line="11"/>
+        <source>Choose widget interactions</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../src/qml/ClassWidgets/pages/tutorial/Interactions.qml" line="12"/>
+        <source>Decide how widgets get out of your way while you work.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../src/qml/ClassWidgets/pages/tutorial/Interactions.qml" line="29"/>
+        <source>Hide Behavior</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../src/qml/ClassWidgets/pages/tutorial/Interactions.qml" line="30"/>
+        <source>Choose whether widgets disappear or become compact</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../src/qml/ClassWidgets/pages/tutorial/Interactions.qml" line="45"/>
+        <source>Hide</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../src/qml/ClassWidgets/pages/tutorial/Interactions.qml" line="50"/>
+        <source>Mini Mode</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../src/qml/ClassWidgets/pages/tutorial/Interactions.qml" line="85"/>
+        <source>Tap to Hide</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../src/qml/ClassWidgets/pages/tutorial/Interactions.qml" line="86"/>
+        <source>Click on a widget to hide it, click it again to bring it back</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../src/qml/ClassWidgets/pages/tutorial/Interactions.qml" line="98"/>
+        <source>Hover Fade</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../src/qml/ClassWidgets/pages/tutorial/Interactions.qml" line="99"/>
+        <source>Hover to make widgets transparent and let clicks pass through</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>Language</name>
+    <message>
+        <location filename="../../src/qml/ClassWidgets/pages/tutorial/Language.qml" line="13"/>
+        <source>Choose your language</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../src/qml/ClassWidgets/pages/tutorial/Language.qml" line="14"/>
+        <source>Choose a language. You can refine every setting later.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../src/qml/ClassWidgets/pages/tutorial/Language.qml" line="30"/>
+        <source>Language</source>
+        <translation type="unfinished">Lingua</translation>
+    </message>
+    <message>
+        <location filename="../../src/qml/ClassWidgets/pages/tutorial/Language.qml" line="40"/>
+        <source>Use System Language</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>NavigationBar</name>
@@ -1613,7 +1810,7 @@ Do you want to continue using them, or discard and restore the original schedule
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/core/utils/backend.py" line="51"/>
+        <location filename="../../src/core/utils/backend.py" line="54"/>
         <source>Debug Notification</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1990,7 +2187,7 @@ Applying an incompatible theme may cause serious errors, crashes, or unexpected 
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/qml/ClassWidgets/Components/plaza/PluginCard.qml" line="208"/>
+        <location filename="../../src/qml/ClassWidgets/Components/plaza/PluginCard.qml" line="209"/>
         <source>Unknown plugin</source>
         <translation type="unfinished"></translation>
     </message>
@@ -2520,6 +2717,150 @@ It&apos;s incompatible and may cause unexpected issues.</source>
         <source>Built-in Widgets</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <location filename="../../src/qml/ClassWidgets/pages/tutorial/Plugins.qml" line="21"/>
+        <source>Recommended plugins</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../src/qml/ClassWidgets/pages/tutorial/Plugins.qml" line="22"/>
+        <source>Pick certified plugins from Plugin Plaza to install with your first setup.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../src/qml/ClassWidgets/pages/tutorial/Plugins.qml" line="28"/>
+        <source>Installing plugins</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../src/qml/ClassWidgets/pages/tutorial/Plugins.qml" line="30"/>
+        <source>Finish</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../src/qml/ClassWidgets/pages/tutorial/Plugins.qml" line="32"/>
+        <source>Skip</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../src/qml/ClassWidgets/pages/tutorial/Plugins.qml" line="33"/>
+        <source>Finish &amp; Install</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../src/qml/ClassWidgets/pages/tutorial/Plugins.qml" line="39"/>
+        <location filename="../../src/qml/ClassWidgets/pages/tutorial/Plugins.qml" line="475"/>
+        <source>Retry</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../src/qml/ClassWidgets/pages/tutorial/Plugins.qml" line="170"/>
+        <source>%1 selected</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../src/qml/ClassWidgets/pages/tutorial/Plugins.qml" line="171"/>
+        <source>No plugins selected</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../src/qml/ClassWidgets/pages/tutorial/Plugins.qml" line="173"/>
+        <source>%1/%2 plugins</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../src/qml/ClassWidgets/pages/tutorial/Plugins.qml" line="196"/>
+        <source>Installation failed</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../src/qml/ClassWidgets/pages/tutorial/Plugins.qml" line="271"/>
+        <source>Unable to start installation</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../src/qml/ClassWidgets/pages/tutorial/Plugins.qml" line="312"/>
+        <source>Installation cancelled</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../src/qml/ClassWidgets/pages/tutorial/Plugins.qml" line="369"/>
+        <source>Select all</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../src/qml/ClassWidgets/pages/tutorial/Plugins.qml" line="378"/>
+        <source>Clear selection</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../src/qml/ClassWidgets/pages/tutorial/Plugins.qml" line="462"/>
+        <source>Could not load recommendations</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../src/qml/ClassWidgets/pages/tutorial/Plugins.qml" line="463"/>
+        <source>No recommendations available</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../src/qml/ClassWidgets/pages/tutorial/Plugins.qml" line="466"/>
+        <source>You can browse Plugin Plaza after setup.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../src/qml/ClassWidgets/pages/tutorial/Plugins.qml" line="489"/>
+        <source>Some plugins were not installed</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../src/qml/ClassWidgets/pages/tutorial/Plugins.qml" line="490"/>
+        <source>%1 installed, %2 failed. Retry the failed plugins or continue without them.</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>Preferences</name>
+    <message>
+        <location filename="../../src/qml/ClassWidgets/pages/tutorial/Preferences.qml" line="12"/>
+        <source>Preferences</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../src/qml/ClassWidgets/pages/tutorial/Preferences.qml" line="13"/>
+        <source>Choose a few defaults before selecting plugins.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../src/qml/ClassWidgets/pages/tutorial/Preferences.qml" line="29"/>
+        <source>Run at Startup</source>
+        <translation type="unfinished">Esegui all&apos;avvio</translation>
+    </message>
+    <message>
+        <location filename="../../src/qml/ClassWidgets/pages/tutorial/Preferences.qml" line="30"/>
+        <source>Open Class Widgets automatically when you sign in</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../src/qml/ClassWidgets/pages/tutorial/Preferences.qml" line="53"/>
+        <source>Create Desktop Shortcut</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../src/qml/ClassWidgets/pages/tutorial/Preferences.qml" line="54"/>
+        <source>Add a shortcut to your desktop after setup completes</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../src/qml/ClassWidgets/pages/tutorial/Preferences.qml" line="69"/>
+        <source>Enable Notifications</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../src/qml/ClassWidgets/pages/tutorial/Preferences.qml" line="70"/>
+        <source>Allow reminders, schedule updates, and plugin messages</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>RescheduleDayDialog</name>
@@ -2952,52 +3293,52 @@ It&apos;s incompatible and may cause unexpected issues.</source>
         <translation type="unfinished">Homepage</translation>
     </message>
     <message>
-        <location filename="../../src/qml/ClassWidgets/Windows/Settings.qml" line="29"/>
+        <location filename="../../src/qml/ClassWidgets/Windows/Settings.qml" line="30"/>
         <source>General</source>
         <translation type="unfinished">Generali</translation>
     </message>
     <message>
-        <location filename="../../src/qml/ClassWidgets/Windows/Settings.qml" line="34"/>
+        <location filename="../../src/qml/ClassWidgets/Windows/Settings.qml" line="35"/>
         <source>Widgets</source>
         <translation type="unfinished">&amp;Widgets</translation>
     </message>
     <message>
-        <location filename="../../src/qml/ClassWidgets/Windows/Settings.qml" line="39"/>
+        <location filename="../../src/qml/ClassWidgets/Windows/Settings.qml" line="40"/>
         <source>Interactions</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/qml/ClassWidgets/Windows/Settings.qml" line="46"/>
+        <location filename="../../src/qml/ClassWidgets/Windows/Settings.qml" line="47"/>
         <source>Personalization</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/qml/ClassWidgets/Windows/Settings.qml" line="51"/>
+        <location filename="../../src/qml/ClassWidgets/Windows/Settings.qml" line="52"/>
         <source>Notification &amp; Time</source>
         <translation type="unfinished">Orario notifica:</translation>
     </message>
     <message>
-        <location filename="../../src/qml/ClassWidgets/Windows/Settings.qml" line="55"/>
+        <location filename="../../src/qml/ClassWidgets/Windows/Settings.qml" line="56"/>
         <source>Notification</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/qml/ClassWidgets/Windows/Settings.qml" line="60"/>
+        <location filename="../../src/qml/ClassWidgets/Windows/Settings.qml" line="61"/>
         <source>Time</source>
         <translation type="unfinished">Tempo</translation>
     </message>
     <message>
-        <location filename="../../src/qml/ClassWidgets/Windows/Settings.qml" line="67"/>
+        <location filename="../../src/qml/ClassWidgets/Windows/Settings.qml" line="68"/>
         <source>Plugins</source>
         <translation type="unfinished">Plugin</translation>
     </message>
     <message>
-        <location filename="../../src/qml/ClassWidgets/Windows/Settings.qml" line="73"/>
+        <location filename="../../src/qml/ClassWidgets/Windows/Settings.qml" line="75"/>
         <source>About</source>
         <translation type="unfinished">Informazioni</translation>
     </message>
     <message>
-        <location filename="../../src/qml/ClassWidgets/Windows/Settings.qml" line="79"/>
+        <location filename="../../src/qml/ClassWidgets/Windows/Settings.qml" line="81"/>
         <source>Update</source>
         <translation type="unfinished">Aggiorna</translation>
     </message>
@@ -3429,6 +3770,51 @@ If it takes place in another location, such as a sport field, lab, or another cl
         <source>Class Widgets Builtin Default Theme</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <location filename="../../src/qml/ClassWidgets/pages/tutorial/Theme.qml" line="11"/>
+        <source>Choose your look</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../src/qml/ClassWidgets/pages/tutorial/Theme.qml" line="12"/>
+        <source>Set the app appearance and an accent color that feels right to you.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../src/qml/ClassWidgets/pages/tutorial/Theme.qml" line="30"/>
+        <source>Theme</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../src/qml/ClassWidgets/pages/tutorial/Theme.qml" line="31"/>
+        <source>Select which app theme to display</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../src/qml/ClassWidgets/pages/tutorial/Theme.qml" line="47"/>
+        <source>Auto</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../src/qml/ClassWidgets/pages/tutorial/Theme.qml" line="52"/>
+        <source>Light</source>
+        <translation type="unfinished">Chiaro</translation>
+    </message>
+    <message>
+        <location filename="../../src/qml/ClassWidgets/pages/tutorial/Theme.qml" line="57"/>
+        <source>Dark</source>
+        <translation type="unfinished">Scuro</translation>
+    </message>
+    <message>
+        <location filename="../../src/qml/ClassWidgets/pages/tutorial/Theme.qml" line="93"/>
+        <source>Accent Color</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../src/qml/ClassWidgets/pages/tutorial/Theme.qml" line="94"/>
+        <source>Choose the color used for highlights and controls</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>Time</name>
@@ -3560,46 +3946,61 @@ If it takes place in another location, such as a sport field, lab, or another cl
 <context>
     <name>Tutorial</name>
     <message>
-        <location filename="../../src/qml/ClassWidgets/Windows/Tutorial.qml" line="11"/>
-        <source>Welcome ╰(*°▽°*)╯</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../../src/qml/ClassWidgets/Windows/Tutorial.qml" line="33"/>
-        <source>Welcome to Class Widgets 2</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../../src/qml/ClassWidgets/Windows/Tutorial.qml" line="43"/>
-        <source>注意</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../../src/qml/ClassWidgets/Windows/Tutorial.qml" line="44"/>
-        <source>初始引导窗口还未完工，在做啦在做啦 
-目前版本为测试版，大多数功能还未补完。若要在教学环境中使用，请三思而后行。
-欢迎到我们的 GitHub 页面提交反馈或建议，谢谢！</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../../src/qml/ClassWidgets/Windows/Tutorial.qml" line="54"/>
-        <source>Select a language</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../../src/qml/ClassWidgets/Windows/Tutorial.qml" line="60"/>
-        <source>Use System Language</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../../src/qml/ClassWidgets/Windows/Tutorial.qml" line="81"/>
         <source>Exit</source>
-        <translation type="unfinished">Esci</translation>
+        <translation type="obsolete">Esci</translation>
     </message>
     <message>
-        <location filename="../../src/qml/ClassWidgets/Windows/Tutorial.qml" line="86"/>
         <source>Get started</source>
-        <translation type="unfinished">Inizia</translation>
+        <translation type="obsolete">Inizia</translation>
+    </message>
+    <message>
+        <location filename="../../src/qml/ClassWidgets/Windows/Tutorial.qml" line="12"/>
+        <source>Getting Started</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../src/qml/ClassWidgets/Windows/Tutorial.qml" line="95"/>
+        <source>Skip setup?</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../src/qml/ClassWidgets/Windows/Tutorial.qml" line="100"/>
+        <source>Are you sure you want to skip the setup?</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../src/qml/ClassWidgets/Windows/Tutorial.qml" line="113"/>
+        <source>Close setup?</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../src/qml/ClassWidgets/Windows/Tutorial.qml" line="118"/>
+        <source>Are you sure you want to close the setup?</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>TutorialPage</name>
+    <message>
+        <location filename="../../src/qml/ClassWidgets/Components/tutorial/TutorialPage.qml" line="18"/>
+        <source>Continue</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>TutorialPluginCard</name>
+    <message>
+        <location filename="../../src/qml/ClassWidgets/Components/tutorial/TutorialPluginCard.qml" line="40"/>
+        <source>Unknown plugin</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>TutorialStepFooter</name>
+    <message>
+        <location filename="../../src/qml/ClassWidgets/Components/tutorial/TutorialStepFooter.qml" line="13"/>
+        <source>Continue</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -3885,6 +4286,29 @@ Go to &quot;Settings&quot; → &quot;Update&quot; for more details.</source>
     </message>
 </context>
 <context>
+    <name>Welcome</name>
+    <message>
+        <location filename="../../src/qml/ClassWidgets/pages/tutorial/Welcome.qml" line="216"/>
+        <source>Get started</source>
+        <translation type="unfinished">Inizia</translation>
+    </message>
+    <message>
+        <location filename="../../src/qml/ClassWidgets/pages/tutorial/Welcome.qml" line="229"/>
+        <source>Data migration</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../src/qml/ClassWidgets/pages/tutorial/Welcome.qml" line="235"/>
+        <source>View License</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../src/qml/ClassWidgets/pages/tutorial/Welcome.qml" line="240"/>
+        <source>Skip tutorial</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>WhatsNew</name>
     <message>
         <location filename="../../src/qml/ClassWidgets/Windows/WhatsNew.qml" line="11"/>
@@ -3916,42 +4340,70 @@ Go to &quot;Settings&quot; → &quot;Update&quot; for more details.</source>
     </message>
     <message>
         <location filename="../../src/qml/ClassWidgets/Data/WhatsNewData.qml" line="17"/>
-        <source>Comprehensive Notification System Upgrade</source>
+        <source>A Brand New Quick Access Panel</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../../src/qml/ClassWidgets/Data/WhatsNewData.qml" line="18"/>
-        <source>A completely rebuilt notification system that supports in-app notification toggles, intelligent ringtone configuration, and customizable notification providers. Bringing users a more flexible and intelligent notification experience.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../../src/qml/ClassWidgets/Data/WhatsNewData.qml" line="21"/>
-        <source>Add &quot;Dynamic Notifications&quot; to Widgets Screen</source>
+        <source>The new Quick Access Panel gives you instant access to Class Widgets features from the tray icon. Quickly launch common actions, switch between class schedules, and manage shortcuts.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../../src/qml/ClassWidgets/Data/WhatsNewData.qml" line="25"/>
-        <source>Enhanced Plugin System</source>
+        <source>Comprehensive Notification System Upgrade</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../../src/qml/ClassWidgets/Data/WhatsNewData.qml" line="26"/>
-        <source>A comprehensive plugin system architecture that supports third-party library imports, web-based plugin plaza, PluginAPI and UIAPI. Added edit mode detection properties to make plugin development more convenient.</source>
+        <source>A completely rebuilt notification system that supports in-app notification toggles, intelligent ringtone configuration, and customizable notification providers. Bringing users a more flexible and intelligent notification experience.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../../src/qml/ClassWidgets/Data/WhatsNewData.qml" line="29"/>
-        <source>Visit Extension Plaza</source>
+        <source>Add &quot;Dynamic Notifications&quot; to Widgets Screen</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../../src/qml/ClassWidgets/Data/WhatsNewData.qml" line="33"/>
-        <source>Extended Multi-language Support</source>
+        <source>Enhanced Plugin System</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../../src/qml/ClassWidgets/Data/WhatsNewData.qml" line="34"/>
+        <source>A comprehensive plugin system architecture that supports third-party library imports, web-based plugin plaza, PluginAPI and UIAPI. Added edit mode detection properties to make plugin development more convenient.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../src/qml/ClassWidgets/Data/WhatsNewData.qml" line="37"/>
+        <source>Visit Extension Plaza</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../src/qml/ClassWidgets/Data/WhatsNewData.qml" line="41"/>
+        <source>Extended Multi-language Support</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../src/qml/ClassWidgets/Data/WhatsNewData.qml" line="42"/>
         <source>Added Japanese and Traditional Chinese (Hong Kong) language support, improved internationalization (i18n) system. Translation management through Weblate platform allows more users to enjoy the convenience of Class Widgets.</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>WidgetPreview</name>
+    <message>
+        <location filename="../../src/qml/ClassWidgets/Components/tutorial/WidgetPreview.qml" line="73"/>
+        <source>Remaining</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../src/qml/ClassWidgets/Components/tutorial/WidgetPreview.qml" line="157"/>
+        <source>Current Activity</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../src/qml/ClassWidgets/Components/tutorial/WidgetPreview.qml" line="187"/>
+        <source>Mathematics</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -4013,106 +4465,116 @@ then tap &quot;Edit Widget Screen&quot; in the menu to experience it.</source>
     </message>
     <message>
         <location filename="../../src/qml/ClassWidgets/pages/settings/General/Widgets.qml" line="149"/>
-        <source>Font</source>
+        <source>Corner Radius</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../../src/qml/ClassWidgets/pages/settings/General/Widgets.qml" line="150"/>
+        <source>Set how rounded widget corners appear</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../src/qml/ClassWidgets/pages/settings/General/Widgets.qml" line="169"/>
+        <source>Font</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../src/qml/ClassWidgets/pages/settings/General/Widgets.qml" line="170"/>
         <source>Choose a font for the widgets</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/qml/ClassWidgets/pages/settings/General/Widgets.qml" line="177"/>
+        <location filename="../../src/qml/ClassWidgets/pages/settings/General/Widgets.qml" line="197"/>
         <source>Font weight</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/qml/ClassWidgets/pages/settings/General/Widgets.qml" line="178"/>
+        <location filename="../../src/qml/ClassWidgets/pages/settings/General/Widgets.qml" line="198"/>
         <source>Set the thickness of the font</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/qml/ClassWidgets/pages/settings/General/Widgets.qml" line="183"/>
+        <location filename="../../src/qml/ClassWidgets/pages/settings/General/Widgets.qml" line="203"/>
         <source>Thin</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/qml/ClassWidgets/pages/settings/General/Widgets.qml" line="184"/>
+        <location filename="../../src/qml/ClassWidgets/pages/settings/General/Widgets.qml" line="204"/>
         <source>Extra Light</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/qml/ClassWidgets/pages/settings/General/Widgets.qml" line="185"/>
+        <location filename="../../src/qml/ClassWidgets/pages/settings/General/Widgets.qml" line="205"/>
         <source>Light</source>
         <translation type="unfinished">Chiaro</translation>
     </message>
     <message>
-        <location filename="../../src/qml/ClassWidgets/pages/settings/General/Widgets.qml" line="186"/>
+        <location filename="../../src/qml/ClassWidgets/pages/settings/General/Widgets.qml" line="206"/>
         <source>Regular</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/qml/ClassWidgets/pages/settings/General/Widgets.qml" line="187"/>
+        <location filename="../../src/qml/ClassWidgets/pages/settings/General/Widgets.qml" line="207"/>
         <source>Medium</source>
         <translation type="unfinished">Media</translation>
     </message>
     <message>
-        <location filename="../../src/qml/ClassWidgets/pages/settings/General/Widgets.qml" line="188"/>
+        <location filename="../../src/qml/ClassWidgets/pages/settings/General/Widgets.qml" line="208"/>
         <source>Semi Bold</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/qml/ClassWidgets/pages/settings/General/Widgets.qml" line="189"/>
+        <location filename="../../src/qml/ClassWidgets/pages/settings/General/Widgets.qml" line="209"/>
         <source>Bold</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/qml/ClassWidgets/pages/settings/General/Widgets.qml" line="190"/>
+        <location filename="../../src/qml/ClassWidgets/pages/settings/General/Widgets.qml" line="210"/>
         <source>Extra Bold</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/qml/ClassWidgets/pages/settings/General/Widgets.qml" line="191"/>
+        <location filename="../../src/qml/ClassWidgets/pages/settings/General/Widgets.qml" line="211"/>
         <source>Black</source>
         <translation type="unfinished">Nero</translation>
     </message>
     <message>
-        <location filename="../../src/qml/ClassWidgets/pages/settings/General/Widgets.qml" line="192"/>
+        <location filename="../../src/qml/ClassWidgets/pages/settings/General/Widgets.qml" line="212"/>
         <source>Custom</source>
         <translation type="unfinished">Personalizzato</translation>
     </message>
     <message>
-        <location filename="../../src/qml/ClassWidgets/pages/settings/General/Widgets.qml" line="225"/>
+        <location filename="../../src/qml/ClassWidgets/pages/settings/General/Widgets.qml" line="245"/>
         <source>Preview</source>
         <translation type="unfinished">Anteprima</translation>
     </message>
     <message>
-        <location filename="../../src/qml/ClassWidgets/pages/settings/General/Widgets.qml" line="228"/>
+        <location filename="../../src/qml/ClassWidgets/pages/settings/General/Widgets.qml" line="248"/>
         <source>The quick brown fox jumps over the lazy dog</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/qml/ClassWidgets/pages/settings/General/Widgets.qml" line="246"/>
+        <location filename="../../src/qml/ClassWidgets/pages/settings/General/Widgets.qml" line="266"/>
         <source>Window</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/qml/ClassWidgets/pages/settings/General/Widgets.qml" line="252"/>
+        <location filename="../../src/qml/ClassWidgets/pages/settings/General/Widgets.qml" line="272"/>
         <source>Display</source>
         <translation type="unfinished">Visualizza</translation>
     </message>
     <message>
-        <location filename="../../src/qml/ClassWidgets/pages/settings/General/Widgets.qml" line="253"/>
+        <location filename="../../src/qml/ClassWidgets/pages/settings/General/Widgets.qml" line="273"/>
         <source>Set which screen to display widgets on, and adjust their position</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/qml/ClassWidgets/pages/settings/General/Widgets.qml" line="368"/>
+        <location filename="../../src/qml/ClassWidgets/pages/settings/General/Widgets.qml" line="388"/>
         <source>X-axis offset</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/qml/ClassWidgets/pages/settings/General/Widgets.qml" line="383"/>
+        <location filename="../../src/qml/ClassWidgets/pages/settings/General/Widgets.qml" line="403"/>
         <source>Y-axis offset</source>
         <translation type="unfinished"></translation>
     </message>
