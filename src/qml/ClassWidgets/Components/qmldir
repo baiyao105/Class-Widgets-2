@@ -16,6 +16,7 @@ ClassSwapDialog 1.0 dialogs/ClassSwapDialog.qml
 PluginReplaceConfirmDialog 1.0 dialogs/PluginReplaceConfirmDialog.qml
 
 # Settings
+ClipItem 1.0 settings/ClipItem.qml
 DayListView 1.0 editor/DayListView.qml
 EntryDetailView 1.0 editor/EntryDetailView.qml
 EntryListView 1.0 editor/EntryListView.qml

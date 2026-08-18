@@ -9,8 +9,8 @@ FluentWindow {
     id: settingsWindow
     icon: PathManager.assets("images/icons/cw2_settings.png")
     title: qsTr("Settings")
-    width: Screen.width * 0.5
-    height: Screen.height * 0.6
+    width: Math.max(Screen.width * 0.6, 900)
+    height: Math.max(Screen.height * 0.7, 640)
     minimumWidth: 600
     // visible: true
 
