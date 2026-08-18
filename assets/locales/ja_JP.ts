@@ -4582,41 +4582,51 @@ Go to &quot;Settings&quot; → &quot;Update&quot; for more details.</source>
     </message>
     <message>
         <location filename="../../src/qml/ClassWidgets/Data/WhatsNewData.qml" line="17"/>
+        <source>A Brand New Quick Access Panel</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../src/qml/ClassWidgets/Data/WhatsNewData.qml" line="18"/>
+        <source>The new Quick Access Panel gives you instant access to Class Widgets features from the tray icon. Quickly launch common actions, switch between class schedules, and manage shortcuts.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../src/qml/ClassWidgets/Data/WhatsNewData.qml" line="25"/>
         <source>Comprehensive Notification System Upgrade</source>
         <translation type="unfinished">通知システムの全面的なアップグレード</translation>
     </message>
     <message>
-        <location filename="../../src/qml/ClassWidgets/Data/WhatsNewData.qml" line="18"/>
+        <location filename="../../src/qml/ClassWidgets/Data/WhatsNewData.qml" line="26"/>
         <source>A completely rebuilt notification system that supports in-app notification toggles, intelligent ringtone configuration, and customizable notification providers. Bringing users a more flexible and intelligent notification experience.</source>
         <translation type="unfinished">アプリ内での通知のトグル、スマートなチャイム設定、カスタマイズ可能な通知プロバイダーをサポートする、完全に再構築された通知システムです。ユーザーにより柔軟でスマートな通知体験を提供します。</translation>
     </message>
     <message>
-        <location filename="../../src/qml/ClassWidgets/Data/WhatsNewData.qml" line="21"/>
+        <location filename="../../src/qml/ClassWidgets/Data/WhatsNewData.qml" line="29"/>
         <source>Add &quot;Dynamic Notifications&quot; to Widgets Screen</source>
         <translation type="unfinished">「Dynamic Notifications」をウィジェット画面に追加してください</translation>
     </message>
     <message>
-        <location filename="../../src/qml/ClassWidgets/Data/WhatsNewData.qml" line="25"/>
+        <location filename="../../src/qml/ClassWidgets/Data/WhatsNewData.qml" line="33"/>
         <source>Enhanced Plugin System</source>
         <translation type="unfinished">拡張されたプラグインシステム</translation>
     </message>
     <message>
-        <location filename="../../src/qml/ClassWidgets/Data/WhatsNewData.qml" line="26"/>
+        <location filename="../../src/qml/ClassWidgets/Data/WhatsNewData.qml" line="34"/>
         <source>A comprehensive plugin system architecture that supports third-party library imports, web-based plugin plaza, PluginAPI and UIAPI. Added edit mode detection properties to make plugin development more convenient.</source>
         <translation type="unfinished">サードパーティライブラリのインポート、ウェブベースのプラグインプラザ、PluginAPI および UIAPI をサポートする、包括的なプラグインシステムのアーキテクチャを提供します。編集モード検出プロパティを追加し、プラグイン開発をより便利にしました。</translation>
     </message>
     <message>
-        <location filename="../../src/qml/ClassWidgets/Data/WhatsNewData.qml" line="29"/>
+        <location filename="../../src/qml/ClassWidgets/Data/WhatsNewData.qml" line="37"/>
         <source>Visit Extension Plaza</source>
         <translation type="unfinished">拡張プラザへアクセス</translation>
     </message>
     <message>
-        <location filename="../../src/qml/ClassWidgets/Data/WhatsNewData.qml" line="33"/>
+        <location filename="../../src/qml/ClassWidgets/Data/WhatsNewData.qml" line="41"/>
         <source>Extended Multi-language Support</source>
         <translation type="unfinished">拡張されたマルチ言語サポート</translation>
     </message>
     <message>
-        <location filename="../../src/qml/ClassWidgets/Data/WhatsNewData.qml" line="34"/>
+        <location filename="../../src/qml/ClassWidgets/Data/WhatsNewData.qml" line="42"/>
         <source>Added Japanese and Traditional Chinese (Hong Kong) language support, improved internationalization (i18n) system. Translation management through Weblate platform allows more users to enjoy the convenience of Class Widgets.</source>
         <translation type="unfinished">日本語および繁体中国語（香港）の言語サポートを追加し、国際化（i18n）システムを改善しました。Weblate プラットフォームを通じた翻訳管理により、より多くのユーザーが Class Widgets の便利さを享受できるようになりました。</translation>
     </message>

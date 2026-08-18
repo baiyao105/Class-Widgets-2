@@ -14,6 +14,14 @@ QtObject {
             "icon": "ic_fluent_info_20_regular"
         },
         {
+            "title": qsTr("A Brand New Quick Access Panel"),
+            "description": qsTr("The new Quick Access Panel gives you instant access to Class Widgets features from the tray icon. Quickly launch common actions, switch between class schedules, and manage shortcuts."),
+            "image": PathManager.images("whatsnew/panel.png"),
+            "icon": "ic_fluent_panel_bottom_expand_20_regular",
+            // "actionButtonText": qsTr("Add \"Dynamic Notifications\" to Widgets Screen"),
+            // "actionButtonAction": "toggleWidgetsEditMode"
+        },
+        {
             "title": qsTr("Comprehensive Notification System Upgrade"),
             "description": qsTr("A completely rebuilt notification system that supports in-app notification toggles, intelligent ringtone configuration, and customizable notification providers. Bringing users a more flexible and intelligent notification experience."),
             "image": PathManager.images("whatsnew/notification.png"),

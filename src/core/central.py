@@ -374,12 +374,15 @@ class AppCentral(QObject):  # Class Widgets 的中枢
         self.app_instance.quit()
 
     @Slot()
-    def restart(self):
+    @Slot(str)
+    def restart(self, extra_argument: Optional[str] = None):
         if self._restart_requested:
             return
 
         self._restart_requested = True
         arguments = sys.argv[1:] if getattr(sys, "frozen", False) else sys.argv
+        if extra_argument and extra_argument not in arguments:
+            arguments.append(extra_argument)
         self.instance_guard.release()
         if not QProcess.startDetached(sys.executable, arguments):
             self.instance_guard.try_acquire()

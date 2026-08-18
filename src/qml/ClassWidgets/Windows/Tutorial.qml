@@ -198,7 +198,7 @@ ApplicationWindow {
 
     function completeTutorial() {
         Configs.set("app.tutorial_completed", true)
-        AppCentral.restart()
+        AppCentral.restart("--update-done")
     }
 
     StackView {

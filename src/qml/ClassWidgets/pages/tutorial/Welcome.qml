@@ -39,6 +39,10 @@ Item {
         return easeOutQuint((contentEntranceProgress - delay) / duration)
     }
 
+    function greetingCharStep(length, span) {
+        return span / Math.max(1, length)
+    }
+
     function advanceGreeting() {
         greetingProgress = 0
         greetingEntryDelay = 0.36
@@ -111,7 +115,7 @@ Item {
 
                         delegate: Text {
                             readonly property real progress: root.easeInCubic(
-                                (root.greetingProgress - index * 0.065) / 0.31
+                                (root.greetingProgress - index * root.greetingCharStep(root.outgoingGreeting.length, 0.31)) / 0.31
                             )
 
                             text: root.outgoingGreeting.charAt(index)
@@ -133,7 +137,7 @@ Item {
 
                         delegate: Text {
                             readonly property real progress: root.easeOutQuint(
-                                (root.greetingProgress - root.greetingEntryDelay - index * 0.075) / 0.5
+                                (root.greetingProgress - root.greetingEntryDelay - index * root.greetingCharStep(root.displayedGreeting.length, 0.5)) / 0.5
                             )
 
                             text: root.displayedGreeting.charAt(index)

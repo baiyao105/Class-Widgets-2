@@ -4816,11 +4816,16 @@ Go to &quot;Settings&quot; → &quot;Update&quot; for more details.</source>
     </message>
     <message>
         <location filename="../../src/qml/ClassWidgets/Data/WhatsNewData.qml" line="17"/>
+        <source>A Brand New Quick Access Panel</source>
+        <translation>全新的快捷面板</translation>
+    </message>
+    <message>
+        <location filename="../../src/qml/ClassWidgets/Data/WhatsNewData.qml" line="25"/>
         <source>Comprehensive Notification System Upgrade</source>
         <translation>通知系统全面升级</translation>
     </message>
     <message>
-        <location filename="../../src/qml/ClassWidgets/Data/WhatsNewData.qml" line="18"/>
+        <location filename="../../src/qml/ClassWidgets/Data/WhatsNewData.qml" line="26"/>
         <source>A completely rebuilt notification system that supports in-app notification toggles, intelligent ringtone configuration, and customizable notification providers. Bringing users a more flexible and intelligent notification experience.</source>
         <translation>全新重构的通知系统，支持应用内通知开关、智能提示音配置，以及可自定义通知推送方，为用户带来更灵活、更智能的通知体验。</translation>
     </message>
@@ -4829,32 +4834,37 @@ Go to &quot;Settings&quot; → &quot;Update&quot; for more details.</source>
         <translation type="vanished">在“设置”调整通知设置</translation>
     </message>
     <message>
-        <location filename="../../src/qml/ClassWidgets/Data/WhatsNewData.qml" line="21"/>
+        <location filename="../../src/qml/ClassWidgets/Data/WhatsNewData.qml" line="18"/>
+        <source>The new Quick Access Panel gives you instant access to Class Widgets features from the tray icon. Quickly launch common actions, switch between class schedules, and manage shortcuts.</source>
+        <translation>通过托盘图标即可打开全新的快捷面板，快速访问常用功能、切换课程表以及管理快捷方式。</translation>
+    </message>
+    <message>
+        <location filename="../../src/qml/ClassWidgets/Data/WhatsNewData.qml" line="29"/>
         <source>Add &quot;Dynamic Notifications&quot; to Widgets Screen</source>
         <translation>在小组件屏幕中添加“灵动通知”</translation>
     </message>
     <message>
-        <location filename="../../src/qml/ClassWidgets/Data/WhatsNewData.qml" line="25"/>
+        <location filename="../../src/qml/ClassWidgets/Data/WhatsNewData.qml" line="33"/>
         <source>Enhanced Plugin System</source>
         <translation>更强大的插件系统</translation>
     </message>
     <message>
-        <location filename="../../src/qml/ClassWidgets/Data/WhatsNewData.qml" line="26"/>
+        <location filename="../../src/qml/ClassWidgets/Data/WhatsNewData.qml" line="34"/>
         <source>A comprehensive plugin system architecture that supports third-party library imports, web-based plugin plaza, PluginAPI and UIAPI. Added edit mode detection properties to make plugin development more convenient.</source>
         <translation>全新的插件系统架构，支持第三方库导入、基于网页的插件广场与 Class Widgets SDK，使插件开发更加便捷。</translation>
     </message>
     <message>
-        <location filename="../../src/qml/ClassWidgets/Data/WhatsNewData.qml" line="29"/>
+        <location filename="../../src/qml/ClassWidgets/Data/WhatsNewData.qml" line="37"/>
         <source>Visit Extension Plaza</source>
         <translation>前往插件广场</translation>
     </message>
     <message>
-        <location filename="../../src/qml/ClassWidgets/Data/WhatsNewData.qml" line="33"/>
+        <location filename="../../src/qml/ClassWidgets/Data/WhatsNewData.qml" line="41"/>
         <source>Extended Multi-language Support</source>
         <translation>扩展的多语言支持</translation>
     </message>
     <message>
-        <location filename="../../src/qml/ClassWidgets/Data/WhatsNewData.qml" line="34"/>
+        <location filename="../../src/qml/ClassWidgets/Data/WhatsNewData.qml" line="42"/>
         <source>Added Japanese and Traditional Chinese (Hong Kong) language support, improved internationalization (i18n) system. Translation management through Weblate platform allows more users to enjoy the convenience of Class Widgets.</source>
         <translation>新增日语和繁体中文（香港）语言支持，通过 Weblate 平台进行翻译管理。</translation>
     </message>
