@@ -186,7 +186,7 @@ Licensed under the MIT license</source>
     </message>
     <message>
         <source>This project (Class Widgets 2) is licensed under the GPL-3 license. For details, see:</source>
-        <translation>本專案 (Class Widgets 2) 採用 MIT 授權條款。詳情請參閱：</translation>
+        <translation type="vanished">本專案 (Class Widgets 2) 採用 MIT 授權條款。詳情請參閱：</translation>
     </message>
 </context>
 <context>
@@ -4625,7 +4625,7 @@ then tap &quot;Edit Widget Screen&quot; in the menu to experience it.</source>
     <message>
         <location filename="../../src/qml/ClassWidgets/pages/settings/General/Widgets.qml" line="149"/>
         <source>Corner Radius</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">圓角半徑</translation>
     </message>
     <message>
         <location filename="../../src/qml/ClassWidgets/pages/settings/General/Widgets.qml" line="150"/>
