@@ -136,10 +136,10 @@ FluentPage {
                 stepSize: 0.05
                 tickmarks: true
                 tickFrequency: 0.2
-                toolTip.text: (value * 100).toString() + "%"
+                toolTip.text: Math.round((value * 100)) + "%"
                 enabled: !Configs.isKeyLocked("preferences.opacity")
                 onValueChanged: if (pressed) Configs.set("preferences.opacity", value)
-                Component.onCompleted: value = Configs.data.preferences.opacity || 1.0
+                Component.onCompleted: value = Configs.data.preferences.opacity
             }
         }
 

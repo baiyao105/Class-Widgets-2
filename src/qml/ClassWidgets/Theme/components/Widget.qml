@@ -17,7 +17,6 @@ Item {
 
     implicitWidth: Math.max(headerRow.implicitWidth, contentArea.childrenRect.width) + 48
     height: miniMode ? 56 : 100
-    clip: false
     opacity: widgetHoverHandler.hovered? 0.8 : 1
 
     // colors
@@ -43,25 +42,6 @@ Item {
 
     // 背景
     readonly property real borderWidth: 1
-
-    Rectangle {
-        id: shadowSource
-        anchors.fill: background
-        radius: background.radius
-        color: "#29000000"
-        visible: false
-    }
-
-    DropShadow {
-        anchors.fill: shadowSource
-        horizontalOffset: 0
-        verticalOffset: 8
-        radius: 28
-        samples: 57
-        color: "#29000000"
-        source: shadowSource
-        transparentBorder: true
-    }
 
     // 动画
     Behavior on implicitWidth {
