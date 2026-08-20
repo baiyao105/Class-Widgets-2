@@ -459,6 +459,7 @@ class AppCentral(QObject):  # Class Widgets 的中枢
         self.widgets_window.run()
 
         if "--update-done" in sys.argv:
+            sys.argv.remove("--update-done")
             self.window_manager.open_whatsnew()
             self.updater_bridge.update_complete()
 
