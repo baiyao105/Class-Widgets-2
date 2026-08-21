@@ -82,6 +82,8 @@ jobs:
               VERSION="${VERSION%%-alpha*}"
               VERSION="${VERSION%%.alpha*}"
               VERSION="${VERSION%%_alpha*}"
+            elif [[ "$VERSION" =~ (^|[-._])dev([-.0-9]*)?$ ]]; then
+              VERSION_TYPE="alpha"
             elif [[ "$VERSION" =~ (^|[-._])beta([-.0-9]*)?$ ]]; then
               VERSION_TYPE="beta"
               VERSION="${VERSION%%-beta*}"
