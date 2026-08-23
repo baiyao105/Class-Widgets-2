@@ -4671,24 +4671,29 @@ then tap &quot;Edit Widget Screen&quot; in the menu to experience it.</source>
 <context>
     <name>WidgetsContainer</name>
     <message>
-        <location filename="../../src/qml/ClassWidgets/Components/WidgetsContainer.qml" line="215"/>
+        <location filename="../../src/qml/ClassWidgets/Components/WidgetsContainer.qml" line="244"/>
         <source>Edit </source>
         <translation>修改 </translation>
     </message>
     <message>
-        <location filename="../../src/qml/ClassWidgets/Components/WidgetsContainer.qml" line="230"/>
+        <location filename="../../src/qml/ClassWidgets/Components/WidgetsContainer.qml" line="259"/>
         <source>Delete</source>
         <translation>丢掉！</translation>
     </message>
     <message>
-        <location filename="../../src/qml/ClassWidgets/Components/WidgetsContainer.qml" line="239"/>
+        <location filename="../../src/qml/ClassWidgets/Components/WidgetsContainer.qml" line="268"/>
         <source>Edit Widgets Screen</source>
         <translation>调教小方块页面</translation>
     </message>
     <message>
-        <location filename="../../src/qml/ClassWidgets/Components/WidgetsContainer.qml" line="314"/>
+        <location filename="../../src/qml/ClassWidgets/Components/WidgetsContainer.qml" line="350"/>
         <source>Add</source>
         <translation>咖啡不断加加加加到厌倦～</translation>
+    </message>
+    <message>
+        <location filename="../../src/qml/ClassWidgets/Components/WidgetsContainer.qml" line="365"/>
+        <source>Done</source>
+        <translation type="unfinished">我滴任务完成辣！</translation>
     </message>
 </context>
 <context>

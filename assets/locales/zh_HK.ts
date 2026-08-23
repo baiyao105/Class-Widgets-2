@@ -4766,24 +4766,29 @@ then tap &quot;Edit Widget Screen&quot; in the menu to experience it.</source>
 <context>
     <name>WidgetsContainer</name>
     <message>
-        <location filename="../../src/qml/ClassWidgets/Components/WidgetsContainer.qml" line="215"/>
+        <location filename="../../src/qml/ClassWidgets/Components/WidgetsContainer.qml" line="244"/>
         <source>Edit </source>
         <translation type="unfinished">編輯 </translation>
     </message>
     <message>
-        <location filename="../../src/qml/ClassWidgets/Components/WidgetsContainer.qml" line="230"/>
+        <location filename="../../src/qml/ClassWidgets/Components/WidgetsContainer.qml" line="259"/>
         <source>Delete</source>
         <translation type="unfinished">刪除</translation>
     </message>
     <message>
-        <location filename="../../src/qml/ClassWidgets/Components/WidgetsContainer.qml" line="239"/>
+        <location filename="../../src/qml/ClassWidgets/Components/WidgetsContainer.qml" line="268"/>
         <source>Edit Widgets Screen</source>
         <translation type="unfinished">編輯小工具畫面</translation>
     </message>
     <message>
-        <location filename="../../src/qml/ClassWidgets/Components/WidgetsContainer.qml" line="314"/>
+        <location filename="../../src/qml/ClassWidgets/Components/WidgetsContainer.qml" line="350"/>
         <source>Add</source>
         <translation type="unfinished">添加</translation>
+    </message>
+    <message>
+        <location filename="../../src/qml/ClassWidgets/Components/WidgetsContainer.qml" line="365"/>
+        <source>Done</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
