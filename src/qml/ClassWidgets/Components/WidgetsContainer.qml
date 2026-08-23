@@ -6,10 +6,10 @@ import RinUI
 import ClassWidgets.Easing
 
 
-Flow {
+Item {
     id: widgetsContainer
     property real scaleFactor: Configs.data.preferences.scale_factor || 1.0
-    spacing: 8
+    property real spacing: 8
 
     property bool editMode: false
     property bool menuVisible: false
@@ -22,6 +22,14 @@ Flow {
     property real dragOffsetY: 0
     property real hideMargin: 24  // 隐藏时保留的可点击空间
     signal contentGeometryChanged()
+
+    width: editMode ? parent.width : widgetsFlow.implicitWidth
+    height: editMode
+                ? flickable.height + (horizontalScrollBar.visible ? horizontalScrollBar.height : 0)
+                    + editButtons.anchors.topMargin + editButtons.height
+        : widgetsFlow.implicitHeight
+
+    onEditModeChanged: contentGeometryChanged()
 
     Component.onCompleted: {
         editMode = widgetRepeater.count === 0
@@ -88,7 +96,7 @@ Flow {
     y: calcY() + dragOffsetY
 
     DragHandler {
-        id: dragHandler
+        id: containerDragHandler
         enabled: !editMode
         target: null
         onActiveChanged: {
@@ -109,15 +117,6 @@ Flow {
         }
     }
 
-    move: Transition {
-        enabled: editMode
-        NumberAnimation {
-            properties: "x,y"
-            duration: 300
-            easing.type: Easing.OutQuint
-        }
-    }
-
     Behavior on opacity {
         NumberAnimation {
             duration: 200
@@ -126,18 +125,48 @@ Flow {
     }
 
 
-    Repeater {
-        id: widgetRepeater
-        model: WidgetsModel
+    Flickable {
+        id: flickable
+        objectName: "widgetsFlickable"
+        anchors.left: parent.left
+        anchors.top: parent.top
+        width: editMode ? parent.width : widgetsFlow.implicitWidth
+        height: widgetsFlow.implicitHeight
+        contentWidth: Math.max(widgetsFlow.implicitWidth, width)
+        contentHeight: widgetsFlow.implicitHeight
+        clip: true
+        interactive: widgetsContainer.editMode && contentWidth > width
+        boundsBehavior: Flickable.StopAtBounds
 
-        delegate: Item {
+        ScrollBar.horizontal: ScrollBar {
+            id: horizontalScrollBar
+            objectName: "widgetsHorizontalScrollBar"
+            height: 12
+            visible: widgetsContainer.editMode && flickable.contentWidth > flickable.width
+            policy: widgetsContainer.editMode && flickable.contentWidth > flickable.width
+                        ? ScrollBar.AsNeeded : ScrollBar.AlwaysOff
+        }
+
+        Row {
+            id: widgetsFlow
+            objectName: "widgetsFlow"
+            x: widgetsFlow.implicitWidth < flickable.width
+                ? (flickable.width - widgetsFlow.implicitWidth) / 2 : 0
+            spacing: widgetsContainer.spacing
+            height: implicitHeight
+
+            Repeater {
+                id: widgetRepeater
+                model: WidgetsModel
+
+                delegate: Item {
             id: widgetContainer
             property real visualScale: scaleFactor
             width: loader.width * visualScale
             height: loader.height * visualScale
             rotation: editMode
-            z: dragHandler.active ? 1 : 0
-            opacity: dragHandler.active ? 0.5 : 1
+            z: widgetDragHandler.active ? 1 : 0
+            opacity: widgetDragHandler.active ? 0.5 : 1
 
             Behavior on visualScale {
                 NumberAnimation {
@@ -182,7 +211,7 @@ Flow {
 
             // 拖拽
             DragHandler {
-                id: dragHandler
+                id: widgetDragHandler
                 enabled: widgetsContainer.editMode
                 property var originalX: parent.x
                 property var originalY: parent.y
@@ -292,29 +321,33 @@ Flow {
             Behavior on opacity {
                 NumberAnimation { duration: 100 }
             }
+                }
+            }
         }
     }
 
     // 添加小组件&完成
-    ColumnLayout {
+    Row {
         objectName: "addWidgetsContainer"
-        visible: widgetsContainer.editMode || widgetRepeater.count === 0
-        width: height
-        height: widgetRepeater.count > 0 ? widgetRepeater.itemAt(0).height: 100 * scaleFactor
+        id: editButtons
+        visible: widgetsContainer.editMode
+        anchors.top: flickable.bottom
+        anchors.topMargin: 18
+        anchors.horizontalCenter: parent.horizontalCenter
+        width: 222
+        height: visible ? 44 : 0
+        spacing: 12
+        z: 100
+        opacity: 1
+        clip: false
 
         Button {
             id: addWidgetButton
-            Layout.fillWidth: true
-            Layout.fillHeight: true
-
-            ColumnLayout {
-                anchors.centerIn: parent
-                Icon { Layout.alignment: Qt.AlignCenter; name: "ic_fluent_add_20_regular"; size: 18 }
-                Text {
-                    Layout.alignment: Qt.AlignCenter; text: qsTr("Add");
-                    visible: addWidgetButton.height > acceptButton.height
-                }
-            }
+            // highlighted: true
+            width: 100
+            height: 40
+            icon.name: "ic_fluent_add_20_regular"
+            text: qsTr("Add")
 
             onClicked: {
                 widgetsContainer.editMode = true
@@ -326,9 +359,14 @@ Flow {
             visible: widgetsContainer.editMode
             id: acceptButton
             highlighted: true
-            Layout.fillWidth: true
+            width: 110
+            height: 40
             icon.name: "ic_fluent_checkmark_20_regular"
-            onClicked: widgetsContainer.editMode = false
+            text: qsTr("Done")
+
+            onClicked: {
+                widgetsContainer.editMode = false
+            }
         }
     }
 
