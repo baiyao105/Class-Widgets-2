@@ -34,6 +34,7 @@ def _jsvalue_to_python(value):
 
 class ScheduleEditor(QObject):
     updated = Signal()
+    subjectsChanged = Signal()
 
     def __init__(self, manager: ScheduleManager):
         super().__init__()
@@ -72,6 +73,7 @@ class ScheduleEditor(QObject):
         self.schedule = schedule
         self._filename = self.manager.schedule_path.stem
         self.updated.emit()
+        self.subjectsChanged.emit()
 
     def refresh_manager(self):
         self.manager.modify(self.schedule)  # 提交给 manager
@@ -92,6 +94,7 @@ class ScheduleEditor(QObject):
         )
         self.schedule.subjects.append(subject)
         self.updated.emit()
+        self.subjectsChanged.emit()
         return subject.id
 
     @Slot(str, str, str, str, str, str, str, bool)
@@ -102,16 +105,22 @@ class ScheduleEditor(QObject):
         if not subject:
             return
 
-        if name:
-            subject.name = name
-        if simplified_name:
-            subject.simplifiedName = simplified_name
-        subject.icon = icon
-        subject.color = color
-        subject.teacher = teacher
-        subject.location = location
-        subject.isLocalClassroom = is_local_classroom
+        changes = {
+            "name": name or subject.name,
+            "simplifiedName": simplified_name or subject.simplifiedName,
+            "icon": icon or None,
+            "color": color or None,
+            "teacher": teacher or None,
+            "location": location or None,
+            "isLocalClassroom": is_local_classroom,
+        }
+        if all(getattr(subject, field) == value for field, value in changes.items()):
+            return
+
+        for field, value in changes.items():
+            setattr(subject, field, value)
         self.updated.emit()
+        self.subjectsChanged.emit()
 
     @Slot(str)
     def removeSubject(self, subject_id: str) -> None:
@@ -126,6 +135,7 @@ class ScheduleEditor(QObject):
 
         self.schedule.subjects.remove(subject)
         self.updated.emit()
+        self.subjectsChanged.emit()
 
     @Slot(str, result="QVariant")
     def getSubject(self, subject_id: str) -> Optional[Subject]:
@@ -427,6 +437,7 @@ class ScheduleEditor(QObject):
         for subj in default_subjects:
             self.schedule.subjects.append(subj)
         self.updated.emit()
+        self.subjectsChanged.emit()
 
     @Slot(int, result=bool)
     def setMaxWeekCycle(self, max_weeks: int):
@@ -454,7 +465,7 @@ class ScheduleEditor(QObject):
             return {}
         return self.schedule.meta.model_dump()
 
-    @Property(list, notify=updated)
+    @Property(list, notify=subjectsChanged)
     def subjects(self) -> list[dict]:
         """获取所有科目"""
         if not self.schedule:
