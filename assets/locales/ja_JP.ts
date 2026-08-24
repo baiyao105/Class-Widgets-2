@@ -3505,104 +3505,154 @@ It&apos;s incompatible and may cause unexpected issues.</source>
 <context>
     <name>SubjectClip</name>
     <message>
-        <location filename="../../src/qml/ClassWidgets/Components/editor/SubjectClip.qml" line="100"/>
+        <location filename="../../src/qml/ClassWidgets/Components/editor/SubjectClip.qml" line="92"/>
         <source>Teacher: </source>
         <translation>先生: </translation>
     </message>
     <message>
-        <location filename="../../src/qml/ClassWidgets/Components/editor/SubjectClip.qml" line="100"/>
+        <location filename="../../src/qml/ClassWidgets/Components/editor/SubjectClip.qml" line="92"/>
         <source>Location: </source>
         <translation>場所: </translation>
     </message>
     <message>
-        <location filename="../../src/qml/ClassWidgets/Components/editor/SubjectClip.qml" line="125"/>
         <source>Edit Subject</source>
-        <translation>編集科目</translation>
+        <translation type="vanished">編集科目</translation>
     </message>
     <message>
-        <location filename="../../src/qml/ClassWidgets/Components/editor/SubjectClip.qml" line="138"/>
         <source>ID</source>
-        <translation>ID</translation>
+        <translation type="vanished">ID</translation>
     </message>
     <message>
-        <location filename="../../src/qml/ClassWidgets/Components/editor/SubjectClip.qml" line="143"/>
         <source>Simplified Name</source>
-        <translation>簡易名</translation>
+        <translation type="vanished">簡易名</translation>
     </message>
     <message>
-        <location filename="../../src/qml/ClassWidgets/Components/editor/SubjectClip.qml" line="149"/>
         <source>Subject Name</source>
-        <translation>科目名</translation>
+        <translation type="vanished">科目名</translation>
     </message>
     <message>
-        <location filename="../../src/qml/ClassWidgets/Components/editor/SubjectClip.qml" line="150"/>
         <source>e.g. Science</source>
-        <translation>例えば、科学</translation>
+        <translation type="vanished">例えば、科学</translation>
     </message>
     <message>
-        <location filename="../../src/qml/ClassWidgets/Components/editor/SubjectClip.qml" line="154"/>
         <source>Teacher</source>
-        <translation>教員</translation>
+        <translation type="vanished">教員</translation>
     </message>
     <message>
-        <location filename="../../src/qml/ClassWidgets/Components/editor/SubjectClip.qml" line="159"/>
         <source>Location</source>
-        <translation>場所</translation>
+        <translation type="vanished">場所</translation>
     </message>
     <message>
-        <location filename="../../src/qml/ClassWidgets/Components/editor/SubjectClip.qml" line="160"/>
         <source>e.g. Room 7813</source>
-        <translation>例：7813号室</translation>
+        <translation type="vanished">例：7813号室</translation>
     </message>
     <message>
-        <location filename="../../src/qml/ClassWidgets/Components/editor/SubjectClip.qml" line="164"/>
         <source>Color</source>
-        <translation>色</translation>
+        <translation type="vanished">色</translation>
     </message>
     <message>
         <source>e.g. #FF0000, blue, #197, etc.</source>
         <translation type="vanished">例：#FF0000、ブルー、#197など</translation>
     </message>
     <message>
-        <location filename="../../src/qml/ClassWidgets/Components/editor/SubjectClip.qml" line="175"/>
         <source>Held in homeroom</source>
-        <translation>ホームルームで実施</translation>
+        <translation type="vanished">ホームルームで実施</translation>
     </message>
     <message>
-        <location filename="../../src/qml/ClassWidgets/Components/editor/SubjectClip.qml" line="187"/>
         <source>Icon</source>
-        <translation>アイコン</translation>
+        <translation type="vanished">アイコン</translation>
     </message>
     <message>
-        <location filename="../../src/qml/ClassWidgets/Components/editor/SubjectClip.qml" line="210"/>
         <source>Enable if the subject is taught in your homeroom classroom.  
 If it takes place in another location, such as a sport field, lab, or another classroom, leave it off.</source>
-        <translation>授業がホームルーム教室で行われる場合に有効にする。
+        <translation type="vanished">授業がホームルーム教室で行われる場合に有効にする。
 それ以外の場所、例えば運動場や実験室、または別の教室で行われる場合は、オフにします。</translation>
     </message>
 </context>
 <context>
     <name>Subjects</name>
     <message>
-        <location filename="../../src/qml/ClassWidgets/pages/editor/Subjects.qml" line="23"/>
-        <location filename="../../src/qml/ClassWidgets/pages/editor/Subjects.qml" line="30"/>
+        <location filename="../../src/qml/ClassWidgets/pages/editor/Subjects.qml" line="38"/>
+        <location filename="../../src/qml/ClassWidgets/pages/editor/Subjects.qml" line="45"/>
         <source>Restore Defaults</source>
         <translation>デフォルトに戻す</translation>
     </message>
     <message>
-        <location filename="../../src/qml/ClassWidgets/pages/editor/Subjects.qml" line="33"/>
+        <location filename="../../src/qml/ClassWidgets/pages/editor/Subjects.qml" line="48"/>
         <source>Are you sure you want to restore the default subjects?</source>
         <translation>デフォルトの科目に戻すことを確認しますか？</translation>
     </message>
     <message>
-        <location filename="../../src/qml/ClassWidgets/pages/editor/Subjects.qml" line="49"/>
+        <location filename="../../src/qml/ClassWidgets/pages/editor/Subjects.qml" line="64"/>
         <source>Add Subject</source>
         <translation>科目を追加する</translation>
     </message>
     <message>
-        <location filename="../../src/qml/ClassWidgets/pages/editor/Subjects.qml" line="52"/>
+        <location filename="../../src/qml/ClassWidgets/pages/editor/Subjects.qml" line="67"/>
         <source>Subject</source>
         <translation>科目</translation>
+    </message>
+    <message>
+        <location filename="../../src/qml/ClassWidgets/pages/editor/Subjects.qml" line="101"/>
+        <source>Edit Subject</source>
+        <translation type="unfinished">編集科目</translation>
+    </message>
+    <message>
+        <location filename="../../src/qml/ClassWidgets/pages/editor/Subjects.qml" line="114"/>
+        <source>ID</source>
+        <translation type="unfinished">ID</translation>
+    </message>
+    <message>
+        <location filename="../../src/qml/ClassWidgets/pages/editor/Subjects.qml" line="119"/>
+        <source>Simplified Name</source>
+        <translation type="unfinished">簡易名</translation>
+    </message>
+    <message>
+        <location filename="../../src/qml/ClassWidgets/pages/editor/Subjects.qml" line="125"/>
+        <source>Subject Name</source>
+        <translation type="unfinished">科目名</translation>
+    </message>
+    <message>
+        <location filename="../../src/qml/ClassWidgets/pages/editor/Subjects.qml" line="126"/>
+        <source>e.g. Science</source>
+        <translation type="unfinished">例えば、科学</translation>
+    </message>
+    <message>
+        <location filename="../../src/qml/ClassWidgets/pages/editor/Subjects.qml" line="130"/>
+        <source>Teacher</source>
+        <translation type="unfinished">教員</translation>
+    </message>
+    <message>
+        <location filename="../../src/qml/ClassWidgets/pages/editor/Subjects.qml" line="135"/>
+        <source>Location</source>
+        <translation type="unfinished">場所</translation>
+    </message>
+    <message>
+        <location filename="../../src/qml/ClassWidgets/pages/editor/Subjects.qml" line="136"/>
+        <source>e.g. Room 7813</source>
+        <translation type="unfinished">例：7813号室</translation>
+    </message>
+    <message>
+        <location filename="../../src/qml/ClassWidgets/pages/editor/Subjects.qml" line="140"/>
+        <source>Color</source>
+        <translation type="unfinished">色</translation>
+    </message>
+    <message>
+        <location filename="../../src/qml/ClassWidgets/pages/editor/Subjects.qml" line="150"/>
+        <source>Held in homeroom</source>
+        <translation type="unfinished">ホームルームで実施</translation>
+    </message>
+    <message>
+        <location filename="../../src/qml/ClassWidgets/pages/editor/Subjects.qml" line="162"/>
+        <source>Icon</source>
+        <translation type="unfinished">アイコン</translation>
+    </message>
+    <message>
+        <location filename="../../src/qml/ClassWidgets/pages/editor/Subjects.qml" line="182"/>
+        <source>Enable if the subject is taught in your homeroom classroom.  
+If it takes place in another location, such as a sport field, lab, or another classroom, leave it off.</source>
+        <translation type="unfinished">授業がホームルーム教室で行われる場合に有効にする。
+それ以外の場所、例えば運動場や実験室、または別の教室で行われる場合は、オフにします。</translation>
     </message>
     <message>
         <location filename="../../src/core/utils/subjects.py" line="46"/>

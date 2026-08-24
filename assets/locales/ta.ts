@@ -3406,100 +3406,150 @@ It&apos;s incompatible and may cause unexpected issues.</source>
 <context>
     <name>SubjectClip</name>
     <message>
-        <location filename="../../src/qml/ClassWidgets/Components/editor/SubjectClip.qml" line="100"/>
+        <location filename="../../src/qml/ClassWidgets/Components/editor/SubjectClip.qml" line="92"/>
         <source>Teacher: </source>
         <translation>ஆசிரியர்: </translation>
     </message>
     <message>
-        <location filename="../../src/qml/ClassWidgets/Components/editor/SubjectClip.qml" line="100"/>
+        <location filename="../../src/qml/ClassWidgets/Components/editor/SubjectClip.qml" line="92"/>
         <source>Location: </source>
         <translation>இடம்: </translation>
     </message>
     <message>
-        <location filename="../../src/qml/ClassWidgets/Components/editor/SubjectClip.qml" line="125"/>
         <source>Edit Subject</source>
-        <translation>தலைப்பைத் திருத்து</translation>
+        <translation type="vanished">தலைப்பைத் திருத்து</translation>
     </message>
     <message>
-        <location filename="../../src/qml/ClassWidgets/Components/editor/SubjectClip.qml" line="138"/>
         <source>ID</source>
-        <translation>ஐடி</translation>
+        <translation type="vanished">ஐடி</translation>
     </message>
     <message>
-        <location filename="../../src/qml/ClassWidgets/Components/editor/SubjectClip.qml" line="143"/>
         <source>Simplified Name</source>
-        <translation>எளிமைப்படுத்தப்பட்ட பெயர்</translation>
+        <translation type="vanished">எளிமைப்படுத்தப்பட்ட பெயர்</translation>
     </message>
     <message>
-        <location filename="../../src/qml/ClassWidgets/Components/editor/SubjectClip.qml" line="149"/>
         <source>Subject Name</source>
-        <translation>பொருள் பெயர்</translation>
+        <translation type="vanished">பொருள் பெயர்</translation>
     </message>
     <message>
-        <location filename="../../src/qml/ClassWidgets/Components/editor/SubjectClip.qml" line="150"/>
         <source>e.g. Science</source>
-        <translation>எ.கா. அறிவியல்</translation>
+        <translation type="vanished">எ.கா. அறிவியல்</translation>
     </message>
     <message>
-        <location filename="../../src/qml/ClassWidgets/Components/editor/SubjectClip.qml" line="154"/>
         <source>Teacher</source>
-        <translation>ஆசிரியர்</translation>
+        <translation type="vanished">ஆசிரியர்</translation>
     </message>
     <message>
-        <location filename="../../src/qml/ClassWidgets/Components/editor/SubjectClip.qml" line="159"/>
         <source>Location</source>
-        <translation>இடம்</translation>
+        <translation type="vanished">இடம்</translation>
     </message>
     <message>
-        <location filename="../../src/qml/ClassWidgets/Components/editor/SubjectClip.qml" line="160"/>
         <source>e.g. Room 7813</source>
-        <translation>எ.கா. அறை 7813</translation>
+        <translation type="vanished">எ.கா. அறை 7813</translation>
     </message>
     <message>
-        <location filename="../../src/qml/ClassWidgets/Components/editor/SubjectClip.qml" line="164"/>
         <source>Color</source>
-        <translation>நிறம்</translation>
+        <translation type="vanished">நிறம்</translation>
     </message>
     <message>
-        <location filename="../../src/qml/ClassWidgets/Components/editor/SubjectClip.qml" line="175"/>
         <source>Held in homeroom</source>
-        <translation>வீட்டு அறையில் நடைபெற்றது</translation>
+        <translation type="vanished">வீட்டு அறையில் நடைபெற்றது</translation>
     </message>
     <message>
-        <location filename="../../src/qml/ClassWidgets/Components/editor/SubjectClip.qml" line="187"/>
         <source>Icon</source>
-        <translation>படவுரு</translation>
+        <translation type="vanished">படவுரு</translation>
     </message>
     <message>
-        <location filename="../../src/qml/ClassWidgets/Components/editor/SubjectClip.qml" line="210"/>
         <source>Enable if the subject is taught in your homeroom classroom.  
 If it takes place in another location, such as a sport field, lab, or another classroom, leave it off.</source>
-        <translation>உங்கள் வீட்டு வகுப்பறையில் பாடம் கற்பிக்கப்படுகிறதா என்பதை இயக்கவும். 
+        <translation type="vanished">உங்கள் வீட்டு வகுப்பறையில் பாடம் கற்பிக்கப்படுகிறதா என்பதை இயக்கவும். 
 விளையாட்டு மைதானம், ஆய்வகம் அல்லது வேறு வகுப்பறை போன்ற வேறொரு இடத்தில் இது நடந்தால், அதை விட்டுவிடவும்.</translation>
     </message>
 </context>
 <context>
     <name>Subjects</name>
     <message>
-        <location filename="../../src/qml/ClassWidgets/pages/editor/Subjects.qml" line="23"/>
-        <location filename="../../src/qml/ClassWidgets/pages/editor/Subjects.qml" line="30"/>
+        <location filename="../../src/qml/ClassWidgets/pages/editor/Subjects.qml" line="38"/>
+        <location filename="../../src/qml/ClassWidgets/pages/editor/Subjects.qml" line="45"/>
         <source>Restore Defaults</source>
         <translation>இயல்புநிலைகளை மீட்டமை</translation>
     </message>
     <message>
-        <location filename="../../src/qml/ClassWidgets/pages/editor/Subjects.qml" line="33"/>
+        <location filename="../../src/qml/ClassWidgets/pages/editor/Subjects.qml" line="48"/>
         <source>Are you sure you want to restore the default subjects?</source>
         <translation>இயல்புநிலை பாடங்களை நிச்சயமாக மீட்டெடுக்க விரும்புகிறீர்களா?</translation>
     </message>
     <message>
-        <location filename="../../src/qml/ClassWidgets/pages/editor/Subjects.qml" line="49"/>
+        <location filename="../../src/qml/ClassWidgets/pages/editor/Subjects.qml" line="64"/>
         <source>Add Subject</source>
         <translation>பொருள் சேர்</translation>
     </message>
     <message>
-        <location filename="../../src/qml/ClassWidgets/pages/editor/Subjects.qml" line="52"/>
+        <location filename="../../src/qml/ClassWidgets/pages/editor/Subjects.qml" line="67"/>
         <source>Subject</source>
         <translation>பொருள்</translation>
+    </message>
+    <message>
+        <location filename="../../src/qml/ClassWidgets/pages/editor/Subjects.qml" line="101"/>
+        <source>Edit Subject</source>
+        <translation type="unfinished">தலைப்பைத் திருத்து</translation>
+    </message>
+    <message>
+        <location filename="../../src/qml/ClassWidgets/pages/editor/Subjects.qml" line="114"/>
+        <source>ID</source>
+        <translation type="unfinished">ஐடி</translation>
+    </message>
+    <message>
+        <location filename="../../src/qml/ClassWidgets/pages/editor/Subjects.qml" line="119"/>
+        <source>Simplified Name</source>
+        <translation type="unfinished">எளிமைப்படுத்தப்பட்ட பெயர்</translation>
+    </message>
+    <message>
+        <location filename="../../src/qml/ClassWidgets/pages/editor/Subjects.qml" line="125"/>
+        <source>Subject Name</source>
+        <translation type="unfinished">பொருள் பெயர்</translation>
+    </message>
+    <message>
+        <location filename="../../src/qml/ClassWidgets/pages/editor/Subjects.qml" line="126"/>
+        <source>e.g. Science</source>
+        <translation type="unfinished">எ.கா. அறிவியல்</translation>
+    </message>
+    <message>
+        <location filename="../../src/qml/ClassWidgets/pages/editor/Subjects.qml" line="130"/>
+        <source>Teacher</source>
+        <translation type="unfinished">ஆசிரியர்</translation>
+    </message>
+    <message>
+        <location filename="../../src/qml/ClassWidgets/pages/editor/Subjects.qml" line="135"/>
+        <source>Location</source>
+        <translation type="unfinished">இடம்</translation>
+    </message>
+    <message>
+        <location filename="../../src/qml/ClassWidgets/pages/editor/Subjects.qml" line="136"/>
+        <source>e.g. Room 7813</source>
+        <translation type="unfinished">எ.கா. அறை 7813</translation>
+    </message>
+    <message>
+        <location filename="../../src/qml/ClassWidgets/pages/editor/Subjects.qml" line="140"/>
+        <source>Color</source>
+        <translation type="unfinished">நிறம்</translation>
+    </message>
+    <message>
+        <location filename="../../src/qml/ClassWidgets/pages/editor/Subjects.qml" line="150"/>
+        <source>Held in homeroom</source>
+        <translation type="unfinished">வீட்டு அறையில் நடைபெற்றது</translation>
+    </message>
+    <message>
+        <location filename="../../src/qml/ClassWidgets/pages/editor/Subjects.qml" line="162"/>
+        <source>Icon</source>
+        <translation type="unfinished">படவுரு</translation>
+    </message>
+    <message>
+        <location filename="../../src/qml/ClassWidgets/pages/editor/Subjects.qml" line="182"/>
+        <source>Enable if the subject is taught in your homeroom classroom.  
+If it takes place in another location, such as a sport field, lab, or another classroom, leave it off.</source>
+        <translation type="unfinished">உங்கள் வீட்டு வகுப்பறையில் பாடம் கற்பிக்கப்படுகிறதா என்பதை இயக்கவும். 
+விளையாட்டு மைதானம், ஆய்வகம் அல்லது வேறு வகுப்பறை போன்ற வேறொரு இடத்தில் இது நடந்தால், அதை விட்டுவிடவும்.</translation>
     </message>
     <message>
         <location filename="../../src/core/utils/subjects.py" line="46"/>
