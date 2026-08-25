@@ -270,6 +270,26 @@ jobs:
             exit 1
           }
 
+      - name: 🔧 Install Inno Setup
+        if: runner.os == 'Windows'
+        shell: pwsh
+        run: |
+          choco install innosetup -y
+
+      - name: 🏗️ Build Windows Installer
+        if: runner.os == 'Windows'
+        shell: cmd
+        run: |
+          set CW_VERSION=${{ steps.version.outputs.version }}
+          iscc scripts\cw2-cicd.iss
+
+      - name: ☁️ Upload installer artifact
+        if: runner.os == 'Windows'
+        uses: actions/upload-artifact@v4
+        with:
+          name: ClassWidgets-2-Windows-Installer
+          path: output/ClassWidgets-*-Win-Installer.exe
+
       - name: 📦 Zip build (macOS)
         if: runner.os == 'macOS'
         shell: bash
