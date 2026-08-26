@@ -4342,8 +4342,8 @@ Go to &quot;Settings&quot; → &quot;Update&quot; for more details.</source>
     </message>
     <message>
         <location filename="../../src/qml/ClassWidgets/Components/editor/WeekSelector.qml" line="39"/>
-        <source>Week %1</source>
-        <translation type="unfinished"></translation>
+        <source>%1</source>
+        <translation type="unfinished">%1</translation>
     </message>
     <message>
         <location filename="../../src/qml/ClassWidgets/Components/editor/WeekSelector.qml" line="66"/>

@@ -4482,9 +4482,13 @@ Go to &quot;Settings&quot; → &quot;Update&quot; for more details.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/qml/ClassWidgets/Components/editor/WeekSelector.qml" line="39"/>
         <source>Week %1</source>
-        <translation type="unfinished">வாரம்% 1</translation>
+        <translation type="obsolete">வாரம்% 1</translation>
+    </message>
+    <message>
+        <location filename="../../src/qml/ClassWidgets/Components/editor/WeekSelector.qml" line="39"/>
+        <source>%1</source>
+        <translation type="unfinished">% 1</translation>
     </message>
     <message>
         <location filename="../../src/qml/ClassWidgets/Components/editor/WeekSelector.qml" line="66"/>
