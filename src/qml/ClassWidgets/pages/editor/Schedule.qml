@@ -8,7 +8,6 @@ import QtQuick.Effects  // shadow
 
 Item {
     id: root
-    // SaveFlyout { id: saveFlyout }
     function quickAddSubject(subjectid) {
         let row = scheduleTable.selectedCell.row
         let column = scheduleTable.selectedCell.column
@@ -58,7 +57,7 @@ Item {
         scheduleTable.selectedCell = { row: nextRow, column: nextColumn }
     }
 
-    property bool editable: !AppCentral.scheduleManager.isReadonly() && segmented.currentIndex === 1  // 是否可编辑
+    property bool editable: !AppCentral.scheduleManager.isReadonly()  // 是否可编辑
 
     ColumnLayout {
         id: mainLayout
@@ -67,19 +66,26 @@ Item {
         // anchors.topMargin: 24 + saveFlyout.height
         spacing: 10
 
-        Segmented {
-            id: segmented
-            Layout.alignment: Qt.AlignCenter
-
-            SegmentedItem {
-                icon.name: "ic_fluent_content_view_20_regular"
-                text: qsTr("Preview")
-            }
-
-            SegmentedItem {
-                enabled: !AppCentral.scheduleManager.isReadonly()
-                icon.name: "ic_fluent_calendar_edit_20_regular"
-                text: qsTr("Edit")
+        // Segmented {
+        //     id: segmented
+        //     Layout.alignment: Qt.AlignCenter
+        //
+        //     SegmentedItem {
+        //         icon.name: "ic_fluent_content_view_20_regular"
+        //         text: qsTr("Preview")
+        //     }
+        //
+        //     SegmentedItem {
+        //         enabled: !AppCentral.scheduleManager.isReadonly()
+        //         icon.name: "ic_fluent_calendar_edit_20_regular"
+        //         text: qsTr("Edit")
+        //     }
+        // }
+        WeekSelector {
+            enabled: !AppCentral.scheduleManager.isReadonly()
+            id: weekSelector
+            onCurrentWeekChanged: {
+                scheduleTable.currentWeek = currentWeek
             }
         }
 
@@ -111,96 +117,38 @@ Item {
             }
         }
 
-        RowLayout {
-            id: rowLayout
+        ScheduleTableView {
+            id: scheduleTable
             Layout.fillWidth: true
             Layout.fillHeight: true
+            currentWeek: editable ? weekSelector.currentWeek : scheduleViewer.currentWeek || 1
 
-            ScheduleTableView {
-                id: scheduleTable
-                Layout.fillWidth: true
-                Layout.fillHeight: true
-                currentWeek: editable ? weekSelector.currentWeek : scheduleViewer.currentWeek || 1
-
-                onCellClicked: (row, column, entry, delegate) => {
-                    if (!editable) {
-                        return
-                    }
-                    entryFlyout.entry = entry
-                    entryFlyout.selectedCell = selectedCell
-                    entryFlyout.weekSelector = weekSelector
-                    entryFlyout.parent = delegate   // 定位到点击的 cell
-                    entryFlyout.open()
+            onCellClicked: (row, column, entry, delegate) => {
+                if (!editable) {
+                    return
                 }
-            }
-
-            ScheduleFlyout {
-                id: entryFlyout
-            }
-
-            ColumnLayout {
-                visible: editable
-                Layout.maximumWidth: Math.max(root.width * 0.32, 275)
-                spacing: 12
-                SettingExpander {
-                    Layout.fillWidth: true
-                    // Layout.fillHeight: true
-                    expanded: true
-                    title: qsTr("Week Cycle")
-                    icon.name: "ic_fluent_calendar_week_numbers_20_regular"
-
-                    WeekSelector {
-                        enabled: !AppCentral.scheduleManager.isReadonly()
-                        Layout.margins: 18
-                        id: weekSelector
-                        onCurrentWeekChanged: {
-                            scheduleTable.currentWeek = currentWeek
-                        }
-                    }
-                }
-
-                // 快速添加学科
-                Frame {
-                    Layout.fillWidth: true
-                    Layout.fillHeight: true
-                    padding: 16
-
-                    ColumnLayout {
-                        anchors.fill: parent
-                        spacing: 8
-                        Text {
-                            typography: Typography.BodyStrong
-                            text: qsTr("Quick Add Subject")
-                        }
-
-                        Flickable {
-                            Layout.fillWidth: true
-                            Layout.fillHeight: true
-                            contentHeight: subjectsFlow.height
-                            clip: true
-
-                            ScrollBar.vertical: ScrollBar {}
-
-                            Flow {
-                                id: subjectsFlow
-                                width: parent.width
-                                Repeater {
-                                    model: AppCentral.scheduleRuntime.subjects
-                                    Button {
-                                        enabled: !AppCentral.scheduleManager.isReadonly()
-                                        flat: true
-                                        icon.name: modelData.icon
-                                        text: modelData.name
-                                        onClicked: {
-                                            quickAddSubject(modelData.id)
-                                        }
-                                    }
-                                }
-                            }
-                        }
-                    }
-                }
+                entryFlyout.entry = entry
+                entryFlyout.selectedCell = selectedCell
+                entryFlyout.weekSelector = weekSelector
+                entryFlyout.parent = delegate   // 定位到点击的 cell
+                entryFlyout.open()
             }
         }
+
+
+        ScheduleFlyout {
+            id: entryFlyout
+        }
+    } 
+
+
+    // 快速添加学科：悬浮于页面右下角（不进布局，位置由组件自管理），Header 可 XY 拖动，松手 Y 吸附回底部
+    AddSubjectExpander {
+        id: addSubject
+        width: 350
+        snapDuration: 380
+        maxDragUp: 420
+        onSubjectClicked: (subjectId) => quickAddSubject(subjectId)
+        sourceItem: mainLayout
     }
 }

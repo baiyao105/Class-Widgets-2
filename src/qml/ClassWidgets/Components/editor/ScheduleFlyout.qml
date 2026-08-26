@@ -19,7 +19,7 @@ Flyout {
         const weeks =
             weekSelector.selectedType === "all" ? "all"
             : weekSelector.selectedType === "round" ? weekSelector.currentWeek
-            : [weekSelector.currentWeek];
+            : weekSelector.currentWeek; // "custom" 时 currentWeek 已是 [n]
         const dayOfWeek = [selectedCell.column + 1];
         return { weeks, dayOfWeek };
     }

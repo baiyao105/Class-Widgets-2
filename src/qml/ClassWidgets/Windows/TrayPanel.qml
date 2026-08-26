@@ -7,7 +7,8 @@ import ClassWidgets.Components
 
 Window {
     id: panel
-    title: Configs.data.app.version
+    title: qsTr("Quick Access Panel")
+    // title: Configs.data.app.version
     width: 375
     height: 475
     minimumWidth: 375

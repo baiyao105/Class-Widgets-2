@@ -369,6 +369,9 @@ class ScheduleEditor(QObject):
         applicable = None
         best_priority = -1
 
+        # 当 week 是列表时，拆成单个元素逐个匹配
+        week_list = week if isinstance(week, list) else [week]
+
         for o in self.schedule.overrides:
             if o.entryId != entry_id:
                 continue
@@ -378,15 +381,21 @@ class ScheduleEditor(QObject):
                 continue
 
             # 判断优先级
-            if isinstance(o.weeks, list) and week in o.weeks:
-                priority = 3  # 特定周最高
-            elif isinstance(o.weeks, int) and week >= o.weeks and (
-                    week - o.weeks) % self.schedule.meta.maxWeekCycle == 0:
-                priority = 2  # 单/双周
+            if isinstance(o.weeks, list):
+                # week 和 o.weeks 都是列表，检查是否有交集
+                if any(w in o.weeks for w in week_list):
+                    priority = 3
+                else:
+                    continue
+            elif isinstance(o.weeks, int):
+                if any(w >= o.weeks and (w - o.weeks) % self.schedule.meta.maxWeekCycle == 0 for w in week_list):
+                    priority = 2
+                else:
+                    continue
             elif o.weeks == "all" or o.weeks is None:
-                priority = 1  # all 最低
+                priority = 1
             else:
-                continue  # 不匹配
+                continue
 
             if priority > best_priority:
                 applicable = o

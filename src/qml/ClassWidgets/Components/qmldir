@@ -30,6 +30,7 @@ SubjectClip 1.0 editor/SubjectClip.qml
 
 SaveFlyout 1.0 editor/SaveFlyout.qml
 ScheduleClip 1.0 editor/ScheduleClip.qml
+AddSubjectExpander 1.0 editor/AddSubjectExpander.qml
 
 ## dialogs
 DayEditor 1.0 editor/dialogs/DayEditor.qml

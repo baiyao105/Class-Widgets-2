@@ -31,9 +31,12 @@ ColumnLayout {
                 startTimePicker.setTime(currentEntry.startTime || "08:00")
                 endTimePicker.setTime(currentEntry.endTime || "09:00")
 
-                if (currentEntry.type === "class") typeSegmented.currentIndex = 0
-                else if (currentEntry.type === "break") typeSegmented.currentIndex = 1
-                else typeSegmented.currentIndex = 2
+                // if (currentEntry.type === "class") typeSegmented.currentIndex = 0
+                // else if (currentEntry.type === "break") typeSegmented.currentIndex = 1
+                // else typeSegmented.currentIndex = 2
+                if (currentEntry.type === "class") btnClass.checked = true
+                else if (currentEntry.type === "break") btnBreak.checked = true
+                else btnActivity.checked = true
             });
         });
     }
@@ -120,24 +123,44 @@ ColumnLayout {
     }
 
     // 类型选择
-    Segmented {
+    ButtonGroup {
         id: typeSegmented
-        Layout.fillWidth: true
+        readonly property int currentIndex: checkedButton ? checkedButton.index : -1
         onCurrentIndexChanged: root.saveChanges()
+    }
 
-        SegmentedItem { text: qsTr("Class"); icon.name: "ic_fluent_calendar_20_regular" }
-        SegmentedItem { text: qsTr("Break"); icon.name: "ic_fluent_clock_sparkle_20_regular" }
-        SegmentedItem { text: qsTr("Activity"); icon.name: "ic_fluent_shifts_activity_20_regular" }
+    ColumnLayout {
+        // id: typeSegmented
+        Layout.fillWidth: true
+
+        RadioButton {
+            id: btnClass
+            text: qsTr("Class"); icon.name: "ic_fluent_calendar_20_regular"
+            ButtonGroup.group: typeSegmented
+            property int index: 0
+        }
+        RadioButton {
+            id: btnBreak
+            text: qsTr("Break"); icon.name: "ic_fluent_clock_sparkle_20_regular"
+            ButtonGroup.group: typeSegmented
+            property int index: 1
+        }
+        RadioButton {
+            id: btnActivity
+            text: qsTr("Activity"); icon.name: "ic_fluent_shifts_activity_20_regular"
+            ButtonGroup.group: typeSegmented
+            property int index: 2
+        }
     }
 
     RowLayout {
-        Layout.fillWidth: true
         Text { text: qsTr("ID"); width: 80 }
         TextField {
             id: entryId
             Layout.fillWidth: true
             readOnly: true
         }
+        visible: false
     }
 
     RowLayout {

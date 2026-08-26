@@ -68,13 +68,13 @@ Clip {
         anchors.top: parent.top
         anchors.horizontalCenter: parent.horizontalCenter
         width: parent.width / 6
-        height: 8
+        height: 12
 
         Rectangle {
             anchors.top: parent.top
-            anchors.margins: 3
+            anchors.margins: 4
             width: parent.width
-            height: 3
+            height: 4
             radius: height / 2
             color: Qt.alpha("white", 0.4)
         }
@@ -82,7 +82,7 @@ Clip {
         DragHandler {
             target: null
             yAxis.enabled: true
-            grabPermissions: PointerHandler.CanTakeOverFromAnything  // 优先级
+            grabPermissions: PointerHandler.CanTakeOverFromAnything
             onTranslationChanged: {
                 let deltaMins = Math.round(translation.y / pxPerMin / 5) * 5
                 let newStart = parseTime(entry.startTime) + deltaMins
@@ -101,15 +101,15 @@ Clip {
     // 下拖拽调整时间
     Item {
         width: parent.width / 6
-        height: 8
+        height: 12
         anchors.bottom: parent.bottom
         anchors.horizontalCenter: parent.horizontalCenter
 
         Rectangle {
             anchors.bottom: parent.bottom
-            anchors.margins: 3
+            anchors.margins: 4
             width: parent.width
-            height: 3
+            height: 4
             radius: height / 2
             color: Qt.alpha("white", 0.4)
         }
@@ -139,7 +139,7 @@ Clip {
         enabled: checked
         target: null
         yAxis.enabled: true
-        // grabPermissions: PointerHandler.TakeOverForbidden
+        grabPermissions: PointerHandler.TakeOverForbidden
 
         property int startTempStart
         property int startTempEnd

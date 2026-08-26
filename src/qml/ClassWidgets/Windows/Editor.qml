@@ -13,8 +13,8 @@ FluentWindow {
     height: Screen.height * 0.6
     minimumWidth: 600
     // visible: true
-    navigationView.navMinimumExpandWidth: Screen.width
-    navigationView.navigationBar.collapsed: true
+    // navigationView.navMinimumExpandWidth: Screen.width
+    // navigationView.navigationBar.collapsed: true
 
     property bool notHint: false
     property bool hintVisible: false
