@@ -8,7 +8,7 @@ import ClassWidgets.Components
 FluentWindow {
     id: settingsWindow
     icon: PathManager.assets("images/icons/cw2_editor.png")
-    title: qsTr("Schedule Editor")
+    title: qsTr("Schedule Editor") + " - " + AppCentral.scheduleEditor.filename + (AppCentral.scheduleEditor.dirty ? " *" : "")
     width: Screen.width * 0.6
     height: Screen.height * 0.6
     minimumWidth: 600
@@ -21,10 +21,44 @@ FluentWindow {
 
     onClosing: function(event) {
         event.accepted = false
-        WindowManager.closeEditor()
+        if (AppCentral.scheduleEditor.dirty) {
+            saveTipDialog.open()
+        } else {
+            WindowManager.closeEditor()
+        }
     }
 
+    Dialog {
+        id: saveTipDialog
+        title: qsTr("Save changes to the timetable")
+        modal: true
+        Text {
+            Layout.fillWidth: true
+            text: qsTr("Do you want to save the changes to \"%1\"?").arg(AppCentral.scheduleEditor.filename)
+        }
+        standardButtons: Dialog.Save | Dialog.Discard | Dialog.Cancel
 
+        onAccepted: {
+            let result = AppCentral.scheduleManager.save()
+            if (result) {
+                AppCentral.scheduleEditor.markSaved()
+                WindowManager.closeEditor()
+            } else {
+                floatLayer.createInfoBar({
+                    title: qsTr("Save Failed"),
+                    severity: Severity.Error,
+                    text: qsTr("Failed to save schedule, see log for details")
+                })
+            }
+        }
+        onDiscarded: {
+            AppCentral.scheduleManager.reload()
+            WindowManager.closeEditor()
+        }
+        onRejected: {
+            close()
+        }
+    }
 
     titleBarArea: RowLayout {
         anchors.fill: parent
@@ -35,6 +69,7 @@ FluentWindow {
             onActivated: {
                 let result = AppCentral.scheduleManager.save()
                 if (result) {
+                    AppCentral.scheduleEditor.markSaved()
                     floatLayer.createInfoBar({
                         title: qsTr("Saved"),
                         severity: Severity.Success,
@@ -65,6 +100,7 @@ FluentWindow {
             onClicked: {
                 let result = AppCentral.scheduleManager.save()
                 if (result) {
+                    AppCentral.scheduleEditor.markSaved()
                     floatLayer.createInfoBar({
                         title: qsTr("Saved"),
                         severity: Severity.Success,

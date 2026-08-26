@@ -9,6 +9,8 @@ import QtQuick.Effects  // shadow
 FluentPage {
     title: qsTr("Home")
 
+    property string _pendingScheduleName: ""
+
     Introduction {
         source:PathManager.images(
             "editor/new_editor_schedule-" + (Theme.isDark()? "dark" : "light") + ".png"
@@ -129,13 +131,50 @@ FluentPage {
                     filename: modelData.name
                     selected: AppCentral.scheduleManager.currentScheduleName === modelData.name
                     onClicked: {
-                        AppCentral.scheduleManager.load(modelData.name)
+                        if (AppCentral.scheduleEditor.dirty) {
+                            _pendingScheduleName = modelData.name
+                            switchScheduleDialog.open()
+                        } else {
+                            AppCentral.scheduleManager.load(modelData.name)
+                        }
                     }
                 }
             }
         }
     }
 
+
+    Dialog {
+        id: switchScheduleDialog
+        modal: true
+        title: qsTr("Save changes to the timetable")
+        Text {
+            Layout.fillWidth: true
+            text: qsTr("Do you want to save the changes to \"%1\"?").arg(AppCentral.scheduleEditor.filename)
+        }
+        standardButtons: Dialog.Save | Dialog.Discard | Dialog.Cancel
+
+        onAccepted: {
+            let result = AppCentral.scheduleManager.save()
+            if (result) {
+                AppCentral.scheduleEditor.markSaved()
+                AppCentral.scheduleManager.load(_pendingScheduleName)
+            } else {
+                floatLayer.createInfoBar({
+                    title: qsTr("Save Failed"),
+                    severity: Severity.Error,
+                    text: qsTr("Failed to save schedule, see log for details")
+                })
+            }
+        }
+        onDiscarded: {
+            AppCentral.scheduleEditor.markSaved()
+            AppCentral.scheduleManager.load(_pendingScheduleName)
+        }
+        onRejected: {
+            close()
+        }
+    }
 
     Dialog {
         id: createScheduleDialog

@@ -35,13 +35,15 @@ def _jsvalue_to_python(value):
 class ScheduleEditor(QObject):
     updated = Signal()
     subjectsChanged = Signal()
+    dirtyChanged = Signal()
 
     def __init__(self, manager: ScheduleManager):
         super().__init__()
         self.manager = manager
         self._filename = manager.schedule_path.stem
         self.schedule: ScheduleData = self.manager.schedule
-        self.updated.connect(self.refresh_manager)
+        self._dirty = False
+        self.updated.connect(self._on_updated)
         self.manager.scheduleSwitched.connect(self.refresh)
 
     def _validate_time_range(self, start_time: str, end_time: str) -> bool:
@@ -73,7 +75,13 @@ class ScheduleEditor(QObject):
         self.schedule = schedule
         self._filename = self.manager.schedule_path.stem
         self.updated.emit()
+        self._dirty = False
         self.subjectsChanged.emit()
+
+    def _on_updated(self):
+        self._dirty = True
+        self.dirtyChanged.emit()
+        self.refresh_manager()
 
     def refresh_manager(self):
         self.manager.modify(self.schedule)  # 提交给 manager
@@ -513,3 +521,15 @@ class ScheduleEditor(QObject):
     def filename(self) -> str:
         """获取课程表文件名"""
         return self._filename
+
+    @Slot()
+    def markSaved(self):
+        """标记为已保存"""
+        if self._dirty:
+            self._dirty = False
+            self.dirtyChanged.emit()
+
+    @Property(bool, notify=dirtyChanged)
+    def dirty(self) -> bool:
+        """检查是否有未保存的更改"""
+        return self._dirty
