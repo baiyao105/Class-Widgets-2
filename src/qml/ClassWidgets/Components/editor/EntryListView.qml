@@ -123,6 +123,7 @@ ColumnLayout {
                 index: model.index
                 entry: modelData
                 pxPerMin: root.pxPerMin
+                listViewRoot: root
             }
         }
     }

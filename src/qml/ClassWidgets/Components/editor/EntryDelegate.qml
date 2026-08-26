@@ -8,6 +8,7 @@ Clip {
     property int index
     property var entry
     property real pxPerMin
+    property Item listViewRoot: null
     checked: currentIndex === model.index
     clip: true
 
@@ -61,7 +62,15 @@ Clip {
         onTapped: contextMenu.open()
     }
 
-    onClicked: currentIndex = entryDelegate.index
+    onClicked: {
+        currentIndex = entryDelegate.index
+        detailFlyout.refresh(entry)
+    }
+
+    EntryDetailView {
+        id: detailFlyout
+        sourceItem: entryDelegate.listViewRoot
+    }
 
     // 上拖拽调整
     Item {
