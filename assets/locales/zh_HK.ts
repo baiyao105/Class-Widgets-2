@@ -611,64 +611,47 @@ Do you want to continue using them, or discard and restore the original schedule
         <translation type="unfinished">週日</translation>
     </message>
     <message>
-        <location filename="../../src/qml/ClassWidgets/Components/editor/DayListView.qml" line="84"/>
         <source>Set start date and max weeks</source>
-        <translation>設定開學日期同多週輪換上限</translation>
+        <translation type="vanished">設定開學日期同多週輪換上限</translation>
     </message>
     <message>
-        <location filename="../../src/qml/ClassWidgets/Components/editor/DayListView.qml" line="85"/>
         <source>Set the first day of school to calculate week numbers accurately</source>
-        <translation>設定開學日期，以便準確計算週次</translation>
+        <translation type="vanished">設定開學日期，以便準確計算週次</translation>
     </message>
     <message>
-        <location filename="../../src/qml/ClassWidgets/Components/editor/DayListView.qml" line="89"/>
-        <location filename="../../src/qml/ClassWidgets/Components/editor/DayListView.qml" line="107"/>
-        <source>Set</source>
-        <translation type="unfinished">設定</translation>
-    </message>
-    <message>
-        <location filename="../../src/qml/ClassWidgets/Components/editor/DayListView.qml" line="102"/>
-        <source>Set default duration</source>
-        <translation>設定默認時長</translation>
-    </message>
-    <message>
-        <location filename="../../src/qml/ClassWidgets/Components/editor/DayListView.qml" line="103"/>
-        <source>Set the default duration for new classes, breaks, or activities.</source>
-        <translation>為新創建嘅班級、休息時段或者活動設定默認持續時間。</translation>
-    </message>
-    <message>
-        <location filename="../../src/qml/ClassWidgets/Components/editor/DayListView.qml" line="117"/>
-        <source>Set date and max weeks</source>
-        <translation>設定開學日期同多週輪換上限</translation>
-    </message>
-    <message>
-        <location filename="../../src/qml/ClassWidgets/Components/editor/DayListView.qml" line="122"/>
-        <source>Start date:</source>
-        <translation>開始日期：</translation>
-    </message>
-    <message>
-        <location filename="../../src/qml/ClassWidgets/Components/editor/DayListView.qml" line="132"/>
-        <source>Max week cycle:</source>
-        <translation>多周循環上限：</translation>
         <source>Set</source>
         <translation type="obsolete">設定</translation>
     </message>
     <message>
+        <source>Set default duration</source>
+        <translation type="vanished">設定默認時長</translation>
+    </message>
+    <message>
+        <source>Set the default duration for new classes, breaks, or activities.</source>
+        <translation type="vanished">為新創建嘅班級、休息時段或者活動設定默認持續時間。</translation>
+    </message>
+    <message>
+        <source>Set date and max weeks</source>
+        <translation type="vanished">設定開學日期同多週輪換上限</translation>
+    </message>
+    <message>
+        <source>Start date:</source>
+        <translation type="vanished">開始日期：</translation>
+    </message>
+    <message>
         <source>Failed</source>
-        <translation type="unfinished">失敗</translation>
+        <translation type="obsolete">失敗</translation>
     </message>
     <message>
-        <location filename="../../src/qml/ClassWidgets/Components/editor/DayListView.qml" line="149"/>
         <source>Failed to set start date or max week cycle. Please report this issue to the community or the developer.</source>
-        <translation>設定開學日期或者最大週循環失敗，請將問題提交畀社區或者開發者。</translation>
+        <translation type="vanished">設定開學日期或者最大週循環失敗，請將問題提交畀社區或者開發者。</translation>
     </message>
     <message>
-        <location filename="../../src/qml/ClassWidgets/Components/editor/DayListView.qml" line="160"/>
         <source>Select Default Duration</source>
-        <translation>選擇默認持續時間</translation>
+        <translation type="vanished">選擇默認持續時間</translation>
     </message>
     <message>
-        <location filename="../../src/qml/ClassWidgets/Components/editor/DayListView.qml" line="166"/>
+        <source></source>
         <translation type="obsolete">失敗</translation>
     </message>
     <message>
@@ -1041,7 +1024,7 @@ Do you want to continue using them, or discard and restore the original schedule
     <message>
         <location filename="../../src/qml/ClassWidgets/Components/editor/EntryDetailView.qml" line="299"/>
         <source>OK</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">好</translation>
     </message>
     <message>
         <location filename="../../src/qml/ClassWidgets/Components/editor/EntryDetailView.qml" line="305"/>
@@ -2036,7 +2019,7 @@ Applying an incompatible theme may cause serious errors, crashes, or unexpected 
     <message>
         <location filename="../../src/qml/ClassWidgets/pages/settings/Personalization.qml" line="231"/>
         <source>Cancel</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">取消</translation>
     </message>
     <message>
         <location filename="../../src/qml/ClassWidgets/pages/settings/Personalization.qml" line="238"/>
@@ -2072,17 +2055,17 @@ Applying an incompatible theme may cause serious errors, crashes, or unexpected 
     <message>
         <location filename="../../src/qml/ClassWidgets/pages/plaza/Plugin.qml" line="125"/>
         <source>%1 B</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">%1 B</translation>
     </message>
     <message>
         <location filename="../../src/qml/ClassWidgets/pages/plaza/Plugin.qml" line="127"/>
         <source>%1 KB</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">%1 KB</translation>
     </message>
     <message>
         <location filename="../../src/qml/ClassWidgets/pages/plaza/Plugin.qml" line="128"/>
         <source>%1 MB</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">%1 MB</translation>
     </message>
     <message>
         <location filename="../../src/qml/ClassWidgets/pages/plaza/Plugin.qml" line="183"/>
@@ -2123,7 +2106,7 @@ Applying an incompatible theme may cause serious errors, crashes, or unexpected 
     <message>
         <location filename="../../src/qml/ClassWidgets/pages/plaza/Plugin.qml" line="483"/>
         <source>Unknown author</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">未知作者</translation>
     </message>
     <message>
         <location filename="../../src/qml/ClassWidgets/pages/plaza/Plugin.qml" line="516"/>
@@ -2133,17 +2116,17 @@ Applying an incompatible theme may cause serious errors, crashes, or unexpected 
     <message>
         <location filename="../../src/qml/ClassWidgets/pages/plaza/Plugin.qml" line="572"/>
         <source>Pause</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">暫停</translation>
     </message>
     <message>
         <location filename="../../src/qml/ClassWidgets/pages/plaza/Plugin.qml" line="574"/>
         <source>Resume</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">恢復</translation>
     </message>
     <message>
         <location filename="../../src/qml/ClassWidgets/pages/plaza/Plugin.qml" line="576"/>
         <source>Installing</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">安裝中</translation>
     </message>
     <message>
         <location filename="../../src/qml/ClassWidgets/pages/plaza/Plugin.qml" line="578"/>
@@ -2158,17 +2141,17 @@ Applying an incompatible theme may cause serious errors, crashes, or unexpected 
     <message>
         <location filename="../../src/qml/ClassWidgets/pages/plaza/Plugin.qml" line="607"/>
         <source>Paused</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">已暫停</translation>
     </message>
     <message>
         <location filename="../../src/qml/ClassWidgets/pages/plaza/Plugin.qml" line="609"/>
         <source>Downloaded: %1 / %2</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">已下載 % 1，共 % 2</translation>
     </message>
     <message>
         <location filename="../../src/qml/ClassWidgets/pages/plaza/Plugin.qml" line="612"/>
         <source>Downloading</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">正在下載中</translation>
     </message>
     <message>
         <location filename="../../src/qml/ClassWidgets/pages/plaza/Plugin.qml" line="630"/>
@@ -2183,7 +2166,7 @@ Applying an incompatible theme may cause serious errors, crashes, or unexpected 
     <message>
         <location filename="../../src/qml/ClassWidgets/pages/plaza/Plugin.qml" line="642"/>
         <source>Link copied</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">連結已經複製</translation>
     </message>
     <message>
         <location filename="../../src/qml/ClassWidgets/pages/plaza/Plugin.qml" line="653"/>
@@ -2277,7 +2260,7 @@ Applying an incompatible theme may cause serious errors, crashes, or unexpected 
         <location filename="../../src/qml/ClassWidgets/Components/plaza/PluginCard.qml" line="21"/>
         <location filename="../../src/qml/ClassWidgets/Components/plaza/PluginCard.qml" line="22"/>
         <source>Unknown author</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">未知作者</translation>
     </message>
     <message>
         <location filename="../../src/qml/ClassWidgets/Components/plaza/PluginCard.qml" line="209"/>
@@ -2296,7 +2279,7 @@ Applying an incompatible theme may cause serious errors, crashes, or unexpected 
         <location filename="../../src/qml/ClassWidgets/Components/plaza/PluginCardRounded.qml" line="23"/>
         <location filename="../../src/qml/ClassWidgets/Components/plaza/PluginCardRounded.qml" line="24"/>
         <source>Unknown author</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">未知作者</translation>
     </message>
 </context>
 <context>
@@ -2386,17 +2369,17 @@ Applying an incompatible theme may cause serious errors, crashes, or unexpected 
     <message>
         <location filename="../../src/qml/ClassWidgets/Windows/PluginPlaza.qml" line="20"/>
         <source>%1 B</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">%1 B</translation>
     </message>
     <message>
         <location filename="../../src/qml/ClassWidgets/Windows/PluginPlaza.qml" line="22"/>
         <source>%1 KB</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">%1 KB</translation>
     </message>
     <message>
         <location filename="../../src/qml/ClassWidgets/Windows/PluginPlaza.qml" line="23"/>
         <source>%1 MB</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">%1 MB</translation>
     </message>
     <message>
         <location filename="../../src/qml/ClassWidgets/Windows/PluginPlaza.qml" line="42"/>
@@ -2411,12 +2394,12 @@ Applying an incompatible theme may cause serious errors, crashes, or unexpected 
     <message>
         <location filename="../../src/qml/ClassWidgets/Windows/PluginPlaza.qml" line="189"/>
         <source>Downloaded: %1 / %2</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">已下載 % 1，共 % 2</translation>
     </message>
     <message>
         <location filename="../../src/qml/ClassWidgets/Windows/PluginPlaza.qml" line="192"/>
         <source>Downloading</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">正在下載中</translation>
     </message>
     <message>
         <location filename="../../src/qml/ClassWidgets/Windows/PluginPlaza.qml" line="206"/>
@@ -2476,7 +2459,7 @@ Applying an incompatible theme may cause serious errors, crashes, or unexpected 
     <message>
         <location filename="../../src/qml/ClassWidgets/Windows/PluginPlaza.qml" line="277"/>
         <source>Downloads</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">下載</translation>
     </message>
     <message>
         <location filename="../../src/core/plugin/errors.py" line="23"/>
@@ -2736,7 +2719,7 @@ Do you want to %3 this plugin?</source>
     <message>
         <location filename="../../src/qml/ClassWidgets/pages/settings/Plugins.qml" line="137"/>
         <source>Downloads</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">下載</translation>
     </message>
     <message>
         <location filename="../../src/qml/ClassWidgets/pages/settings/Plugins.qml" line="143"/>
@@ -2762,7 +2745,7 @@ It&apos;s incompatible and may cause unexpected issues.</source>
     <message>
         <location filename="../../src/qml/ClassWidgets/pages/settings/Plugins.qml" line="381"/>
         <source>Update</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">更新</translation>
     </message>
     <message>
         <source>The selected ZIP file does not contain a valid plugin.</source>
@@ -2869,7 +2852,7 @@ It&apos;s incompatible and may cause unexpected issues.</source>
         <location filename="../../src/qml/ClassWidgets/pages/tutorial/Plugins.qml" line="39"/>
         <location filename="../../src/qml/ClassWidgets/pages/tutorial/Plugins.qml" line="475"/>
         <source>Retry</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">重試</translation>
     </message>
     <message>
         <location filename="../../src/qml/ClassWidgets/pages/tutorial/Plugins.qml" line="170"/>
@@ -2952,7 +2935,7 @@ It&apos;s incompatible and may cause unexpected issues.</source>
     <message>
         <location filename="../../src/qml/ClassWidgets/pages/tutorial/Preferences.qml" line="29"/>
         <source>Run at Startup</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">開機自啟動</translation>
     </message>
     <message>
         <location filename="../../src/qml/ClassWidgets/pages/tutorial/Preferences.qml" line="30"/>
@@ -3025,7 +3008,7 @@ It&apos;s incompatible and may cause unexpected issues.</source>
     <message>
         <location filename="../../src/qml/ClassWidgets/pages/editor/Schedule.qml" line="109"/>
         <source>Week %1</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">第 % 1週</translation>
     </message>
     <message>
         <source>Week Cycle</source>
@@ -3333,31 +3316,31 @@ It&apos;s incompatible and may cause unexpected issues.</source>
         <location filename="../../src/qml/ClassWidgets/pages/plaza/Search.qml" line="286"/>
         <location filename="../../src/qml/ClassWidgets/pages/plaza/Search.qml" line="293"/>
         <source>Relevance</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">相關度</translation>
     </message>
     <message>
         <location filename="../../src/qml/ClassWidgets/pages/plaza/Search.qml" line="287"/>
         <location filename="../../src/qml/ClassWidgets/pages/plaza/Search.qml" line="295"/>
         <source>Name</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">名稱</translation>
     </message>
     <message>
         <location filename="../../src/qml/ClassWidgets/pages/plaza/Search.qml" line="288"/>
         <location filename="../../src/qml/ClassWidgets/pages/plaza/Search.qml" line="296"/>
         <source>Rating</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">分級</translation>
     </message>
     <message>
         <location filename="../../src/qml/ClassWidgets/pages/plaza/Search.qml" line="289"/>
         <location filename="../../src/qml/ClassWidgets/pages/plaza/Search.qml" line="297"/>
         <source>Downloads</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">下載</translation>
     </message>
     <message>
         <location filename="../../src/qml/ClassWidgets/pages/plaza/Search.qml" line="290"/>
         <location filename="../../src/qml/ClassWidgets/pages/plaza/Search.qml" line="294"/>
         <source>Latest</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">最新發佈</translation>
     </message>
     <message>
         <location filename="../../src/qml/ClassWidgets/pages/plaza/Search.qml" line="305"/>
@@ -3450,7 +3433,7 @@ It&apos;s incompatible and may cause unexpected issues.</source>
     <message>
         <location filename="../../src/qml/ClassWidgets/Windows/Settings.qml" line="81"/>
         <source>Update</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">更新</translation>
     </message>
 </context>
 <context>
@@ -3478,7 +3461,7 @@ It&apos;s incompatible and may cause unexpected issues.</source>
     <message>
         <location filename="../../src/core/central.py" line="175"/>
         <source>Class Swap</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">換課</translation>
     </message>
 </context>
 <context>
@@ -4062,12 +4045,12 @@ If it takes place in another location, such as a sport field, lab, or another cl
     <message>
         <location filename="../../src/qml/ClassWidgets/pages/editor/Timeline.qml" line="25"/>
         <source>Set start date and max weeks</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">設定開學日期同多週輪換上限</translation>
     </message>
     <message>
         <location filename="../../src/qml/ClassWidgets/pages/editor/Timeline.qml" line="26"/>
         <source>Set the first day of school to calculate week numbers accurately</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">設定開學日期，以便準確計算週次</translation>
     </message>
     <message>
         <location filename="../../src/qml/ClassWidgets/pages/editor/Timeline.qml" line="30"/>
@@ -4078,22 +4061,22 @@ If it takes place in another location, such as a sport field, lab, or another cl
     <message>
         <location filename="../../src/qml/ClassWidgets/pages/editor/Timeline.qml" line="44"/>
         <source>Set default duration</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">設定默認時長</translation>
     </message>
     <message>
         <location filename="../../src/qml/ClassWidgets/pages/editor/Timeline.qml" line="45"/>
         <source>Set the default duration for new classes, breaks, or activities.</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">為新創建嘅班級、休息時段或者活動設定默認持續時間。</translation>
     </message>
     <message>
         <location filename="../../src/qml/ClassWidgets/pages/editor/Timeline.qml" line="82"/>
         <source>Set date and max weeks</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">設定開學日期同多週輪換上限</translation>
     </message>
     <message>
         <location filename="../../src/qml/ClassWidgets/pages/editor/Timeline.qml" line="90"/>
         <source>Start date:</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">開始日期：</translation>
     </message>
     <message>
         <location filename="../../src/qml/ClassWidgets/pages/editor/Timeline.qml" line="100"/>
@@ -4108,12 +4091,12 @@ If it takes place in another location, such as a sport field, lab, or another cl
     <message>
         <location filename="../../src/qml/ClassWidgets/pages/editor/Timeline.qml" line="119"/>
         <source>Failed to set start date or max week cycle. Please report this issue to the community or the developer.</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">設定開學日期或者最大週循環失敗，請將問題提交畀社區或者開發者。</translation>
     </message>
     <message>
         <location filename="../../src/qml/ClassWidgets/pages/editor/Timeline.qml" line="130"/>
         <source>Select Default Duration</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">選擇默認持續時間</translation>
     </message>
     <message>
         <location filename="../../src/qml/ClassWidgets/pages/editor/Timeline.qml" line="139"/>
@@ -4274,7 +4257,7 @@ If it takes place in another location, such as a sport field, lab, or another cl
     <message>
         <location filename="../../src/qml/ClassWidgets/Windows/Tutorial.qml" line="12"/>
         <source>Getting Started</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">開始使用</translation>
     </message>
     <message>
         <location filename="../../src/qml/ClassWidgets/Windows/Tutorial.qml" line="95"/>
@@ -4302,7 +4285,7 @@ If it takes place in another location, such as a sport field, lab, or another cl
     <message>
         <location filename="../../src/qml/ClassWidgets/Components/tutorial/TutorialPage.qml" line="18"/>
         <source>Continue</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">繼續使用</translation>
     </message>
 </context>
 <context>
@@ -4318,7 +4301,7 @@ If it takes place in another location, such as a sport field, lab, or another cl
     <message>
         <location filename="../../src/qml/ClassWidgets/Components/tutorial/TutorialStepFooter.qml" line="13"/>
         <source>Continue</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">繼續使用</translation>
     </message>
 </context>
 <context>
@@ -4372,7 +4355,7 @@ If it takes place in another location, such as a sport field, lab, or another cl
         <location filename="../../src/qml/ClassWidgets/pages/settings/Update.qml" line="75"/>
         <location filename="../../src/qml/ClassWidgets/pages/settings/Update.qml" line="132"/>
         <source>Check for updates</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">檢查更新</translation>
     </message>
     <message>
         <location filename="../../src/qml/ClassWidgets/pages/settings/Update.qml" line="88"/>
@@ -4442,7 +4425,7 @@ If it takes place in another location, such as a sport field, lab, or another cl
     <message>
         <location filename="../../src/qml/ClassWidgets/pages/settings/Update.qml" line="174"/>
         <source>Cancel</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">取消</translation>
     </message>
     <message>
         <location filename="../../src/qml/ClassWidgets/pages/settings/Update.qml" line="186"/>
@@ -4664,7 +4647,7 @@ Go to &quot;Settings&quot; → &quot;Update&quot; for more details.</source>
     <message>
         <location filename="../../src/qml/ClassWidgets/pages/tutorial/Welcome.qml" line="258"/>
         <source>This project (Class Widgets 2) is licensed under the MIT license. For details, see:</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">本項目（Class Widgets 2）使用MIT許可證。詳情信息請看：</translation>
     </message>
 </context>
 <context>
@@ -4835,7 +4818,7 @@ then tap &quot;Edit Widget Screen&quot; in the menu to experience it.</source>
     <message>
         <location filename="../../src/qml/ClassWidgets/pages/settings/General/Widgets.qml" line="150"/>
         <source>Set how rounded widget corners appear</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">設定小組件圓角的顯示方式</translation>
     </message>
     <message>
         <location filename="../../src/qml/ClassWidgets/pages/settings/General/Widgets.qml" line="169"/>
