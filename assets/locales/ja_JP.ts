@@ -5056,29 +5056,24 @@ then tap &quot;Edit Widget Screen&quot; in the menu to experience it.</source>
 <context>
     <name>WidgetsContainer</name>
     <message>
-        <location filename="../../src/qml/ClassWidgets/Components/WidgetsContainer.qml" line="242"/>
+        <location filename="../../src/qml/ClassWidgets/Components/WidgetsContainer.qml" line="224"/>
         <source>Edit </source>
         <translation>編集 </translation>
     </message>
     <message>
-        <location filename="../../src/qml/ClassWidgets/Components/WidgetsContainer.qml" line="257"/>
+        <location filename="../../src/qml/ClassWidgets/Components/WidgetsContainer.qml" line="239"/>
         <source>Delete</source>
         <translation>削除</translation>
     </message>
     <message>
-        <location filename="../../src/qml/ClassWidgets/Components/WidgetsContainer.qml" line="266"/>
+        <location filename="../../src/qml/ClassWidgets/Components/WidgetsContainer.qml" line="248"/>
         <source>Edit Widgets Screen</source>
         <translation>ウィジェット編集画面</translation>
     </message>
     <message>
-        <location filename="../../src/qml/ClassWidgets/Components/WidgetsContainer.qml" line="348"/>
+        <location filename="../../src/qml/ClassWidgets/Components/WidgetsContainer.qml" line="322"/>
         <source>Add</source>
         <translation>追加</translation>
-    </message>
-    <message>
-        <location filename="../../src/qml/ClassWidgets/Components/WidgetsContainer.qml" line="363"/>
-        <source>Done</source>
-        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
