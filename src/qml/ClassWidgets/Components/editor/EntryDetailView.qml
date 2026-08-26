@@ -196,7 +196,7 @@ Flyout {
                 Flyout {
                     id: subjectsFlyout
                     position: Position.Left
-                    width: 300
+                    implicitWidth: 300
 
                     Flow {
                         Layout.fillWidth: true
