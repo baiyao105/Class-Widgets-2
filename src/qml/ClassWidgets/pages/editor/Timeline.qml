@@ -43,7 +43,7 @@ Item {
                 Layout.preferredHeight: 84
                 title: qsTr("Set default duration")
                 description: qsTr("Set the default duration for new classes, breaks, or activities.")
-                icon.name: "ic_fluent_calendar_arrow_counterclockwise_20_regular"
+                icon.name: "ic_fluent_clock_bill_20_regular"
 
                 Button {
                     text: qsTr("Set")

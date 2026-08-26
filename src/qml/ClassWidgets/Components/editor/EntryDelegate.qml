@@ -35,6 +35,7 @@ Clip {
 
     property int tempStart: parseTime(entry.startTime)
     property int tempEnd: parseTime(entry.endTime)
+    readonly property bool enabledDrag: height > 20
 
     x: 52
     width: parent.width - x
@@ -105,6 +106,9 @@ Clip {
         HoverHandler {
             cursorShape: Qt.SizeVerCursor
         }
+
+        visible: enabledDrag
+        enabled: enabledDrag
     }
 
     // 下拖拽调整时间
@@ -113,6 +117,9 @@ Clip {
         height: 12
         anchors.bottom: parent.bottom
         anchors.horizontalCenter: parent.horizontalCenter
+
+        visible: enabledDrag
+        enabled: enabledDrag
 
         Rectangle {
             anchors.bottom: parent.bottom
@@ -184,7 +191,8 @@ Clip {
         property bool expanded: entryDelegate.height >= 48
 
         anchors.top: expanded ? parent.top : undefined
-        anchors.verticalCenter: !expanded ? parent.verticalCenter : undefined
+        // anchors.verticalCenter: !expanded ? parent.verticalCenter : undefined
+        anchors.verticalCenter: parent.verticalCenter
         anchors.left: parent.left
         anchors.margins: 12
         spacing: 4
@@ -211,7 +219,7 @@ Clip {
                 color: checked ? Colors.proxy.textOnAccentColor : Colors.proxy.textColor
             }
             Text {
-                visible: !content.expanded
+                // visible: !content.expanded
                 text: `${minutesToTime(entryDelegate.tempStart)} - ${minutesToTime(entryDelegate.tempEnd)}` +
                     "    (" +(entryDelegate.tempEnd - entryDelegate.tempStart) + qsTr(" minutes") + ")"
                 typography: Typography.Caption
@@ -219,14 +227,14 @@ Clip {
                 opacity: 0.7
             }
         }
-        Text {
-            visible: content.expanded
-            text: `${minutesToTime(entryDelegate.tempStart)} - ${minutesToTime(entryDelegate.tempEnd)}` +
-                "    (" +(entryDelegate.tempEnd - entryDelegate.tempStart) + qsTr(" minutes") + ")"
-            typography: Typography.Caption
-            color: checked ? Colors.proxy.textOnAccentColor : Colors.proxy.textColor
-            opacity: 0.7
-        }
+        // Text {
+        //     visible: content.expanded
+        //     text: `${minutesToTime(entryDelegate.tempStart)} - ${minutesToTime(entryDelegate.tempEnd)}` +
+        //         "    (" +(entryDelegate.tempEnd - entryDelegate.tempStart) + qsTr(" minutes") + ")"
+        //     typography: Typography.Caption
+        //     color: checked ? Colors.proxy.textOnAccentColor : Colors.proxy.textColor
+        //     opacity: 0.7
+        // }
     }
 
     Timer {
