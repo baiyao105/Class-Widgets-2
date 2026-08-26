@@ -5304,27 +5304,27 @@ then tap &quot;Edit Widget Screen&quot; in the menu to experience it.</source>
 <context>
     <name>WidgetsContainer</name>
     <message>
-        <location filename="../../src/qml/ClassWidgets/Components/WidgetsContainer.qml" line="244"/>
+        <location filename="../../src/qml/ClassWidgets/Components/WidgetsContainer.qml" line="242"/>
         <source>Edit </source>
         <translation>编辑 </translation>
     </message>
     <message>
-        <location filename="../../src/qml/ClassWidgets/Components/WidgetsContainer.qml" line="259"/>
+        <location filename="../../src/qml/ClassWidgets/Components/WidgetsContainer.qml" line="257"/>
         <source>Delete</source>
         <translation>删除</translation>
     </message>
     <message>
-        <location filename="../../src/qml/ClassWidgets/Components/WidgetsContainer.qml" line="268"/>
+        <location filename="../../src/qml/ClassWidgets/Components/WidgetsContainer.qml" line="266"/>
         <source>Edit Widgets Screen</source>
         <translation>小组件编辑界面</translation>
     </message>
     <message>
-        <location filename="../../src/qml/ClassWidgets/Components/WidgetsContainer.qml" line="350"/>
+        <location filename="../../src/qml/ClassWidgets/Components/WidgetsContainer.qml" line="348"/>
         <source>Add</source>
         <translation>添加</translation>
     </message>
     <message>
-        <location filename="../../src/qml/ClassWidgets/Components/WidgetsContainer.qml" line="365"/>
+        <location filename="../../src/qml/ClassWidgets/Components/WidgetsContainer.qml" line="363"/>
         <source>Done</source>
         <translation>完成</translation>
     </message>
