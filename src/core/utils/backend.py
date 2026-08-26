@@ -10,16 +10,20 @@ from loguru import logger
 from src.core.directories import LOGS_PATH, ROOT_PATH
 from src.core.notification import NotificationProvider
 from src.core.utils.auto_startup import autostart_supported, enable_autostart, disable_autostart, is_autostart_enabled
+from src.core.utils.log_list_model import LogListModel, LogFilterProxyModel
 
 
 class UtilsBackend(QObject):
-    logsUpdated = Signal()
     extraSettingsChanged = Signal()
     licenseLoaded = Signal()
     notificationProvidersChanged = Signal()
     shortcutsChanged = Signal()
 
-    MAX_LOG_LINES = 200
+    MAX_LOG_LINES = LogListModel.MAX_LOG_LINES
+
+    # Loguru 的 sink 在独立线程执行, 不能直接修改 QAbstractListModel,
+    # 通过此信号把日志条目 marshal 回 GUI 线程再调用 append_entry。
+    _log_appended = Signal(dict)
 
     def __init__(self, app):
         super().__init__()
@@ -27,7 +31,10 @@ class UtilsBackend(QObject):
         self.notification_service = app.notification_service
         self._extra_settings: list = []
         self._license_text: str = ""
-        self._logs: list = []
+        self._log_model = LogListModel(self)
+        self._log_proxy = LogFilterProxyModel(self)
+        self._log_proxy.setSourceModel(self._log_model)
+        self._log_appended.connect(self._on_log_appended)
         self.app.plugin_api.ui.settingsPageRegistered.connect(lambda: self.extraSettingsChanged.emit())
         self.app.plugin_api.ui.shortcutsChanged.connect(self.shortcutsChanged.emit)
         self.app.configs.configChanged.connect(self.shortcutsChanged.emit)
@@ -74,29 +81,42 @@ class UtilsBackend(QObject):
         logger.add(self._capture_log, level="DEBUG", enqueue=True)
 
     def _capture_log(self, message):
-        """Loguru 回调函数"""
+        """Loguru 回调函数 (在 enqueue 线程执行)。
+
+        仅构造条目并通过信号发回 GUI 线程, 不直接修改 model。
+        """
         record = message.record
         log_entry = {
             "time": record["time"].strftime("%H:%M:%S"),
             "level": record["level"].name,
             "message": record["message"]
         }
-        self._logs.append(log_entry)
+        self._log_appended.emit(log_entry)
 
-        if len(self._logs) > self.MAX_LOG_LINES:
-            self._logs.pop(0)
+    @Slot(dict)
+    def _on_log_appended(self, entry: dict) -> None:
+        """GUI 线程接收新日志, 安全地更新 QAbstractListModel。"""
+        self._log_model.append_entry(entry)
 
-        self.logsUpdated.emit()
-
-    @Property("QVariantList", notify=logsUpdated)
+    @Property(QObject, constant=True)
     def logs(self):
-        return self._logs
+        """暴露 LogFilterProxyModel 给 QML。constant=True 因为对象本身不变;
+        过滤/增删由 proxy 自身的 rowsInserted/rowsRemoved 信号通知 ListView。
+        """
+        return self._log_proxy
+
+    @Slot(str)
+    def setLogFilterText(self, text: str) -> None:
+        """按子串过滤日志 (不区分大小写, 命中 time/level/message 任一)。"""
+        self._log_proxy.set_filter_text(text)
+
+    @Slot(str)
+    def setLogFilterLevel(self, level: str) -> None:
+        """按级别过滤日志 (DEBUG/INFO/WARNING/ERROR/SUCCESS, 空串=全部)。"""
+        self._log_proxy.set_filter_level(level)
 
     def get_log_snapshot(self, limit: int = MAX_LOG_LINES) -> list[dict]:
-        safe_limit = max(0, min(limit, self.MAX_LOG_LINES))
-        if safe_limit == 0:
-            return []
-        return [dict(item) for item in self._logs[-safe_limit:]]
+        return self._log_model.snapshot(limit)
 
     @Slot(result=list)
     def clearLogs(self):

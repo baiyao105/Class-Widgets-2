@@ -1,6 +1,7 @@
 import QtQuick
 import QtQuick.Controls
 import QtQuick.Layouts
+import QtQuick.Effects
 import RinUI
 import Debugger
 
@@ -27,82 +28,193 @@ ColumnLayout {
                 text: "Logs"
                 typography: Typography.BodyStrong
             }
-            ListView {
-                id: logsList
+            // 过滤栏：搜索框 + 级别下拉
+            RowLayout {
+                Layout.fillWidth: true
+                spacing: 8
+
+                TextField {
+                    id: logSearchField
+                    Layout.fillWidth: true
+                    placeholderText: qsTr("Search logs...")
+                    onTextEdited: UtilsBackend.setLogFilterText(text)
+                }
+
+                ComboBox {
+                    id: logLevelFilter
+                    Layout.preferredWidth: 150
+                    textRole: "text"
+                    valueRole: "value"
+                    model: ListModel {
+                        ListElement { text: "All Levels"; value: "" }
+                        ListElement { text: "DEBUG"; value: "DEBUG" }
+                        ListElement { text: "INFO"; value: "INFO" }
+                        ListElement { text: "WARNING"; value: "WARNING" }
+                        ListElement { text: "ERROR"; value: "ERROR" }
+                        ListElement { text: "SUCCESS"; value: "SUCCESS" }
+                    }
+                    onActivated: {
+                        UtilsBackend.setLogFilterLevel(model.get(currentIndex).value)
+                    }
+                }
+            }
+            // 日志列表（含“回到最新日志”悬浮按钮）
+            Item {
                 Layout.fillWidth: true
                 Layout.preferredHeight: 300
-                clip: true
-                model: UtilsBackend.logs
-                spacing: 0
 
-                property bool autoScroll: true
+                ListView {
+                    id: logsList
+                    anchors.fill: parent
+                    clip: true
+                    model: UtilsBackend.logs
+                    spacing: 0
 
-                // onContentYChanged: {
-                //     autoScroll = (contentY + height >= contentHeight - 2);
-                // }
 
-                onCountChanged: {
-                    if (autoScroll) {
-                        positionViewAtEnd();
+                    property bool atBottom: true
+                    property bool initialized: false
+
+                    onCountChanged: {
+                        if (!initialized && count > 0) {
+                            initialized = true
+                            Qt.callLater(function() {
+                                positionViewAtEnd()
+                            })
+                            return
+                        }
+
+                        if (atBottom)
+                            Qt.callLater(positionViewAtEnd)
+                    }
+
+                    Component.onCompleted: {
+                        positionViewAtEnd()
+                    }
+
+                    onMovementEnded: {
+                        atBottom = contentY + height >= contentHeight - 2
+                    }
+
+                    delegate: Frame {
+                        height: 40
+                        width: logsList.width
+                        HoverHandler { id: logHoverHandler }
+                        frameless: !logHoverHandler.hovered
+                        leftPadding: 12
+                        padding: 4
+
+                        RowLayout {
+                            width: parent.width
+                            spacing: 10
+                            Text {
+                                Layout.preferredWidth: 90
+                                text: model.time
+                                color: Colors.proxy.textSecondaryColor
+                                elide: Text.ElideRight
+                                wrapMode: Text.NoWrap
+                            }
+                            Text {
+                                Layout.preferredWidth: 80
+                                text: model.level
+                                elide: Text.ElideRight
+                                wrapMode: Text.NoWrap
+                                color: {
+                                    switch (model.level) {
+                                        case "DEBUG": return Colors.proxy.systemNeutralColor
+                                        case "INFO": return Colors.proxy.textColor
+                                        case "WARNING": return Colors.proxy.systemCautionColor
+                                        case "ERROR": return Colors.proxy.systemCriticalColor
+                                        case "SUCCESS": return Colors.proxy.systemSuccessColor
+                                        default: return Colors.proxy.textColor
+                                    }
+                                }
+                            }
+                            Text {
+                                Layout.fillWidth: true
+                                text: model.message
+                                elide: Text.ElideRight
+                                wrapMode: Text.NoWrap
+                                color: {
+                                    switch (model.level) {
+                                        case "DEBUG": return Colors.proxy.systemNeutralColor
+                                        case "INFO": return Colors.proxy.textColor
+                                        case "WARNING": return Colors.proxy.systemCautionColor
+                                        case "ERROR": return Colors.proxy.systemCriticalColor
+                                        case "SUCCESS": return Colors.proxy.systemSuccessColor
+                                        default: return Colors.proxy.textColor
+                                    }
+                                }
+                                ToolTip {
+                                    delay: 300
+                                    text: model.message
+                                    visible: logHoverHandler.hovered
+                                }
+                            }
+                            ToolButton {
+                                flat: true
+                                onClicked: {
+                                    if (UtilsBackend.copyToClipboard(JSON.stringify({
+                                        time: model.time,
+                                        level: model.level,
+                                        message: model.message
+                                    }))) {
+                                        floatLayer.createInfoBar({
+                                            severity: Severity.Success,
+                                            text: "Copied to clipboard!",
+                                        })
+                                    }
+                                }
+                                icon.name: "ic_fluent_copy_20_regular"
+                                size: 18
+                            }
+                        }
                     }
                 }
 
-                delegate: Frame {
-                    width: logsList.width
-                    HoverHandler { id: logHoverHandler }
-                    frameless: !logHoverHandler.hovered
-                    leftPadding: 12
-                    padding: 4
+                // 空状态占位：过滤无结果时显示
+                Text {
+                    anchors.centerIn: parent
+                    visible: logsList.count === 0
+                    text: qsTr("No logs match filter")
+                    color: Colors.proxy.textSecondaryColor
+                }
 
-                    RowLayout {
-                        width: parent.width
-                        spacing: 10
-                        Text {
-                            Layout.preferredWidth: 90
-                            text: modelData.time; color: Colors.proxy.textSecondaryColor
-                        }
-                        Text {
-                            Layout.preferredWidth: 80
-                            text: modelData.level
-                            color: {
-                                switch (modelData.level) {
-                                    case "DEBUG": return Colors.proxy.systemNeutralColor
-                                    case "INFO": return Colors.proxy.textColor
-                                    case "WARNING": return Colors.proxy.systemCautionColor
-                                    case "ERROR": return Colors.proxy.systemCriticalColor
-                                    case "SUCCESS": return Colors.proxy.systemSuccessColor
-                                    default: return Colors.proxy.textColor
-                                }
-                            }
-                        }
-                        Text {
-                            Layout.fillWidth: true
-                            text: modelData.message
-                            color: {
-                                switch (modelData.level) {
-                                    case "DEBUG": return Colors.proxy.systemNeutralColor
-                                    case "INFO": return Colors.proxy.textColor
-                                    case "WARNING": return Colors.proxy.systemCautionColor
-                                    case "ERROR": return Colors.proxy.systemCriticalColor
-                                    case "SUCCESS": return Colors.proxy.systemSuccessColor
-                                    default: return Colors.proxy.textColor
-                                }
-                            }
-                        }
-                        ToolButton {
-                            flat: true
-                            onClicked: {
-                                if (UtilsBackend.copyToClipboard(JSON.stringify(modelData))) {
-                                    floatLayer.createInfoBar({
-                                        severity: Severity.Success,
-                                        text: "Copied to clipboard!",
-                                    })
-                                }
-                            }
-                            icon.name: "ic_fluent_copy_20_regular"
-                            size: 18
-                        }
+                // 回到最新日志的悬浮按钮（仅在离开底部时显示）
+                Item {
+                    anchors.horizontalCenter: parent.horizontalCenter
+                    anchors.bottom: parent.bottom
+                    anchors.margins: 10
+                    width: 42
+                    height: 42
+                    opacity: logsList.atBottom ? 0 : 1
+                    visible: opacity > 0
+
+                    RectangularShadow {
+                        anchors.fill: parent
+                        offset.y: 3
+                        radius: width / 2
+                        blur: 10
+                        color: Qt.rgba(0, 0, 0, 0.15)
                     }
+
+                    Clip {
+                        anchors.fill: parent
+                        radius: height / 2
+                        AcrylicBrush {
+                            sourceItem: logsList
+                        }
+                        onClicked: {
+                            logsList.atBottom = true
+                            logsList.positionViewAtEnd()
+                        }
+                        Icon {
+                            name: "ic_fluent_arrow_down_20_regular"
+                            anchors.centerIn: parent
+                        }
+                        // icon.name: "ic_fluent_arrow_down_20_regular"
+                    }
+
+                    Behavior on opacity { NumberAnimation { duration: 150; easing.type: Easing.OutQuart } }
                 }
             }
 
