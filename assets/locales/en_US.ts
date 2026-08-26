@@ -387,6 +387,19 @@ Do you want to continue using them, or discard and restore the original schedule
     </message>
 </context>
 <context>
+    <name>Dashboard</name>
+    <message>
+        <location filename="../../src/qml/Debugger/contents/Dashboard.qml" line="39"/>
+        <source>Search logs...</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../src/qml/Debugger/contents/Dashboard.qml" line="178"/>
+        <source>No logs match filter</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>DayEditor</name>
     <message>
         <location filename="../../src/qml/ClassWidgets/Components/editor/dialogs/DayEditor.qml" line="10"/>
@@ -1731,7 +1744,7 @@ Do you want to continue using them, or discard and restore the original schedule
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/core/utils/backend.py" line="54"/>
+        <location filename="../../src/core/utils/backend.py" line="61"/>
         <source>Debug Notification</source>
         <translation type="unfinished"></translation>
     </message>
