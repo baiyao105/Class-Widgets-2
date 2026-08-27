@@ -2089,12 +2089,12 @@ Applying an incompatible theme may cause serious errors, crashes, or unexpected 
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/qml/ClassWidgets/pages/plaza/Plugin.qml" line="814"/>
+        <location filename="../../src/qml/ClassWidgets/pages/plaza/Plugin.qml" line="815"/>
         <source>Discover more</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/qml/ClassWidgets/pages/plaza/Plugin.qml" line="855"/>
+        <location filename="../../src/qml/ClassWidgets/pages/plaza/Plugin.qml" line="856"/>
         <source>No recommendations</source>
         <translation type="unfinished"></translation>
     </message>
@@ -2435,37 +2435,37 @@ Do you want to %3 this plugin?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/qml/ClassWidgets/pages/plaza/Plugins.qml" line="36"/>
+        <location filename="../../src/qml/ClassWidgets/pages/plaza/Plugins.qml" line="39"/>
         <source>Invalid server response.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/qml/ClassWidgets/pages/plaza/Plugins.qml" line="63"/>
+        <location filename="../../src/qml/ClassWidgets/pages/plaza/Plugins.qml" line="83"/>
         <source>The plaza rejected the request.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/qml/ClassWidgets/pages/plaza/Plugins.qml" line="77"/>
+        <location filename="../../src/qml/ClassWidgets/pages/plaza/Plugins.qml" line="98"/>
         <source>Unable to load plugins: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/qml/ClassWidgets/pages/plaza/Plugins.qml" line="141"/>
+        <location filename="../../src/qml/ClassWidgets/pages/plaza/Plugins.qml" line="199"/>
         <source>Could not load plugins</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/qml/ClassWidgets/pages/plaza/Plugins.qml" line="150"/>
+        <location filename="../../src/qml/ClassWidgets/pages/plaza/Plugins.qml" line="208"/>
         <source>No plugins found</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/qml/ClassWidgets/pages/plaza/Plugins.qml" line="151"/>
+        <location filename="../../src/qml/ClassWidgets/pages/plaza/Plugins.qml" line="209"/>
         <source>Try another category.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/qml/ClassWidgets/pages/plaza/Plugins.qml" line="151"/>
+        <location filename="../../src/qml/ClassWidgets/pages/plaza/Plugins.qml" line="209"/>
         <source>The plaza is empty right now.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -3097,82 +3097,82 @@ It&apos;s incompatible and may cause unexpected issues.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/qml/ClassWidgets/pages/plaza/Search.qml" line="57"/>
+        <location filename="../../src/qml/ClassWidgets/pages/plaza/Search.qml" line="60"/>
         <source>Invalid server response.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/qml/ClassWidgets/pages/plaza/Search.qml" line="91"/>
+        <location filename="../../src/qml/ClassWidgets/pages/plaza/Search.qml" line="109"/>
         <source>The plaza rejected the request.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/qml/ClassWidgets/pages/plaza/Search.qml" line="104"/>
+        <location filename="../../src/qml/ClassWidgets/pages/plaza/Search.qml" line="123"/>
         <source>Unable to search plugins: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/qml/ClassWidgets/pages/plaza/Search.qml" line="255"/>
+        <location filename="../../src/qml/ClassWidgets/pages/plaza/Search.qml" line="297"/>
         <source>Suggested plugins</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/qml/ClassWidgets/pages/plaza/Search.qml" line="286"/>
-        <location filename="../../src/qml/ClassWidgets/pages/plaza/Search.qml" line="293"/>
+        <location filename="../../src/qml/ClassWidgets/pages/plaza/Search.qml" line="328"/>
+        <location filename="../../src/qml/ClassWidgets/pages/plaza/Search.qml" line="335"/>
         <source>Relevance</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/qml/ClassWidgets/pages/plaza/Search.qml" line="287"/>
-        <location filename="../../src/qml/ClassWidgets/pages/plaza/Search.qml" line="295"/>
+        <location filename="../../src/qml/ClassWidgets/pages/plaza/Search.qml" line="329"/>
+        <location filename="../../src/qml/ClassWidgets/pages/plaza/Search.qml" line="337"/>
         <source>Name</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/qml/ClassWidgets/pages/plaza/Search.qml" line="288"/>
-        <location filename="../../src/qml/ClassWidgets/pages/plaza/Search.qml" line="296"/>
+        <location filename="../../src/qml/ClassWidgets/pages/plaza/Search.qml" line="330"/>
+        <location filename="../../src/qml/ClassWidgets/pages/plaza/Search.qml" line="338"/>
         <source>Rating</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/qml/ClassWidgets/pages/plaza/Search.qml" line="289"/>
-        <location filename="../../src/qml/ClassWidgets/pages/plaza/Search.qml" line="297"/>
+        <location filename="../../src/qml/ClassWidgets/pages/plaza/Search.qml" line="331"/>
+        <location filename="../../src/qml/ClassWidgets/pages/plaza/Search.qml" line="339"/>
         <source>Downloads</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/qml/ClassWidgets/pages/plaza/Search.qml" line="290"/>
-        <location filename="../../src/qml/ClassWidgets/pages/plaza/Search.qml" line="294"/>
+        <location filename="../../src/qml/ClassWidgets/pages/plaza/Search.qml" line="332"/>
+        <location filename="../../src/qml/ClassWidgets/pages/plaza/Search.qml" line="336"/>
         <source>Latest</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/qml/ClassWidgets/pages/plaza/Search.qml" line="305"/>
+        <location filename="../../src/qml/ClassWidgets/pages/plaza/Search.qml" line="347"/>
         <source>All</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/qml/ClassWidgets/pages/plaza/Search.qml" line="339"/>
+        <location filename="../../src/qml/ClassWidgets/pages/plaza/Search.qml" line="388"/>
         <source>Could not search plugins</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/qml/ClassWidgets/pages/plaza/Search.qml" line="352"/>
+        <location filename="../../src/qml/ClassWidgets/pages/plaza/Search.qml" line="401"/>
         <source>Search the plaza</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/qml/ClassWidgets/pages/plaza/Search.qml" line="353"/>
+        <location filename="../../src/qml/ClassWidgets/pages/plaza/Search.qml" line="402"/>
         <source>No suggested keywords are available.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/qml/ClassWidgets/pages/plaza/Search.qml" line="360"/>
+        <location filename="../../src/qml/ClassWidgets/pages/plaza/Search.qml" line="409"/>
         <source>No plugins found</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/qml/ClassWidgets/pages/plaza/Search.qml" line="361"/>
+        <location filename="../../src/qml/ClassWidgets/pages/plaza/Search.qml" line="410"/>
         <source>Try another search or category.</source>
         <translation type="unfinished"></translation>
     </message>
