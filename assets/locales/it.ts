@@ -3277,47 +3277,47 @@ It&apos;s incompatible and may cause unexpected issues.</source>
         <translation type="unfinished">Generali</translation>
     </message>
     <message>
-        <location filename="../../src/qml/ClassWidgets/Windows/Settings.qml" line="35"/>
+        <location filename="../../src/qml/ClassWidgets/Windows/Settings.qml" line="38"/>
         <source>Widgets</source>
         <translation type="unfinished">&amp;Widgets</translation>
     </message>
     <message>
-        <location filename="../../src/qml/ClassWidgets/Windows/Settings.qml" line="40"/>
+        <location filename="../../src/qml/ClassWidgets/Windows/Settings.qml" line="43"/>
         <source>Interactions</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/qml/ClassWidgets/Windows/Settings.qml" line="47"/>
+        <location filename="../../src/qml/ClassWidgets/Windows/Settings.qml" line="48"/>
         <source>Personalization</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/qml/ClassWidgets/Windows/Settings.qml" line="52"/>
+        <location filename="../../src/qml/ClassWidgets/Windows/Settings.qml" line="53"/>
         <source>Notification &amp; Time</source>
         <translation type="unfinished">Orario notifica:</translation>
     </message>
     <message>
-        <location filename="../../src/qml/ClassWidgets/Windows/Settings.qml" line="56"/>
+        <location filename="../../src/qml/ClassWidgets/Windows/Settings.qml" line="57"/>
         <source>Notification</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/qml/ClassWidgets/Windows/Settings.qml" line="61"/>
+        <location filename="../../src/qml/ClassWidgets/Windows/Settings.qml" line="62"/>
         <source>Time</source>
         <translation type="unfinished">Tempo</translation>
     </message>
     <message>
-        <location filename="../../src/qml/ClassWidgets/Windows/Settings.qml" line="68"/>
+        <location filename="../../src/qml/ClassWidgets/Windows/Settings.qml" line="69"/>
         <source>Plugins</source>
         <translation type="unfinished">Plugin</translation>
     </message>
     <message>
-        <location filename="../../src/qml/ClassWidgets/Windows/Settings.qml" line="75"/>
+        <location filename="../../src/qml/ClassWidgets/Windows/Settings.qml" line="76"/>
         <source>About</source>
         <translation type="unfinished">Informazioni</translation>
     </message>
     <message>
-        <location filename="../../src/qml/ClassWidgets/Windows/Settings.qml" line="81"/>
+        <location filename="../../src/qml/ClassWidgets/Windows/Settings.qml" line="82"/>
         <source>Update</source>
         <translation type="unfinished">Aggiorna</translation>
     </message>

@@ -3367,47 +3367,47 @@ It&apos;s incompatible and may cause unexpected issues.</source>
         <translation>将军</translation>
     </message>
     <message>
-        <location filename="../../src/qml/ClassWidgets/Windows/Settings.qml" line="35"/>
+        <location filename="../../src/qml/ClassWidgets/Windows/Settings.qml" line="38"/>
         <source>Widgets</source>
         <translation>大组件</translation>
     </message>
     <message>
-        <location filename="../../src/qml/ClassWidgets/Windows/Settings.qml" line="40"/>
+        <location filename="../../src/qml/ClassWidgets/Windows/Settings.qml" line="43"/>
         <source>Interactions</source>
         <translation>交互</translation>
     </message>
     <message>
-        <location filename="../../src/qml/ClassWidgets/Windows/Settings.qml" line="47"/>
+        <location filename="../../src/qml/ClassWidgets/Windows/Settings.qml" line="48"/>
         <source>Personalization</source>
         <translation>学你</translation>
     </message>
     <message>
-        <location filename="../../src/qml/ClassWidgets/Windows/Settings.qml" line="52"/>
+        <location filename="../../src/qml/ClassWidgets/Windows/Settings.qml" line="53"/>
         <source>Notification &amp; Time</source>
         <translation>no化和提姆</translation>
     </message>
     <message>
-        <location filename="../../src/qml/ClassWidgets/Windows/Settings.qml" line="56"/>
+        <location filename="../../src/qml/ClassWidgets/Windows/Settings.qml" line="57"/>
         <source>Notification</source>
         <translation>QQ消息</translation>
     </message>
     <message>
-        <location filename="../../src/qml/ClassWidgets/Windows/Settings.qml" line="61"/>
+        <location filename="../../src/qml/ClassWidgets/Windows/Settings.qml" line="62"/>
         <source>Time</source>
         <translation>Tim Cook</translation>
     </message>
     <message>
-        <location filename="../../src/qml/ClassWidgets/Windows/Settings.qml" line="68"/>
+        <location filename="../../src/qml/ClassWidgets/Windows/Settings.qml" line="69"/>
         <source>Plugins</source>
         <translation>屁股</translation>
     </message>
     <message>
-        <location filename="../../src/qml/ClassWidgets/Windows/Settings.qml" line="75"/>
+        <location filename="../../src/qml/ClassWidgets/Windows/Settings.qml" line="76"/>
         <source>About</source>
         <translation>这是什么</translation>
     </message>
     <message>
-        <location filename="../../src/qml/ClassWidgets/Windows/Settings.qml" line="81"/>
+        <location filename="../../src/qml/ClassWidgets/Windows/Settings.qml" line="82"/>
         <source>Update</source>
         <translation>上日期</translation>
     </message>

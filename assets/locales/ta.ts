@@ -3369,47 +3369,47 @@ It&apos;s incompatible and may cause unexpected issues.</source>
         <translation>பொது</translation>
     </message>
     <message>
-        <location filename="../../src/qml/ClassWidgets/Windows/Settings.qml" line="35"/>
+        <location filename="../../src/qml/ClassWidgets/Windows/Settings.qml" line="38"/>
         <source>Widgets</source>
         <translation>நிரல்பலகை</translation>
     </message>
     <message>
-        <location filename="../../src/qml/ClassWidgets/Windows/Settings.qml" line="40"/>
+        <location filename="../../src/qml/ClassWidgets/Windows/Settings.qml" line="43"/>
         <source>Interactions</source>
         <translation>தொடர்புகள்</translation>
     </message>
     <message>
-        <location filename="../../src/qml/ClassWidgets/Windows/Settings.qml" line="47"/>
+        <location filename="../../src/qml/ClassWidgets/Windows/Settings.qml" line="48"/>
         <source>Personalization</source>
         <translation>தனிப்பயனாக்கம்</translation>
     </message>
     <message>
-        <location filename="../../src/qml/ClassWidgets/Windows/Settings.qml" line="52"/>
+        <location filename="../../src/qml/ClassWidgets/Windows/Settings.qml" line="53"/>
         <source>Notification &amp; Time</source>
         <translation>அறிவிப்பு &amp; நேரம்</translation>
     </message>
     <message>
-        <location filename="../../src/qml/ClassWidgets/Windows/Settings.qml" line="56"/>
+        <location filename="../../src/qml/ClassWidgets/Windows/Settings.qml" line="57"/>
         <source>Notification</source>
         <translation>அறிவிப்பு</translation>
     </message>
     <message>
-        <location filename="../../src/qml/ClassWidgets/Windows/Settings.qml" line="61"/>
+        <location filename="../../src/qml/ClassWidgets/Windows/Settings.qml" line="62"/>
         <source>Time</source>
         <translation>நேரம்</translation>
     </message>
     <message>
-        <location filename="../../src/qml/ClassWidgets/Windows/Settings.qml" line="68"/>
+        <location filename="../../src/qml/ClassWidgets/Windows/Settings.qml" line="69"/>
         <source>Plugins</source>
         <translation>செருகுநிரல்கள்</translation>
     </message>
     <message>
-        <location filename="../../src/qml/ClassWidgets/Windows/Settings.qml" line="75"/>
+        <location filename="../../src/qml/ClassWidgets/Windows/Settings.qml" line="76"/>
         <source>About</source>
         <translation>பற்றி</translation>
     </message>
     <message>
-        <location filename="../../src/qml/ClassWidgets/Windows/Settings.qml" line="81"/>
+        <location filename="../../src/qml/ClassWidgets/Windows/Settings.qml" line="82"/>
         <source>Update</source>
         <translation>புதுப்பிப்பு</translation>
     </message>
