@@ -2066,14 +2066,12 @@ Please try again later.</source>
         <translation>使用系统设置</translation>
     </message>
     <message>
-        <location filename="../../src/qml/Debugger/contents/Overview.qml" line="106"/>
         <source>No Logs</source>
-        <translation>不保存日志</translation>
+        <translation type="vanished">不保存日志</translation>
     </message>
     <message>
-        <location filename="../../src/qml/Debugger/contents/Overview.qml" line="107"/>
         <source>Do not save logs to local storage.</source>
-        <translation>不将日志保存至本地存储。</translation>
+        <translation type="vanished">不将日志保存至本地存储。</translation>
     </message>
 </context>
 <context>

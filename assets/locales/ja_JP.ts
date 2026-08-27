@@ -1956,14 +1956,12 @@ Do you want to continue using them, or discard and restore the original schedule
         <translation>システム設定を使用する</translation>
     </message>
     <message>
-        <location filename="../../src/qml/Debugger/contents/Overview.qml" line="106"/>
         <source>No Logs</source>
-        <translation>ノーログ</translation>
+        <translation type="vanished">ノーログ</translation>
     </message>
     <message>
-        <location filename="../../src/qml/Debugger/contents/Overview.qml" line="107"/>
         <source>Do not save logs to local storage.</source>
-        <translation>ローカルストレージにログを保存しません。</translation>
+        <translation type="vanished">ローカルストレージにログを保存しません。</translation>
     </message>
 </context>
 <context>

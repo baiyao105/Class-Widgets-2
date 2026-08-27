@@ -1947,14 +1947,12 @@ Do you want to continue using them, or discard and restore the original schedule
         <translation type="unfinished">使用系統設定 (&amp;Y)</translation>
     </message>
     <message>
-        <location filename="../../src/qml/Debugger/contents/Overview.qml" line="106"/>
         <source>No Logs</source>
-        <translation type="unfinished">無日誌</translation>
+        <translation type="obsolete">無日誌</translation>
     </message>
     <message>
-        <location filename="../../src/qml/Debugger/contents/Overview.qml" line="107"/>
         <source>Do not save logs to local storage.</source>
-        <translation type="unfinished">不要將日誌保存至本機存儲</translation>
+        <translation type="obsolete">不要將日誌保存至本機存儲</translation>
     </message>
 </context>
 <context>

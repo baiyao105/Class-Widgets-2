@@ -1902,14 +1902,12 @@ Do you want to continue using them, or discard and restore the original schedule
         <translation>学系统精。</translation>
     </message>
     <message>
-        <location filename="../../src/qml/Debugger/contents/Overview.qml" line="106"/>
         <source>No Logs</source>
-        <translation>不要保存作案记录</translation>
+        <translation type="vanished">不要保存作案记录</translation>
     </message>
     <message>
-        <location filename="../../src/qml/Debugger/contents/Overview.qml" line="107"/>
         <source>Do not save logs to local storage.</source>
-        <translation>不要占我硬盘空间。</translation>
+        <translation type="vanished">不要占我硬盘空间。</translation>
     </message>
 </context>
 <context>

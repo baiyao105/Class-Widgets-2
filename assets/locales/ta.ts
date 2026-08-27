@@ -1904,14 +1904,12 @@ Do you want to continue using them, or discard and restore the original schedule
         <translation>கணினி அமைப்பைப் பயன்படுத்தவும்</translation>
     </message>
     <message>
-        <location filename="../../src/qml/Debugger/contents/Overview.qml" line="106"/>
         <source>No Logs</source>
-        <translation>பதிவுகள் இல்லை</translation>
+        <translation type="vanished">பதிவுகள் இல்லை</translation>
     </message>
     <message>
-        <location filename="../../src/qml/Debugger/contents/Overview.qml" line="107"/>
         <source>Do not save logs to local storage.</source>
-        <translation>உள்ளக சேமிப்பகத்தில் பதிவுகளைச் சேமிக்க வேண்டாம்.</translation>
+        <translation type="vanished">உள்ளக சேமிப்பகத்தில் பதிவுகளைச் சேமிக்க வேண்டாம்.</translation>
     </message>
 </context>
 <context>

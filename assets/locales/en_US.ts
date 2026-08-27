@@ -1786,16 +1786,6 @@ Do you want to continue using them, or discard and restore the original schedule
         <source>Use system setting</source>
         <translation type="unfinished"></translation>
     </message>
-    <message>
-        <location filename="../../src/qml/Debugger/contents/Overview.qml" line="106"/>
-        <source>No Logs</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../../src/qml/Debugger/contents/Overview.qml" line="107"/>
-        <source>Do not save logs to local storage.</source>
-        <translation type="unfinished"></translation>
-    </message>
 </context>
 <context>
     <name>Pagination</name>
