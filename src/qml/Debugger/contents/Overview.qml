@@ -100,15 +100,15 @@ ColumnLayout {
         }
     }
 
-    SettingCard {
-        Layout.fillWidth: true
-        icon.name: "ic_fluent_document_bullet_list_off_20_regular"
-        title: qsTr("No Logs")
-        description: qsTr("Do not save logs to local storage.")
-
-        // Control placed on the right side via the 'content' default property
-        Switch { // This Switch is assigned to the 'content' property
-            checked: true
-        }
-    }
+    // SettingCard {
+    //     Layout.fillWidth: true
+    //     icon.name: "ic_fluent_document_bullet_list_off_20_regular"
+    //     title: qsTr("No Logs")
+    //     description: qsTr("Do not save logs to local storage.")
+    //
+    //     // Control placed on the right side via the 'content' default property
+    //     Switch { // This Switch is assigned to the 'content' property
+    //         checked: true
+    //     }
+    // }
 }
