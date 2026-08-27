@@ -1,3 +1,4 @@
+import multiprocessing
 import sys
 import os
 
@@ -9,7 +10,9 @@ from src.core import AppCentral
 from PySide6.QtWidgets import QApplication
 
 if __name__ == "__main__":
+    multiprocessing.freeze_support()
     app = QApplication(sys.argv)
+    app.setQuitOnLastWindowClosed(False)
     instance = AppCentral()
     instance.run()
     app.exec()

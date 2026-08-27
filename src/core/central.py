@@ -200,7 +200,13 @@ class AppCentral(QObject):  # Class Widgets 的中枢
 
     def _initialize_app_icon(self) -> None:
         """设置图标"""
-        icon_path = ASSETS_PATH / "images" / "logo.ico"
+        if sys.platform == "darwin":
+            return
+            # icon_path = ASSETS_PATH / "images" / "logo.icns"
+        elif sys.platform == "win32":
+            icon_path = ASSETS_PATH / "images" / "logo.ico"
+        else:
+            icon_path = ASSETS_PATH / "images" / "logo.png"
         self.app_instance.setWindowIcon(QIcon(str(icon_path)))
 
     def _initialize_windows_appid(self) -> None:
@@ -322,10 +328,11 @@ class AppCentral(QObject):  # Class Widgets 的中枢
         cleanup_steps = (
             ("configuration save", self.configs.save),
             ("update timer stop", self.union_update_timer.stop),
-            ("auxiliary window release", self.window_manager.release_all),
             ("main window release", self.widgets_window.release),
+            ("auxiliary window release", self.window_manager.release_all),
             ("plugin cleanup", self.plugin_manager.cleanup),
             ("RinUI theme cleanup", self.widgets_window.theme_manager.clean_up),
+            ("tray icon cleanup", self._cleanup_tray_icon),
             ("single instance lock release", self.instance_guard.release),
         )
         for step_name, cleanup_step in cleanup_steps:
@@ -479,6 +486,11 @@ class AppCentral(QObject):  # Class Widgets 的中枢
 
         self.tray_icon = TrayIcon()
         self.tray_icon.togglePanel.connect(self._on_tray_toggle)
+
+    def _cleanup_tray_icon(self) -> None:
+        if self.tray_icon is not None:
+            self.tray_icon.cleanup()
+            self.tray_icon = None
 
     def _setup_logging(self) -> None:
         """根据 Configs.app.no_logs 决定是否写日志到文件"""
