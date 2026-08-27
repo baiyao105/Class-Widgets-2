@@ -4097,7 +4097,7 @@ If it takes place in another location, such as a sport field, lab, or another cl
     </message>
     <message>
         <location filename="../../src/qml/ClassWidgets/Components/TrayShortcuts.qml" line="38"/>
-        <location filename="../../src/qml/ClassWidgets/Components/TrayShortcuts.qml" line="236"/>
+        <location filename="../../src/qml/ClassWidgets/Components/TrayShortcuts.qml" line="251"/>
         <source>Add</source>
         <translation>咖啡不断加加加加到厌倦～</translation>
     </message>
@@ -4122,12 +4122,12 @@ If it takes place in another location, such as a sport field, lab, or another cl
         <translation>“+”让西大不丢更快速。</translation>
     </message>
     <message>
-        <location filename="../../src/qml/ClassWidgets/Components/TrayShortcuts.qml" line="150"/>
+        <location filename="../../src/qml/ClassWidgets/Components/TrayShortcuts.qml" line="165"/>
         <source>Remove</source>
         <translation>草飞</translation>
     </message>
     <message>
-        <location filename="../../src/qml/ClassWidgets/Components/TrayShortcuts.qml" line="185"/>
+        <location filename="../../src/qml/ClassWidgets/Components/TrayShortcuts.qml" line="200"/>
         <source>Add Shortcuts</source>
         <translation>加快</translation>
     </message>

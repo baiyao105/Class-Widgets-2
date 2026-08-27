@@ -4292,7 +4292,7 @@ If it takes place in another location, such as a sport field, lab, or another cl
     </message>
     <message>
         <location filename="../../src/qml/ClassWidgets/Components/TrayShortcuts.qml" line="38"/>
-        <location filename="../../src/qml/ClassWidgets/Components/TrayShortcuts.qml" line="236"/>
+        <location filename="../../src/qml/ClassWidgets/Components/TrayShortcuts.qml" line="251"/>
         <source>Add</source>
         <translation type="unfinished">追加</translation>
     </message>
@@ -4317,12 +4317,12 @@ If it takes place in another location, such as a sport field, lab, or another cl
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/qml/ClassWidgets/Components/TrayShortcuts.qml" line="150"/>
+        <location filename="../../src/qml/ClassWidgets/Components/TrayShortcuts.qml" line="165"/>
         <source>Remove</source>
         <translation type="unfinished">削除</translation>
     </message>
     <message>
-        <location filename="../../src/qml/ClassWidgets/Components/TrayShortcuts.qml" line="185"/>
+        <location filename="../../src/qml/ClassWidgets/Components/TrayShortcuts.qml" line="200"/>
         <source>Add Shortcuts</source>
         <translation type="unfinished"></translation>
     </message>
