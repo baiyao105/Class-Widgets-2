@@ -789,7 +789,8 @@ FluentPage {
                                 flat: true
                                 icon.name: "ic_fluent_star_edit_20_regular"
                                 text: qsTr("Write a review").arg(root.totalWithComment)
-                                onClicked: root.commentsDialogOpen = true
+                                // onClicked: root.commentsDialogOpen = true
+                                onClicked: root.openUrl(root.storePageUrl())
                                 highlighted: true
                             }
                         }

@@ -34,8 +34,11 @@ FluentPage {
     property var activeTagsRequest: null
     property var activeSuggestionsRequest: null
     property var activeRecommendationsRequest: null
+    property var flickable: null
+    readonly property int prefetchThreshold: 50
 
     readonly property bool hasQuery: query.trim().length > 0
+    readonly property bool hasMore: hasQuery && !loading && page < totalPages && errorMessage.length === 0
 
     onQueryChanged: {
         activeTag = ""
@@ -64,7 +67,18 @@ FluentPage {
         return xhr
     }
 
-    function search(nextPage) {
+    function findFlickable() {
+        var p = layout.parent
+        while (p) {
+            if (p.toString().indexOf("Flickable") !== -1) {
+                flickable = p
+                return
+            }
+            p = p.parent
+        }
+    }
+
+    function search(nextPage, append) {
         var serial = ++searchSerial
         if (activeSearchRequest)
             activeSearchRequest.abort()
@@ -74,7 +88,11 @@ FluentPage {
             totalPages = 1
             return
         }
-        page = nextPage || 1
+        var targetPage = nextPage || 1
+        var isAppend = append === true && targetPage > 1
+        if (!isAppend)
+            plugins = []
+        page = targetPage
         loading = true
         errorMessage = ""
         var params = "?q=" + encodeURIComponent(query.trim())
@@ -85,12 +103,13 @@ FluentPage {
             if (serial !== searchSerial)
                 return
             if (response.ok === false) {
-                plugins = []
+                if (!isAppend) plugins = []
                 total = 0
                 totalPages = 1
                 errorMessage = response.error || qsTr("The plaza rejected the request.")
             } else {
-                plugins = response.data instanceof Array ? response.data : []
+                var newItems = response.data instanceof Array ? response.data : []
+                plugins = isAppend ? plugins.concat(newItems) : newItems
                 total = response.meta && response.meta.total !== undefined ? response.meta.total : plugins.length
                 totalPages = response.meta && response.meta.total_pages ? response.meta.total_pages : 1
             }
@@ -98,12 +117,26 @@ FluentPage {
         }, function(error) {
             if (serial !== searchSerial)
                 return
-            plugins = []
+            if (!isAppend) plugins = []
             total = 0
             totalPages = 1
             errorMessage = qsTr("Unable to search plugins: ") + error
             loading = false
         })
+    }
+
+    function loadMore() {
+        if (!hasMore)
+            return
+        search(page + 1, true)
+    }
+
+    function checkLoadMore() {
+        if (!flickable || !hasMore)
+            return
+        var remaining = flickable.contentHeight - (flickable.contentY + flickable.height)
+        if (remaining <= prefetchThreshold)
+            loadMore()
     }
 
     function loadTags() {
@@ -164,15 +197,16 @@ FluentPage {
 
     function selectTag(tagId) {
         activeTag = tagId
-        search(1)
+        search(1, false)
     }
 
     function selectSort(value) {
         sort = value
-        search(1)
+        search(1, false)
     }
 
     Component.onCompleted: {
+        findFlickable()
         loadTags()
         if (hasQuery)
             search(1)
@@ -196,7 +230,15 @@ FluentPage {
             activeTagsRequest.abort()
     }
 
+    Connections {
+        target: root.flickable
+        enabled: root.flickable !== null
+        function onContentYChanged() { root.checkLoadMore() }
+        function onContentHeightChanged() { root.checkLoadMore() }
+    }
+
     ColumnLayout {
+        id: layout
         Layout.fillWidth: true
         spacing: 16
 
@@ -323,14 +365,21 @@ FluentPage {
 
         PlazaLoading {
             Layout.fillWidth: true
-            visible: root.hasQuery && root.loading
+            visible: root.hasQuery && root.loading && root.page === 1
         }
 
         PluginGrid {
             Layout.fillWidth: true
-            visible: root.hasQuery && !root.loading && root.errorMessage.length === 0 && root.plugins.length > 0
+            visible: root.hasQuery && root.errorMessage.length === 0 && root.plugins.length > 0
             plugins: root.plugins
             loading: false
+        }
+
+        PlazaLoading {
+            Layout.fillWidth: true
+            Layout.topMargin: 4
+            Layout.bottomMargin: 8
+            visible: root.hasQuery && root.loading && root.page > 1
         }
 
         ErrorState {
@@ -338,7 +387,7 @@ FluentPage {
             visible: root.hasQuery && !root.loading && root.errorMessage.length > 0
             title: qsTr("Could not search plugins")
             description: root.errorMessage
-            onRetryRequested: root.search(root.page)
+            onRetryRequested: root.search(root.page, root.page > 1)
         }
 
         EmptyState {
@@ -359,14 +408,6 @@ FluentPage {
             // iconName: "ic_fluent_search_info_24_regular"
             title: qsTr("No plugins found")
             description: qsTr("Try another search or category.")
-        }
-
-        Pagination {
-            Layout.alignment: Qt.AlignHCenter
-            visible: root.hasQuery && !root.loading && root.errorMessage.length === 0 && root.totalPages > 1
-            currentPage: root.page
-            totalPages: root.totalPages
-            onPageRequested: function(value) { root.search(value) }
         }
     }
 }
