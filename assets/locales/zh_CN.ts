@@ -2538,27 +2538,27 @@ Applying an incompatible theme may cause serious errors, crashes, or unexpected 
         <translation>已有 {count} 个插件更新已准备就绪。</translation>
     </message>
     <message>
-        <location filename="../../src/qml/ClassWidgets/Windows/PluginPlaza.qml" line="164"/>
+        <location filename="../../src/qml/ClassWidgets/Windows/PluginPlaza.qml" line="177"/>
         <source>Refresh</source>
         <translation>刷新</translation>
     </message>
     <message>
-        <location filename="../../src/qml/ClassWidgets/Windows/PluginPlaza.qml" line="206"/>
+        <location filename="../../src/qml/ClassWidgets/Windows/PluginPlaza.qml" line="219"/>
         <source>Error</source>
         <translation>错误</translation>
     </message>
     <message>
-        <location filename="../../src/qml/ClassWidgets/Windows/PluginPlaza.qml" line="248"/>
+        <location filename="../../src/qml/ClassWidgets/Windows/PluginPlaza.qml" line="261"/>
         <source>Download cancelled</source>
         <translation>下载已取消</translation>
     </message>
     <message>
-        <location filename="../../src/qml/ClassWidgets/Windows/PluginPlaza.qml" line="262"/>
+        <location filename="../../src/qml/ClassWidgets/Windows/PluginPlaza.qml" line="275"/>
         <source>Home</source>
         <translation>首页</translation>
     </message>
     <message>
-        <location filename="../../src/qml/ClassWidgets/Windows/PluginPlaza.qml" line="267"/>
+        <location filename="../../src/qml/ClassWidgets/Windows/PluginPlaza.qml" line="280"/>
         <source>Plugins</source>
         <translation>插件</translation>
     </message>
@@ -2628,52 +2628,52 @@ Applying an incompatible theme may cause serious errors, crashes, or unexpected 
         <translation>搜索插件 ...</translation>
     </message>
     <message>
-        <location filename="../../src/qml/ClassWidgets/Windows/PluginPlaza.qml" line="189"/>
+        <location filename="../../src/qml/ClassWidgets/Windows/PluginPlaza.qml" line="202"/>
         <source>Downloaded: %1 / %2</source>
         <translation>已下载 %1 ，共 %2</translation>
     </message>
     <message>
-        <location filename="../../src/qml/ClassWidgets/Windows/PluginPlaza.qml" line="192"/>
+        <location filename="../../src/qml/ClassWidgets/Windows/PluginPlaza.qml" line="205"/>
         <source>Downloading</source>
         <translation>正在下载</translation>
     </message>
     <message>
-        <location filename="../../src/qml/ClassWidgets/Windows/PluginPlaza.qml" line="227"/>
+        <location filename="../../src/qml/ClassWidgets/Windows/PluginPlaza.qml" line="240"/>
         <source>Plugin updated</source>
         <translation>插件已更新</translation>
     </message>
     <message>
-        <location filename="../../src/qml/ClassWidgets/Windows/PluginPlaza.qml" line="227"/>
+        <location filename="../../src/qml/ClassWidgets/Windows/PluginPlaza.qml" line="240"/>
         <source>Plugin installed</source>
         <translation>插件已安装</translation>
     </message>
     <message>
-        <location filename="../../src/qml/ClassWidgets/Windows/PluginPlaza.qml" line="230"/>
+        <location filename="../../src/qml/ClassWidgets/Windows/PluginPlaza.qml" line="243"/>
         <source>%1 v%2 is ready to use.</source>
         <translation>%1 v%2 已可使用。</translation>
     </message>
     <message>
-        <location filename="../../src/qml/ClassWidgets/Windows/PluginPlaza.qml" line="237"/>
+        <location filename="../../src/qml/ClassWidgets/Windows/PluginPlaza.qml" line="250"/>
         <source>Plugin update failed</source>
         <translation>插件更新失败</translation>
     </message>
     <message>
-        <location filename="../../src/qml/ClassWidgets/Windows/PluginPlaza.qml" line="237"/>
+        <location filename="../../src/qml/ClassWidgets/Windows/PluginPlaza.qml" line="250"/>
         <source>Plugin installation failed</source>
         <translation>插件安装失败</translation>
     </message>
     <message>
-        <location filename="../../src/qml/ClassWidgets/Windows/PluginPlaza.qml" line="249"/>
+        <location filename="../../src/qml/ClassWidgets/Windows/PluginPlaza.qml" line="262"/>
         <source>The download for %1 was cancelled.</source>
         <translation>%1 的下载已取消。</translation>
     </message>
     <message>
-        <location filename="../../src/qml/ClassWidgets/Windows/PluginPlaza.qml" line="272"/>
+        <location filename="../../src/qml/ClassWidgets/Windows/PluginPlaza.qml" line="285"/>
         <source>Search</source>
         <translation>搜索</translation>
     </message>
     <message>
-        <location filename="../../src/qml/ClassWidgets/Windows/PluginPlaza.qml" line="277"/>
+        <location filename="../../src/qml/ClassWidgets/Windows/PluginPlaza.qml" line="290"/>
         <source>Downloads</source>
         <translation>下载</translation>
     </message>
@@ -3508,82 +3508,82 @@ It&apos;s incompatible and may cause unexpected issues.</source>
         <translation>搜索</translation>
     </message>
     <message>
-        <location filename="../../src/qml/ClassWidgets/pages/plaza/Search.qml" line="60"/>
+        <location filename="../../src/qml/ClassWidgets/pages/plaza/Search.qml" line="62"/>
         <source>Invalid server response.</source>
         <translation>服务器响应无效。</translation>
     </message>
     <message>
-        <location filename="../../src/qml/ClassWidgets/pages/plaza/Search.qml" line="109"/>
+        <location filename="../../src/qml/ClassWidgets/pages/plaza/Search.qml" line="116"/>
         <source>The plaza rejected the request.</source>
         <translation>插件广场拒绝了这一请求。</translation>
     </message>
     <message>
-        <location filename="../../src/qml/ClassWidgets/pages/plaza/Search.qml" line="123"/>
+        <location filename="../../src/qml/ClassWidgets/pages/plaza/Search.qml" line="131"/>
         <source>Unable to search plugins: </source>
         <translation>无法寻找插件： </translation>
     </message>
     <message>
-        <location filename="../../src/qml/ClassWidgets/pages/plaza/Search.qml" line="297"/>
+        <location filename="../../src/qml/ClassWidgets/pages/plaza/Search.qml" line="305"/>
         <source>Suggested plugins</source>
         <translation>推荐插件</translation>
     </message>
     <message>
-        <location filename="../../src/qml/ClassWidgets/pages/plaza/Search.qml" line="328"/>
-        <location filename="../../src/qml/ClassWidgets/pages/plaza/Search.qml" line="335"/>
+        <location filename="../../src/qml/ClassWidgets/pages/plaza/Search.qml" line="336"/>
+        <location filename="../../src/qml/ClassWidgets/pages/plaza/Search.qml" line="343"/>
         <source>Relevance</source>
         <translation>相关度</translation>
     </message>
     <message>
-        <location filename="../../src/qml/ClassWidgets/pages/plaza/Search.qml" line="329"/>
         <location filename="../../src/qml/ClassWidgets/pages/plaza/Search.qml" line="337"/>
+        <location filename="../../src/qml/ClassWidgets/pages/plaza/Search.qml" line="345"/>
         <source>Name</source>
         <translation>名称</translation>
     </message>
     <message>
-        <location filename="../../src/qml/ClassWidgets/pages/plaza/Search.qml" line="330"/>
         <location filename="../../src/qml/ClassWidgets/pages/plaza/Search.qml" line="338"/>
+        <location filename="../../src/qml/ClassWidgets/pages/plaza/Search.qml" line="346"/>
         <source>Rating</source>
         <translation>评级</translation>
     </message>
     <message>
-        <location filename="../../src/qml/ClassWidgets/pages/plaza/Search.qml" line="331"/>
         <location filename="../../src/qml/ClassWidgets/pages/plaza/Search.qml" line="339"/>
+        <location filename="../../src/qml/ClassWidgets/pages/plaza/Search.qml" line="347"/>
         <source>Downloads</source>
         <translation>下载</translation>
     </message>
     <message>
-        <location filename="../../src/qml/ClassWidgets/pages/plaza/Search.qml" line="332"/>
-        <location filename="../../src/qml/ClassWidgets/pages/plaza/Search.qml" line="336"/>
+        <location filename="../../src/qml/ClassWidgets/pages/plaza/Search.qml" line="340"/>
+        <location filename="../../src/qml/ClassWidgets/pages/plaza/Search.qml" line="344"/>
         <source>Latest</source>
         <translation>最新发布</translation>
     </message>
     <message>
-        <location filename="../../src/qml/ClassWidgets/pages/plaza/Search.qml" line="347"/>
+        <location filename="../../src/qml/ClassWidgets/pages/plaza/Search.qml" line="355"/>
         <source>All</source>
         <translation>全部</translation>
     </message>
     <message>
-        <location filename="../../src/qml/ClassWidgets/pages/plaza/Search.qml" line="388"/>
+        <location filename="../../src/qml/ClassWidgets/pages/plaza/Search.qml" line="396"/>
         <source>Could not search plugins</source>
         <translation>无法查找插件</translation>
     </message>
     <message>
-        <location filename="../../src/qml/ClassWidgets/pages/plaza/Search.qml" line="401"/>
+        <location filename="../../src/qml/ClassWidgets/pages/plaza/Search.qml" line="409"/>
         <source>Search the plaza</source>
         <translation>在插件广场内查找</translation>
     </message>
     <message>
-        <location filename="../../src/qml/ClassWidgets/pages/plaza/Search.qml" line="402"/>
+        <location filename="../../src/qml/ClassWidgets/pages/plaza/Search.qml" line="410"/>
         <source>No suggested keywords are available.</source>
         <translation>没有可用的推荐的关键词。</translation>
     </message>
     <message>
-        <location filename="../../src/qml/ClassWidgets/pages/plaza/Search.qml" line="409"/>
+        <location filename="../../src/qml/ClassWidgets/pages/plaza/Search.qml" line="417"/>
         <source>No plugins found</source>
         <translation>未找到插件</translation>
     </message>
     <message>
-        <location filename="../../src/qml/ClassWidgets/pages/plaza/Search.qml" line="410"/>
+        <location filename="../../src/qml/ClassWidgets/pages/plaza/Search.qml" line="418"/>
         <source>Try another search or category.</source>
         <translation>尝试用其他关键字或分区查找。</translation>
     </message>

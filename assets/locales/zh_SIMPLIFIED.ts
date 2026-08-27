@@ -2365,77 +2365,77 @@ If translations are missing after a theme change, please restart</source>
         <translation>查找屁股…</translation>
     </message>
     <message>
-        <location filename="../../src/qml/ClassWidgets/Windows/PluginPlaza.qml" line="164"/>
+        <location filename="../../src/qml/ClassWidgets/Windows/PluginPlaza.qml" line="177"/>
         <source>Refresh</source>
         <translation>更新鲜</translation>
     </message>
     <message>
-        <location filename="../../src/qml/ClassWidgets/Windows/PluginPlaza.qml" line="189"/>
+        <location filename="../../src/qml/ClassWidgets/Windows/PluginPlaza.qml" line="202"/>
         <source>Downloaded: %1 / %2</source>
         <translation>已下崽 %1 ，共 %2</translation>
     </message>
     <message>
-        <location filename="../../src/qml/ClassWidgets/Windows/PluginPlaza.qml" line="192"/>
+        <location filename="../../src/qml/ClassWidgets/Windows/PluginPlaza.qml" line="205"/>
         <source>Downloading</source>
         <translation>正在下崽</translation>
     </message>
     <message>
-        <location filename="../../src/qml/ClassWidgets/Windows/PluginPlaza.qml" line="206"/>
+        <location filename="../../src/qml/ClassWidgets/Windows/PluginPlaza.qml" line="219"/>
         <source>Error</source>
         <translation>不兑！</translation>
     </message>
     <message>
-        <location filename="../../src/qml/ClassWidgets/Windows/PluginPlaza.qml" line="227"/>
+        <location filename="../../src/qml/ClassWidgets/Windows/PluginPlaza.qml" line="240"/>
         <source>Plugin updated</source>
         <translation>屁股换新完成</translation>
     </message>
     <message>
-        <location filename="../../src/qml/ClassWidgets/Windows/PluginPlaza.qml" line="227"/>
+        <location filename="../../src/qml/ClassWidgets/Windows/PluginPlaza.qml" line="240"/>
         <source>Plugin installed</source>
         <translation>屁股已安装</translation>
     </message>
     <message>
-        <location filename="../../src/qml/ClassWidgets/Windows/PluginPlaza.qml" line="230"/>
+        <location filename="../../src/qml/ClassWidgets/Windows/PluginPlaza.qml" line="243"/>
         <source>%1 v%2 is ready to use.</source>
         <translation>%1 v%2 可用。</translation>
     </message>
     <message>
-        <location filename="../../src/qml/ClassWidgets/Windows/PluginPlaza.qml" line="237"/>
+        <location filename="../../src/qml/ClassWidgets/Windows/PluginPlaza.qml" line="250"/>
         <source>Plugin update failed</source>
         <translation>屁股换新失败</translation>
     </message>
     <message>
-        <location filename="../../src/qml/ClassWidgets/Windows/PluginPlaza.qml" line="237"/>
+        <location filename="../../src/qml/ClassWidgets/Windows/PluginPlaza.qml" line="250"/>
         <source>Plugin installation failed</source>
         <translation>屁股安装失败</translation>
     </message>
     <message>
-        <location filename="../../src/qml/ClassWidgets/Windows/PluginPlaza.qml" line="248"/>
+        <location filename="../../src/qml/ClassWidgets/Windows/PluginPlaza.qml" line="261"/>
         <source>Download cancelled</source>
         <translation>你的教室中的生物中止了一个已建立的下崽</translation>
     </message>
     <message>
-        <location filename="../../src/qml/ClassWidgets/Windows/PluginPlaza.qml" line="249"/>
+        <location filename="../../src/qml/ClassWidgets/Windows/PluginPlaza.qml" line="262"/>
         <source>The download for %1 was cancelled.</source>
         <translation>%1 的下崽已被中止。</translation>
     </message>
     <message>
-        <location filename="../../src/qml/ClassWidgets/Windows/PluginPlaza.qml" line="262"/>
+        <location filename="../../src/qml/ClassWidgets/Windows/PluginPlaza.qml" line="275"/>
         <source>Home</source>
         <translation>家</translation>
     </message>
     <message>
-        <location filename="../../src/qml/ClassWidgets/Windows/PluginPlaza.qml" line="267"/>
+        <location filename="../../src/qml/ClassWidgets/Windows/PluginPlaza.qml" line="280"/>
         <source>Plugins</source>
         <translation>屁股</translation>
     </message>
     <message>
-        <location filename="../../src/qml/ClassWidgets/Windows/PluginPlaza.qml" line="272"/>
+        <location filename="../../src/qml/ClassWidgets/Windows/PluginPlaza.qml" line="285"/>
         <source>Search</source>
         <translation>RinLit一下</translation>
     </message>
     <message>
-        <location filename="../../src/qml/ClassWidgets/Windows/PluginPlaza.qml" line="277"/>
+        <location filename="../../src/qml/ClassWidgets/Windows/PluginPlaza.qml" line="290"/>
         <source>Downloads</source>
         <translation>下崽</translation>
     </message>
@@ -3271,82 +3271,82 @@ It&apos;s incompatible and may cause unexpected issues.</source>
         <translation>RinLit一下</translation>
     </message>
     <message>
-        <location filename="../../src/qml/ClassWidgets/pages/plaza/Search.qml" line="60"/>
+        <location filename="../../src/qml/ClassWidgets/pages/plaza/Search.qml" line="62"/>
         <source>Invalid server response.</source>
         <translation>听不懂服务器在说什么。</translation>
     </message>
     <message>
-        <location filename="../../src/qml/ClassWidgets/pages/plaza/Search.qml" line="109"/>
+        <location filename="../../src/qml/ClassWidgets/pages/plaza/Search.qml" line="116"/>
         <source>The plaza rejected the request.</source>
         <translation>屁股广场：403</translation>
     </message>
     <message>
-        <location filename="../../src/qml/ClassWidgets/pages/plaza/Search.qml" line="123"/>
+        <location filename="../../src/qml/ClassWidgets/pages/plaza/Search.qml" line="131"/>
         <source>Unable to search plugins: </source>
         <translation>无法寻找屁股 </translation>
     </message>
     <message>
-        <location filename="../../src/qml/ClassWidgets/pages/plaza/Search.qml" line="297"/>
+        <location filename="../../src/qml/ClassWidgets/pages/plaza/Search.qml" line="305"/>
         <source>Suggested plugins</source>
         <translation>建议的屁股</translation>
     </message>
     <message>
-        <location filename="../../src/qml/ClassWidgets/pages/plaza/Search.qml" line="328"/>
-        <location filename="../../src/qml/ClassWidgets/pages/plaza/Search.qml" line="335"/>
+        <location filename="../../src/qml/ClassWidgets/pages/plaza/Search.qml" line="336"/>
+        <location filename="../../src/qml/ClassWidgets/pages/plaza/Search.qml" line="343"/>
         <source>Relevance</source>
         <translation>相关性</translation>
     </message>
     <message>
-        <location filename="../../src/qml/ClassWidgets/pages/plaza/Search.qml" line="329"/>
         <location filename="../../src/qml/ClassWidgets/pages/plaza/Search.qml" line="337"/>
+        <location filename="../../src/qml/ClassWidgets/pages/plaza/Search.qml" line="345"/>
         <source>Name</source>
         <translation>你那屁股叫什么名字？</translation>
     </message>
     <message>
-        <location filename="../../src/qml/ClassWidgets/pages/plaza/Search.qml" line="330"/>
         <location filename="../../src/qml/ClassWidgets/pages/plaza/Search.qml" line="338"/>
+        <location filename="../../src/qml/ClassWidgets/pages/plaza/Search.qml" line="346"/>
         <source>Rating</source>
         <translation>积分</translation>
     </message>
     <message>
-        <location filename="../../src/qml/ClassWidgets/pages/plaza/Search.qml" line="331"/>
         <location filename="../../src/qml/ClassWidgets/pages/plaza/Search.qml" line="339"/>
+        <location filename="../../src/qml/ClassWidgets/pages/plaza/Search.qml" line="347"/>
         <source>Downloads</source>
         <translation>下崽</translation>
     </message>
     <message>
-        <location filename="../../src/qml/ClassWidgets/pages/plaza/Search.qml" line="332"/>
-        <location filename="../../src/qml/ClassWidgets/pages/plaza/Search.qml" line="336"/>
+        <location filename="../../src/qml/ClassWidgets/pages/plaza/Search.qml" line="340"/>
+        <location filename="../../src/qml/ClassWidgets/pages/plaza/Search.qml" line="344"/>
         <source>Latest</source>
         <translation>最后一夜</translation>
     </message>
     <message>
-        <location filename="../../src/qml/ClassWidgets/pages/plaza/Search.qml" line="347"/>
+        <location filename="../../src/qml/ClassWidgets/pages/plaza/Search.qml" line="355"/>
         <source>All</source>
         <translation>我！全！都！要！</translation>
     </message>
     <message>
-        <location filename="../../src/qml/ClassWidgets/pages/plaza/Search.qml" line="388"/>
+        <location filename="../../src/qml/ClassWidgets/pages/plaza/Search.qml" line="396"/>
         <source>Could not search plugins</source>
         <translation>找不了你要的屁股！（气愤</translation>
     </message>
     <message>
-        <location filename="../../src/qml/ClassWidgets/pages/plaza/Search.qml" line="401"/>
+        <location filename="../../src/qml/ClassWidgets/pages/plaza/Search.qml" line="409"/>
         <source>Search the plaza</source>
         <translation>在屁股超市里面查查</translation>
     </message>
     <message>
-        <location filename="../../src/qml/ClassWidgets/pages/plaza/Search.qml" line="402"/>
+        <location filename="../../src/qml/ClassWidgets/pages/plaza/Search.qml" line="410"/>
         <source>No suggested keywords are available.</source>
         <translation>没有可用的建议钥匙世界。</translation>
     </message>
     <message>
-        <location filename="../../src/qml/ClassWidgets/pages/plaza/Search.qml" line="409"/>
+        <location filename="../../src/qml/ClassWidgets/pages/plaza/Search.qml" line="417"/>
         <source>No plugins found</source>
         <translation>没有你要的屁股！（气愤</translation>
     </message>
     <message>
-        <location filename="../../src/qml/ClassWidgets/pages/plaza/Search.qml" line="410"/>
+        <location filename="../../src/qml/ClassWidgets/pages/plaza/Search.qml" line="418"/>
         <source>Try another search or category.</source>
         <translation>尝试用其它钥匙或者去其它分区找屁股。</translation>
     </message>
