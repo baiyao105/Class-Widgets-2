@@ -102,8 +102,21 @@ FluentWindow {
 
             function submitSearch(keyword) {
                 var query = keyword.trim()
-                if (query)
-                    navigationView.push(PathManager.qml("pages/plaza/Search.qml"), { query: query })
+                if (!query)
+                    return
+                var searchPageUrl = PathManager.qml("pages/plaza/Search.qml")
+                var stack = navigationView.navigationBar.stackView
+                if (navigationView.currentPage === searchPageUrl
+                    && stack && stack.currentItem
+                    && stack.currentItem.query !== undefined) {
+                    var page = stack.currentItem
+                    if (page.query === query)
+                        page.search(1, false)
+                    else
+                        page.query = query
+                    return
+                }
+                navigationView.push(searchPageUrl, { query: query })
             }
 
             onTextChanged: {

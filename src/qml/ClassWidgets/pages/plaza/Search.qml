@@ -5,7 +5,7 @@ import ClassWidgets.Components
 
 FluentPage {
     id: root
-    title: qsTr("Search")
+    title: root.hasQuery ? "\u201C" + root.query + "\u201D" : qsTr("Search")
     horizontalPadding: 0
     wrapperWidth: width - 42 * 2
 
@@ -41,8 +41,10 @@ FluentPage {
     readonly property bool hasMore: hasQuery && !loading && page < totalPages && errorMessage.length === 0
 
     onQueryChanged: {
+        console.log("[Search] onQueryChanged fired, query:", query, "hasQuery:", hasQuery)
         activeTag = ""
-        if (hasQuery)
+        // 注意：不能依赖 hasQuery，QML readonly binding 在信号处理期间尚未重新计算
+        if (query.trim().length > 0)
             search(1)
         else {
             loadSuggestions()
@@ -80,9 +82,11 @@ FluentPage {
 
     function search(nextPage, append) {
         var serial = ++searchSerial
+        console.log("[Search] search called, nextPage:", nextPage, "append:", append, "hasQuery:", hasQuery, "query:", query)
         if (activeSearchRequest)
             activeSearchRequest.abort()
-        if (!hasQuery) {
+        // 注意：不能依赖 hasQuery，从 onQueryChanged 调用时 binding 尚未更新
+        if (query.trim().length === 0) {
             plugins = []
             total = 0
             totalPages = 1
@@ -99,9 +103,12 @@ FluentPage {
             + "&page=" + page + "&per_page=" + perPage
             + "&sort=" + encodeURIComponent(sort)
         if (activeTag) params += "&tag=" + encodeURIComponent(activeTag)
-        activeSearchRequest = request(baseUrl + "/api/plugins/search" + params, function(response) {
-            if (serial !== searchSerial)
+        var requestUrl = baseUrl + "/api/plugins/search" + params
+        activeSearchRequest = request(requestUrl, function(response) {
+            if (serial !== searchSerial) {
+                console.log("[Search] serial mismatch, ignoring response")
                 return
+            }
             if (response.ok === false) {
                 if (!isAppend) plugins = []
                 total = 0
@@ -115,6 +122,7 @@ FluentPage {
             }
             loading = false
         }, function(error) {
+            console.log("[Search] search request failed:", error)
             if (serial !== searchSerial)
                 return
             if (!isAppend) plugins = []
@@ -315,12 +323,12 @@ FluentPage {
                 Layout.fillWidth: true
                 spacing: 12
 
-                Text {
-                    Layout.fillWidth: true
-                    text: "\u201C" + root.query + "\u201D"
-                    typography: Typography.Title
-                    elide: Text.ElideRight
-                }
+                // Text {
+                //     Layout.fillWidth: true
+                //     text: "\u201C" + root.query + "\u201D"
+                //     typography: Typography.Title
+                //     elide: Text.ElideRight
+                // }
 
                 DropDownButton {
                     Layout.alignment: Qt.AlignRight
