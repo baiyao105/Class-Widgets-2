@@ -302,8 +302,8 @@ Column {
                     running: editMode
                     loops: Animation.Infinite
 
-                    NumberAnimation { to: rotationAnim.angle1; duration: 125; easing.type: Easing.InOutQuad }
-                    NumberAnimation { to: rotationAnim.angle2; duration: 125; easing.type: Easing.InOutQuad }
+                    NumberAnimation { to: rotationAnim.angle1; duration: 250; easing.type: Easing.InOutQuad }
+                    NumberAnimation { to: rotationAnim.angle2; duration: 250; easing.type: Easing.InOutQuad }
 
                     onRunningChanged: {
                         rotationAnim.angle1 = Math.random() * 2.0
