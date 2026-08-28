@@ -194,12 +194,12 @@ MIT உரிமத்தின் கீழ் உரிமம் பெற்�
         <translation>விட்செட்களைச் சேர்க்கவும்</translation>
     </message>
     <message>
-        <location filename="../../src/qml/ClassWidgets/Components/dialogs/AddWidgetsDialog.qml" line="110"/>
+        <location filename="../../src/qml/ClassWidgets/Components/dialogs/AddWidgetsDialog.qml" line="141"/>
         <source>No Widget Selected</source>
         <translation>விட்செட் எதுவும் தேர்ந்தெடுக்கப்படவில்லை</translation>
     </message>
     <message>
-        <location filename="../../src/qml/ClassWidgets/Components/dialogs/AddWidgetsDialog.qml" line="176"/>
+        <location filename="../../src/qml/ClassWidgets/Components/dialogs/AddWidgetsDialog.qml" line="217"/>
         <source>Add</source>
         <translation>கூட்டு</translation>
     </message>
@@ -4080,7 +4080,7 @@ If it takes place in another location, such as a sport field, lab, or another cl
         <translation type="vanished">குறுக்குவழிகள்</translation>
     </message>
     <message>
-        <location filename="../../src/qml/ClassWidgets/Windows/TrayPanel.qml" line="154"/>
+        <location filename="../../src/qml/ClassWidgets/Windows/TrayPanel.qml" line="168"/>
         <source>Reschedule Day</source>
         <translation>மறு அட்டவணை நாள்</translation>
     </message>
@@ -4099,17 +4099,22 @@ If it takes place in another location, such as a sport field, lab, or another cl
         <translation>உங்கள் அட்டவணையை மாற்றவும்</translation>
     </message>
     <message>
-        <location filename="../../src/qml/ClassWidgets/Windows/TrayPanel.qml" line="134"/>
+        <location filename="../../src/qml/ClassWidgets/Windows/TrayPanel.qml" line="135"/>
         <source>Debugger</source>
         <translation>பிழைத்திருத்தி</translation>
     </message>
     <message>
-        <location filename="../../src/qml/ClassWidgets/Windows/TrayPanel.qml" line="141"/>
+        <location filename="../../src/qml/ClassWidgets/Windows/TrayPanel.qml" line="147"/>
         <source>Restart</source>
         <translation>மறுதொடக்கம்</translation>
     </message>
     <message>
-        <location filename="../../src/qml/ClassWidgets/Windows/TrayPanel.qml" line="148"/>
+        <location filename="../../src/qml/ClassWidgets/Windows/TrayPanel.qml" line="155"/>
+        <source>Restart required</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../src/qml/ClassWidgets/Windows/TrayPanel.qml" line="162"/>
         <source>Exit</source>
         <translation>வெளியேறு</translation>
     </message>
