@@ -7,11 +7,11 @@ Button {
     id: root
 
     // 仅在有待应用的重启时显示
-    // visible: AppCentral.restartRequired
+    visible: AppCentral.restartRequired
     highlighted: true
     flat: true
     // backgroundColor: Colors.proxy.systemCautionBackgroundColor
-    icon.name: "ic_fluent_arrow_sync_20_regular"
+    icon.name: "ic_fluent_arrow_counterclockwise_20_regular"
     text: qsTr("Restart required")
 
     ToolTip {

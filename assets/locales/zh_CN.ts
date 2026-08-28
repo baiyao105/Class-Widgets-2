@@ -212,12 +212,12 @@ Licensed under the MIT license</source>
         <translation>添加小组件</translation>
     </message>
     <message>
-        <location filename="../../src/qml/ClassWidgets/Components/dialogs/AddWidgetsDialog.qml" line="110"/>
+        <location filename="../../src/qml/ClassWidgets/Components/dialogs/AddWidgetsDialog.qml" line="97"/>
         <source>No Widget Selected</source>
         <translation>未选择小组件</translation>
     </message>
     <message>
-        <location filename="../../src/qml/ClassWidgets/Components/dialogs/AddWidgetsDialog.qml" line="176"/>
+        <location filename="../../src/qml/ClassWidgets/Components/dialogs/AddWidgetsDialog.qml" line="190"/>
         <source>Add</source>
         <translation>添加</translation>
     </message>
@@ -445,7 +445,7 @@ Do you want to continue using them, or discard and restore the original schedule
         <translation type="vanished">默认</translation>
     </message>
     <message>
-        <location filename="../../src/core/config/model.py" line="206"/>
+        <location filename="../../src/core/config/model.py" line="205"/>
         <source>New Schedule 1</source>
         <translation>新课程表 1</translation>
     </message>
@@ -877,7 +877,7 @@ Do you want to continue using them, or discard and restore the original schedule
         <translation>已在 %1 更新</translation>
     </message>
     <message>
-        <location filename="../../src/qml/ClassWidgets/pages/plaza/Downloads.qml" line="275"/>
+        <location filename="../../src/qml/ClassWidgets/pages/plaza/Downloads.qml" line="280"/>
         <source>No installed Plugin Plaza plugins</source>
         <translation>没有从插件市场安装的插件</translation>
     </message>
@@ -1215,12 +1215,12 @@ Please try again later.</source>
         <translation>导出课程表</translation>
     </message>
     <message>
-        <location filename="../../src/core/convertor/slots.py" line="27"/>
+        <location filename="../../src/core/convertor/slots.py" line="26"/>
         <source>CSES Format (*.yaml *.yml)</source>
         <translation>CSES 格式 (*.yaml *.yml)</translation>
     </message>
     <message>
-        <location filename="../../src/core/schedule/manager.py" line="289"/>
+        <location filename="../../src/core/schedule/manager.py" line="288"/>
         <source>Class Widgets 2 JSON Files (*.json)</source>
         <translation>Class Widgets 2 JSON 文件 (*.json)</translation>
     </message>
@@ -1535,7 +1535,7 @@ Please try again later.</source>
         <translation>导入 CSES 课程表</translation>
     </message>
     <message>
-        <location filename="../../src/core/convertor/slots.py" line="45"/>
+        <location filename="../../src/core/convertor/slots.py" line="44"/>
         <source>CSES YAML Files (*.yaml *.yml)</source>
         <translation>CSES YAML 文件 (*.yaml *.yml)</translation>
     </message>
@@ -1545,7 +1545,7 @@ Please try again later.</source>
         <translation>导入 Class Widgets 1 课程表</translation>
     </message>
     <message>
-        <location filename="../../src/core/convertor/slots.py" line="86"/>
+        <location filename="../../src/core/convertor/slots.py" line="85"/>
         <source>Class Widgets 1 JSON Files (*.json)</source>
         <translation>Class Widgets 1 JSON 文件 (*.json)</translation>
     </message>
@@ -1555,7 +1555,7 @@ Please try again later.</source>
         <translation>导入课程表</translation>
     </message>
     <message>
-        <location filename="../../src/core/schedule/manager.py" line="240"/>
+        <location filename="../../src/core/schedule/manager.py" line="239"/>
         <source>Class Widgets 2 JSON Files (*.json)</source>
         <translation>Class Widgets 2 JSON 文件 (*.json)</translation>
     </message>
@@ -2188,22 +2188,22 @@ Applying an incompatible theme may cause serious errors, crashes, or unexpected 
 <context>
     <name>PlazaStatusCard</name>
     <message>
-        <location filename="../../src/qml/ClassWidgets/Components/plaza/PlazaStatusCard.qml" line="183"/>
+        <location filename="../../src/qml/ClassWidgets/Components/plaza/PlazaStatusCard.qml" line="195"/>
         <source>More options</source>
         <translation>更多选项</translation>
     </message>
     <message>
-        <location filename="../../src/qml/ClassWidgets/Components/plaza/PlazaStatusCard.qml" line="191"/>
+        <location filename="../../src/qml/ClassWidgets/Components/plaza/PlazaStatusCard.qml" line="203"/>
         <source>Open in Plugin Plaza</source>
         <translation>在“插件广场”打开</translation>
     </message>
     <message>
-        <location filename="../../src/qml/ClassWidgets/Components/plaza/PlazaStatusCard.qml" line="196"/>
+        <location filename="../../src/qml/ClassWidgets/Components/plaza/PlazaStatusCard.qml" line="208"/>
         <source>Copy link</source>
         <translation>复制链接</translation>
     </message>
     <message>
-        <location filename="../../src/qml/ClassWidgets/Components/plaza/PlazaStatusCard.qml" line="205"/>
+        <location filename="../../src/qml/ClassWidgets/Components/plaza/PlazaStatusCard.qml" line="217"/>
         <source>Cancel download</source>
         <translation>取消下载</translation>
     </message>
@@ -2211,194 +2211,204 @@ Applying an incompatible theme may cause serious errors, crashes, or unexpected 
 <context>
     <name>Plugin</name>
     <message>
-        <location filename="../../src/qml/ClassWidgets/pages/plaza/Plugin.qml" line="125"/>
+        <location filename="../../src/qml/ClassWidgets/pages/plaza/Plugin.qml" line="127"/>
         <source>%1 B</source>
         <translation>%1 B</translation>
     </message>
     <message>
-        <location filename="../../src/qml/ClassWidgets/pages/plaza/Plugin.qml" line="127"/>
+        <location filename="../../src/qml/ClassWidgets/pages/plaza/Plugin.qml" line="129"/>
         <source>%1 KB</source>
         <translation>%1 KB</translation>
     </message>
     <message>
-        <location filename="../../src/qml/ClassWidgets/pages/plaza/Plugin.qml" line="128"/>
+        <location filename="../../src/qml/ClassWidgets/pages/plaza/Plugin.qml" line="130"/>
         <source>%1 MB</source>
         <translation>%1 MB</translation>
     </message>
     <message>
-        <location filename="../../src/qml/ClassWidgets/pages/plaza/Plugin.qml" line="183"/>
-        <location filename="../../src/qml/ClassWidgets/pages/plaza/Plugin.qml" line="743"/>
+        <location filename="../../src/qml/ClassWidgets/pages/plaza/Plugin.qml" line="185"/>
+        <location filename="../../src/qml/ClassWidgets/pages/plaza/Plugin.qml" line="771"/>
         <source>No data</source>
         <translation>无数据</translation>
     </message>
     <message>
-        <location filename="../../src/qml/ClassWidgets/pages/plaza/Plugin.qml" line="231"/>
+        <location filename="../../src/qml/ClassWidgets/pages/plaza/Plugin.qml" line="233"/>
         <source>Failed to parse plugin information.</source>
         <translation>无法解析插件信息。</translation>
     </message>
     <message>
-        <location filename="../../src/qml/ClassWidgets/pages/plaza/Plugin.qml" line="237"/>
+        <location filename="../../src/qml/ClassWidgets/pages/plaza/Plugin.qml" line="239"/>
         <source>Failed to load plugin information: </source>
         <translation>无法加载插件信息: </translation>
     </message>
     <message>
-        <location filename="../../src/qml/ClassWidgets/pages/plaza/Plugin.qml" line="253"/>
+        <location filename="../../src/qml/ClassWidgets/pages/plaza/Plugin.qml" line="255"/>
         <source>No description</source>
         <translation>无描述</translation>
     </message>
     <message>
-        <location filename="../../src/qml/ClassWidgets/pages/plaza/Plugin.qml" line="253"/>
+        <location filename="../../src/qml/ClassWidgets/pages/plaza/Plugin.qml" line="255"/>
         <source>This plugin does not provide README content.</source>
         <translation>插件未提供内容描述</translation>
     </message>
     <message>
-        <location filename="../../src/qml/ClassWidgets/pages/plaza/Plugin.qml" line="410"/>
+        <location filename="../../src/qml/ClassWidgets/pages/plaza/Plugin.qml" line="412"/>
         <source>Load failed</source>
         <translation>加载失败</translation>
     </message>
     <message>
-        <location filename="../../src/qml/ClassWidgets/pages/plaza/Plugin.qml" line="476"/>
+        <location filename="../../src/qml/ClassWidgets/pages/plaza/Plugin.qml" line="478"/>
         <source>Loading plugin...</source>
         <translation>加载插件中...</translation>
     </message>
     <message>
-        <location filename="../../src/qml/ClassWidgets/pages/plaza/Plugin.qml" line="483"/>
+        <location filename="../../src/qml/ClassWidgets/pages/plaza/Plugin.qml" line="485"/>
         <source>Unknown author</source>
         <translation>未知作者</translation>
     </message>
     <message>
-        <location filename="../../src/qml/ClassWidgets/pages/plaza/Plugin.qml" line="516"/>
+        <location filename="../../src/qml/ClassWidgets/pages/plaza/Plugin.qml" line="518"/>
         <source>%1 Ratings</source>
         <translation>%1 个评级</translation>
     </message>
     <message>
-        <location filename="../../src/qml/ClassWidgets/pages/plaza/Plugin.qml" line="572"/>
+        <location filename="../../src/qml/ClassWidgets/pages/plaza/Plugin.qml" line="574"/>
         <source>Pause</source>
         <translation>暂停</translation>
     </message>
     <message>
-        <location filename="../../src/qml/ClassWidgets/pages/plaza/Plugin.qml" line="574"/>
+        <location filename="../../src/qml/ClassWidgets/pages/plaza/Plugin.qml" line="576"/>
         <source>Resume</source>
         <translation>继续</translation>
     </message>
     <message>
-        <location filename="../../src/qml/ClassWidgets/pages/plaza/Plugin.qml" line="576"/>
+        <location filename="../../src/qml/ClassWidgets/pages/plaza/Plugin.qml" line="578"/>
         <source>Installing</source>
         <translation>正在安装</translation>
     </message>
     <message>
-        <location filename="../../src/qml/ClassWidgets/pages/plaza/Plugin.qml" line="578"/>
+        <location filename="../../src/qml/ClassWidgets/pages/plaza/Plugin.qml" line="580"/>
         <source>Installed</source>
         <translation>已安装</translation>
     </message>
     <message>
-        <location filename="../../src/qml/ClassWidgets/pages/plaza/Plugin.qml" line="579"/>
+        <location filename="../../src/qml/ClassWidgets/pages/plaza/Plugin.qml" line="581"/>
         <source>Get</source>
         <translation>获取</translation>
     </message>
     <message>
-        <location filename="../../src/qml/ClassWidgets/pages/plaza/Plugin.qml" line="607"/>
+        <location filename="../../src/qml/ClassWidgets/pages/plaza/Plugin.qml" line="610"/>
         <source>Paused</source>
         <translation>暂停</translation>
     </message>
     <message>
-        <location filename="../../src/qml/ClassWidgets/pages/plaza/Plugin.qml" line="609"/>
+        <location filename="../../src/qml/ClassWidgets/pages/plaza/Plugin.qml" line="612"/>
         <source>Downloaded: %1 / %2</source>
         <translation>已下载 %1 ，共 %2</translation>
     </message>
     <message>
-        <location filename="../../src/qml/ClassWidgets/pages/plaza/Plugin.qml" line="612"/>
+        <location filename="../../src/qml/ClassWidgets/pages/plaza/Plugin.qml" line="615"/>
         <source>Downloading</source>
         <translation>正在下载</translation>
     </message>
     <message>
-        <location filename="../../src/qml/ClassWidgets/pages/plaza/Plugin.qml" line="630"/>
+        <location filename="../../src/qml/ClassWidgets/pages/plaza/Plugin.qml" line="626"/>
+        <source>Enable</source>
+        <translation>启用</translation>
+    </message>
+    <message>
+        <location filename="../../src/qml/ClassWidgets/pages/plaza/Plugin.qml" line="626"/>
+        <source>Disable</source>
+        <translation>禁用</translation>
+    </message>
+    <message>
+        <location filename="../../src/qml/ClassWidgets/pages/plaza/Plugin.qml" line="658"/>
         <source>Open in Web</source>
         <translation>在网页中打开</translation>
     </message>
     <message>
-        <location filename="../../src/qml/ClassWidgets/pages/plaza/Plugin.qml" line="636"/>
+        <location filename="../../src/qml/ClassWidgets/pages/plaza/Plugin.qml" line="664"/>
         <source>Copy link</source>
         <translation>复制链接</translation>
     </message>
     <message>
-        <location filename="../../src/qml/ClassWidgets/pages/plaza/Plugin.qml" line="642"/>
+        <location filename="../../src/qml/ClassWidgets/pages/plaza/Plugin.qml" line="670"/>
         <source>Link copied</source>
         <translation>链接已复制</translation>
     </message>
     <message>
-        <location filename="../../src/qml/ClassWidgets/pages/plaza/Plugin.qml" line="653"/>
+        <location filename="../../src/qml/ClassWidgets/pages/plaza/Plugin.qml" line="681"/>
         <source>Cancel download</source>
         <translation>取消下载</translation>
     </message>
     <message>
-        <location filename="../../src/qml/ClassWidgets/pages/plaza/Plugin.qml" line="674"/>
+        <location filename="../../src/qml/ClassWidgets/pages/plaza/Plugin.qml" line="702"/>
         <source>More options</source>
         <translation>更多选项</translation>
     </message>
     <message>
-        <location filename="../../src/qml/ClassWidgets/pages/plaza/Plugin.qml" line="691"/>
+        <location filename="../../src/qml/ClassWidgets/pages/plaza/Plugin.qml" line="719"/>
         <source>Description</source>
         <translation>描述</translation>
     </message>
     <message>
-        <location filename="../../src/qml/ClassWidgets/pages/plaza/Plugin.qml" line="724"/>
+        <location filename="../../src/qml/ClassWidgets/pages/plaza/Plugin.qml" line="752"/>
         <source>Other information</source>
         <translation>其他信息</translation>
     </message>
     <message>
-        <location filename="../../src/qml/ClassWidgets/pages/plaza/Plugin.qml" line="738"/>
+        <location filename="../../src/qml/ClassWidgets/pages/plaza/Plugin.qml" line="766"/>
         <source>Plugin ID</source>
         <translation>插件代码</translation>
     </message>
     <message>
-        <location filename="../../src/qml/ClassWidgets/pages/plaza/Plugin.qml" line="739"/>
-        <location filename="../../src/qml/ClassWidgets/pages/plaza/Plugin.qml" line="740"/>
+        <location filename="../../src/qml/ClassWidgets/pages/plaza/Plugin.qml" line="767"/>
+        <location filename="../../src/qml/ClassWidgets/pages/plaza/Plugin.qml" line="768"/>
         <source>Unknown</source>
         <translation>未知</translation>
     </message>
     <message>
-        <location filename="../../src/qml/ClassWidgets/pages/plaza/Plugin.qml" line="739"/>
+        <location filename="../../src/qml/ClassWidgets/pages/plaza/Plugin.qml" line="767"/>
         <source>Version</source>
         <translation>版本</translation>
     </message>
     <message>
-        <location filename="../../src/qml/ClassWidgets/pages/plaza/Plugin.qml" line="740"/>
+        <location filename="../../src/qml/ClassWidgets/pages/plaza/Plugin.qml" line="768"/>
         <source>API version</source>
         <translation>支持的 API 版本</translation>
     </message>
     <message>
-        <location filename="../../src/qml/ClassWidgets/pages/plaza/Plugin.qml" line="741"/>
+        <location filename="../../src/qml/ClassWidgets/pages/plaza/Plugin.qml" line="769"/>
         <source>Branch</source>
         <translation>分支</translation>
     </message>
     <message>
-        <location filename="../../src/qml/ClassWidgets/pages/plaza/Plugin.qml" line="742"/>
+        <location filename="../../src/qml/ClassWidgets/pages/plaza/Plugin.qml" line="770"/>
         <source>Last updated</source>
         <translation>上次更新日期</translation>
     </message>
     <message>
-        <location filename="../../src/qml/ClassWidgets/pages/plaza/Plugin.qml" line="743"/>
+        <location filename="../../src/qml/ClassWidgets/pages/plaza/Plugin.qml" line="771"/>
         <source>Repository</source>
         <translation>存储库</translation>
     </message>
     <message>
-        <location filename="../../src/qml/ClassWidgets/pages/plaza/Plugin.qml" line="767"/>
+        <location filename="../../src/qml/ClassWidgets/pages/plaza/Plugin.qml" line="795"/>
         <source>Ratings and reviews</source>
         <translation>评分与评价</translation>
     </message>
     <message>
-        <location filename="../../src/qml/ClassWidgets/pages/plaza/Plugin.qml" line="783"/>
+        <location filename="../../src/qml/ClassWidgets/pages/plaza/Plugin.qml" line="811"/>
         <source>See all (%1)</source>
         <translation>查看全部 (%1)</translation>
     </message>
     <message>
-        <location filename="../../src/qml/ClassWidgets/pages/plaza/Plugin.qml" line="791"/>
+        <location filename="../../src/qml/ClassWidgets/pages/plaza/Plugin.qml" line="819"/>
         <source>Write a review</source>
         <translation>评论</translation>
     </message>
     <message>
-        <location filename="../../src/qml/ClassWidgets/pages/plaza/Plugin.qml" line="815"/>
+        <location filename="../../src/qml/ClassWidgets/pages/plaza/Plugin.qml" line="843"/>
         <source>Discover more</source>
         <translation>发现更多</translation>
     </message>
@@ -2407,7 +2417,7 @@ Applying an incompatible theme may cause serious errors, crashes, or unexpected 
         <translation type="vanished">更多</translation>
     </message>
     <message>
-        <location filename="../../src/qml/ClassWidgets/pages/plaza/Plugin.qml" line="856"/>
+        <location filename="../../src/qml/ClassWidgets/pages/plaza/Plugin.qml" line="884"/>
         <source>No recommendations</source>
         <translation>暂无更多推荐</translation>
     </message>
@@ -2497,7 +2507,7 @@ Applying an incompatible theme may cause serious errors, crashes, or unexpected 
         <translation>不兼容</translation>
     </message>
     <message>
-        <location filename="../../src/core/plugin/manager.py" line="127"/>
+        <location filename="../../src/core/plugin/manager.py" line="124"/>
         <source>{count} incompatible plugin(s) have been loaded, which may cause unknown issues.</source>
         <translation>发现 {count} 个插件可能不兼容，运行过程中可能出现异常。</translation>
     </message>
@@ -2531,32 +2541,31 @@ Applying an incompatible theme may cause serious errors, crashes, or unexpected 
         <translation>发现插件更新可用</translation>
     </message>
     <message>
-        <location filename="../../src/core/plaza/notifications.py" line="81"/>
+        <location filename="../../src/core/plaza/notifications.py" line="79"/>
         <source>{count} plugin update(s) are ready in Plugin Plaza.</source>
         <translation>已有 {count} 个插件更新已准备就绪。</translation>
     </message>
     <message>
-        <location filename="../../src/qml/ClassWidgets/Windows/PluginPlaza.qml" line="177"/>
         <source>Refresh</source>
-        <translation>刷新</translation>
+        <translation type="vanished">刷新</translation>
     </message>
     <message>
-        <location filename="../../src/qml/ClassWidgets/Windows/PluginPlaza.qml" line="219"/>
+        <location filename="../../src/qml/ClassWidgets/Windows/PluginPlaza.qml" line="202"/>
         <source>Error</source>
         <translation>错误</translation>
     </message>
     <message>
-        <location filename="../../src/qml/ClassWidgets/Windows/PluginPlaza.qml" line="261"/>
+        <location filename="../../src/qml/ClassWidgets/Windows/PluginPlaza.qml" line="244"/>
         <source>Download cancelled</source>
         <translation>下载已取消</translation>
     </message>
     <message>
-        <location filename="../../src/qml/ClassWidgets/Windows/PluginPlaza.qml" line="275"/>
+        <location filename="../../src/qml/ClassWidgets/Windows/PluginPlaza.qml" line="258"/>
         <source>Home</source>
         <translation>首页</translation>
     </message>
     <message>
-        <location filename="../../src/qml/ClassWidgets/Windows/PluginPlaza.qml" line="280"/>
+        <location filename="../../src/qml/ClassWidgets/Windows/PluginPlaza.qml" line="263"/>
         <source>Plugins</source>
         <translation>插件</translation>
     </message>
@@ -2566,42 +2575,42 @@ Applying an incompatible theme may cause serious errors, crashes, or unexpected 
         <translation>插件包版本（{package_version}）与插件广场版本（{release_version}）不匹配。</translation>
     </message>
     <message>
-        <location filename="../../src/core/plugin/errors.py" line="30"/>
+        <location filename="../../src/core/plugin/errors.py" line="29"/>
         <source>The plugin package does not match the selected plugin.</source>
         <translation>插件包与所选插件不匹配。</translation>
     </message>
     <message>
-        <location filename="../../src/core/plugin/errors.py" line="32"/>
+        <location filename="../../src/core/plugin/errors.py" line="31"/>
         <source>The plugin package could not be found.</source>
         <translation>找不到插件包。</translation>
     </message>
     <message>
-        <location filename="../../src/core/plugin/errors.py" line="38"/>
+        <location filename="../../src/core/plugin/errors.py" line="37"/>
         <source>The plugin package is too large.</source>
         <translation>插件包过大。</translation>
     </message>
     <message>
-        <location filename="../../src/core/plugin/errors.py" line="40"/>
+        <location filename="../../src/core/plugin/errors.py" line="39"/>
         <source>The plugin package is invalid.</source>
         <translation>插件包无效。</translation>
     </message>
     <message>
-        <location filename="../../src/core/plugin/errors.py" line="46"/>
+        <location filename="../../src/core/plugin/errors.py" line="45"/>
         <source>The plugin manifest is invalid.</source>
         <translation>插件清单无效。</translation>
     </message>
     <message>
-        <location filename="../../src/core/plugin/errors.py" line="55"/>
+        <location filename="../../src/core/plugin/errors.py" line="54"/>
         <source>The plugin package failed security checks.</source>
         <translation>插件包未通过安全检查。</translation>
     </message>
     <message>
-        <location filename="../../src/core/plugin/errors.py" line="57"/>
+        <location filename="../../src/core/plugin/errors.py" line="56"/>
         <source>Unable to download the plugin. Check your connection and try again.</source>
         <translation>无法下载插件。请检查网络后重试。</translation>
     </message>
     <message>
-        <location filename="../../src/core/plugin/errors.py" line="60"/>
+        <location filename="../../src/core/plugin/errors.py" line="57"/>
         <source>Plugin installation failed.</source>
         <translation>插件安装失败。</translation>
     </message>
@@ -2626,52 +2635,52 @@ Applying an incompatible theme may cause serious errors, crashes, or unexpected 
         <translation>搜索插件 ...</translation>
     </message>
     <message>
-        <location filename="../../src/qml/ClassWidgets/Windows/PluginPlaza.qml" line="202"/>
+        <location filename="../../src/qml/ClassWidgets/Windows/PluginPlaza.qml" line="182"/>
         <source>Downloaded: %1 / %2</source>
         <translation>已下载 %1 ，共 %2</translation>
     </message>
     <message>
-        <location filename="../../src/qml/ClassWidgets/Windows/PluginPlaza.qml" line="205"/>
+        <location filename="../../src/qml/ClassWidgets/Windows/PluginPlaza.qml" line="185"/>
         <source>Downloading</source>
         <translation>正在下载</translation>
     </message>
     <message>
-        <location filename="../../src/qml/ClassWidgets/Windows/PluginPlaza.qml" line="240"/>
+        <location filename="../../src/qml/ClassWidgets/Windows/PluginPlaza.qml" line="223"/>
         <source>Plugin updated</source>
         <translation>插件已更新</translation>
     </message>
     <message>
-        <location filename="../../src/qml/ClassWidgets/Windows/PluginPlaza.qml" line="240"/>
+        <location filename="../../src/qml/ClassWidgets/Windows/PluginPlaza.qml" line="223"/>
         <source>Plugin installed</source>
         <translation>插件已安装</translation>
     </message>
     <message>
-        <location filename="../../src/qml/ClassWidgets/Windows/PluginPlaza.qml" line="243"/>
+        <location filename="../../src/qml/ClassWidgets/Windows/PluginPlaza.qml" line="226"/>
         <source>%1 v%2 is ready to use.</source>
         <translation>%1 v%2 已可使用。</translation>
     </message>
     <message>
-        <location filename="../../src/qml/ClassWidgets/Windows/PluginPlaza.qml" line="250"/>
+        <location filename="../../src/qml/ClassWidgets/Windows/PluginPlaza.qml" line="233"/>
         <source>Plugin update failed</source>
         <translation>插件更新失败</translation>
     </message>
     <message>
-        <location filename="../../src/qml/ClassWidgets/Windows/PluginPlaza.qml" line="250"/>
+        <location filename="../../src/qml/ClassWidgets/Windows/PluginPlaza.qml" line="233"/>
         <source>Plugin installation failed</source>
         <translation>插件安装失败</translation>
     </message>
     <message>
-        <location filename="../../src/qml/ClassWidgets/Windows/PluginPlaza.qml" line="262"/>
+        <location filename="../../src/qml/ClassWidgets/Windows/PluginPlaza.qml" line="245"/>
         <source>The download for %1 was cancelled.</source>
         <translation>%1 的下载已取消。</translation>
     </message>
     <message>
-        <location filename="../../src/qml/ClassWidgets/Windows/PluginPlaza.qml" line="285"/>
+        <location filename="../../src/qml/ClassWidgets/Windows/PluginPlaza.qml" line="268"/>
         <source>Search</source>
         <translation>搜索</translation>
     </message>
     <message>
-        <location filename="../../src/qml/ClassWidgets/Windows/PluginPlaza.qml" line="290"/>
+        <location filename="../../src/qml/ClassWidgets/Windows/PluginPlaza.qml" line="273"/>
         <source>Downloads</source>
         <translation>下载</translation>
     </message>
@@ -3175,6 +3184,19 @@ It&apos;s incompatible and may cause unexpected issues.</source>
     </message>
 </context>
 <context>
+    <name>RestartButton</name>
+    <message>
+        <location filename="../../src/qml/ClassWidgets/Components/RestartButton.qml" line="15"/>
+        <source>Restart required</source>
+        <translation>需要重新启动</translation>
+    </message>
+    <message>
+        <location filename="../../src/qml/ClassWidgets/Components/RestartButton.qml" line="18"/>
+        <source>Restart to apply changes</source>
+        <translation>重新启动以应用修改</translation>
+    </message>
+</context>
+<context>
     <name>SaveFlyout</name>
     <message>
         <location filename="../../src/qml/ClassWidgets/Components/editor/SaveFlyout.qml" line="56"/>
@@ -3225,17 +3247,17 @@ It&apos;s incompatible and may cause unexpected issues.</source>
         <translation type="vanished">快速添加课程</translation>
     </message>
     <message>
-        <location filename="../../src/core/convertor/converter.py" line="63"/>
+        <location filename="../../src/core/convertor/converter.py" line="62"/>
         <source>All Weeks</source>
         <translation>每周</translation>
     </message>
     <message>
-        <location filename="../../src/core/convertor/converter.py" line="65"/>
+        <location filename="../../src/core/convertor/converter.py" line="64"/>
         <source>Odd Weeks</source>
         <translation>单周</translation>
     </message>
     <message>
-        <location filename="../../src/core/convertor/converter.py" line="67"/>
+        <location filename="../../src/core/convertor/converter.py" line="66"/>
         <source>Even Weeks</source>
         <translation>双周</translation>
     </message>
@@ -3369,7 +3391,7 @@ It&apos;s incompatible and may cause unexpected issues.</source>
 <context>
     <name>ScheduleConverter</name>
     <message>
-        <location filename="../../src/core/convertor/converter.py" line="490"/>
+        <location filename="../../src/core/convertor/converter.py" line="489"/>
         <source>Class</source>
         <translation>课程</translation>
     </message>
@@ -3410,17 +3432,17 @@ It&apos;s incompatible and may cause unexpected issues.</source>
 <context>
     <name>ScheduleRuntime</name>
     <message>
-        <location filename="../../src/core/schedule/runtime.py" line="293"/>
+        <location filename="../../src/core/schedule/runtime.py" line="292"/>
         <source>Class Started</source>
         <translation>上课</translation>
     </message>
     <message>
-        <location filename="../../src/core/schedule/runtime.py" line="310"/>
+        <location filename="../../src/core/schedule/runtime.py" line="309"/>
         <source>Activity Started</source>
         <translation>活动开始</translation>
     </message>
     <message>
-        <location filename="../../src/core/schedule/runtime.py" line="319"/>
+        <location filename="../../src/core/schedule/runtime.py" line="318"/>
         <source>Intermission</source>
         <translation>课程准备</translation>
     </message>
@@ -3445,22 +3467,22 @@ It&apos;s incompatible and may cause unexpected issues.</source>
         <translation>下一节 {}（不在本教室）</translation>
     </message>
     <message>
-        <location filename="../../src/core/schedule/runtime.py" line="355"/>
+        <location filename="../../src/core/schedule/runtime.py" line="353"/>
         <source>Recess</source>
         <translation>下课课间</translation>
     </message>
     <message>
-        <location filename="../../src/core/schedule/runtime.py" line="390"/>
+        <location filename="../../src/core/schedule/runtime.py" line="388"/>
         <source>Enjoy your break</source>
         <translation>放松一下吧～</translation>
     </message>
     <message>
-        <location filename="../../src/core/schedule/runtime.py" line="392"/>
+        <location filename="../../src/core/schedule/runtime.py" line="391"/>
         <source>Free Time</source>
         <translation>自由时间</translation>
     </message>
     <message>
-        <location filename="../../src/core/schedule/runtime.py" line="397"/>
+        <location filename="../../src/core/schedule/runtime.py" line="396"/>
         <source>Status Changed</source>
         <translation>状态变更为</translation>
     </message>
@@ -3526,62 +3548,62 @@ It&apos;s incompatible and may cause unexpected issues.</source>
         <translation>推荐插件</translation>
     </message>
     <message>
-        <location filename="../../src/qml/ClassWidgets/pages/plaza/Search.qml" line="336"/>
-        <location filename="../../src/qml/ClassWidgets/pages/plaza/Search.qml" line="343"/>
+        <location filename="../../src/qml/ClassWidgets/pages/plaza/Search.qml" line="355"/>
+        <location filename="../../src/qml/ClassWidgets/pages/plaza/Search.qml" line="362"/>
         <source>Relevance</source>
         <translation>相关度</translation>
     </message>
     <message>
-        <location filename="../../src/qml/ClassWidgets/pages/plaza/Search.qml" line="337"/>
-        <location filename="../../src/qml/ClassWidgets/pages/plaza/Search.qml" line="345"/>
+        <location filename="../../src/qml/ClassWidgets/pages/plaza/Search.qml" line="356"/>
+        <location filename="../../src/qml/ClassWidgets/pages/plaza/Search.qml" line="364"/>
         <source>Name</source>
         <translation>名称</translation>
     </message>
     <message>
-        <location filename="../../src/qml/ClassWidgets/pages/plaza/Search.qml" line="338"/>
-        <location filename="../../src/qml/ClassWidgets/pages/plaza/Search.qml" line="346"/>
+        <location filename="../../src/qml/ClassWidgets/pages/plaza/Search.qml" line="357"/>
+        <location filename="../../src/qml/ClassWidgets/pages/plaza/Search.qml" line="365"/>
         <source>Rating</source>
         <translation>评级</translation>
     </message>
     <message>
-        <location filename="../../src/qml/ClassWidgets/pages/plaza/Search.qml" line="339"/>
-        <location filename="../../src/qml/ClassWidgets/pages/plaza/Search.qml" line="347"/>
+        <location filename="../../src/qml/ClassWidgets/pages/plaza/Search.qml" line="358"/>
+        <location filename="../../src/qml/ClassWidgets/pages/plaza/Search.qml" line="366"/>
         <source>Downloads</source>
         <translation>下载</translation>
     </message>
     <message>
-        <location filename="../../src/qml/ClassWidgets/pages/plaza/Search.qml" line="340"/>
-        <location filename="../../src/qml/ClassWidgets/pages/plaza/Search.qml" line="344"/>
+        <location filename="../../src/qml/ClassWidgets/pages/plaza/Search.qml" line="359"/>
+        <location filename="../../src/qml/ClassWidgets/pages/plaza/Search.qml" line="363"/>
         <source>Latest</source>
         <translation>最新发布</translation>
     </message>
     <message>
-        <location filename="../../src/qml/ClassWidgets/pages/plaza/Search.qml" line="355"/>
+        <location filename="../../src/qml/ClassWidgets/pages/plaza/Search.qml" line="330"/>
         <source>All</source>
         <translation>全部</translation>
     </message>
     <message>
-        <location filename="../../src/qml/ClassWidgets/pages/plaza/Search.qml" line="396"/>
+        <location filename="../../src/qml/ClassWidgets/pages/plaza/Search.qml" line="393"/>
         <source>Could not search plugins</source>
         <translation>无法查找插件</translation>
     </message>
     <message>
-        <location filename="../../src/qml/ClassWidgets/pages/plaza/Search.qml" line="409"/>
+        <location filename="../../src/qml/ClassWidgets/pages/plaza/Search.qml" line="406"/>
         <source>Search the plaza</source>
         <translation>在插件广场内查找</translation>
     </message>
     <message>
-        <location filename="../../src/qml/ClassWidgets/pages/plaza/Search.qml" line="410"/>
+        <location filename="../../src/qml/ClassWidgets/pages/plaza/Search.qml" line="407"/>
         <source>No suggested keywords are available.</source>
         <translation>没有可用的推荐的关键词。</translation>
     </message>
     <message>
-        <location filename="../../src/qml/ClassWidgets/pages/plaza/Search.qml" line="417"/>
+        <location filename="../../src/qml/ClassWidgets/pages/plaza/Search.qml" line="414"/>
         <source>No plugins found</source>
         <translation>未找到插件</translation>
     </message>
     <message>
-        <location filename="../../src/qml/ClassWidgets/pages/plaza/Search.qml" line="418"/>
+        <location filename="../../src/qml/ClassWidgets/pages/plaza/Search.qml" line="415"/>
         <source>Try another search or category.</source>
         <translation>尝试用其他关键字或分区查找。</translation>
     </message>
@@ -3594,57 +3616,57 @@ It&apos;s incompatible and may cause unexpected issues.</source>
         <translation>设置</translation>
     </message>
     <message>
-        <location filename="../../src/qml/ClassWidgets/Windows/Settings.qml" line="24"/>
+        <location filename="../../src/qml/ClassWidgets/Windows/Settings.qml" line="32"/>
         <source>Home</source>
         <translation>首页</translation>
     </message>
     <message>
-        <location filename="../../src/qml/ClassWidgets/Windows/Settings.qml" line="30"/>
+        <location filename="../../src/qml/ClassWidgets/Windows/Settings.qml" line="38"/>
         <source>General</source>
         <translation>通用</translation>
     </message>
     <message>
-        <location filename="../../src/qml/ClassWidgets/Windows/Settings.qml" line="38"/>
+        <location filename="../../src/qml/ClassWidgets/Windows/Settings.qml" line="46"/>
         <source>Widgets</source>
         <translation>小组件</translation>
     </message>
     <message>
-        <location filename="../../src/qml/ClassWidgets/Windows/Settings.qml" line="43"/>
+        <location filename="../../src/qml/ClassWidgets/Windows/Settings.qml" line="51"/>
         <source>Interactions</source>
         <translation>交互</translation>
     </message>
     <message>
-        <location filename="../../src/qml/ClassWidgets/Windows/Settings.qml" line="48"/>
+        <location filename="../../src/qml/ClassWidgets/Windows/Settings.qml" line="56"/>
         <source>Personalization</source>
         <translation>个性化</translation>
     </message>
     <message>
-        <location filename="../../src/qml/ClassWidgets/Windows/Settings.qml" line="53"/>
+        <location filename="../../src/qml/ClassWidgets/Windows/Settings.qml" line="61"/>
         <source>Notification &amp; Time</source>
         <translation>通知与时间</translation>
     </message>
     <message>
-        <location filename="../../src/qml/ClassWidgets/Windows/Settings.qml" line="57"/>
+        <location filename="../../src/qml/ClassWidgets/Windows/Settings.qml" line="65"/>
         <source>Notification</source>
         <translation>通知</translation>
     </message>
     <message>
-        <location filename="../../src/qml/ClassWidgets/Windows/Settings.qml" line="62"/>
+        <location filename="../../src/qml/ClassWidgets/Windows/Settings.qml" line="70"/>
         <source>Time</source>
         <translation>时间</translation>
     </message>
     <message>
-        <location filename="../../src/qml/ClassWidgets/Windows/Settings.qml" line="69"/>
+        <location filename="../../src/qml/ClassWidgets/Windows/Settings.qml" line="77"/>
         <source>Plugins</source>
         <translation>插件</translation>
     </message>
     <message>
-        <location filename="../../src/qml/ClassWidgets/Windows/Settings.qml" line="76"/>
+        <location filename="../../src/qml/ClassWidgets/Windows/Settings.qml" line="84"/>
         <source>About</source>
         <translation>关于</translation>
     </message>
     <message>
-        <location filename="../../src/qml/ClassWidgets/Windows/Settings.qml" line="82"/>
+        <location filename="../../src/qml/ClassWidgets/Windows/Settings.qml" line="90"/>
         <source>Update</source>
         <translation>更新</translation>
     </message>
@@ -3656,27 +3678,27 @@ It&apos;s incompatible and may cause unexpected issues.</source>
 <context>
     <name>Shortcuts</name>
     <message>
-        <location filename="../../src/core/central.py" line="151"/>
+        <location filename="../../src/core/central.py" line="153"/>
         <source>Settings</source>
         <translation>设置</translation>
     </message>
     <message>
-        <location filename="../../src/core/central.py" line="157"/>
+        <location filename="../../src/core/central.py" line="159"/>
         <source>Schedules</source>
         <translation>课程编辑</translation>
     </message>
     <message>
-        <location filename="../../src/core/central.py" line="163"/>
+        <location filename="../../src/core/central.py" line="165"/>
         <source>Plugin Plaza</source>
         <translation>插件广场</translation>
     </message>
     <message>
-        <location filename="../../src/core/central.py" line="169"/>
+        <location filename="../../src/core/central.py" line="171"/>
         <source>Reschedule Day</source>
         <translation>调休</translation>
     </message>
     <message>
-        <location filename="../../src/core/central.py" line="175"/>
+        <location filename="../../src/core/central.py" line="177"/>
         <source>Class Swap</source>
         <translation>换课</translation>
     </message>
@@ -3774,87 +3796,87 @@ If it takes place in another location, such as a sport field, lab, or another cl
 <context>
     <name>Subjects</name>
     <message>
-        <location filename="../../src/core/utils/subjects.py" line="46"/>
+        <location filename="../../src/core/utils/subjects.py" line="45"/>
         <source>Chinese</source>
         <translation>语文</translation>
     </message>
     <message>
-        <location filename="../../src/core/utils/subjects.py" line="47"/>
+        <location filename="../../src/core/utils/subjects.py" line="46"/>
         <source>Mathematics</source>
         <translation>数学</translation>
     </message>
     <message>
-        <location filename="../../src/core/utils/subjects.py" line="48"/>
+        <location filename="../../src/core/utils/subjects.py" line="47"/>
         <source>English</source>
         <translation>英语</translation>
     </message>
     <message>
-        <location filename="../../src/core/utils/subjects.py" line="49"/>
+        <location filename="../../src/core/utils/subjects.py" line="48"/>
         <source>Politics</source>
         <translation>政治</translation>
     </message>
     <message>
-        <location filename="../../src/core/utils/subjects.py" line="50"/>
+        <location filename="../../src/core/utils/subjects.py" line="49"/>
         <source>History</source>
         <translation>历史</translation>
     </message>
     <message>
-        <location filename="../../src/core/utils/subjects.py" line="51"/>
+        <location filename="../../src/core/utils/subjects.py" line="50"/>
         <source>Physics</source>
         <translation>物理</translation>
     </message>
     <message>
-        <location filename="../../src/core/utils/subjects.py" line="52"/>
+        <location filename="../../src/core/utils/subjects.py" line="51"/>
         <source>Chemistry</source>
         <translation>化学</translation>
     </message>
     <message>
-        <location filename="../../src/core/utils/subjects.py" line="53"/>
+        <location filename="../../src/core/utils/subjects.py" line="52"/>
         <source>Biology</source>
         <translation>生物</translation>
     </message>
     <message>
-        <location filename="../../src/core/utils/subjects.py" line="54"/>
+        <location filename="../../src/core/utils/subjects.py" line="53"/>
         <source>Geography</source>
         <translation>地理</translation>
     </message>
     <message>
-        <location filename="../../src/core/utils/subjects.py" line="55"/>
+        <location filename="../../src/core/utils/subjects.py" line="54"/>
         <source>Music</source>
         <translation>音乐</translation>
     </message>
     <message>
-        <location filename="../../src/core/utils/subjects.py" line="56"/>
+        <location filename="../../src/core/utils/subjects.py" line="55"/>
         <source>Art</source>
         <translation>美术</translation>
     </message>
     <message>
-        <location filename="../../src/core/utils/subjects.py" line="57"/>
+        <location filename="../../src/core/utils/subjects.py" line="56"/>
         <source>Psychology</source>
         <translation>心理</translation>
     </message>
     <message>
-        <location filename="../../src/core/utils/subjects.py" line="58"/>
+        <location filename="../../src/core/utils/subjects.py" line="57"/>
         <source>Physical Education</source>
         <translation>体育</translation>
     </message>
     <message>
-        <location filename="../../src/core/utils/subjects.py" line="59"/>
+        <location filename="../../src/core/utils/subjects.py" line="58"/>
         <source>Information Technology</source>
         <translation>信息技术</translation>
     </message>
     <message>
-        <location filename="../../src/core/utils/subjects.py" line="60"/>
+        <location filename="../../src/core/utils/subjects.py" line="59"/>
         <source>General Technology</source>
         <translation>通用技术</translation>
     </message>
     <message>
-        <location filename="../../src/core/utils/subjects.py" line="61"/>
+        <location filename="../../src/core/utils/subjects.py" line="60"/>
         <source>Elective</source>
         <translation>选修</translation>
     </message>
     <message>
-        <location filename="../../src/core/utils/subjects.py" line="62"/>
+        <location filename="../../src/core/utils/subjects.py" line="61"/>
         <source>Self Study</source>
         <translation>自学</translation>
     </message>
@@ -3891,27 +3913,27 @@ If it takes place in another location, such as a sport field, lab, or another cl
         <translation type="vanished">哲</translation>
     </message>
     <message>
-        <location filename="../../src/core/utils/subjects.py" line="64"/>
+        <location filename="../../src/core/utils/subjects.py" line="63"/>
         <source>Class Meeting</source>
         <translation>班会</translation>
     </message>
     <message>
-        <location filename="../../src/core/utils/subjects.py" line="65"/>
+        <location filename="../../src/core/utils/subjects.py" line="64"/>
         <source>Weekly Test</source>
         <translation>周测</translation>
     </message>
     <message>
-        <location filename="../../src/core/utils/subjects.py" line="66"/>
+        <location filename="../../src/core/utils/subjects.py" line="65"/>
         <source>Economics</source>
         <translation>经济学</translation>
     </message>
     <message>
-        <location filename="../../src/core/utils/subjects.py" line="67"/>
+        <location filename="../../src/core/utils/subjects.py" line="66"/>
         <source>Philosophy</source>
         <translation>哲学</translation>
     </message>
     <message>
-        <location filename="../../src/core/utils/subjects.py" line="70"/>
+        <location filename="../../src/core/utils/subjects.py" line="67"/>
         <source>Computer Science</source>
         <translation>计算机科学</translation>
     </message>
@@ -3956,7 +3978,7 @@ If it takes place in another location, such as a sport field, lab, or another cl
         <translation type="vanished">信</translation>
     </message>
     <message>
-        <location filename="../../src/core/utils/subjects.py" line="63"/>
+        <location filename="../../src/core/utils/subjects.py" line="62"/>
         <source>Club</source>
         <translation>社团</translation>
     </message>
@@ -4055,127 +4077,127 @@ If it takes place in another location, such as a sport field, lab, or another cl
 <context>
     <name>SubjectsSimplified</name>
     <message>
-        <location filename="../../src/core/utils/subjects.py" line="71"/>
+        <location filename="../../src/core/utils/subjects.py" line="70"/>
         <source>CHN</source>
         <translation>语</translation>
     </message>
     <message>
-        <location filename="../../src/core/utils/subjects.py" line="72"/>
+        <location filename="../../src/core/utils/subjects.py" line="71"/>
         <source>Math</source>
         <translation>数</translation>
     </message>
     <message>
-        <location filename="../../src/core/utils/subjects.py" line="73"/>
+        <location filename="../../src/core/utils/subjects.py" line="72"/>
         <source>Eng</source>
         <translation>英</translation>
     </message>
     <message>
-        <location filename="../../src/core/utils/subjects.py" line="74"/>
+        <location filename="../../src/core/utils/subjects.py" line="73"/>
         <source>Civics</source>
         <translation>政</translation>
     </message>
     <message>
-        <location filename="../../src/core/utils/subjects.py" line="75"/>
+        <location filename="../../src/core/utils/subjects.py" line="74"/>
         <source>Hist</source>
         <translation>史</translation>
     </message>
     <message>
-        <location filename="../../src/core/utils/subjects.py" line="76"/>
+        <location filename="../../src/core/utils/subjects.py" line="75"/>
         <source>Phys</source>
         <translation>物</translation>
     </message>
     <message>
-        <location filename="../../src/core/utils/subjects.py" line="77"/>
+        <location filename="../../src/core/utils/subjects.py" line="76"/>
         <source>Chem</source>
         <translation>化</translation>
     </message>
     <message>
-        <location filename="../../src/core/utils/subjects.py" line="78"/>
+        <location filename="../../src/core/utils/subjects.py" line="77"/>
         <source>Bio</source>
         <translation>生</translation>
     </message>
     <message>
-        <location filename="../../src/core/utils/subjects.py" line="79"/>
+        <location filename="../../src/core/utils/subjects.py" line="78"/>
         <source>Geo</source>
         <translation>地</translation>
     </message>
     <message>
-        <location filename="../../src/core/utils/subjects.py" line="80"/>
+        <location filename="../../src/core/utils/subjects.py" line="79"/>
         <source>Mus</source>
         <translation>音</translation>
     </message>
     <message>
-        <location filename="../../src/core/utils/subjects.py" line="81"/>
+        <location filename="../../src/core/utils/subjects.py" line="80"/>
         <source>Art</source>
         <translation>美</translation>
     </message>
     <message>
-        <location filename="../../src/core/utils/subjects.py" line="82"/>
+        <location filename="../../src/core/utils/subjects.py" line="81"/>
         <source>Psy</source>
         <translation>心</translation>
     </message>
     <message>
-        <location filename="../../src/core/utils/subjects.py" line="83"/>
+        <location filename="../../src/core/utils/subjects.py" line="82"/>
         <source>PE</source>
         <translation>体</translation>
     </message>
     <message>
-        <location filename="../../src/core/utils/subjects.py" line="84"/>
+        <location filename="../../src/core/utils/subjects.py" line="83"/>
         <source>IT</source>
         <translation>信</translation>
     </message>
     <message>
-        <location filename="../../src/core/utils/subjects.py" line="85"/>
+        <location filename="../../src/core/utils/subjects.py" line="84"/>
         <source>GenTech</source>
         <translation>通</translation>
     </message>
     <message>
-        <location filename="../../src/core/utils/subjects.py" line="86"/>
+        <location filename="../../src/core/utils/subjects.py" line="85"/>
         <source>Elective</source>
         <translation>选</translation>
     </message>
     <message>
-        <location filename="../../src/core/utils/subjects.py" line="87"/>
+        <location filename="../../src/core/utils/subjects.py" line="86"/>
         <source>Study</source>
         <translation>自</translation>
     </message>
     <message>
-        <location filename="../../src/core/utils/subjects.py" line="88"/>
+        <location filename="../../src/core/utils/subjects.py" line="87"/>
         <source>Club</source>
         <translation>社</translation>
     </message>
     <message>
-        <location filename="../../src/core/utils/subjects.py" line="89"/>
+        <location filename="../../src/core/utils/subjects.py" line="88"/>
         <source>ClassMtg</source>
         <translation>班</translation>
     </message>
     <message>
-        <location filename="../../src/core/utils/subjects.py" line="90"/>
+        <location filename="../../src/core/utils/subjects.py" line="89"/>
         <source>Weekly</source>
         <translation>测</translation>
     </message>
     <message>
-        <location filename="../../src/core/utils/subjects.py" line="91"/>
+        <location filename="../../src/core/utils/subjects.py" line="90"/>
         <source>Econ</source>
         <translation>经</translation>
     </message>
     <message>
-        <location filename="../../src/core/utils/subjects.py" line="92"/>
+        <location filename="../../src/core/utils/subjects.py" line="91"/>
         <source>Philos</source>
         <translation>哲</translation>
     </message>
     <message>
-        <location filename="../../src/core/utils/subjects.py" line="93"/>
+        <location filename="../../src/core/utils/subjects.py" line="92"/>
         <source>CS</source>
         <translation>计科</translation>
     </message>
     <message>
-        <location filename="../../src/core/utils/subjects.py" line="94"/>
+        <location filename="../../src/core/utils/subjects.py" line="93"/>
         <source>Meeting</source>
         <translation>会</translation>
     </message>
     <message>
-        <location filename="../../src/core/utils/subjects.py" line="95"/>
+        <location filename="../../src/core/utils/subjects.py" line="94"/>
         <source>Test</source>
         <translation>测</translation>
     </message>
@@ -4483,7 +4505,7 @@ If it takes place in another location, such as a sport field, lab, or another cl
         <translation type="vanished">快捷方式</translation>
     </message>
     <message>
-        <location filename="../../src/qml/ClassWidgets/Windows/TrayPanel.qml" line="154"/>
+        <location filename="../../src/qml/ClassWidgets/Windows/TrayPanel.qml" line="168"/>
         <source>Reschedule Day</source>
         <translation>调休</translation>
     </message>
@@ -4502,17 +4524,22 @@ If it takes place in another location, such as a sport field, lab, or another cl
         <translation>切换课程表</translation>
     </message>
     <message>
-        <location filename="../../src/qml/ClassWidgets/Windows/TrayPanel.qml" line="134"/>
+        <location filename="../../src/qml/ClassWidgets/Windows/TrayPanel.qml" line="135"/>
         <source>Debugger</source>
         <translation>调试器</translation>
     </message>
     <message>
-        <location filename="../../src/qml/ClassWidgets/Windows/TrayPanel.qml" line="141"/>
+        <location filename="../../src/qml/ClassWidgets/Windows/TrayPanel.qml" line="147"/>
         <source>Restart</source>
         <translation>重启</translation>
     </message>
     <message>
-        <location filename="../../src/qml/ClassWidgets/Windows/TrayPanel.qml" line="148"/>
+        <location filename="../../src/qml/ClassWidgets/Windows/TrayPanel.qml" line="155"/>
+        <source>Restart required</source>
+        <translation>需要重新启动</translation>
+    </message>
+    <message>
+        <location filename="../../src/qml/ClassWidgets/Windows/TrayPanel.qml" line="162"/>
         <source>Exit</source>
         <translation>退出</translation>
     </message>
@@ -4863,7 +4890,7 @@ If it takes place in another location, such as a sport field, lab, or another cl
 <context>
     <name>UpdateNotification</name>
     <message>
-        <location filename="../../src/core/automations/update_check.py" line="43"/>
+        <location filename="../../src/core/automations/update_check.py" line="39"/>
         <source>&quot;{version}&quot; is available!
 Go to &quot;Settings&quot; → &quot;Update&quot; for more details.</source>
         <translation>发现新版本：&quot;{version}&quot;！
@@ -4875,7 +4902,7 @@ Go to &quot;Settings&quot; → &quot;Update&quot; for more details.</source>
         <translation>Class Widgets 更新速递</translation>
     </message>
     <message>
-        <location filename="../../src/core/updater/bridge.py" line="89"/>
+        <location filename="../../src/core/updater/bridge.py" line="85"/>
         <source>Class Widgets has been updated to the latest version: {version}</source>
         <translation>Class Widgets 已更新至最新版本：{version}</translation>
     </message>
@@ -4890,7 +4917,7 @@ Go to &quot;Settings&quot; → &quot;Update&quot; for more details.</source>
         <translation>已下载更新</translation>
     </message>
     <message>
-        <location filename="../../src/core/updater/bridge.py" line="168"/>
+        <location filename="../../src/core/updater/bridge.py" line="164"/>
         <source>Ready to install anytime. Go to &quot;Settings&quot; → &quot;Update&quot; to proceed with installation.</source>
         <translation>随时可以安装。前往“设置”→“更新”以安装。</translation>
     </message>
@@ -4900,7 +4927,7 @@ Go to &quot;Settings&quot; → &quot;Update&quot; for more details.</source>
         <translation>即将应用更新</translation>
     </message>
     <message>
-        <location filename="../../src/core/updater/bridge.py" line="209"/>
+        <location filename="../../src/core/updater/bridge.py" line="206"/>
         <source>The update may take several seconds to complete. (●&apos;◡&apos;●)</source>
         <translation>本更新可能会耗时数十秒，请稍后 (●&apos;◡&apos;●)</translation>
     </message>

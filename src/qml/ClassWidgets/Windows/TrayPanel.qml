@@ -119,6 +119,7 @@ Window {
     RowLayout {
         id: bottomRow
         anchors.right: parent.right
+        anchors.left: parent.left
         anchors.bottom: parent.bottom
         anchors.margins: 4
         spacing: 0
@@ -134,11 +135,24 @@ Window {
             ToolTip { text: qsTr("Debugger"); visible: parent.hovered }
         }
 
+        Item {
+            Layout.fillWidth: true
+        }
+
         ToolButton {
             flat: true
             icon.name: "ic_fluent_arrow_counterclockwise_20_regular"
             onClicked: AppCentral.restart()
+            visible: !AppCentral.restartRequired
             ToolTip { text: qsTr("Restart"); visible: parent.hovered }
+        }
+
+        Button {
+            flat: true
+            icon.name: "ic_fluent_arrow_counterclockwise_20_regular"
+            onClicked: AppCentral.restart()
+            visible: AppCentral.restartRequired
+            text: qsTr("Restart required")
         }
 
         ToolButton {
