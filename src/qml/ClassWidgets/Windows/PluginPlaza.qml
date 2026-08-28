@@ -167,44 +167,27 @@ FluentWindow {
 
 
 
-        ToolButton {
-            flat: true
+        ProgressRing {
             Layout.alignment: Qt.AlignRight
-            icon.name: "ic_fluent_arrow_sync_20_regular"
-            size: 18
+            visible: PluginManager.plazaInstallActive
+            strokeWidth: 3
+            size: 20
+            value: PluginManager.installProgress / 100
+            backgroundColor: indeterminate ? "transparent" : Colors.proxy.controlAltTertiaryColor
+            indeterminate: PluginManager.installStatus === "Installing"
 
             ToolTip {
-                text: qsTr("Refresh")
                 visible: parent.hovered
+                text: PluginManager.installTotalBytes > 0
+                        ? qsTr("Downloaded: %1 / %2")
+                          .arg(root.formatBytes(PluginManager.installDownloadedBytes))
+                          .arg(root.formatBytes(PluginManager.installTotalBytes))
+                        : qsTr("Downloading")
             }
+        }
 
-            onClicked: {
-                PlazaBridge.refreshAll()
-            }
-
-            ProgressRing {
-                visible: PluginManager.plazaInstallActive
-                // Layout.alignment: Qt.AlignVCenter
-                strokeWidth: 3
-                anchors {
-                    right: parent.left
-                    verticalCenter: parent.verticalCenter
-                    rightMargin: 12
-                }
-                size: 20
-                value: PluginManager.installProgress / 100
-                backgroundColor: indeterminate ? "transparent" : Colors.proxy.controlAltTertiaryColor
-                indeterminate: PluginManager.installStatus === "Installing"
-
-                ToolTip {
-                    visible: parent.hovered
-                    text: PluginManager.installTotalBytes > 0
-                            ? qsTr("Downloaded: %1 / %2")
-                              .arg(root.formatBytes(PluginManager.installDownloadedBytes))
-                              .arg(root.formatBytes(PluginManager.installTotalBytes))
-                            : qsTr("Downloading")
-                }
-            }
+        RestartButton {
+            Layout.alignment: Qt.AlignRight
         }
     }
 

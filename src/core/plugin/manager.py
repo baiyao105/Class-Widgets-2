@@ -666,6 +666,7 @@ class PluginManager(QObject):
             self.enabled_plugins.discard(pid)
         self.app_central.configs.plugins.enabled = list(self.enabled_plugins)
         self.pluginListChanged.emit()
+        self.app_central.markRestartRequired()
 
     @Slot(str, result=bool)
     def openPluginFolder(self, pid: str) -> bool:
@@ -740,6 +741,7 @@ class PluginManager(QObject):
             # 重新扫描插件列表
             self.scan()
             self.pluginListChanged.emit()
+            self.app_central.markRestartRequired()
             return True
         except Exception as e:
             logger.exception(f"Failed to uninstall plugin {pid}: {e}")

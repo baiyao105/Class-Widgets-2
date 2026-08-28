@@ -19,6 +19,14 @@ FluentWindow {
         WindowManager.closeSettings()
     }
 
+    titleBarArea: RowLayout {
+        anchors.fill: parent
+
+        RestartButton {
+            Layout.alignment: Qt.AlignRight
+        }
+    }
+
     navigationItems: [
         {
             title: qsTr("Home"),

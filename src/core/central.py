@@ -78,6 +78,7 @@ class AppCentral(QObject):  # Class Widgets 的中枢
     widgetRegistered = Signal(str)  # 新增：widget注册信号
     retranslate = Signal()  # 新增：翻译信号
     trayShortcutRequested = Signal(str)
+    restartRequiredChanged = Signal(bool)  # 新增：需要重启以应用更改
 
     def __init__(self) -> None:  # 初始化
         super().__init__()
@@ -93,6 +94,7 @@ class AppCentral(QObject):  # Class Widgets 的中枢
         self._startup_swap_restore_scheduled: bool = False
         self._cleanup_started = False
         self._restart_requested = False
+        self._restart_required = False  # 是否有待应用的重启（UI 提示用）
         self._initialize_cores()
         self._initialize_app_icon()
         self._initialize_windows_appid()
@@ -398,6 +400,19 @@ class AppCentral(QObject):  # Class Widgets 的中枢
             return
 
         self.app_instance.quit()
+
+    @Property(bool, notify=restartRequiredChanged)
+    def restartRequired(self) -> bool:
+        """是否有待应用的重启（供 UI 显示重启提示按钮）"""
+        return self._restart_required
+
+    @Slot()
+    def markRestartRequired(self) -> None:
+        """标记需要重启以应用更改（如插件启用/禁用状态变化）"""
+        if self._restart_required:
+            return
+        self._restart_required = True
+        self.restartRequiredChanged.emit(True)
 
     def setup_qml_context(self, window: QmlContextWindow) -> None:
         """
