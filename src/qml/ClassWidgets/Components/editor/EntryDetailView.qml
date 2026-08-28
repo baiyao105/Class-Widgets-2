@@ -64,45 +64,37 @@ Flyout {
         });
     }
 
-    Timer {
-        id: saveTimer
-        interval: 300
-        onTriggered: {
-            if (!currentEntry) return;
+    function applyChanges() {
+        if (!currentEntry) return;
 
-            const newType = typeSegmented.currentIndex === 0 ? "class"
-                      : typeSegmented.currentIndex === 1 ? "break"
-                      : "activity"
+        const newType = typeSegmented.currentIndex === 0 ? "class"
+                  : typeSegmented.currentIndex === 1 ? "break"
+                  : "activity"
 
-            const startTime = startTimePicker.time.toString("hh:mm")
-            const endTime = endTimePicker.time.toString("hh:mm")
+        const startTime = startTimePicker.time.toString("hh:mm")
+        const endTime = endTimePicker.time.toString("hh:mm")
 
-            if (endTime <= startTime) {
-                floatLayer.createInfoBar({
-                    title: qsTr("Invalid Time Range"),
-                    text: qsTr("End time must be later than start time."),
-                    severity: Severity.Error
-                })
+        if (endTime <= startTime) {
+            floatLayer.createInfoBar({
+                title: qsTr("Invalid Time Range"),
+                text: qsTr("End time must be later than start time."),
+                severity: Severity.Error
+            })
 
-                Qt.callLater(function() {
-                    startTimePicker.setTime(currentEntry.startTime || "08:00")
-                    endTimePicker.setTime(currentEntry.endTime || "09:00")
-                })
-                return
-            }
-
-            AppCentral.scheduleEditor.updateEntry(
-                currentEntry.id, newType,
-                startTime,
-                endTime,
-                entrySubject.checkedId || null,
-                entryTitle.text || null
-            )
+            Qt.callLater(function() {
+                startTimePicker.setTime(currentEntry.startTime || "08:00")
+                endTimePicker.setTime(currentEntry.endTime || "09:00")
+            })
+            return
         }
-    }
 
-    function saveChanges() {
-        saveTimer.restart()
+        AppCentral.scheduleEditor.updateEntry(
+            currentEntry.id, newType,
+            startTime,
+            endTime,
+            entrySubject.checkedId || null,
+            entryTitle.text || null
+        )
     }
 
     position: Position.Bottom
@@ -145,7 +137,6 @@ Flyout {
         ButtonGroup {
             id: typeSegmented
             readonly property int currentIndex: checkedButton ? checkedButton.index : -1
-            onCurrentIndexChanged: root.saveChanges()
         }
 
         RowLayout {
@@ -221,7 +212,6 @@ Flyout {
                         text: qsTr("Set Subject")
                         onClicked: {
                             entrySubject.checkedId = subjectsGroup.checkedButton.checkedId
-                            saveChanges()
                             subjectsFlyout.close()
                         }
                     }
@@ -242,7 +232,6 @@ Flyout {
             TextField {
                 id: entryTitle
                 Layout.minimumWidth: 200
-                onTextChanged: root.saveChanges()
                 placeholderText: {
                     switch (typeSegmented.currentIndex) {
                         case 0:
@@ -268,7 +257,6 @@ Flyout {
                 id: startTimePicker
                 Layout.preferredWidth: 200
                 use24Hour: true
-                onTimeChanged: root.saveChanges()
             }
         }
         RowLayout {
@@ -281,7 +269,6 @@ Flyout {
                 id: endTimePicker
                 Layout.preferredWidth: 200
                 use24Hour: true
-                onTimeChanged: root.saveChanges()
             }
         }
 
@@ -297,7 +284,10 @@ Flyout {
             highlighted: true
             icon.name: "ic_fluent_checkmark_20_regular"
             text: qsTr("OK")
-            onClicked: root.close()
+            onClicked: {
+                root.applyChanges()
+                root.close()
+            }
         },
         Button {
             Layout.alignment: Qt.AlignRight
