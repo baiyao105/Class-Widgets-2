@@ -25,10 +25,14 @@ Clip {
     property string primaryActionIcon: ""
     property bool cancelVisible: false
 
+    property bool enableSwitchVisible: false
+    property bool pluginEnabled: false
+
     signal primaryActionRequested()
     signal openStoreRequested()
     signal copyLinkRequested()
     signal cancelRequested()
+    signal enableToggled(bool checked)
 
     Layout.fillWidth: true
     Layout.minimumHeight: 82
@@ -163,6 +167,14 @@ Clip {
 
             Item {
                 Layout.fillWidth: true
+            }
+
+            Switch {
+                visible: root.enableSwitchVisible
+                // text: checked ? qsTr("Enabled") : qsTr("Disabled")
+                onToggled: root.enableToggled(checked)
+
+                Component.onCompleted: checked = root.pluginEnabled
             }
 
             Button {

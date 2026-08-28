@@ -323,12 +323,31 @@ FluentPage {
                 Layout.fillWidth: true
                 spacing: 12
 
-                // Text {
-                //     Layout.fillWidth: true
-                //     text: "\u201C" + root.query + "\u201D"
-                //     typography: Typography.Title
-                //     elide: Text.ElideRight
-                // }
+                Segmented {
+                    enabled: !root.loading
+
+                    SegmentedItem {
+                        text: qsTr("All")
+                        checked: root.activeTag === ""
+                        onClicked: root.selectTag("")
+                    }
+
+                    Repeater {
+                        model: root.tags instanceof Array ? root.tags.slice(0, 5) : []
+
+                        delegate: SegmentedItem {
+                            required property var modelData
+                            readonly property string tagId: modelData.id || modelData.name || ""
+                            text: modelData.name || modelData.id || ""
+                            checked: root.activeTag === tagId
+                            onClicked: root.selectTag(tagId)
+                        }
+                    }
+                }
+
+                Item {
+                    Layout.fillWidth: true
+                }
 
                 DropDownButton {
                     Layout.alignment: Qt.AlignRight
@@ -345,28 +364,6 @@ FluentPage {
                     MenuItem { text: qsTr("Name"); onTriggered: root.selectSort("name") }
                     MenuItem { text: qsTr("Rating"); onTriggered: root.selectSort("rating") }
                     MenuItem { text: qsTr("Downloads"); onTriggered: root.selectSort("downloads") }
-                }
-            }
-
-            Segmented {
-                enabled: !root.loading
-
-                SegmentedItem {
-                    text: qsTr("All")
-                    checked: root.activeTag === ""
-                    onClicked: root.selectTag("")
-                }
-
-                Repeater {
-                    model: root.tags instanceof Array ? root.tags.slice(0, 5) : []
-
-                    delegate: SegmentedItem {
-                        required property var modelData
-                        readonly property string tagId: modelData.id || modelData.name || ""
-                        text: modelData.name || modelData.id || ""
-                        checked: root.activeTag === tagId
-                        onClicked: root.selectTag(tagId)
-                    }
                 }
             }
         }
