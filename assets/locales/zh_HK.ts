@@ -427,7 +427,7 @@ Do you want to continue using them, or discard and restore the original schedule
         <translation type="obsolete">預設</translation>
     </message>
     <message>
-        <location filename="../../src/core/config/model.py" line="206"/>
+        <location filename="../../src/core/config/model.py" line="219"/>
         <source>New Schedule 1</source>
         <translation>新課程表1</translation>
     </message>
@@ -1620,17 +1620,29 @@ Do you want to continue using them, or discard and restore the original schedule
 <context>
     <name>Interactions</name>
     <message>
-        <location filename="../../src/qml/ClassWidgets/pages/settings/General/Interactions.qml" line="10"/>
+        <location filename="../../src/qml/ClassWidgets/pages/settings/General/Interactions.qml" line="11"/>
         <source>Interactions &amp; Actions</source>
         <translation type="unfinished">互動與動作</translation>
     </message>
     <message>
-        <location filename="../../src/qml/ClassWidgets/pages/settings/General/Interactions.qml" line="18"/>
+        <location filename="../../src/qml/ClassWidgets/pages/settings/General/Interactions.qml" line="22"/>
         <source>Widgets</source>
         <translation type="unfinished">控制項 (&amp;W)</translation>
     </message>
     <message>
-        <location filename="../../src/qml/ClassWidgets/pages/settings/General/Interactions.qml" line="23"/>
+        <location filename="../../src/qml/ClassWidgets/pages/settings/General/Interactions.qml" line="28"/>
+        <location filename="../../src/qml/ClassWidgets/pages/tutorial/Interactions.qml" line="29"/>
+        <source>Tap Action</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../src/qml/ClassWidgets/pages/settings/General/Interactions.qml" line="29"/>
+        <location filename="../../src/qml/ClassWidgets/pages/tutorial/Interactions.qml" line="30"/>
+        <source>Choose whether tapping a widget hides it or switches to mini mode</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../src/qml/ClassWidgets/pages/settings/General/Interactions.qml" line="90"/>
         <source>Hover fade</source>
         <translation type="unfinished">懸停淡出</translation>
     </message>
@@ -1639,9 +1651,8 @@ Do you want to continue using them, or discard and restore the original schedule
         <translation type="obsolete">懸停以使小工具變為透明並讓點擊穿過，移開時恢復原狀。</translation>
     </message>
     <message>
-        <location filename="../../src/qml/ClassWidgets/pages/settings/General/Interactions.qml" line="40"/>
         <source>Tap to hide</source>
-        <translation type="unfinished">點按隱藏</translation>
+        <translation type="obsolete">點按隱藏</translation>
     </message>
     <message>
         <source>Click on the widget to hide it, click it again to bring it back. 
@@ -1649,47 +1660,46 @@ Do you want to continue using them, or discard and restore the original schedule
         <translation type="obsolete">點擊小工具以隱藏它，再次點擊以恢復原狀。* 某些互動元素可能不會響應點擊</translation>
     </message>
     <message>
-        <location filename="../../src/qml/ClassWidgets/pages/settings/General/Interactions.qml" line="24"/>
+        <location filename="../../src/qml/ClassWidgets/pages/settings/General/Interactions.qml" line="91"/>
         <source>Hover to make the widget transparent and let clicks go through, move away to bring it back</source>
         <translation>懸停使部件透明並允許點擊穿透，移開後恢復顯示</translation>
     </message>
     <message>
-        <location filename="../../src/qml/ClassWidgets/pages/settings/General/Interactions.qml" line="41"/>
         <source>Click on the widget to hide it, click it again to bring it back</source>
-        <translation>點擊小組件以隱藏，再次點擊以恢復顯示</translation>
+        <translation type="vanished">點擊小組件以隱藏，再次點擊以恢復顯示</translation>
     </message>
     <message>
-        <location filename="../../src/qml/ClassWidgets/pages/settings/General/Interactions.qml" line="54"/>
+        <location filename="../../src/qml/ClassWidgets/pages/settings/General/Interactions.qml" line="106"/>
         <source>More hide behavior</source>
         <translation type="unfinished">更多隱藏行為</translation>
     </message>
     <message>
-        <location filename="../../src/qml/ClassWidgets/pages/settings/General/Interactions.qml" line="56"/>
+        <location filename="../../src/qml/ClassWidgets/pages/settings/General/Interactions.qml" line="108"/>
         <source>Choose whether widgets hide or switch to Mini Mode when triggered</source>
         <translation type="unfinished">選擇觸發時小工具是隱藏還是切換至迷你模式</translation>
     </message>
     <message>
-        <location filename="../../src/qml/ClassWidgets/pages/settings/General/Interactions.qml" line="62"/>
+        <location filename="../../src/qml/ClassWidgets/pages/settings/General/Interactions.qml" line="114"/>
         <source>Hide Widgets</source>
         <translation type="unfinished">隱藏小工具</translation>
     </message>
     <message>
-        <location filename="../../src/qml/ClassWidgets/pages/settings/General/Interactions.qml" line="63"/>
+        <location filename="../../src/qml/ClassWidgets/pages/settings/General/Interactions.qml" line="115"/>
         <source>Switch to mini mode</source>
         <translation type="unfinished">切換至迷你模式</translation>
     </message>
     <message>
-        <location filename="../../src/qml/ClassWidgets/pages/settings/General/Interactions.qml" line="80"/>
+        <location filename="../../src/qml/ClassWidgets/pages/settings/General/Interactions.qml" line="129"/>
         <source>Hide when in class</source>
         <translation type="unfinished">上課時隱藏</translation>
     </message>
     <message>
-        <location filename="../../src/qml/ClassWidgets/pages/settings/General/Interactions.qml" line="87"/>
+        <location filename="../../src/qml/ClassWidgets/pages/settings/General/Interactions.qml" line="136"/>
         <source>Hide when a window is maximized</source>
         <translation type="unfinished">視窗最大化時隱藏</translation>
     </message>
     <message>
-        <location filename="../../src/qml/ClassWidgets/pages/settings/General/Interactions.qml" line="94"/>
+        <location filename="../../src/qml/ClassWidgets/pages/settings/General/Interactions.qml" line="143"/>
         <source>Hide when a window enters fullscreen</source>
         <translation type="unfinished">視窗進入全螢幕時隱藏</translation>
     </message>
@@ -1704,21 +1714,21 @@ Do you want to continue using them, or discard and restore the original schedule
         <translation>選擇點樣令小組件喺你正常使用嗰陣避免干擾。</translation>
     </message>
     <message>
-        <location filename="../../src/qml/ClassWidgets/pages/tutorial/Interactions.qml" line="29"/>
         <source>Hide Behavior</source>
-        <translation>隱藏方式</translation>
+        <translation type="vanished">隱藏方式</translation>
     </message>
     <message>
-        <location filename="../../src/qml/ClassWidgets/pages/tutorial/Interactions.qml" line="30"/>
         <source>Choose whether widgets disappear or become compact</source>
-        <translation>選擇小組件隱藏後消失或縮小顯示</translation>
+        <translation type="vanished">選擇小組件隱藏後消失或縮小顯示</translation>
     </message>
     <message>
+        <location filename="../../src/qml/ClassWidgets/pages/settings/General/Interactions.qml" line="51"/>
         <location filename="../../src/qml/ClassWidgets/pages/tutorial/Interactions.qml" line="45"/>
         <source>Hide</source>
         <translation>隱藏</translation>
     </message>
     <message>
+        <location filename="../../src/qml/ClassWidgets/pages/settings/General/Interactions.qml" line="56"/>
         <location filename="../../src/qml/ClassWidgets/pages/tutorial/Interactions.qml" line="50"/>
         <source>Mini Mode</source>
         <translation type="unfinished">迷你模式</translation>
@@ -1793,7 +1803,7 @@ Do you want to continue using them, or discard and restore the original schedule
     </message>
     <message>
         <location filename="../../src/qml/ClassWidgets/pages/settings/notificationAndTime/Notification.qml" line="27"/>
-        <location filename="../../src/qml/ClassWidgets/pages/settings/notificationAndTime/Notification.qml" line="358"/>
+        <location filename="../../src/qml/ClassWidgets/pages/settings/notificationAndTime/Notification.qml" line="362"/>
         <source>Enable notifications</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1824,85 +1834,85 @@ Do you want to continue using them, or discard and restore the original schedule
     </message>
     <message>
         <location filename="../../src/qml/ClassWidgets/pages/settings/notificationAndTime/Notification.qml" line="65"/>
-        <location filename="../../src/qml/ClassWidgets/pages/settings/notificationAndTime/Notification.qml" line="104"/>
-        <location filename="../../src/qml/ClassWidgets/pages/settings/notificationAndTime/Notification.qml" line="143"/>
-        <location filename="../../src/qml/ClassWidgets/pages/settings/notificationAndTime/Notification.qml" line="182"/>
+        <location filename="../../src/qml/ClassWidgets/pages/settings/notificationAndTime/Notification.qml" line="105"/>
+        <location filename="../../src/qml/ClassWidgets/pages/settings/notificationAndTime/Notification.qml" line="145"/>
+        <location filename="../../src/qml/ClassWidgets/pages/settings/notificationAndTime/Notification.qml" line="185"/>
         <source>Default sound</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/qml/ClassWidgets/pages/settings/notificationAndTime/Notification.qml" line="78"/>
-        <location filename="../../src/qml/ClassWidgets/pages/settings/notificationAndTime/Notification.qml" line="116"/>
-        <location filename="../../src/qml/ClassWidgets/pages/settings/notificationAndTime/Notification.qml" line="155"/>
-        <location filename="../../src/qml/ClassWidgets/pages/settings/notificationAndTime/Notification.qml" line="194"/>
+        <location filename="../../src/qml/ClassWidgets/pages/settings/notificationAndTime/Notification.qml" line="79"/>
+        <location filename="../../src/qml/ClassWidgets/pages/settings/notificationAndTime/Notification.qml" line="118"/>
+        <location filename="../../src/qml/ClassWidgets/pages/settings/notificationAndTime/Notification.qml" line="158"/>
+        <location filename="../../src/qml/ClassWidgets/pages/settings/notificationAndTime/Notification.qml" line="198"/>
         <source>Play sound</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/qml/ClassWidgets/pages/settings/notificationAndTime/Notification.qml" line="85"/>
-        <location filename="../../src/qml/ClassWidgets/pages/settings/notificationAndTime/Notification.qml" line="124"/>
-        <location filename="../../src/qml/ClassWidgets/pages/settings/notificationAndTime/Notification.qml" line="163"/>
-        <location filename="../../src/qml/ClassWidgets/pages/settings/notificationAndTime/Notification.qml" line="202"/>
+        <location filename="../../src/qml/ClassWidgets/pages/settings/notificationAndTime/Notification.qml" line="86"/>
+        <location filename="../../src/qml/ClassWidgets/pages/settings/notificationAndTime/Notification.qml" line="126"/>
+        <location filename="../../src/qml/ClassWidgets/pages/settings/notificationAndTime/Notification.qml" line="166"/>
+        <location filename="../../src/qml/ClassWidgets/pages/settings/notificationAndTime/Notification.qml" line="206"/>
         <source>Select sound</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/qml/ClassWidgets/pages/settings/notificationAndTime/Notification.qml" line="94"/>
+        <location filename="../../src/qml/ClassWidgets/pages/settings/notificationAndTime/Notification.qml" line="95"/>
         <source>Announcement</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/qml/ClassWidgets/pages/settings/notificationAndTime/Notification.qml" line="95"/>
+        <location filename="../../src/qml/ClassWidgets/pages/settings/notificationAndTime/Notification.qml" line="96"/>
         <source>Notification sounds for class and break announcements</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/qml/ClassWidgets/pages/settings/notificationAndTime/Notification.qml" line="133"/>
+        <location filename="../../src/qml/ClassWidgets/pages/settings/notificationAndTime/Notification.qml" line="135"/>
         <source>Warning</source>
         <translation type="unfinished">警告</translation>
     </message>
     <message>
-        <location filename="../../src/qml/ClassWidgets/pages/settings/notificationAndTime/Notification.qml" line="134"/>
+        <location filename="../../src/qml/ClassWidgets/pages/settings/notificationAndTime/Notification.qml" line="136"/>
         <source>Notification sounds for warnings and important alerts</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/qml/ClassWidgets/pages/settings/notificationAndTime/Notification.qml" line="172"/>
+        <location filename="../../src/qml/ClassWidgets/pages/settings/notificationAndTime/Notification.qml" line="175"/>
         <source>System</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/qml/ClassWidgets/pages/settings/notificationAndTime/Notification.qml" line="173"/>
+        <location filename="../../src/qml/ClassWidgets/pages/settings/notificationAndTime/Notification.qml" line="176"/>
         <source>Notification sounds for system messages and updates</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/qml/ClassWidgets/pages/settings/notificationAndTime/Notification.qml" line="213"/>
+        <location filename="../../src/qml/ClassWidgets/pages/settings/notificationAndTime/Notification.qml" line="217"/>
         <source>Default duration (ms)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/qml/ClassWidgets/pages/settings/notificationAndTime/Notification.qml" line="214"/>
+        <location filename="../../src/qml/ClassWidgets/pages/settings/notificationAndTime/Notification.qml" line="218"/>
         <source>Customize the notification duration (ms)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/qml/ClassWidgets/pages/settings/notificationAndTime/Notification.qml" line="238"/>
+        <location filename="../../src/qml/ClassWidgets/pages/settings/notificationAndTime/Notification.qml" line="242"/>
         <source>Providers</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/qml/ClassWidgets/pages/settings/notificationAndTime/Notification.qml" line="359"/>
+        <location filename="../../src/qml/ClassWidgets/pages/settings/notificationAndTime/Notification.qml" line="363"/>
         <source>Turn on or off notifications from this provider</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/qml/ClassWidgets/pages/settings/notificationAndTime/Notification.qml" line="384"/>
+        <location filename="../../src/qml/ClassWidgets/pages/settings/notificationAndTime/Notification.qml" line="388"/>
         <source>Use Dynamic Notification</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/qml/ClassWidgets/pages/settings/notificationAndTime/Notification.qml" line="407"/>
+        <location filename="../../src/qml/ClassWidgets/pages/settings/notificationAndTime/Notification.qml" line="411"/>
         <source>Use System Notification</source>
         <translation type="unfinished"></translation>
     </message>
@@ -4018,7 +4028,7 @@ If it takes place in another location, such as a sport field, lab, or another cl
 <context>
     <name>TagShowcase</name>
     <message>
-        <location filename="../../src/qml/ClassWidgets/Components/plaza/TagShowcase.qml" line="34"/>
+        <location filename="../../src/qml/ClassWidgets/Components/plaza/TagShowcase.qml" line="35"/>
         <source>View all %1 plugins</source>
         <translation type="unfinished"></translation>
     </message>
@@ -4976,22 +4986,22 @@ then tap &quot;Edit Widget Screen&quot; in the menu to experience it.</source>
         <translation type="unfinished">視窗</translation>
     </message>
     <message>
-        <location filename="../../src/qml/ClassWidgets/pages/settings/General/Widgets.qml" line="274"/>
+        <location filename="../../src/qml/ClassWidgets/pages/settings/General/Widgets.qml" line="275"/>
         <source>Display</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/qml/ClassWidgets/pages/settings/General/Widgets.qml" line="275"/>
+        <location filename="../../src/qml/ClassWidgets/pages/settings/General/Widgets.qml" line="276"/>
         <source>Set which screen to display widgets on, and adjust their position</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/qml/ClassWidgets/pages/settings/General/Widgets.qml" line="390"/>
+        <location filename="../../src/qml/ClassWidgets/pages/settings/General/Widgets.qml" line="392"/>
         <source>X-axis offset</source>
         <translation type="unfinished">X軸偏移</translation>
     </message>
     <message>
-        <location filename="../../src/qml/ClassWidgets/pages/settings/General/Widgets.qml" line="405"/>
+        <location filename="../../src/qml/ClassWidgets/pages/settings/General/Widgets.qml" line="407"/>
         <source>Y-axis offset</source>
         <translation type="unfinished">Y軸偏移</translation>
     </message>

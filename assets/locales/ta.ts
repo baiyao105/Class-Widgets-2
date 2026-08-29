@@ -412,7 +412,7 @@ Do you want to continue using them, or discard and restore the original schedule
 <context>
     <name>Configs</name>
     <message>
-        <location filename="../../src/core/config/model.py" line="206"/>
+        <location filename="../../src/core/config/model.py" line="219"/>
         <source>New Schedule 1</source>
         <translation>புதிய அட்டவணை 1</translation>
     </message>
@@ -1598,67 +1598,77 @@ Do you want to continue using them, or discard and restore the original schedule
 <context>
     <name>Interactions</name>
     <message>
-        <location filename="../../src/qml/ClassWidgets/pages/settings/General/Interactions.qml" line="10"/>
+        <location filename="../../src/qml/ClassWidgets/pages/settings/General/Interactions.qml" line="11"/>
         <source>Interactions &amp; Actions</source>
         <translation>தொடர்புகள் மற்றும் செயல்கள்</translation>
     </message>
     <message>
-        <location filename="../../src/qml/ClassWidgets/pages/settings/General/Interactions.qml" line="18"/>
+        <location filename="../../src/qml/ClassWidgets/pages/settings/General/Interactions.qml" line="22"/>
         <source>Widgets</source>
         <translation>நிரல்பலகை</translation>
     </message>
     <message>
-        <location filename="../../src/qml/ClassWidgets/pages/settings/General/Interactions.qml" line="23"/>
+        <location filename="../../src/qml/ClassWidgets/pages/settings/General/Interactions.qml" line="28"/>
+        <location filename="../../src/qml/ClassWidgets/pages/tutorial/Interactions.qml" line="29"/>
+        <source>Tap Action</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../src/qml/ClassWidgets/pages/settings/General/Interactions.qml" line="29"/>
+        <location filename="../../src/qml/ClassWidgets/pages/tutorial/Interactions.qml" line="30"/>
+        <source>Choose whether tapping a widget hides it or switches to mini mode</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../src/qml/ClassWidgets/pages/settings/General/Interactions.qml" line="90"/>
         <source>Hover fade</source>
         <translation>மறைந்துவிடும்</translation>
     </message>
     <message>
-        <location filename="../../src/qml/ClassWidgets/pages/settings/General/Interactions.qml" line="40"/>
         <source>Tap to hide</source>
-        <translation>மறைக்க தட்டவும்</translation>
+        <translation type="vanished">மறைக்க தட்டவும்</translation>
     </message>
     <message>
-        <location filename="../../src/qml/ClassWidgets/pages/settings/General/Interactions.qml" line="24"/>
+        <location filename="../../src/qml/ClassWidgets/pages/settings/General/Interactions.qml" line="91"/>
         <source>Hover to make the widget transparent and let clicks go through, move away to bring it back</source>
         <translation>விட்செட்டை வெளிப்படையானதாக மாற்ற வட்டமிடவும் மற்றும் கிளிக்குகள் செல்ல அனுமதிக்கவும், அதை மீண்டும் கொண்டு வர நகர்த்தவும்</translation>
     </message>
     <message>
-        <location filename="../../src/qml/ClassWidgets/pages/settings/General/Interactions.qml" line="41"/>
         <source>Click on the widget to hide it, click it again to bring it back</source>
-        <translation>அதை மறைக்க விட்செட்டை சொடுக்கு செய்யவும், அதை மீண்டும் கொண்டு வர மீண்டும் சொடுக்கு செய்யவும்</translation>
+        <translation type="vanished">அதை மறைக்க விட்செட்டை சொடுக்கு செய்யவும், அதை மீண்டும் கொண்டு வர மீண்டும் சொடுக்கு செய்யவும்</translation>
     </message>
     <message>
-        <location filename="../../src/qml/ClassWidgets/pages/settings/General/Interactions.qml" line="54"/>
+        <location filename="../../src/qml/ClassWidgets/pages/settings/General/Interactions.qml" line="106"/>
         <source>More hide behavior</source>
         <translation>மேலும் மறை நடத்தை</translation>
     </message>
     <message>
-        <location filename="../../src/qml/ClassWidgets/pages/settings/General/Interactions.qml" line="56"/>
+        <location filename="../../src/qml/ClassWidgets/pages/settings/General/Interactions.qml" line="108"/>
         <source>Choose whether widgets hide or switch to Mini Mode when triggered</source>
         <translation>தூண்டப்படும்போது விட்செட்டுகள் மறைக்க வேண்டுமா அல்லது மினி பயன்முறைக்கு மாற வேண்டுமா என்பதைத் தேர்வுசெய்யவும்</translation>
     </message>
     <message>
-        <location filename="../../src/qml/ClassWidgets/pages/settings/General/Interactions.qml" line="62"/>
+        <location filename="../../src/qml/ClassWidgets/pages/settings/General/Interactions.qml" line="114"/>
         <source>Hide Widgets</source>
         <translation>விட்செட்களை மறை</translation>
     </message>
     <message>
-        <location filename="../../src/qml/ClassWidgets/pages/settings/General/Interactions.qml" line="63"/>
+        <location filename="../../src/qml/ClassWidgets/pages/settings/General/Interactions.qml" line="115"/>
         <source>Switch to mini mode</source>
         <translation>மினி பயன்முறைக்கு மாறவும்</translation>
     </message>
     <message>
-        <location filename="../../src/qml/ClassWidgets/pages/settings/General/Interactions.qml" line="80"/>
+        <location filename="../../src/qml/ClassWidgets/pages/settings/General/Interactions.qml" line="129"/>
         <source>Hide when in class</source>
         <translation>வகுப்பில் இருக்கும்போது மறைக்கவும்</translation>
     </message>
     <message>
-        <location filename="../../src/qml/ClassWidgets/pages/settings/General/Interactions.qml" line="87"/>
+        <location filename="../../src/qml/ClassWidgets/pages/settings/General/Interactions.qml" line="136"/>
         <source>Hide when a window is maximized</source>
         <translation>ஒரு சாளரம் பெரிதாக்கப்படும் போது மறை</translation>
     </message>
     <message>
-        <location filename="../../src/qml/ClassWidgets/pages/settings/General/Interactions.qml" line="94"/>
+        <location filename="../../src/qml/ClassWidgets/pages/settings/General/Interactions.qml" line="143"/>
         <source>Hide when a window enters fullscreen</source>
         <translation>ஒரு சாளரம் முழுத்திரையில் நுழையும் போது மறை</translation>
     </message>
@@ -1673,21 +1683,13 @@ Do you want to continue using them, or discard and restore the original schedule
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/qml/ClassWidgets/pages/tutorial/Interactions.qml" line="29"/>
-        <source>Hide Behavior</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../../src/qml/ClassWidgets/pages/tutorial/Interactions.qml" line="30"/>
-        <source>Choose whether widgets disappear or become compact</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
+        <location filename="../../src/qml/ClassWidgets/pages/settings/General/Interactions.qml" line="51"/>
         <location filename="../../src/qml/ClassWidgets/pages/tutorial/Interactions.qml" line="45"/>
         <source>Hide</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
+        <location filename="../../src/qml/ClassWidgets/pages/settings/General/Interactions.qml" line="56"/>
         <location filename="../../src/qml/ClassWidgets/pages/tutorial/Interactions.qml" line="50"/>
         <source>Mini Mode</source>
         <translation type="unfinished">மினி பயன்முறை</translation>
@@ -1750,7 +1752,7 @@ Do you want to continue using them, or discard and restore the original schedule
     </message>
     <message>
         <location filename="../../src/qml/ClassWidgets/pages/settings/notificationAndTime/Notification.qml" line="27"/>
-        <location filename="../../src/qml/ClassWidgets/pages/settings/notificationAndTime/Notification.qml" line="358"/>
+        <location filename="../../src/qml/ClassWidgets/pages/settings/notificationAndTime/Notification.qml" line="362"/>
         <source>Enable notifications</source>
         <translation>அறிவிப்புகளை இயக்கு</translation>
     </message>
@@ -1781,85 +1783,85 @@ Do you want to continue using them, or discard and restore the original schedule
     </message>
     <message>
         <location filename="../../src/qml/ClassWidgets/pages/settings/notificationAndTime/Notification.qml" line="65"/>
-        <location filename="../../src/qml/ClassWidgets/pages/settings/notificationAndTime/Notification.qml" line="104"/>
-        <location filename="../../src/qml/ClassWidgets/pages/settings/notificationAndTime/Notification.qml" line="143"/>
-        <location filename="../../src/qml/ClassWidgets/pages/settings/notificationAndTime/Notification.qml" line="182"/>
+        <location filename="../../src/qml/ClassWidgets/pages/settings/notificationAndTime/Notification.qml" line="105"/>
+        <location filename="../../src/qml/ClassWidgets/pages/settings/notificationAndTime/Notification.qml" line="145"/>
+        <location filename="../../src/qml/ClassWidgets/pages/settings/notificationAndTime/Notification.qml" line="185"/>
         <source>Default sound</source>
         <translation>இயல்பு ஒலி</translation>
     </message>
     <message>
-        <location filename="../../src/qml/ClassWidgets/pages/settings/notificationAndTime/Notification.qml" line="78"/>
-        <location filename="../../src/qml/ClassWidgets/pages/settings/notificationAndTime/Notification.qml" line="116"/>
-        <location filename="../../src/qml/ClassWidgets/pages/settings/notificationAndTime/Notification.qml" line="155"/>
-        <location filename="../../src/qml/ClassWidgets/pages/settings/notificationAndTime/Notification.qml" line="194"/>
+        <location filename="../../src/qml/ClassWidgets/pages/settings/notificationAndTime/Notification.qml" line="79"/>
+        <location filename="../../src/qml/ClassWidgets/pages/settings/notificationAndTime/Notification.qml" line="118"/>
+        <location filename="../../src/qml/ClassWidgets/pages/settings/notificationAndTime/Notification.qml" line="158"/>
+        <location filename="../../src/qml/ClassWidgets/pages/settings/notificationAndTime/Notification.qml" line="198"/>
         <source>Play sound</source>
         <translation>ஒலியை இயக்கவும்</translation>
     </message>
     <message>
-        <location filename="../../src/qml/ClassWidgets/pages/settings/notificationAndTime/Notification.qml" line="85"/>
-        <location filename="../../src/qml/ClassWidgets/pages/settings/notificationAndTime/Notification.qml" line="124"/>
-        <location filename="../../src/qml/ClassWidgets/pages/settings/notificationAndTime/Notification.qml" line="163"/>
-        <location filename="../../src/qml/ClassWidgets/pages/settings/notificationAndTime/Notification.qml" line="202"/>
+        <location filename="../../src/qml/ClassWidgets/pages/settings/notificationAndTime/Notification.qml" line="86"/>
+        <location filename="../../src/qml/ClassWidgets/pages/settings/notificationAndTime/Notification.qml" line="126"/>
+        <location filename="../../src/qml/ClassWidgets/pages/settings/notificationAndTime/Notification.qml" line="166"/>
+        <location filename="../../src/qml/ClassWidgets/pages/settings/notificationAndTime/Notification.qml" line="206"/>
         <source>Select sound</source>
         <translation>ஒலியைத் தேர்ந்தெடுக்கவும்</translation>
     </message>
     <message>
-        <location filename="../../src/qml/ClassWidgets/pages/settings/notificationAndTime/Notification.qml" line="94"/>
+        <location filename="../../src/qml/ClassWidgets/pages/settings/notificationAndTime/Notification.qml" line="95"/>
         <source>Announcement</source>
         <translation>அறிவிப்பு</translation>
     </message>
     <message>
-        <location filename="../../src/qml/ClassWidgets/pages/settings/notificationAndTime/Notification.qml" line="95"/>
+        <location filename="../../src/qml/ClassWidgets/pages/settings/notificationAndTime/Notification.qml" line="96"/>
         <source>Notification sounds for class and break announcements</source>
         <translation>வகுப்பு மற்றும் இடைவேளை அறிவிப்புகளுக்கான அறிவிப்பு ஒலிகள்</translation>
     </message>
     <message>
-        <location filename="../../src/qml/ClassWidgets/pages/settings/notificationAndTime/Notification.qml" line="133"/>
+        <location filename="../../src/qml/ClassWidgets/pages/settings/notificationAndTime/Notification.qml" line="135"/>
         <source>Warning</source>
         <translation>எச்சரிக்கை</translation>
     </message>
     <message>
-        <location filename="../../src/qml/ClassWidgets/pages/settings/notificationAndTime/Notification.qml" line="134"/>
+        <location filename="../../src/qml/ClassWidgets/pages/settings/notificationAndTime/Notification.qml" line="136"/>
         <source>Notification sounds for warnings and important alerts</source>
         <translation>எச்சரிக்கைகள் மற்றும் முக்கியமான விழிப்பூட்டல்களுக்கான அறிவிப்பு ஒலிகள்</translation>
     </message>
     <message>
-        <location filename="../../src/qml/ClassWidgets/pages/settings/notificationAndTime/Notification.qml" line="172"/>
+        <location filename="../../src/qml/ClassWidgets/pages/settings/notificationAndTime/Notification.qml" line="175"/>
         <source>System</source>
         <translation>மண்டலம்</translation>
     </message>
     <message>
-        <location filename="../../src/qml/ClassWidgets/pages/settings/notificationAndTime/Notification.qml" line="173"/>
+        <location filename="../../src/qml/ClassWidgets/pages/settings/notificationAndTime/Notification.qml" line="176"/>
         <source>Notification sounds for system messages and updates</source>
         <translation>கணினி செய்திகள் மற்றும் புதுப்பிப்புகளுக்கான அறிவிப்பு ஒலிகள்</translation>
     </message>
     <message>
-        <location filename="../../src/qml/ClassWidgets/pages/settings/notificationAndTime/Notification.qml" line="213"/>
+        <location filename="../../src/qml/ClassWidgets/pages/settings/notificationAndTime/Notification.qml" line="217"/>
         <source>Default duration (ms)</source>
         <translation>இயல்பு கால அளவு (மிவி)</translation>
     </message>
     <message>
-        <location filename="../../src/qml/ClassWidgets/pages/settings/notificationAndTime/Notification.qml" line="214"/>
+        <location filename="../../src/qml/ClassWidgets/pages/settings/notificationAndTime/Notification.qml" line="218"/>
         <source>Customize the notification duration (ms)</source>
         <translation>அறிவிப்பு காலத்தைத் தனிப்பயனாக்குக (மிசி)</translation>
     </message>
     <message>
-        <location filename="../../src/qml/ClassWidgets/pages/settings/notificationAndTime/Notification.qml" line="238"/>
+        <location filename="../../src/qml/ClassWidgets/pages/settings/notificationAndTime/Notification.qml" line="242"/>
         <source>Providers</source>
         <translation>வழங்குபவர்கள்</translation>
     </message>
     <message>
-        <location filename="../../src/qml/ClassWidgets/pages/settings/notificationAndTime/Notification.qml" line="359"/>
+        <location filename="../../src/qml/ClassWidgets/pages/settings/notificationAndTime/Notification.qml" line="363"/>
         <source>Turn on or off notifications from this provider</source>
         <translation>இந்த வழங்குநரிடமிருந்து அறிவிப்புகளை இயக்கவும் அல்லது முடக்கவும்</translation>
     </message>
     <message>
-        <location filename="../../src/qml/ClassWidgets/pages/settings/notificationAndTime/Notification.qml" line="384"/>
+        <location filename="../../src/qml/ClassWidgets/pages/settings/notificationAndTime/Notification.qml" line="388"/>
         <source>Use Dynamic Notification</source>
         <translation>மாறும் அறிவிப்பைப் பயன்படுத்தவும்</translation>
     </message>
     <message>
-        <location filename="../../src/qml/ClassWidgets/pages/settings/notificationAndTime/Notification.qml" line="407"/>
+        <location filename="../../src/qml/ClassWidgets/pages/settings/notificationAndTime/Notification.qml" line="411"/>
         <source>Use System Notification</source>
         <translation>கணினி அறிவிப்பைப் பயன்படுத்தவும்</translation>
     </message>
@@ -3903,7 +3905,7 @@ If it takes place in another location, such as a sport field, lab, or another cl
 <context>
     <name>TagShowcase</name>
     <message>
-        <location filename="../../src/qml/ClassWidgets/Components/plaza/TagShowcase.qml" line="34"/>
+        <location filename="../../src/qml/ClassWidgets/Components/plaza/TagShowcase.qml" line="35"/>
         <source>View all %1 plugins</source>
         <translation type="unfinished"></translation>
     </message>
@@ -4891,22 +4893,22 @@ then tap &quot;Edit Widget Screen&quot; in the menu to experience it.</source>
         <translation>சாளரம்</translation>
     </message>
     <message>
-        <location filename="../../src/qml/ClassWidgets/pages/settings/General/Widgets.qml" line="274"/>
+        <location filename="../../src/qml/ClassWidgets/pages/settings/General/Widgets.qml" line="275"/>
         <source>Display</source>
         <translation>காட்சி</translation>
     </message>
     <message>
-        <location filename="../../src/qml/ClassWidgets/pages/settings/General/Widgets.qml" line="275"/>
+        <location filename="../../src/qml/ClassWidgets/pages/settings/General/Widgets.qml" line="276"/>
         <source>Set which screen to display widgets on, and adjust their position</source>
         <translation>எந்தத் திரையில் விட்செட்களைக் காண்பிக்க வேண்டும் என்பதை அமைத்து, அவற்றின் நிலையைச் சரிசெய்யவும்</translation>
     </message>
     <message>
-        <location filename="../../src/qml/ClassWidgets/pages/settings/General/Widgets.qml" line="390"/>
+        <location filename="../../src/qml/ClassWidgets/pages/settings/General/Widgets.qml" line="392"/>
         <source>X-axis offset</source>
         <translation>எக்ச்-அச்சு ஆஃப்செட்</translation>
     </message>
     <message>
-        <location filename="../../src/qml/ClassWidgets/pages/settings/General/Widgets.qml" line="405"/>
+        <location filename="../../src/qml/ClassWidgets/pages/settings/General/Widgets.qml" line="407"/>
         <source>Y-axis offset</source>
         <translation>ஒய்-அச்சு ஆஃப்செட்</translation>
     </message>
