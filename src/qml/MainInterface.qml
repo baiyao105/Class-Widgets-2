@@ -113,9 +113,13 @@ QQW.Window {
 
         TapHandler {
             id: hideTapHandler
-            enabled: !Configs.isKeyLocked("interactions.hide.state")
+            enabled: Configs.data.interactions.hide.clicked
             onTapped: {
-                if (Configs.data.interactions.hide.clicked) {
+                // 点击小组件：根据 tapped_action 决定隐藏或切换迷你模式
+                if (Configs.data.interactions.tapped_action === "mini_mode") {
+                    if (!Configs.isKeyLocked("preferences.mini_mode"))
+                        Configs.set("preferences.mini_mode", !Configs.data.preferences.mini_mode)
+                } else if (!Configs.isKeyLocked("interactions.hide.state")) {
                     Configs.set("interactions.hide.state", !Configs.data.interactions.hide.state)
                 }
             }

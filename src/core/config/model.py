@@ -91,6 +91,10 @@ class ZOrder(str, Enum):
     BOTTOM = "bottom"
     NORMAL = "normal"
 
+class TapAction(str, Enum):  # 小组件点击触发的行为
+    HIDE = "hide"  # 隐藏
+    MINI_MODE = "mini_mode"  # 切换迷你模式
+
 class WidgetEntry(ConfigBaseModel):
     type_id: str
     instance_id: str
@@ -119,7 +123,11 @@ class HideInteractionsConfig(ConfigBaseModel):
     clicked: bool = True  # 点击时
     maximized: bool = False  # 窗口最大化
     fullscreen: bool = False   # 窗口全屏
-    mini_mode: bool = False  # 切换迷你模式
+    action: TapAction = TapAction.HIDE  # 触发隐藏时的行为（隐藏 / 切换迷你模式）
+
+    class Config:
+        use_enum_values = True
+        validate_assignment = True
 
 class AppConfig(ConfigBaseModel):
     """
@@ -184,6 +192,11 @@ class InteractionsConfig(ConfigBaseModel):
     """
     hover_fade: bool = False  # 鼠标悬停时淡出
     hide: HideInteractionsConfig = Field(default_factory=HideInteractionsConfig)  # 隐藏配置
+    tapped_action: TapAction = TapAction.HIDE  # 点击小组件触发的行为（隐藏 / 切换迷你模式）
+
+    class Config:
+        use_enum_values = True
+        validate_assignment = True
 
 
 class PluginsConfig(ConfigBaseModel):
