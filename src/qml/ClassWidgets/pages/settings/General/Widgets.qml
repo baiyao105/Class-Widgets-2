@@ -224,8 +224,8 @@ FluentPage {
                     tickmarks: true
                     tickFrequency: 100
                     Layout.fillWidth: true
-                    showTooltip: true
                     toolTip.text: weightLabel.text
+                    toolTip.visible: true
                     enabled: !Configs.isKeyLocked("preferences.font_weight")
 
                     // 初始化
@@ -270,6 +270,7 @@ FluentPage {
 
         SettingExpander {
             Layout.fillWidth: true
+            expanded: true
             icon.name: "ic_fluent_laptop_20_regular"
             title: qsTr("Display")
             description: qsTr("Set which screen to display widgets on, and adjust their position")
@@ -291,15 +292,16 @@ FluentPage {
             RowLayout {
                 Layout.fillWidth: true
                 Layout.margins: 24
-                spacing: 12
+                spacing: 32
 
                 Rectangle {
                     // 屏幕边框
-                    Layout.preferredWidth: parent.width * 0.65
-                    Layout.preferredHeight: 200
+                    Layout.preferredWidth: Math.min(parent.width * 0.65, 360)
+                    // Layout.preferredWidth: 360
+                    // Layout.preferredHeight: 200
                     // Layout.fillWidth: true
-                    Layout.fillHeight: true
-                    // Layout.preferredHeight: Math.min(width / 1.75, 350)
+                    // Layout.fillHeight: true
+                    Layout.preferredHeight: Math.min(width / 1.75, 200)
                     border.width: 8
                     radius: 12
                     color: "transparent"

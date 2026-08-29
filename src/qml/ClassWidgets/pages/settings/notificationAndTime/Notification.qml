@@ -65,6 +65,7 @@ FluentPage {
                             return qsTr("Default sound")
                         }
                     }
+                    horizontalAlignment: Text.AlignRight
                     wrapMode: Text.NoWrap
                     elide: Text.ElideLeft
                     typography: Typography.Caption
@@ -104,6 +105,7 @@ FluentPage {
                             return qsTr("Default sound")
                         }
                     }
+                    horizontalAlignment: Text.AlignRight
                     wrapMode: Text.NoWrap
                     elide: Text.ElideLeft
                     typography: Typography.Caption
@@ -143,6 +145,7 @@ FluentPage {
                             return qsTr("Default sound")
                         }
                     }
+                    horizontalAlignment: Text.AlignRight
                     wrapMode: Text.NoWrap
                     elide: Text.ElideLeft
                     typography: Typography.Caption
@@ -182,6 +185,7 @@ FluentPage {
                             return qsTr("Default sound")
                         }
                     }
+                    horizontalAlignment: Text.AlignRight
                     wrapMode: Text.NoWrap
                     elide: Text.ElideLeft
                     typography: Typography.Caption
