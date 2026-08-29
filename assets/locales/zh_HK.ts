@@ -4911,87 +4911,87 @@ then tap &quot;Edit Widget Screen&quot; in the menu to experience it.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/qml/ClassWidgets/pages/settings/General/Widgets.qml" line="203"/>
+        <location filename="../../src/qml/ClassWidgets/pages/settings/General/Widgets.qml" line="204"/>
         <source>Thin</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/qml/ClassWidgets/pages/settings/General/Widgets.qml" line="204"/>
+        <location filename="../../src/qml/ClassWidgets/pages/settings/General/Widgets.qml" line="205"/>
         <source>Extra Light</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/qml/ClassWidgets/pages/settings/General/Widgets.qml" line="205"/>
+        <location filename="../../src/qml/ClassWidgets/pages/settings/General/Widgets.qml" line="206"/>
         <source>Light</source>
         <translation type="unfinished">淺色</translation>
     </message>
     <message>
-        <location filename="../../src/qml/ClassWidgets/pages/settings/General/Widgets.qml" line="206"/>
+        <location filename="../../src/qml/ClassWidgets/pages/settings/General/Widgets.qml" line="207"/>
         <source>Regular</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/qml/ClassWidgets/pages/settings/General/Widgets.qml" line="207"/>
+        <location filename="../../src/qml/ClassWidgets/pages/settings/General/Widgets.qml" line="208"/>
         <source>Medium</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/qml/ClassWidgets/pages/settings/General/Widgets.qml" line="208"/>
+        <location filename="../../src/qml/ClassWidgets/pages/settings/General/Widgets.qml" line="209"/>
         <source>Semi Bold</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/qml/ClassWidgets/pages/settings/General/Widgets.qml" line="209"/>
+        <location filename="../../src/qml/ClassWidgets/pages/settings/General/Widgets.qml" line="210"/>
         <source>Bold</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/qml/ClassWidgets/pages/settings/General/Widgets.qml" line="210"/>
+        <location filename="../../src/qml/ClassWidgets/pages/settings/General/Widgets.qml" line="211"/>
         <source>Extra Bold</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/qml/ClassWidgets/pages/settings/General/Widgets.qml" line="211"/>
+        <location filename="../../src/qml/ClassWidgets/pages/settings/General/Widgets.qml" line="212"/>
         <source>Black</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/qml/ClassWidgets/pages/settings/General/Widgets.qml" line="212"/>
+        <location filename="../../src/qml/ClassWidgets/pages/settings/General/Widgets.qml" line="213"/>
         <source>Custom</source>
         <translation type="unfinished">自訂</translation>
     </message>
     <message>
-        <location filename="../../src/qml/ClassWidgets/pages/settings/General/Widgets.qml" line="245"/>
+        <location filename="../../src/qml/ClassWidgets/pages/settings/General/Widgets.qml" line="247"/>
         <source>Preview</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/qml/ClassWidgets/pages/settings/General/Widgets.qml" line="248"/>
+        <location filename="../../src/qml/ClassWidgets/pages/settings/General/Widgets.qml" line="250"/>
         <source>The quick brown fox jumps over the lazy dog</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/qml/ClassWidgets/pages/settings/General/Widgets.qml" line="266"/>
+        <location filename="../../src/qml/ClassWidgets/pages/settings/General/Widgets.qml" line="268"/>
         <source>Window</source>
         <translation type="unfinished">視窗</translation>
     </message>
     <message>
-        <location filename="../../src/qml/ClassWidgets/pages/settings/General/Widgets.qml" line="272"/>
+        <location filename="../../src/qml/ClassWidgets/pages/settings/General/Widgets.qml" line="274"/>
         <source>Display</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/qml/ClassWidgets/pages/settings/General/Widgets.qml" line="273"/>
+        <location filename="../../src/qml/ClassWidgets/pages/settings/General/Widgets.qml" line="275"/>
         <source>Set which screen to display widgets on, and adjust their position</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/qml/ClassWidgets/pages/settings/General/Widgets.qml" line="388"/>
+        <location filename="../../src/qml/ClassWidgets/pages/settings/General/Widgets.qml" line="390"/>
         <source>X-axis offset</source>
         <translation type="unfinished">X軸偏移</translation>
     </message>
     <message>
-        <location filename="../../src/qml/ClassWidgets/pages/settings/General/Widgets.qml" line="403"/>
+        <location filename="../../src/qml/ClassWidgets/pages/settings/General/Widgets.qml" line="405"/>
         <source>Y-axis offset</source>
         <translation type="unfinished">Y軸偏移</translation>
     </message>
