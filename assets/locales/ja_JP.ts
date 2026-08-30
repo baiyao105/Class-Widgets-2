@@ -435,7 +435,7 @@ Do you want to continue using them, or discard and restore the original schedule
         <translation type="vanished">デフォルト</translation>
     </message>
     <message>
-        <location filename="../../src/core/config/model.py" line="222"/>
+        <location filename="../../src/core/config/model.py" line="227"/>
         <source>New Schedule 1</source>
         <translation type="unfinished">新スケジュール 1</translation>
     </message>
@@ -960,42 +960,42 @@ Do you want to continue using them, or discard and restore the original schedule
 <context>
     <name>EntryDelegate</name>
     <message>
-        <location filename="../../src/qml/ClassWidgets/Components/editor/EntryDelegate.qml" line="54"/>
+        <location filename="../../src/qml/ClassWidgets/Components/editor/EntryDelegate.qml" line="57"/>
         <source>Remove</source>
         <translation>削除</translation>
     </message>
     <message>
-        <location filename="../../src/qml/ClassWidgets/Components/editor/EntryDelegate.qml" line="213"/>
+        <location filename="../../src/qml/ClassWidgets/Components/editor/EntryDelegate.qml" line="223"/>
         <source>Class</source>
         <translation>クラス</translation>
     </message>
     <message>
-        <location filename="../../src/qml/ClassWidgets/Components/editor/EntryDelegate.qml" line="214"/>
+        <location filename="../../src/qml/ClassWidgets/Components/editor/EntryDelegate.qml" line="224"/>
         <source>Break</source>
         <translation>Break</translation>
     </message>
     <message>
-        <location filename="../../src/qml/ClassWidgets/Components/editor/EntryDelegate.qml" line="215"/>
+        <location filename="../../src/qml/ClassWidgets/Components/editor/EntryDelegate.qml" line="225"/>
         <source>Activity</source>
         <translation>活動</translation>
     </message>
     <message>
-        <location filename="../../src/qml/ClassWidgets/Components/editor/EntryDelegate.qml" line="216"/>
+        <location filename="../../src/qml/ClassWidgets/Components/editor/EntryDelegate.qml" line="226"/>
         <source>Unknown Type</source>
         <translation>不明な種類</translation>
     </message>
     <message>
-        <location filename="../../src/qml/ClassWidgets/Components/editor/EntryDelegate.qml" line="224"/>
+        <location filename="../../src/qml/ClassWidgets/Components/editor/EntryDelegate.qml" line="234"/>
         <source> minutes</source>
         <translation> 分</translation>
     </message>
     <message>
-        <location filename="../../src/qml/ClassWidgets/Components/editor/EntryDelegate.qml" line="252"/>
+        <location filename="../../src/qml/ClassWidgets/Components/editor/EntryDelegate.qml" line="262"/>
         <source>Invalid Time Range</source>
         <translation type="unfinished">無効な時間範囲</translation>
     </message>
     <message>
-        <location filename="../../src/qml/ClassWidgets/Components/editor/EntryDelegate.qml" line="253"/>
+        <location filename="../../src/qml/ClassWidgets/Components/editor/EntryDelegate.qml" line="263"/>
         <source>End time must be later than start time.</source>
         <translation type="unfinished">終了時間は開始時間よりも後に設定する必要があります。</translation>
     </message>
@@ -1092,55 +1092,55 @@ Do you want to continue using them, or discard and restore the original schedule
 <context>
     <name>EntryListView</name>
     <message>
-        <location filename="../../src/qml/ClassWidgets/Components/editor/EntryListView.qml" line="102"/>
+        <location filename="../../src/qml/ClassWidgets/Components/editor/EntryListView.qml" line="106"/>
         <source> PM</source>
         <translation> 午後</translation>
     </message>
     <message>
-        <location filename="../../src/qml/ClassWidgets/Components/editor/EntryListView.qml" line="104"/>
+        <location filename="../../src/qml/ClassWidgets/Components/editor/EntryListView.qml" line="108"/>
         <source> AM</source>
         <translation> 午前</translation>
     </message>
     <message>
-        <location filename="../../src/qml/ClassWidgets/Components/editor/EntryListView.qml" line="177"/>
+        <location filename="../../src/qml/ClassWidgets/Components/editor/EntryListView.qml" line="187"/>
         <source>New Schedule</source>
         <translation>新規スケジュール</translation>
     </message>
     <message>
-        <location filename="../../src/qml/ClassWidgets/Components/editor/EntryListView.qml" line="153"/>
-        <location filename="../../src/qml/ClassWidgets/Components/editor/EntryListView.qml" line="182"/>
+        <location filename="../../src/qml/ClassWidgets/Components/editor/EntryListView.qml" line="163"/>
+        <location filename="../../src/qml/ClassWidgets/Components/editor/EntryListView.qml" line="192"/>
         <source>Class</source>
         <translation>Class</translation>
     </message>
     <message>
-        <location filename="../../src/qml/ClassWidgets/Components/editor/EntryListView.qml" line="46"/>
+        <location filename="../../src/qml/ClassWidgets/Components/editor/EntryListView.qml" line="49"/>
         <source>No timeline selected</source>
         <translation>タイムラインが選択されていません</translation>
     </message>
     <message>
-        <location filename="../../src/qml/ClassWidgets/Components/editor/EntryListView.qml" line="52"/>
+        <location filename="../../src/qml/ClassWidgets/Components/editor/EntryListView.qml" line="55"/>
         <source>Please select a timeline first to add a new schedule.</source>
         <translation>まずタイムラインを選択して、新しいスケジュールを追加してください</translation>
     </message>
     <message>
-        <location filename="../../src/qml/ClassWidgets/Components/editor/EntryListView.qml" line="161"/>
-        <location filename="../../src/qml/ClassWidgets/Components/editor/EntryListView.qml" line="188"/>
+        <location filename="../../src/qml/ClassWidgets/Components/editor/EntryListView.qml" line="171"/>
+        <location filename="../../src/qml/ClassWidgets/Components/editor/EntryListView.qml" line="198"/>
         <source>Break</source>
         <translation>Break</translation>
     </message>
     <message>
-        <location filename="../../src/qml/ClassWidgets/Components/editor/EntryListView.qml" line="169"/>
-        <location filename="../../src/qml/ClassWidgets/Components/editor/EntryListView.qml" line="194"/>
+        <location filename="../../src/qml/ClassWidgets/Components/editor/EntryListView.qml" line="179"/>
+        <location filename="../../src/qml/ClassWidgets/Components/editor/EntryListView.qml" line="204"/>
         <source>Activity</source>
         <translation>Activity</translation>
     </message>
     <message>
-        <location filename="../../src/qml/ClassWidgets/Components/editor/EntryListView.qml" line="299"/>
+        <location filename="../../src/qml/ClassWidgets/Components/editor/EntryListView.qml" line="309"/>
         <source>Conflict with existing schedule</source>
         <translation>既存のスケジュールと競合しています</translation>
     </message>
     <message>
-        <location filename="../../src/qml/ClassWidgets/Components/editor/EntryListView.qml" line="301"/>
+        <location filename="../../src/qml/ClassWidgets/Components/editor/EntryListView.qml" line="311"/>
         <source>This time overlaps with an existing schedule (%1 – %2)</source>
         <translation>この時間は既存のスケジュール (%1 – %2) と重なっています</translation>
     </message>
@@ -1224,24 +1224,34 @@ Do you want to continue using them, or discard and restore the original schedule
 <context>
     <name>FloatingWidget</name>
     <message>
-        <location filename="../../src/qml/ClassWidgets/Theme/components/FloatingWidget.qml" line="103"/>
+        <location filename="../../src/qml/ClassWidgets/Theme/components/FloatingWidget.qml" line="108"/>
         <source>Class</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/qml/ClassWidgets/Theme/components/FloatingWidget.qml" line="105"/>
+        <location filename="../../src/qml/ClassWidgets/Theme/components/FloatingWidget.qml" line="110"/>
         <source>Activity</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/qml/ClassWidgets/Theme/components/FloatingWidget.qml" line="107"/>
+        <location filename="../../src/qml/ClassWidgets/Theme/components/FloatingWidget.qml" line="112"/>
         <source>Take a break</source>
         <translation type="unfinished">休息一下</translation>
     </message>
     <message>
-        <location filename="../../src/qml/ClassWidgets/Theme/components/FloatingWidget.qml" line="108"/>
+        <location filename="../../src/qml/ClassWidgets/Theme/components/FloatingWidget.qml" line="113"/>
         <source>Nothing right now</source>
         <translation type="unfinished">当前无内容</translation>
+    </message>
+    <message>
+        <location filename="../../src/qml/ClassWidgets/Theme/components/FloatingWidget.qml" line="125"/>
+        <source>&lt; </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../src/qml/ClassWidgets/Theme/components/FloatingWidget.qml" line="136"/>
+        <source> min</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -1624,26 +1634,46 @@ Do you want to continue using them, or discard and restore the original schedule
     </message>
     <message>
         <location filename="../../src/qml/ClassWidgets/pages/settings/General/Index.qml" line="124"/>
+        <source>Countdown Precision</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../src/qml/ClassWidgets/pages/settings/General/Index.qml" line="125"/>
+        <source>Choose how precisely the remaining time is displayed</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../src/qml/ClassWidgets/pages/settings/General/Index.qml" line="132"/>
+        <source>To the Second</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../src/qml/ClassWidgets/pages/settings/General/Index.qml" line="133"/>
+        <source>To the Minute</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../src/qml/ClassWidgets/pages/settings/General/Index.qml" line="155"/>
         <source>Mini Mode</source>
         <translation>ミニモード</translation>
     </message>
     <message>
-        <location filename="../../src/qml/ClassWidgets/pages/settings/General/Index.qml" line="125"/>
+        <location filename="../../src/qml/ClassWidgets/pages/settings/General/Index.qml" line="156"/>
         <source>Use a more compact layout for smaller widgets</source>
         <translation>小さなウィジェット用にコンパクトなレイアウトを使用します</translation>
     </message>
     <message>
-        <location filename="../../src/qml/ClassWidgets/pages/settings/General/Index.qml" line="144"/>
+        <location filename="../../src/qml/ClassWidgets/pages/settings/General/Index.qml" line="175"/>
         <source>Actions</source>
         <translation type="unfinished">アクション</translation>
     </message>
     <message>
-        <location filename="../../src/qml/ClassWidgets/pages/settings/General/Index.qml" line="149"/>
+        <location filename="../../src/qml/ClassWidgets/pages/settings/General/Index.qml" line="180"/>
         <source>Run at Startup</source>
         <translation type="unfinished">起動時に実行</translation>
     </message>
     <message>
-        <location filename="../../src/qml/ClassWidgets/pages/settings/General/Index.qml" line="150"/>
+        <location filename="../../src/qml/ClassWidgets/pages/settings/General/Index.qml" line="181"/>
         <source>Run Class Widgets on startup</source>
         <translation type="unfinished">起動時にクラス・ウィジェットを実行</translation>
     </message>
@@ -1955,27 +1985,27 @@ Do you want to continue using them, or discard and restore the original schedule
         <translation type="unfinished">デバッグ通知</translation>
     </message>
     <message>
-        <location filename="../../src/core/schedule/runtime.py" line="68"/>
+        <location filename="../../src/core/schedule/runtime.py" line="73"/>
         <source>Class Notifications</source>
         <translation type="unfinished">クラス通知</translation>
     </message>
     <message>
-        <location filename="../../src/core/schedule/runtime.py" line="77"/>
+        <location filename="../../src/core/schedule/runtime.py" line="82"/>
         <source>Activity Notifications</source>
         <translation type="unfinished">イベント通知</translation>
     </message>
     <message>
-        <location filename="../../src/core/schedule/runtime.py" line="86"/>
+        <location filename="../../src/core/schedule/runtime.py" line="91"/>
         <source>Break Notifications</source>
         <translation type="unfinished">休憩通知</translation>
     </message>
     <message>
-        <location filename="../../src/core/schedule/runtime.py" line="95"/>
+        <location filename="../../src/core/schedule/runtime.py" line="100"/>
         <source>Free Time Notifications</source>
         <translation type="unfinished">空き時間通知</translation>
     </message>
     <message>
-        <location filename="../../src/core/schedule/runtime.py" line="104"/>
+        <location filename="../../src/core/schedule/runtime.py" line="109"/>
         <source>Preparation Bell</source>
         <translation type="unfinished">準備チャイム</translation>
     </message>
@@ -3359,83 +3389,83 @@ It&apos;s incompatible and may cause unexpected issues.</source>
 <context>
     <name>ScheduleRuntime</name>
     <message>
-        <location filename="../../src/core/schedule/runtime.py" line="292"/>
+        <location filename="../../src/core/schedule/runtime.py" line="309"/>
         <source>Class Started</source>
         <translation type="unfinished">授業が始まりました</translation>
     </message>
     <message>
-        <location filename="../../src/core/schedule/runtime.py" line="309"/>
+        <location filename="../../src/core/schedule/runtime.py" line="326"/>
         <source>Activity Started</source>
         <translation type="unfinished">アクティビティが始まりました</translation>
     </message>
     <message>
-        <location filename="../../src/core/schedule/runtime.py" line="318"/>
+        <location filename="../../src/core/schedule/runtime.py" line="335"/>
         <source>Intermission</source>
         <translation type="unfinished">休憩中</translation>
     </message>
     <message>
-        <location filename="../../src/core/schedule/runtime.py" line="335"/>
-        <location filename="../../src/core/schedule/runtime.py" line="345"/>
-        <location filename="../../src/core/schedule/runtime.py" line="371"/>
-        <location filename="../../src/core/schedule/runtime.py" line="381"/>
+        <location filename="../../src/core/schedule/runtime.py" line="352"/>
+        <location filename="../../src/core/schedule/runtime.py" line="362"/>
+        <location filename="../../src/core/schedule/runtime.py" line="388"/>
+        <location filename="../../src/core/schedule/runtime.py" line="398"/>
         <source>Next: {}</source>
         <translation type="unfinished">次: {}</translation>
     </message>
     <message>
-        <location filename="../../src/core/schedule/runtime.py" line="339"/>
-        <location filename="../../src/core/schedule/runtime.py" line="375"/>
+        <location filename="../../src/core/schedule/runtime.py" line="356"/>
+        <location filename="../../src/core/schedule/runtime.py" line="392"/>
         <source>Next: {} at {}</source>
         <translation type="unfinished">次: {} に {}</translation>
     </message>
     <message>
-        <location filename="../../src/core/schedule/runtime.py" line="341"/>
-        <location filename="../../src/core/schedule/runtime.py" line="377"/>
+        <location filename="../../src/core/schedule/runtime.py" line="358"/>
+        <location filename="../../src/core/schedule/runtime.py" line="394"/>
         <source>Next: {} (Off-site)</source>
         <translation type="unfinished">次: {} (オフサイト)</translation>
     </message>
     <message>
-        <location filename="../../src/core/schedule/runtime.py" line="353"/>
+        <location filename="../../src/core/schedule/runtime.py" line="370"/>
         <source>Recess</source>
         <translation type="unfinished">休憩</translation>
     </message>
     <message>
-        <location filename="../../src/core/schedule/runtime.py" line="388"/>
+        <location filename="../../src/core/schedule/runtime.py" line="405"/>
         <source>Enjoy your break</source>
         <translation type="unfinished">休憩を楽しんでください</translation>
     </message>
     <message>
-        <location filename="../../src/core/schedule/runtime.py" line="391"/>
+        <location filename="../../src/core/schedule/runtime.py" line="408"/>
         <source>Free Time</source>
         <translation type="unfinished">自由時間</translation>
     </message>
     <message>
-        <location filename="../../src/core/schedule/runtime.py" line="396"/>
+        <location filename="../../src/core/schedule/runtime.py" line="413"/>
         <source>Status Changed</source>
         <translation type="unfinished">ステータスが変更されました</translation>
     </message>
     <message>
-        <location filename="../../src/core/schedule/runtime.py" line="397"/>
+        <location filename="../../src/core/schedule/runtime.py" line="414"/>
         <source>Current status: {}</source>
         <translation type="unfinished">現在のステータス: {}</translation>
     </message>
     <message>
-        <location filename="../../src/core/schedule/runtime.py" line="451"/>
-        <location filename="../../src/core/schedule/runtime.py" line="461"/>
+        <location filename="../../src/core/schedule/runtime.py" line="468"/>
+        <location filename="../../src/core/schedule/runtime.py" line="478"/>
         <source>Coming up: {}</source>
         <translation type="unfinished">次に予定: {}</translation>
     </message>
     <message>
-        <location filename="../../src/core/schedule/runtime.py" line="455"/>
+        <location filename="../../src/core/schedule/runtime.py" line="472"/>
         <source>Coming up: {} at {}</source>
         <translation type="unfinished">次に予定: {} に {}</translation>
     </message>
     <message>
-        <location filename="../../src/core/schedule/runtime.py" line="457"/>
+        <location filename="../../src/core/schedule/runtime.py" line="474"/>
         <source>Coming up: {} (Off-site)</source>
         <translation type="unfinished">次に予定: {} (オフサイト)</translation>
     </message>
     <message>
-        <location filename="../../src/core/schedule/runtime.py" line="469"/>
+        <location filename="../../src/core/schedule/runtime.py" line="486"/>
         <source>Preparation Bell</source>
         <translation type="unfinished">準備チャイム</translation>
     </message>
@@ -4260,32 +4290,32 @@ If it takes place in another location, such as a sport field, lab, or another cl
         <translation type="unfinished">最大週数:</translation>
     </message>
     <message>
-        <location filename="../../src/qml/ClassWidgets/pages/editor/Timeline.qml" line="118"/>
+        <location filename="../../src/qml/ClassWidgets/pages/editor/Timeline.qml" line="116"/>
         <source>Failed</source>
         <translation type="unfinished">失敗</translation>
     </message>
     <message>
-        <location filename="../../src/qml/ClassWidgets/pages/editor/Timeline.qml" line="119"/>
+        <location filename="../../src/qml/ClassWidgets/pages/editor/Timeline.qml" line="117"/>
         <source>Failed to set start date or max week cycle. Please report this issue to the community or the developer.</source>
         <translation type="unfinished">開始日または最大週数の設定に失敗しました。この問題をコミュニティまたは開発者に報告してください。</translation>
     </message>
     <message>
-        <location filename="../../src/qml/ClassWidgets/pages/editor/Timeline.qml" line="130"/>
+        <location filename="../../src/qml/ClassWidgets/pages/editor/Timeline.qml" line="128"/>
         <source>Select Default Duration</source>
         <translation type="unfinished">デフォルトの期間を選択</translation>
     </message>
     <message>
-        <location filename="../../src/qml/ClassWidgets/pages/editor/Timeline.qml" line="139"/>
+        <location filename="../../src/qml/ClassWidgets/pages/editor/Timeline.qml" line="137"/>
         <source>Class</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/qml/ClassWidgets/pages/editor/Timeline.qml" line="153"/>
+        <location filename="../../src/qml/ClassWidgets/pages/editor/Timeline.qml" line="151"/>
         <source>Break</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/qml/ClassWidgets/pages/editor/Timeline.qml" line="166"/>
+        <location filename="../../src/qml/ClassWidgets/pages/editor/Timeline.qml" line="164"/>
         <source>Activity</source>
         <translation type="unfinished"></translation>
     </message>
@@ -5165,22 +5195,22 @@ then tap &quot;Edit Widget Screen&quot; in the menu to experience it.</source>
 <context>
     <name>WidgetsContainer</name>
     <message>
-        <location filename="../../src/qml/ClassWidgets/Components/WidgetsContainer.qml" line="263"/>
+        <location filename="../../src/qml/ClassWidgets/Components/WidgetsContainer.qml" line="267"/>
         <source>Edit </source>
         <translation>編集 </translation>
     </message>
     <message>
-        <location filename="../../src/qml/ClassWidgets/Components/WidgetsContainer.qml" line="278"/>
+        <location filename="../../src/qml/ClassWidgets/Components/WidgetsContainer.qml" line="282"/>
         <source>Delete</source>
         <translation>削除</translation>
     </message>
     <message>
-        <location filename="../../src/qml/ClassWidgets/Components/WidgetsContainer.qml" line="287"/>
+        <location filename="../../src/qml/ClassWidgets/Components/WidgetsContainer.qml" line="291"/>
         <source>Edit Widgets Screen</source>
         <translation>ウィジェット編集画面</translation>
     </message>
     <message>
-        <location filename="../../src/qml/ClassWidgets/Components/WidgetsContainer.qml" line="361"/>
+        <location filename="../../src/qml/ClassWidgets/Components/WidgetsContainer.qml" line="365"/>
         <source>Add</source>
         <translation>追加</translation>
     </message>
@@ -5232,6 +5262,16 @@ then tap &quot;Edit Widget Screen&quot; in the menu to experience it.</source>
         <location filename="../../src/qml/widgets/eventCountdown.qml" line="12"/>
         <source>Remaining</source>
         <translation>剩余</translation>
+    </message>
+    <message>
+        <location filename="../../src/qml/widgets/eventCountdown.qml" line="45"/>
+        <source>&lt; </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../src/qml/widgets/eventCountdown.qml" line="54"/>
+        <source> min</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
