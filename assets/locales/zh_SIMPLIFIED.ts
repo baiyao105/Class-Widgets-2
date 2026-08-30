@@ -3542,27 +3542,27 @@ It&apos;s incompatible and may cause unexpected issues.</source>
 <context>
     <name>Shortcuts</name>
     <message>
-        <location filename="../../src/core/central.py" line="153"/>
+        <location filename="../../src/core/central.py" line="157"/>
         <source>Settings</source>
         <translation>齿轮</translation>
     </message>
     <message>
-        <location filename="../../src/core/central.py" line="159"/>
+        <location filename="../../src/core/central.py" line="163"/>
         <source>Schedules</source>
         <translation>配料表</translation>
     </message>
     <message>
-        <location filename="../../src/core/central.py" line="165"/>
+        <location filename="../../src/core/central.py" line="169"/>
         <source>Plugin Plaza</source>
         <translation>屁股超市</translation>
     </message>
     <message>
-        <location filename="../../src/core/central.py" line="171"/>
+        <location filename="../../src/core/central.py" line="175"/>
         <source>Reschedule Day</source>
         <translation>傻逼调休</translation>
     </message>
     <message>
-        <location filename="../../src/core/central.py" line="177"/>
+        <location filename="../../src/core/central.py" line="181"/>
         <source>Class Swap</source>
         <translation>洗牌！</translation>
     </message>
@@ -4029,6 +4029,25 @@ If it takes place in another location, such as a sport field, lab, or another cl
         <location filename="../../src/qml/ClassWidgets/pages/tutorial/Theme.qml" line="94"/>
         <source>Choose the color used for highlights and controls</source>
         <translation>一起色色！</translation>
+    </message>
+</context>
+<context>
+    <name>ThemeLoadErrorDialog</name>
+    <message>
+        <location filename="../../src/qml/ClassWidgets/Components/dialogs/ThemeLoadErrorDialog.qml" line="38"/>
+        <source>Theme could not be loaded</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../src/qml/ClassWidgets/Components/dialogs/ThemeLoadErrorDialog.qml" line="56"/>
+        <source>The selected theme could not be loaded.
+Class Widgets has restored the default theme.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../src/qml/ClassWidgets/Components/dialogs/ThemeLoadErrorDialog.qml" line="57"/>
+        <source>The selected theme could not be loaded, and the default theme is unavailable.</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
