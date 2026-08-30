@@ -26,7 +26,7 @@ FluentPage {
             Layout.fillWidth: true
             icon.name: "ic_fluent_tap_single_20_regular"
             title: qsTr("Tap Action")
-            description: qsTr("Choose whether tapping a widget hides it or switches to mini mode")
+            description: qsTr("Choose whether tapping a widget hides it, switches to mini mode, or opens a floating widget")
             expanded: true
 
             action: Switch {
@@ -42,7 +42,7 @@ FluentPage {
 
             SettingItem {
                 RowLayout {
-                    Layout.fillWidth: true
+                    // Layout.fillWidth: true
                     spacing: 12
 
                     Repeater {
@@ -56,16 +56,21 @@ FluentPage {
                                 "name": qsTr("Mini Mode"),
                                 "value": "mini_mode",
                                 "preview": "hide_mini"
+                            },
+                            {
+                                "name": qsTr("Floating Widget"),
+                                "value": "floating_widget",
+                                "preview": "hide_floating"
                             }
                         ]
 
                         delegate: ColumnLayout {
-                            Layout.fillWidth: true
+                            // Layout.fillWidth: true
                             spacing: 4
 
                             Image {
                                 Layout.fillWidth: true
-                                Layout.preferredHeight: 72
+                                Layout.preferredHeight: 128
                                 source: root.hidePreviewSource(modelData.preview)
                                 fillMode: Image.PreserveAspectFit
                                 asynchronous: true

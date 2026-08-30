@@ -94,6 +94,7 @@ class ZOrder(str, Enum):
 class TapAction(str, Enum):  # 小组件点击触发的行为
     HIDE = "hide"  # 隐藏
     MINI_MODE = "mini_mode"  # 切换迷你模式
+    FLOATING_WIDGET = "floating_widget"  # 切换浮窗模式
 
 class WidgetEntry(ConfigBaseModel):
     type_id: str
@@ -179,6 +180,9 @@ class PreferencesConfig(ConfigBaseModel):
     font: str = Field(default="Microsoft YaHei")  # 字体
     font_weight: int = 600  # 字重
 
+    floating_widget_x: Optional[int] = None  # 浮窗位置 X
+    floating_widget_y: Optional[int] = None  # 浮窗位置 Y
+
     class Config:
         use_enum_values = True
         extra = Extra.allow
@@ -192,7 +196,7 @@ class InteractionsConfig(ConfigBaseModel):
     """
     hover_fade: bool = False  # 鼠标悬停时淡出
     hide: HideInteractionsConfig = Field(default_factory=HideInteractionsConfig)  # 隐藏配置
-    tapped_action: TapAction = TapAction.HIDE  # 点击小组件触发的行为（隐藏 / 切换迷你模式）
+    tapped_action: TapAction = TapAction.HIDE  # 点击小组件触发的行为
 
     class Config:
         use_enum_values = True
@@ -256,4 +260,3 @@ class NotificationsConfig(ConfigBaseModel):
     class Config:
         extra = Extra.allow
         validate_assignment = True
-

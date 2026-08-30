@@ -17,11 +17,13 @@ Column {
     property bool hide: {
         return Configs.data.interactions.hide.state
     }
+    property bool floatingMode: hide && Configs.data.interactions.tapped_action === "floating_widget"
     property var preferences: Configs.data.preferences
 
     property real dragOffsetX: 0
     property real dragOffsetY: 0
     property real hideMargin: {
+        if (floatingMode) return 0  // 浮窗模式下完全移出窗口
         switch (Qt.platform.os) {
             case "osx":
                 return 48
@@ -125,6 +127,13 @@ Column {
 
     x: calcX() + dragOffsetX
     y: calcY() + dragOffsetY
+
+    // The window mask must follow the hide/show transition frame by frame.
+    onXChanged: contentGeometryChanged()
+    onYChanged: contentGeometryChanged()
+
+    // 浮窗模式由 MainInterface 的独立容器接管显示。保留这里的坐标动画，
+    // 使退出浮窗模式时普通小组件仍沿原有的边缘动画返回。
 
     DragHandler {
         id: dragHandler

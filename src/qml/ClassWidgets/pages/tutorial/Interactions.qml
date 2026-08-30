@@ -27,7 +27,7 @@ TutorialComponents.TutorialPage {
             Layout.minimumHeight: 200
             icon.name: "ic_fluent_tap_single_20_regular"
             title: qsTr("Tap Action")
-            description: qsTr("Choose whether tapping a widget hides it or switches to mini mode")
+            description: qsTr("Choose whether tapping a widget hides it, switches to mini mode, or opens a floating widget")
             expanded: true
 
             ButtonGroup {
@@ -50,6 +50,11 @@ TutorialComponents.TutorialPage {
                                 "name": qsTr("Mini Mode"),
                                 "value": "mini_mode",
                                 "preview": "hide_mini"
+                            },
+                            {
+                                "name": qsTr("Floating Widget"),
+                                "value": "floating_widget",
+                                "preview": "hide_float"
                             }
                         ]
 
