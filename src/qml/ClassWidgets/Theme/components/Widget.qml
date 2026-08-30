@@ -30,6 +30,18 @@ Item {
     // backend
     property var backend: null
     property var settings: null
+    property string instanceId: ""
+
+    // Update the local view immediately and commit the change to the model.
+    // Mutating a property on a JS object does not emit a model notification.
+    function updateSettings(changes) {
+        if (!changes || !instanceId)
+            return
+
+        var updatedSettings = Object.assign({}, settings || {}, changes)
+        settings = updatedSettings
+        WidgetsModel.updateSettings(instanceId, updatedSettings)
+    }
 
     // properties
     property alias text: subtitleLabel.text

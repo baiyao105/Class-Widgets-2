@@ -17,6 +17,9 @@ Loader {
             if (item && model.settings) {
                 item.settings = model.settings
             }
+            if (item && item.hasOwnProperty('instanceId')) {
+                item.instanceId = model.instanceId
+            }
             if (item && item.hasOwnProperty('editMode')) {
                 item.editMode = widgetsContainer.editMode
             }
@@ -35,6 +38,9 @@ Loader {
         function onModelChanged() {
             if (loader.item && model.settings) {
                 loader.item.settings = model.settings
+            }
+            if (loader.item && loader.item.hasOwnProperty('instanceId')) {
+                loader.item.instanceId = model.instanceId
             }
         }
     }

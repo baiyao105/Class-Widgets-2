@@ -39,10 +39,22 @@ Item {
     property real cornerRadius: 8
     property alias backgroundArea: backgroundArea.children
     default property alias content: contentArea.data
+    property string instanceId: ""
     property real padding: miniMode ? 16 : 24
 
     // 背景
     readonly property real borderWidth: 1.5
+
+    // Update the local view immediately and commit the change to the model.
+    // Mutating a property on a JS object does not emit a model notification.
+    function updateSettings(changes) {
+        if (!changes || !instanceId)
+            return
+
+        var updatedSettings = Object.assign({}, settings || {}, changes)
+        settings = updatedSettings
+        WidgetsModel.updateSettings(instanceId, updatedSettings)
+    }
 
     // 动画
     Behavior on implicitWidth {

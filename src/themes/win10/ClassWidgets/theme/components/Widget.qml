@@ -14,7 +14,19 @@ Item {
     readonly property bool hide: Configs.data.interactions.hide.state
     property bool editMode: false
     property bool lightingEffect: Configs.data.preferences.lighting_effect || true
+    property string instanceId: ""
     property real cornerRadius: 4
+
+    // Update the local view immediately and commit the change to the model.
+    // Mutating a property on a JS object does not emit a model notification.
+    function updateSettings(changes) {
+        if (!changes || !instanceId)
+            return
+
+        var updatedSettings = Object.assign({}, settings || {}, changes)
+        settings = updatedSettings
+        WidgetsModel.updateSettings(instanceId, updatedSettings)
+    }
 
     implicitWidth: Math.max(headerRow.implicitWidth, contentArea.childrenRect.width) + 48
     height: miniMode ? 56 : 100
