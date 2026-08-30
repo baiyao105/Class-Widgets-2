@@ -88,26 +88,34 @@ Widget {
         }
     }
 
-    backgroundColor: notificationActive
-        ? Qt.alpha(notificationLevelColor(notificationLevel), Theme.isDark() ? 0.65 : 0.7)
-        : (Theme.isDark() ? Qt.alpha("#1E1D22", 0.65) : Qt.alpha("#FBFAFF", 0.7))
+    backgroundArea: Item {
+        anchors.fill: parent
+        Rectangle {
+            anchors.fill: parent
+            radius: root.cornerRadius
+            color: root.notificationLevelColor(root.notificationLevel)
+            opacity: 0.6
+            visible: root.notificationActive
+        }
 
-    backgroundArea: Rectangle {
-        id: circle
-        width: root.height * 0.4
-        height: root.height * 0.4
-        x: (parent.width - width) / 2
-        y: (parent.height - height) * 0.67
-        radius: height / 2
-        color: currentColor
-        visible: lightingEffect && !root.notificationActive
+        // 光效圆圈
+        Rectangle {
+            id: circle
+            width: root.height * 0.4
+            height: root.height * 0.4
+            x: (parent.width - width) / 2
+            y: (parent.height - height) * 0.67
+            radius: height / 2
+            color: currentColor
+            visible: lightingEffect && !root.notificationActive
 
-        layer.enabled: true
-        layer.effect: FastBlur {
-            anchors.fill: circle
-            radius: 64
-            opacity: 0.5
-            transparentBorder: true
+            layer.enabled: true
+            layer.effect: FastBlur {
+                anchors.fill: circle
+                radius: 64
+                opacity: 0.5
+                transparentBorder: true
+            }
         }
     }
 
