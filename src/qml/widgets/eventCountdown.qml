@@ -41,10 +41,6 @@ Widget {
                 Layout.topMargin: miniMode ? 0 : -4
                 Layout.alignment: Qt.AlignHCenter
 
-                Title {
-                    visible: Configs.data.preferences.countdown_precision === "minute"
-                    text: qsTr("< ")
-                }
                 AnimatedDigits {
                     id: fuzzyMinute
                     visible: Configs.data.preferences.countdown_precision === "minute"
