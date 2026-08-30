@@ -3536,27 +3536,27 @@ It&apos;s incompatible and may cause unexpected issues.</source>
 <context>
     <name>Shortcuts</name>
     <message>
-        <location filename="../../src/core/central.py" line="157"/>
+        <location filename="../../src/core/central.py" line="146"/>
         <source>Settings</source>
         <translation type="unfinished">அமைப்புகள்</translation>
     </message>
     <message>
-        <location filename="../../src/core/central.py" line="163"/>
+        <location filename="../../src/core/central.py" line="152"/>
         <source>Schedules</source>
         <translation type="unfinished">அட்டவணைகள்</translation>
     </message>
     <message>
-        <location filename="../../src/core/central.py" line="169"/>
+        <location filename="../../src/core/central.py" line="158"/>
         <source>Plugin Plaza</source>
         <translation type="unfinished">செருகுநிரல் பிளாசா</translation>
     </message>
     <message>
-        <location filename="../../src/core/central.py" line="175"/>
+        <location filename="../../src/core/central.py" line="164"/>
         <source>Reschedule Day</source>
         <translation type="unfinished">மறு அட்டவணை நாள்</translation>
     </message>
     <message>
-        <location filename="../../src/core/central.py" line="181"/>
+        <location filename="../../src/core/central.py" line="170"/>
         <source>Class Swap</source>
         <translation type="unfinished">வகுப்பு இடமாற்று</translation>
     </message>
