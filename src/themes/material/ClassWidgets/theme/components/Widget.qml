@@ -8,7 +8,7 @@ import ClassWidgets.Easing
 import ClassWidgets.Theme.Material
 
 
-Itedm {
+Item {
     id: widgetBase
     // 最小宽度 = 内容 + 边距，默认可以被拉伸
     readonly property bool miniMode: Configs.data.preferences.mini_mode

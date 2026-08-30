@@ -6,12 +6,14 @@ from pathlib import Path
 from typing import Any, Optional, TYPE_CHECKING, Protocol
 
 from PySide6.QtCore import QCoreApplication, QObject, Property, Signal, Slot, QPoint, QProcess, QTimer
-from PySide6.QtGui import QFont, QIcon
+from PySide6.QtGui import QFont
 from PySide6.QtWidgets import QApplication
 from loguru import logger
 
 from src.core import CONFIGS_PATH, QML_PATH
-from src.core.directories import PathManager, ASSETS_PATH, LOGS_PATH
+from src.core.directories import PathManager, LOGS_PATH
+from src.core.platform import PlatformIntegration
+from src.core.theme_recovery import ThemeRecoveryController
 
 if TYPE_CHECKING:
     from src.core.notification.manager import NotificationManager, NotificationService
@@ -41,7 +43,6 @@ from src.core.schedule import ScheduleRuntime, ScheduleManager
 from src.core.schedule.editor import ScheduleEditor
 from src.core.schedule.swapper import ClassSwapManager
 from src.core.themes import ThemeManager
-from src.core.themes.manager import DEFAULT_THEME_ID
 from src.core.timer import UnionUpdateTimer
 from src.core.updater import UpdaterBridge
 from src.core.utils import AppTranslator, UtilsBackend
@@ -89,35 +90,23 @@ class AppCentral(QObject):  # Class Widgets 的中枢
             raise RuntimeError("AppCentral is a singleton. Use AppCentral.instance() instead.")
         AppCentral._instance = self
 
-        self._check_single_instance()
         self._startup_state = StartupState.CREATED
         self._startup_swap_restore_pending: bool = False
         self._startup_swap_restore_scheduled: bool = False
         self._cleanup_started = False
         self._restart_requested = False
         self._restart_required = False  # 是否有待应用的重启（UI 提示用）
-        self._theme_failure_handling = False
-        self._theme_failure_dialog_scheduled = False
-        self._theme_failure_theme_id = ""
         self._initialize_cores()
-        self._initialize_app_icon()
-        self._initialize_windows_appid()
+        self.platform = PlatformIntegration(self.app_instance)
+        self.instance_guard = self.platform.instance_guard
+        self.multi_instances = self.platform.multi_instances
+        self.platform.initialize()
         self._initialize_notification()
         self._initialize_schedule_components()
         self._initialize_utils()
         self._initialize_ui_components()
         self.app_instance.aboutToQuit.connect(self.cleanup)
         logger.info("AppCentral initialization completed")
-
-    def _check_single_instance(self) -> None:
-        """确保单实例运行"""
-        self.instance_guard: SingleInstanceGuard = SingleInstanceGuard()
-        if not self.instance_guard.try_acquire():
-            lock_info = self.instance_guard.get_lock_info()
-            logger.error(f"Another instance is already running: {lock_info}")
-            self.multi_instances = True
-            return 
-        self.multi_instances: bool = False
 
     @classmethod
     def instance(cls) -> AppCentral:
@@ -204,31 +193,16 @@ class AppCentral(QObject):  # Class Widgets 的中枢
         self._schedule_editor: ScheduleEditor = ScheduleEditor(self.schedule_manager)
         self._class_swap_manager: ClassSwapManager = ClassSwapManager(self)
 
-    def _initialize_app_icon(self) -> None:
-        """设置图标"""
-        if sys.platform == "darwin":
-            return
-            # icon_path = ASSETS_PATH / "images" / "logo.icns"
-        elif sys.platform == "win32":
-            icon_path = ASSETS_PATH / "images" / "logo.ico"
-        else:
-            icon_path = ASSETS_PATH / "images" / "logo.png"
-        self.app_instance.setWindowIcon(QIcon(str(icon_path)))
-
-    def _initialize_windows_appid(self) -> None:
-        """解决 Windows 默认图标问题"""
-        if sys.platform == 'win32':
-            try:
-                import ctypes
-                ctypes.windll.shell32.SetCurrentProcessExplicitAppUserModelID('org.classwidgets.app')
-            except Exception as e:
-                logger.error(f"Failed to set AppUserModelID: {e}")
-
     def _initialize_ui_components(self):
         """初始化启动必需的UI组件"""
         self.widgets_window: WidgetsWindow = WidgetsWindow(self)
         self.widgets_window.qmlReady.connect(self._schedule_startup_swap_restore_prompt)
-        self.widgets_window.themeLoadFailed.connect(self._on_theme_load_failed)
+        self.theme_recovery = ThemeRecoveryController(
+            self.theme_manager,
+            self.window_manager,
+            self,
+        )
+        self.widgets_window.themeLoadFailed.connect(self.theme_recovery.handle_failure)
         if self.multi_instances:
             self.window_manager.ensure("single_instance")
 
@@ -305,52 +279,9 @@ class AppCentral(QObject):  # Class Widgets 的中枢
         self.window_manager.open_class_swap_restore()
 
     @Slot(str)
-    def _on_theme_load_failed(self, failed_theme_id: str) -> None:
-        """Recover from a broken theme and notify the user through QML."""
-        # A Loader from the previous theme may report its error after the
-        # rollback has already selected the default theme.
-        if (
-            self.theme_manager.currentTheme == DEFAULT_THEME_ID
-            and failed_theme_id != DEFAULT_THEME_ID
-        ):
-            return
-        if self._theme_failure_handling:
-            return
-
-        self._theme_failure_handling = True
-        self._theme_failure_theme_id = failed_theme_id
-        logger.error(f"Theme '{failed_theme_id}' failed to load; restoring default theme")
-        recovered = self.theme_manager.rollback_to_default(failed_theme_id)
-        if not recovered:
-            logger.critical("Unable to recover from theme load failure")
-
-        # Keep the guard active while the default theme is being reloaded.
-        # QML Loader errors can arrive synchronously from themeChanged.
-        if not self._theme_failure_dialog_scheduled:
-            self._theme_failure_dialog_scheduled = True
-            QTimer.singleShot(0, lambda: self._show_theme_load_error(failed_theme_id, recovered))
-
-    def _show_theme_load_error(self, failed_theme_id: str, recovered: bool) -> None:
-        self._theme_failure_dialog_scheduled = False
-        self.window_manager.open_theme_load_error(failed_theme_id, recovered)
-        self._theme_failure_handling = False
-
-    @Slot(str)
     def reportThemeLoadFailure(self, source: str = "") -> None:
-        """Receive asynchronous Loader errors from themed widget components."""
-        failed_theme_id = self.theme_manager.currentTheme
-        logger.error(
-            "Theme component failed to load for theme '{}'{}".format(
-                failed_theme_id,
-                f": {source}" if source else "",
-            )
-        )
-        if self._theme_failure_handling:
-            return
-        QTimer.singleShot(0, lambda: self._handle_reported_theme_failure(failed_theme_id))
-
-    def _handle_reported_theme_failure(self, failed_theme_id: str) -> None:
-        self._on_theme_load_failed(failed_theme_id)
+        """Keep the existing QML entry point while delegating recovery."""
+        self.theme_recovery.report_component_failure(source)
 
     def resolve_class_swap_restore(self, *, discard: bool) -> None:
         if discard:
