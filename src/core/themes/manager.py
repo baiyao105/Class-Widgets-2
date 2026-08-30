@@ -151,6 +151,10 @@ class ThemeManager(QObject):
 
         self._pending = None
         if self._currentTheme == DEFAULT_THEME_ID:
+            # A component failure can happen while the default theme is
+            # already selected. Emit again so the window can rebuild after
+            # clearing its QML component cache.
+            self.themeChanged.emit()
             return True
 
         self._apply(DEFAULT_THEME_ID)

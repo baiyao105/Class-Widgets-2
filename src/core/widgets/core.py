@@ -81,7 +81,6 @@ class WidgetsWindow(ReleasableWindow, QObject):
             if current_theme_path:
                 logger.info(f"Setting theme interceptor path: {current_theme_path}")
                 self.interceptor.set_theme(current_theme_path)
-                self.engine.addImportPath(current_theme_path)
             else:
                 logger.warning(f"Theme path is empty for theme: {current_theme_id}")
         else:
@@ -117,7 +116,6 @@ class WidgetsWindow(ReleasableWindow, QObject):
             if current_theme_path:
                 logger.info(f"Updating theme interceptor path: {current_theme_path}")
                 self.interceptor.set_theme(current_theme_path)
-                self.engine.addImportPath(current_theme_path)
             else:
                 logger.warning(f"Theme path is empty for theme: {current_theme_id}")
                 self.interceptor.set_theme(None)
