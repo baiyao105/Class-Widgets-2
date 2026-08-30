@@ -128,7 +128,7 @@ class HideInteractionsConfig(ConfigBaseModel):
     clicked: bool = True  # 点击时
     maximized: bool = False  # 窗口最大化
     fullscreen: bool = False   # 窗口全屏
-    action: TapAction = TapAction.HIDE  # 触发隐藏时的行为（隐藏 / 切换迷你模式）
+    action: TapAction = TapAction.HIDE  # 触发隐藏时的行为（隐藏 / 切换迷你模式 / 浮窗）
 
     class Config:
         use_enum_values = True

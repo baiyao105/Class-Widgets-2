@@ -59,10 +59,11 @@ class AutoHideTask(AutomationTask):
 
     def _hide(self, state: bool) -> None:
         """隐藏窗口"""
-        if self.app_central.configs.interactions.hide.action == TapAction.MINI_MODE:  # mini模式
+        action = self.app_central.configs.interactions.hide.action
+        if action == TapAction.MINI_MODE:  # mini模式
             # if not self.app_central.configs.isKeyLocked("preferences.mini_mode"):
             self.app_central.configs.preferences.mini_mode = state
-        else:
+        elif action in (TapAction.HIDE, TapAction.FLOATING_WIDGET):
             # if not self.app_central.configs.isKeyLocked("interactions.hide.state"):
             self.app_central.configs.interactions.hide.state = state
 

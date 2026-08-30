@@ -17,7 +17,9 @@ Column {
     property bool hide: {
         return Configs.data.interactions.hide.state
     }
-    property bool floatingMode: hide && Configs.data.interactions.tapped_action === "floating_widget"
+    property bool floatingMode: hide
+        && (Configs.data.interactions.tapped_action === "floating_widget"
+            || Configs.data.interactions.hide.action === "floating_widget")
     property var preferences: Configs.data.preferences
 
     property real dragOffsetX: 0

@@ -120,7 +120,7 @@ FluentPage {
             Layout.fillWidth: true
             title: qsTr("More hide behavior")
             icon.name: "ic_fluent_slide_hide_20_regular"
-            description: qsTr("Choose whether widgets hide or switch to Mini Mode when triggered")
+            description: qsTr("Choose whether widgets hide, switch to Mini Mode, or open a floating widget when triggered")
 
             action: ComboBox {
                 id: modeSelector
@@ -128,6 +128,7 @@ FluentPage {
                 model: ListModel {
                     ListElement { text: qsTr("Hide Widgets"); value: "hide" }
                     ListElement { text: qsTr("Switch to mini mode"); value: "mini_mode" }
+                    ListElement { text: qsTr("Floating widget"); value: "floating_widget" }
                 }
                 textRole: "text"
                 valueRole: "value"

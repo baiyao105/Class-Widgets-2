@@ -105,42 +105,25 @@ TutorialComponents.TutorialPage {
             }
         }
 
-        // SettingExpander {
-        //     Layout.fillWidth: true
-        //     icon.name: "ic_fluent_eye_off_20_regular"
-        //     title: qsTr("Auto Hide")
-        //     description: qsTr("Automatically hide widgets in specific situations")
-        //     expanded: true
-        //
-        //     SettingItem {
-        //         ColumnLayout {
-        //             Layout.fillWidth: true
-        //
-        //             CheckBox {
-        //                 Layout.fillWidth: true
-        //                 text: qsTr("Hide when in class")
-        //                 enabled: !Configs.isKeyLocked("interactions.hide.in_class")
-        //                 onCheckedChanged: Configs.set("interactions.hide.in_class", checked)
-        //                 Component.onCompleted: checked = Configs.data.interactions.hide.in_class
-        //             }
-        //
-        //             CheckBox {
-        //                 Layout.fillWidth: true
-        //                 text: qsTr("Hide when a window is maximized")
-        //                 enabled: !Configs.isKeyLocked("interactions.hide.maximized") && Qt.platform.os === "windows"
-        //                 onCheckedChanged: Configs.set("interactions.hide.maximized", checked)
-        //                 Component.onCompleted: checked = Configs.data.interactions.hide.maximized
-        //             }
-        //
-        //             CheckBox {
-        //                 Layout.fillWidth: true
-        //                 text: qsTr("Hide when a window enters fullscreen")
-        //                 enabled: !Configs.isKeyLocked("interactions.hide.fullscreen") && Qt.platform.os === "windows"
-        //                 onCheckedChanged: Configs.set("interactions.hide.fullscreen", checked)
-        //                 Component.onCompleted: checked = Configs.data.interactions.hide.fullscreen
-        //             }
-        //         }
-        //     }
-        // }
+        SettingExpander {
+            Layout.fillWidth: true
+            icon.name: "ic_fluent_slide_hide_20_regular"
+            title: qsTr("More hide behavior")
+            description: qsTr("Choose whether widgets hide, switch to Mini Mode, or open a floating widget when triggered")
+
+            action: ComboBox {
+                Layout.preferredWidth: 180
+                model: ListModel {
+                    ListElement { text: qsTr("Hide Widgets"); value: "hide" }
+                    ListElement { text: qsTr("Switch to mini mode"); value: "mini_mode" }
+                    ListElement { text: qsTr("Floating widget"); value: "floating_widget" }
+                }
+                textRole: "text"
+                valueRole: "value"
+                enabled: !Configs.isKeyLocked("interactions.hide.action")
+                onCurrentValueChanged: if (focus) Configs.set("interactions.hide.action", currentValue)
+                Component.onCompleted: currentIndex = indexOfValue(Configs.data.interactions.hide.action)
+            }
+        }
     }
 }
