@@ -169,6 +169,7 @@ Widget {
                     spacing: 0
                     opacity: 0.6
                     visible: AppCentral.scheduleRuntime.currentStatus !== "free"
+                        || countdown !== { "minute": 0, "second": 0 }
 
                     // min
                     Text {

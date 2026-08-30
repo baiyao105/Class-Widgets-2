@@ -11,7 +11,7 @@ Widget {
         AppCentral.translator.language
         return qsTr("Remaining")
     }
-    property var countdown: AppCentral.scheduleRuntime.remainingTime || { "minutes": 0, "seconds": 0 }
+    property var countdown: AppCentral.scheduleRuntime.remainingTime || { "minute": 0, "second": 0 }
 
     // 统一布局，用 RowLayout 并根据 miniMode 控制内部排列
     RowLayout {
