@@ -221,16 +221,16 @@ class ScheduleEditor(QObject):
         if not day:
             return
 
-        if day_of_week:
-            day.dayOfWeek = day_of_week
+        # The editor submits the complete mode state. Clear fields from the
+        # previous mode so a stale date cannot keep taking precedence.
+        day.dayOfWeek = day_of_week or None
         if weeks is not None:
             weeks = _jsvalue_to_python(weeks)
             if isinstance(weeks, str) and weeks == WeekType.ALL.value:
                 day.weeks = WeekType.ALL
             else:
                 day.weeks = weeks
-        if date:
-            day.date = date
+        day.date = date or None
         self._emit_days_changed()
         self._entries_revision += 1
         self.entriesChanged.emit()
