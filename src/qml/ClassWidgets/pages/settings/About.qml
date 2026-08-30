@@ -74,6 +74,7 @@ FluentPage {
             description: qsTr("© 2024-2026 RinLit. All rights reserved \nLicensed under the MIT license")
             icon.source: PathManager.images("logo.png")
             icon.size: 28
+            expanded: true
 
             content: RowLayout {
                 spacing: 8
