@@ -26,7 +26,7 @@ Licensed under the MIT license</source>
 MIT உரிமத்தின் கீழ் உரிமம் பெற்றது</translation>
     </message>
     <message>
-        <location filename="../../src/qml/ClassWidgets/pages/settings/About.qml" line="91"/>
+        <location filename="../../src/qml/ClassWidgets/pages/settings/About.qml" line="92"/>
         <source>To view this repository</source>
         <translation>இந்தக் களஞ்சியத்தைப் பார்க்க</translation>
     </message>
@@ -39,37 +39,37 @@ MIT உரிமத்தின் கீழ் உரிமம் பெற்�
         <translation type="vanished">GitHub இல் சிக்கலை உருவாக்கவும்</translation>
     </message>
     <message>
-        <location filename="../../src/qml/ClassWidgets/pages/settings/About.qml" line="129"/>
+        <location filename="../../src/qml/ClassWidgets/pages/settings/About.qml" line="130"/>
         <source>Dependencies &amp; references</source>
         <translation>சார்புகள் மற்றும் குறிப்புகள்</translation>
     </message>
     <message>
-        <location filename="../../src/qml/ClassWidgets/pages/settings/About.qml" line="132"/>
+        <location filename="../../src/qml/ClassWidgets/pages/settings/About.qml" line="133"/>
         <source>Qt &amp; Qt Quick</source>
         <translation>கியுடி மற்றும் கியுடி விரைவு</translation>
     </message>
     <message>
-        <location filename="../../src/qml/ClassWidgets/pages/settings/About.qml" line="136"/>
+        <location filename="../../src/qml/ClassWidgets/pages/settings/About.qml" line="137"/>
         <source>Fluent Design System</source>
         <translation>சரளமான வடிவமைப்பு அமைப்பு</translation>
     </message>
     <message>
-        <location filename="../../src/qml/ClassWidgets/pages/settings/About.qml" line="140"/>
+        <location filename="../../src/qml/ClassWidgets/pages/settings/About.qml" line="141"/>
         <source>RinUI</source>
         <translation>ரினுய்</translation>
     </message>
     <message>
-        <location filename="../../src/qml/ClassWidgets/pages/settings/About.qml" line="144"/>
+        <location filename="../../src/qml/ClassWidgets/pages/settings/About.qml" line="145"/>
         <source>Loguru</source>
         <translation>உள்நுழையவும்</translation>
     </message>
     <message>
-        <location filename="../../src/qml/ClassWidgets/pages/settings/About.qml" line="148"/>
+        <location filename="../../src/qml/ClassWidgets/pages/settings/About.qml" line="149"/>
         <source>Pydantic</source>
         <translation>பிடான்டிக்</translation>
     </message>
     <message>
-        <location filename="../../src/qml/ClassWidgets/pages/settings/About.qml" line="154"/>
+        <location filename="../../src/qml/ClassWidgets/pages/settings/About.qml" line="155"/>
         <source>License</source>
         <translation>உரிமம்</translation>
     </message>
@@ -82,94 +82,94 @@ MIT உரிமத்தின் கீழ் உரிமம் பெற்�
         <translation type="vanished">GPL-3 உரிமம்</translation>
     </message>
     <message>
-        <location filename="../../src/qml/ClassWidgets/pages/settings/About.qml" line="115"/>
+        <location filename="../../src/qml/ClassWidgets/pages/settings/About.qml" line="116"/>
         <source>File a bug or request new feature</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/qml/ClassWidgets/pages/settings/About.qml" line="155"/>
+        <location filename="../../src/qml/ClassWidgets/pages/settings/About.qml" line="156"/>
         <source>This project is licensed under the MIT license</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/qml/ClassWidgets/pages/settings/About.qml" line="158"/>
+        <location filename="../../src/qml/ClassWidgets/pages/settings/About.qml" line="159"/>
         <source>MIT License</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/qml/ClassWidgets/pages/settings/About.qml" line="172"/>
+        <location filename="../../src/qml/ClassWidgets/pages/settings/About.qml" line="173"/>
         <source>Advances</source>
         <translation>முன்னேற்றங்கள்</translation>
     </message>
     <message>
-        <location filename="../../src/qml/ClassWidgets/pages/settings/About.qml" line="178"/>
+        <location filename="../../src/qml/ClassWidgets/pages/settings/About.qml" line="179"/>
         <source>Log Storage Disabled</source>
         <translation>பதிவுச் சேமிப்பகம் முடக்கப்பட்டது</translation>
     </message>
     <message>
-        <location filename="../../src/qml/ClassWidgets/pages/settings/About.qml" line="179"/>
+        <location filename="../../src/qml/ClassWidgets/pages/settings/About.qml" line="180"/>
         <source>When enabled, the app will &lt;b&gt;not&lt;/b&gt; save logs.</source>
         <translation>இயக்கப்பட்டால், பயன்பாடு பதிவுகளை &lt;b&gt;இல்லை&lt;/b&gt; சேமிக்கும்.</translation>
     </message>
     <message>
-        <location filename="../../src/qml/ClassWidgets/pages/settings/About.qml" line="188"/>
+        <location filename="../../src/qml/ClassWidgets/pages/settings/About.qml" line="189"/>
         <source>Clear Logs</source>
         <translation>பதிவுகளை அழிக்கவும்</translation>
     </message>
     <message>
-        <location filename="../../src/qml/ClassWidgets/pages/settings/About.qml" line="192"/>
+        <location filename="../../src/qml/ClassWidgets/pages/settings/About.qml" line="193"/>
         <source>Clear</source>
         <translation>தெளிவு</translation>
     </message>
     <message>
-        <location filename="../../src/qml/ClassWidgets/pages/settings/About.qml" line="197"/>
+        <location filename="../../src/qml/ClassWidgets/pages/settings/About.qml" line="198"/>
         <source>Cleared</source>
         <translation>அழிக்கப்பட்டது</translation>
     </message>
     <message>
-        <location filename="../../src/qml/ClassWidgets/pages/settings/About.qml" line="198"/>
+        <location filename="../../src/qml/ClassWidgets/pages/settings/About.qml" line="199"/>
         <source>All logs have been cleared about </source>
         <translation>அனைத்து பதிவுகளும் அழிக்கப்பட்டன </translation>
     </message>
     <message>
-        <location filename="../../src/qml/ClassWidgets/pages/settings/About.qml" line="204"/>
+        <location filename="../../src/qml/ClassWidgets/pages/settings/About.qml" line="205"/>
         <source>Failed</source>
         <translation>தோல்வியடைந்தது</translation>
     </message>
     <message>
-        <location filename="../../src/qml/ClassWidgets/pages/settings/About.qml" line="205"/>
+        <location filename="../../src/qml/ClassWidgets/pages/settings/About.qml" line="206"/>
         <source>Failed to clear logs.</source>
         <translation>பதிவுகளை அழிக்க முடியவில்லை.</translation>
     </message>
     <message>
-        <location filename="../../src/qml/ClassWidgets/pages/settings/About.qml" line="218"/>
+        <location filename="../../src/qml/ClassWidgets/pages/settings/About.qml" line="219"/>
         <source>Debug Mode</source>
         <translation>பிழைத்திருத்த முறை</translation>
     </message>
     <message>
-        <location filename="../../src/qml/ClassWidgets/pages/settings/About.qml" line="219"/>
+        <location filename="../../src/qml/ClassWidgets/pages/settings/About.qml" line="220"/>
         <source>Enable Debug Mode to access core widget information, and debugging tools 
 * Requires restart</source>
         <translation>முக்கிய விட்செட் செய்தி மற்றும் பிழைத்திருத்த கருவிகளை அணுக பிழைத்திருத்த பயன்முறையை இயக்கவும் 
 * மறுதொடக்கம் தேவை</translation>
     </message>
     <message>
-        <location filename="../../src/qml/ClassWidgets/pages/settings/About.qml" line="235"/>
+        <location filename="../../src/qml/ClassWidgets/pages/settings/About.qml" line="236"/>
         <source>Show Tutorials again</source>
         <translation>டுடோரியல்களை மீண்டும் காட்டு</translation>
     </message>
     <message>
-        <location filename="../../src/qml/ClassWidgets/pages/settings/About.qml" line="238"/>
+        <location filename="../../src/qml/ClassWidgets/pages/settings/About.qml" line="239"/>
         <source>Restart</source>
         <translation>மறுதொடக்கம்</translation>
     </message>
     <message>
-        <location filename="../../src/qml/ClassWidgets/pages/settings/About.qml" line="250"/>
+        <location filename="../../src/qml/ClassWidgets/pages/settings/About.qml" line="251"/>
         <source>License Agreement</source>
         <translation>உரிம ஒப்பந்தத்தின்</translation>
     </message>
     <message>
-        <location filename="../../src/qml/ClassWidgets/pages/settings/About.qml" line="257"/>
+        <location filename="../../src/qml/ClassWidgets/pages/settings/About.qml" line="258"/>
         <source>This project (Class Widgets 2) is licensed under the MIT license. For details, see:</source>
         <translation type="unfinished"></translation>
     </message>
@@ -412,7 +412,7 @@ Do you want to continue using them, or discard and restore the original schedule
 <context>
     <name>Configs</name>
     <message>
-        <location filename="../../src/core/config/model.py" line="228"/>
+        <location filename="../../src/core/config/model.py" line="230"/>
         <source>New Schedule 1</source>
         <translation>புதிய அட்டவணை 1</translation>
     </message>
@@ -727,110 +727,120 @@ Do you want to continue using them, or discard and restore the original schedule
 <context>
     <name>Downloads</name>
     <message>
-        <location filename="../../src/qml/ClassWidgets/pages/plaza/Downloads.qml" line="30"/>
+        <location filename="../../src/qml/ClassWidgets/pages/plaza/Downloads.qml" line="31"/>
         <source>Link copied</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/qml/ClassWidgets/pages/plaza/Downloads.qml" line="38"/>
+        <location filename="../../src/qml/ClassWidgets/pages/plaza/Downloads.qml" line="39"/>
         <source>%1 B</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/qml/ClassWidgets/pages/plaza/Downloads.qml" line="40"/>
+        <location filename="../../src/qml/ClassWidgets/pages/plaza/Downloads.qml" line="41"/>
         <source>%1 KB</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/qml/ClassWidgets/pages/plaza/Downloads.qml" line="41"/>
+        <location filename="../../src/qml/ClassWidgets/pages/plaza/Downloads.qml" line="42"/>
         <source>%1 MB</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/qml/ClassWidgets/pages/plaza/Downloads.qml" line="45"/>
+        <location filename="../../src/qml/ClassWidgets/pages/plaza/Downloads.qml" line="46"/>
         <source>%1/s</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/qml/ClassWidgets/pages/plaza/Downloads.qml" line="97"/>
+        <location filename="../../src/qml/ClassWidgets/pages/plaza/Downloads.qml" line="108"/>
         <source>Paused</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/qml/ClassWidgets/pages/plaza/Downloads.qml" line="99"/>
+        <location filename="../../src/qml/ClassWidgets/pages/plaza/Downloads.qml" line="110"/>
         <source>Installing</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/qml/ClassWidgets/pages/plaza/Downloads.qml" line="102"/>
+        <location filename="../../src/qml/ClassWidgets/pages/plaza/Downloads.qml" line="112"/>
+        <source>Downloaded. Restart to apply</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../src/qml/ClassWidgets/pages/plaza/Downloads.qml" line="115"/>
         <source>Downloaded: %1 / %2</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/qml/ClassWidgets/pages/plaza/Downloads.qml" line="109"/>
+        <location filename="../../src/qml/ClassWidgets/pages/plaza/Downloads.qml" line="122"/>
         <source>Downloading</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/qml/ClassWidgets/pages/plaza/Downloads.qml" line="129"/>
+        <location filename="../../src/qml/ClassWidgets/pages/plaza/Downloads.qml" line="142"/>
         <source>Updates and downloads</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/qml/ClassWidgets/pages/plaza/Downloads.qml" line="139"/>
+        <location filename="../../src/qml/ClassWidgets/pages/plaza/Downloads.qml" line="152"/>
         <source>Check for updates</source>
         <translation type="unfinished">புதுப்பிப்புகளை சரிபார்க்கவும்</translation>
     </message>
     <message>
-        <location filename="../../src/qml/ClassWidgets/pages/plaza/Downloads.qml" line="178"/>
+        <location filename="../../src/qml/ClassWidgets/pages/plaza/Downloads.qml" line="192"/>
         <source>Resume</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/qml/ClassWidgets/pages/plaza/Downloads.qml" line="178"/>
+        <location filename="../../src/qml/ClassWidgets/pages/plaza/Downloads.qml" line="192"/>
         <source>Pause</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/qml/ClassWidgets/pages/plaza/Downloads.qml" line="202"/>
-        <location filename="../../src/qml/ClassWidgets/pages/plaza/Downloads.qml" line="250"/>
+        <location filename="../../src/qml/ClassWidgets/pages/plaza/Downloads.qml" line="221"/>
+        <location filename="../../src/qml/ClassWidgets/pages/plaza/Downloads.qml" line="270"/>
         <source>Unknown author</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/qml/ClassWidgets/pages/plaza/Downloads.qml" line="204"/>
-        <location filename="../../src/qml/ClassWidgets/pages/plaza/Downloads.qml" line="255"/>
+        <location filename="../../src/qml/ClassWidgets/pages/plaza/Downloads.qml" line="223"/>
+        <location filename="../../src/qml/ClassWidgets/pages/plaza/Downloads.qml" line="277"/>
         <source>v%1 -&gt; v%2</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/qml/ClassWidgets/pages/plaza/Downloads.qml" line="207"/>
-        <location filename="../../src/qml/ClassWidgets/pages/plaza/Downloads.qml" line="262"/>
+        <location filename="../../src/qml/ClassWidgets/pages/plaza/Downloads.qml" line="227"/>
+        <location filename="../../src/qml/ClassWidgets/pages/plaza/Downloads.qml" line="287"/>
         <source>Update</source>
         <translation type="unfinished">புதுப்பிப்பு</translation>
     </message>
     <message>
-        <location filename="../../src/qml/ClassWidgets/pages/plaza/Downloads.qml" line="235"/>
+        <location filename="../../src/qml/ClassWidgets/pages/plaza/Downloads.qml" line="255"/>
         <source>Installed Plugin Plaza plugins</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/qml/ClassWidgets/pages/plaza/Downloads.qml" line="253"/>
+        <location filename="../../src/qml/ClassWidgets/pages/plaza/Downloads.qml" line="273"/>
+        <source>Update downloaded. Restart to apply</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../src/qml/ClassWidgets/pages/plaza/Downloads.qml" line="275"/>
         <source>Update check unavailable</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/qml/ClassWidgets/pages/plaza/Downloads.qml" line="256"/>
+        <location filename="../../src/qml/ClassWidgets/pages/plaza/Downloads.qml" line="278"/>
         <source>Updated at %1</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/qml/ClassWidgets/pages/plaza/Downloads.qml" line="256"/>
+        <location filename="../../src/qml/ClassWidgets/pages/plaza/Downloads.qml" line="278"/>
         <source>Unknown</source>
         <translation type="unfinished">தெரியவில்லை</translation>
     </message>
     <message>
-        <location filename="../../src/qml/ClassWidgets/pages/plaza/Downloads.qml" line="280"/>
+        <location filename="../../src/qml/ClassWidgets/pages/plaza/Downloads.qml" line="305"/>
         <source>No installed Plugin Plaza plugins</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1194,32 +1204,32 @@ Do you want to continue using them, or discard and restore the original schedule
 <context>
     <name>FloatingWidget</name>
     <message>
-        <location filename="../../src/qml/ClassWidgets/Theme/components/FloatingWidget.qml" line="151"/>
+        <location filename="../../src/qml/ClassWidgets/Theme/components/FloatingWidget.qml" line="159"/>
         <source>Class</source>
         <translation type="unfinished">வகுப்பு</translation>
     </message>
     <message>
-        <location filename="../../src/qml/ClassWidgets/Theme/components/FloatingWidget.qml" line="153"/>
+        <location filename="../../src/qml/ClassWidgets/Theme/components/FloatingWidget.qml" line="161"/>
         <source>Activity</source>
         <translation type="unfinished">செய்கைப்பாடு</translation>
     </message>
     <message>
-        <location filename="../../src/qml/ClassWidgets/Theme/components/FloatingWidget.qml" line="155"/>
+        <location filename="../../src/qml/ClassWidgets/Theme/components/FloatingWidget.qml" line="163"/>
         <source>Take a break</source>
         <translation type="unfinished">ஓய்வு எடுங்கள்</translation>
     </message>
     <message>
-        <location filename="../../src/qml/ClassWidgets/Theme/components/FloatingWidget.qml" line="156"/>
+        <location filename="../../src/qml/ClassWidgets/Theme/components/FloatingWidget.qml" line="164"/>
         <source>Nothing right now</source>
         <translation type="unfinished">இப்போது எதுவும் இல்லை</translation>
     </message>
     <message>
-        <location filename="../../src/qml/ClassWidgets/Theme/components/FloatingWidget.qml" line="168"/>
+        <location filename="../../src/qml/ClassWidgets/Theme/components/FloatingWidget.qml" line="176"/>
         <source>&lt; </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/qml/ClassWidgets/Theme/components/FloatingWidget.qml" line="179"/>
+        <location filename="../../src/qml/ClassWidgets/Theme/components/FloatingWidget.qml" line="187"/>
         <source> min</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1741,16 +1751,19 @@ Do you want to continue using them, or discard and restore the original schedule
     </message>
     <message>
         <location filename="../../src/qml/ClassWidgets/pages/settings/General/Interactions.qml" line="145"/>
+        <location filename="../../src/qml/ClassWidgets/pages/tutorial/Interactions.qml" line="132"/>
         <source>Hide when in class</source>
         <translation>வகுப்பில் இருக்கும்போது மறைக்கவும்</translation>
     </message>
     <message>
         <location filename="../../src/qml/ClassWidgets/pages/settings/General/Interactions.qml" line="152"/>
+        <location filename="../../src/qml/ClassWidgets/pages/tutorial/Interactions.qml" line="139"/>
         <source>Hide when a window is maximized</source>
         <translation>ஒரு சாளரம் பெரிதாக்கப்படும் போது மறை</translation>
     </message>
     <message>
         <location filename="../../src/qml/ClassWidgets/pages/settings/General/Interactions.qml" line="159"/>
+        <location filename="../../src/qml/ClassWidgets/pages/tutorial/Interactions.qml" line="146"/>
         <source>Hide when a window enters fullscreen</source>
         <translation>ஒரு சாளரம் முழுத்திரையில் நுழையும் போது மறை</translation>
     </message>
@@ -1941,7 +1954,7 @@ Do you want to continue using them, or discard and restore the original schedule
 <context>
     <name>NotificationProviders</name>
     <message>
-        <location filename="../../src/core/utils/backend.py" line="61"/>
+        <location filename="../../src/core/utils/backend.py" line="62"/>
         <source>Debug Notification</source>
         <translation>பிழைத்திருத்த அறிவிப்பு</translation>
     </message>
@@ -2141,209 +2154,214 @@ If translations are missing after a theme change, please restart</source>
 <context>
     <name>Plugin</name>
     <message>
-        <location filename="../../src/qml/ClassWidgets/pages/plaza/Plugin.qml" line="127"/>
+        <location filename="../../src/qml/ClassWidgets/pages/plaza/Plugin.qml" line="144"/>
         <source>%1 B</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/qml/ClassWidgets/pages/plaza/Plugin.qml" line="129"/>
+        <location filename="../../src/qml/ClassWidgets/pages/plaza/Plugin.qml" line="146"/>
         <source>%1 KB</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/qml/ClassWidgets/pages/plaza/Plugin.qml" line="130"/>
+        <location filename="../../src/qml/ClassWidgets/pages/plaza/Plugin.qml" line="147"/>
         <source>%1 MB</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/qml/ClassWidgets/pages/plaza/Plugin.qml" line="185"/>
-        <location filename="../../src/qml/ClassWidgets/pages/plaza/Plugin.qml" line="771"/>
+        <location filename="../../src/qml/ClassWidgets/pages/plaza/Plugin.qml" line="202"/>
+        <location filename="../../src/qml/ClassWidgets/pages/plaza/Plugin.qml" line="794"/>
         <source>No data</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/qml/ClassWidgets/pages/plaza/Plugin.qml" line="233"/>
+        <location filename="../../src/qml/ClassWidgets/pages/plaza/Plugin.qml" line="250"/>
         <source>Failed to parse plugin information.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/qml/ClassWidgets/pages/plaza/Plugin.qml" line="239"/>
+        <location filename="../../src/qml/ClassWidgets/pages/plaza/Plugin.qml" line="256"/>
         <source>Failed to load plugin information: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/qml/ClassWidgets/pages/plaza/Plugin.qml" line="255"/>
+        <location filename="../../src/qml/ClassWidgets/pages/plaza/Plugin.qml" line="272"/>
         <source>No description</source>
         <translation type="unfinished">விளக்கம் இல்லை</translation>
     </message>
     <message>
-        <location filename="../../src/qml/ClassWidgets/pages/plaza/Plugin.qml" line="255"/>
+        <location filename="../../src/qml/ClassWidgets/pages/plaza/Plugin.qml" line="272"/>
         <source>This plugin does not provide README content.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/qml/ClassWidgets/pages/plaza/Plugin.qml" line="412"/>
+        <location filename="../../src/qml/ClassWidgets/pages/plaza/Plugin.qml" line="429"/>
         <source>Load failed</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/qml/ClassWidgets/pages/plaza/Plugin.qml" line="478"/>
+        <location filename="../../src/qml/ClassWidgets/pages/plaza/Plugin.qml" line="495"/>
         <source>Loading plugin...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/qml/ClassWidgets/pages/plaza/Plugin.qml" line="485"/>
+        <location filename="../../src/qml/ClassWidgets/pages/plaza/Plugin.qml" line="502"/>
         <source>Unknown author</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/qml/ClassWidgets/pages/plaza/Plugin.qml" line="518"/>
+        <location filename="../../src/qml/ClassWidgets/pages/plaza/Plugin.qml" line="535"/>
         <source>%1 Ratings</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/qml/ClassWidgets/pages/plaza/Plugin.qml" line="574"/>
+        <location filename="../../src/qml/ClassWidgets/pages/plaza/Plugin.qml" line="591"/>
         <source>Pause</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/qml/ClassWidgets/pages/plaza/Plugin.qml" line="576"/>
+        <location filename="../../src/qml/ClassWidgets/pages/plaza/Plugin.qml" line="593"/>
         <source>Resume</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/qml/ClassWidgets/pages/plaza/Plugin.qml" line="578"/>
+        <location filename="../../src/qml/ClassWidgets/pages/plaza/Plugin.qml" line="595"/>
         <source>Installing</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/qml/ClassWidgets/pages/plaza/Plugin.qml" line="580"/>
+        <location filename="../../src/qml/ClassWidgets/pages/plaza/Plugin.qml" line="597"/>
+        <source>Restart to apply</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../src/qml/ClassWidgets/pages/plaza/Plugin.qml" line="599"/>
         <source>Installed</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/qml/ClassWidgets/pages/plaza/Plugin.qml" line="581"/>
+        <location filename="../../src/qml/ClassWidgets/pages/plaza/Plugin.qml" line="600"/>
         <source>Get</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/qml/ClassWidgets/pages/plaza/Plugin.qml" line="610"/>
+        <location filename="../../src/qml/ClassWidgets/pages/plaza/Plugin.qml" line="630"/>
         <source>Paused</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/qml/ClassWidgets/pages/plaza/Plugin.qml" line="612"/>
+        <location filename="../../src/qml/ClassWidgets/pages/plaza/Plugin.qml" line="632"/>
         <source>Downloaded: %1 / %2</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/qml/ClassWidgets/pages/plaza/Plugin.qml" line="615"/>
+        <location filename="../../src/qml/ClassWidgets/pages/plaza/Plugin.qml" line="635"/>
         <source>Downloading</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/qml/ClassWidgets/pages/plaza/Plugin.qml" line="626"/>
+        <location filename="../../src/qml/ClassWidgets/pages/plaza/Plugin.qml" line="646"/>
         <source>Enable</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/qml/ClassWidgets/pages/plaza/Plugin.qml" line="626"/>
+        <location filename="../../src/qml/ClassWidgets/pages/plaza/Plugin.qml" line="646"/>
         <source>Disable</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/qml/ClassWidgets/pages/plaza/Plugin.qml" line="658"/>
+        <location filename="../../src/qml/ClassWidgets/pages/plaza/Plugin.qml" line="681"/>
         <source>Open in Web</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/qml/ClassWidgets/pages/plaza/Plugin.qml" line="664"/>
+        <location filename="../../src/qml/ClassWidgets/pages/plaza/Plugin.qml" line="687"/>
         <source>Copy link</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/qml/ClassWidgets/pages/plaza/Plugin.qml" line="670"/>
+        <location filename="../../src/qml/ClassWidgets/pages/plaza/Plugin.qml" line="693"/>
         <source>Link copied</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/qml/ClassWidgets/pages/plaza/Plugin.qml" line="681"/>
+        <location filename="../../src/qml/ClassWidgets/pages/plaza/Plugin.qml" line="704"/>
         <source>Cancel download</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/qml/ClassWidgets/pages/plaza/Plugin.qml" line="702"/>
+        <location filename="../../src/qml/ClassWidgets/pages/plaza/Plugin.qml" line="725"/>
         <source>More options</source>
         <translation type="unfinished">மேலும் விருப்பங்கள்</translation>
     </message>
     <message>
-        <location filename="../../src/qml/ClassWidgets/pages/plaza/Plugin.qml" line="719"/>
+        <location filename="../../src/qml/ClassWidgets/pages/plaza/Plugin.qml" line="742"/>
         <source>Description</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/qml/ClassWidgets/pages/plaza/Plugin.qml" line="752"/>
+        <location filename="../../src/qml/ClassWidgets/pages/plaza/Plugin.qml" line="775"/>
         <source>Other information</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/qml/ClassWidgets/pages/plaza/Plugin.qml" line="766"/>
+        <location filename="../../src/qml/ClassWidgets/pages/plaza/Plugin.qml" line="789"/>
         <source>Plugin ID</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/qml/ClassWidgets/pages/plaza/Plugin.qml" line="767"/>
+        <location filename="../../src/qml/ClassWidgets/pages/plaza/Plugin.qml" line="790"/>
         <source>Version</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/qml/ClassWidgets/pages/plaza/Plugin.qml" line="767"/>
-        <location filename="../../src/qml/ClassWidgets/pages/plaza/Plugin.qml" line="768"/>
+        <location filename="../../src/qml/ClassWidgets/pages/plaza/Plugin.qml" line="790"/>
+        <location filename="../../src/qml/ClassWidgets/pages/plaza/Plugin.qml" line="791"/>
         <source>Unknown</source>
         <translation type="unfinished">தெரியவில்லை</translation>
     </message>
     <message>
-        <location filename="../../src/qml/ClassWidgets/pages/plaza/Plugin.qml" line="768"/>
+        <location filename="../../src/qml/ClassWidgets/pages/plaza/Plugin.qml" line="791"/>
         <source>API version</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/qml/ClassWidgets/pages/plaza/Plugin.qml" line="769"/>
+        <location filename="../../src/qml/ClassWidgets/pages/plaza/Plugin.qml" line="792"/>
         <source>Branch</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/qml/ClassWidgets/pages/plaza/Plugin.qml" line="770"/>
+        <location filename="../../src/qml/ClassWidgets/pages/plaza/Plugin.qml" line="793"/>
         <source>Last updated</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/qml/ClassWidgets/pages/plaza/Plugin.qml" line="771"/>
+        <location filename="../../src/qml/ClassWidgets/pages/plaza/Plugin.qml" line="794"/>
         <source>Repository</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/qml/ClassWidgets/pages/plaza/Plugin.qml" line="795"/>
+        <location filename="../../src/qml/ClassWidgets/pages/plaza/Plugin.qml" line="818"/>
         <source>Ratings and reviews</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/qml/ClassWidgets/pages/plaza/Plugin.qml" line="811"/>
+        <location filename="../../src/qml/ClassWidgets/pages/plaza/Plugin.qml" line="834"/>
         <source>See all (%1)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/qml/ClassWidgets/pages/plaza/Plugin.qml" line="819"/>
+        <location filename="../../src/qml/ClassWidgets/pages/plaza/Plugin.qml" line="842"/>
         <source>Write a review</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/qml/ClassWidgets/pages/plaza/Plugin.qml" line="843"/>
+        <location filename="../../src/qml/ClassWidgets/pages/plaza/Plugin.qml" line="866"/>
         <source>Discover more</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/qml/ClassWidgets/pages/plaza/Plugin.qml" line="884"/>
+        <location filename="../../src/qml/ClassWidgets/pages/plaza/Plugin.qml" line="907"/>
         <source>No recommendations</source>
         <translation type="unfinished"></translation>
     </message>
@@ -2421,12 +2439,12 @@ If translations are missing after a theme change, please restart</source>
 <context>
     <name>PluginManager</name>
     <message>
-        <location filename="../../src/core/plugin/manager.py" line="123"/>
+        <location filename="../../src/core/plugin/manager.py" line="120"/>
         <source>Incompatible</source>
         <translation>பொருந்தாதது</translation>
     </message>
     <message>
-        <location filename="../../src/core/plugin/manager.py" line="127"/>
+        <location filename="../../src/core/plugin/manager.py" line="124"/>
         <source>{count} incompatible plugin(s) have been loaded, which may cause unknown issues.</source>
         <translation>{count} பொருந்தாத செருகுநிரல்கள் (கள்) ஏற்றப்பட்டுள்ளன, இது அறியப்படாத சிக்கல்களை ஏற்படுத்தக்கூடும்.</translation>
     </message>
@@ -2730,9 +2748,8 @@ Do you want to %3 this plugin?</source>
         <translation>செய்</translation>
     </message>
     <message>
-        <location filename="../../src/qml/ClassWidgets/pages/settings/Plugins.qml" line="28"/>
         <source>The plugin has been uninstalled successfully. Restart to take effect.</source>
-        <translation>செருகுநிரல் வெற்றிகரமாக நிறுவல் நீக்கப்பட்டது. நடைமுறைக்கு வர மீண்டும் தொடங்கவும்.</translation>
+        <translation type="vanished">செருகுநிரல் வெற்றிகரமாக நிறுவல் நீக்கப்பட்டது. நடைமுறைக்கு வர மீண்டும் தொடங்கவும்.</translation>
     </message>
     <message>
         <location filename="../../src/qml/ClassWidgets/pages/settings/Plugins.qml" line="37"/>
@@ -2778,9 +2795,8 @@ It&apos;s incompatible and may cause unexpected issues.</source>
 இது இணக்கமற்றது மற்றும் எதிர்பாராத சிக்கல்களை ஏற்படுத்தலாம்.</translation>
     </message>
     <message>
-        <location filename="../../src/qml/ClassWidgets/pages/settings/Plugins.qml" line="191"/>
         <source>The plugin has been imported successfully.</source>
-        <translation>செருகுநிரல் வெற்றிகரமாக இறக்குமதி செய்யப்பட்டது.</translation>
+        <translation type="vanished">செருகுநிரல் வெற்றிகரமாக இறக்குமதி செய்யப்பட்டது.</translation>
     </message>
     <message>
         <source>The plugin system is still under development. </source>
@@ -2800,9 +2816,8 @@ It&apos;s incompatible and may cause unexpected issues.</source>
         <translation>இறக்குமதி தோல்வி</translation>
     </message>
     <message>
-        <location filename="../../src/qml/ClassWidgets/pages/settings/Plugins.qml" line="108"/>
         <source>Importing</source>
-        <translation>இறக்குமதி செய்கிறது</translation>
+        <translation type="vanished">இறக்குமதி செய்கிறது</translation>
     </message>
     <message>
         <location filename="../../src/qml/ClassWidgets/pages/settings/Plugins.qml" line="17"/>
@@ -2815,9 +2830,23 @@ It&apos;s incompatible and may cause unexpected issues.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/qml/ClassWidgets/pages/settings/Plugins.qml" line="109"/>
         <source>Importing the selected plugin. Please wait...</source>
-        <translation>தேர்ந்தெடுக்கப்பட்ட செருகுநிரலை இறக்குமதி செய்கிறது. தயவுசெய்து காத்திருங்கள்...</translation>
+        <translation type="vanished">தேர்ந்தெடுக்கப்பட்ட செருகுநிரலை இறக்குமதி செய்கிறது. தயவுசெய்து காத்திருங்கள்...</translation>
+    </message>
+    <message>
+        <location filename="../../src/qml/ClassWidgets/pages/settings/Plugins.qml" line="28"/>
+        <source>The plugin uninstall has been queued. Restart to apply it.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../src/qml/ClassWidgets/pages/settings/Plugins.qml" line="108"/>
+        <source>Import queued</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../src/qml/ClassWidgets/pages/settings/Plugins.qml" line="109"/>
+        <source>The plugin will be installed after restart.</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../../src/qml/ClassWidgets/pages/settings/Plugins.qml" line="123"/>
@@ -2842,6 +2871,11 @@ It&apos;s incompatible and may cause unexpected issues.</source>
     <message>
         <location filename="../../src/qml/ClassWidgets/pages/settings/Plugins.qml" line="152"/>
         <source>Automatically install plugin updates</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../src/qml/ClassWidgets/pages/settings/Plugins.qml" line="191"/>
+        <source>The plugin import has been queued. Restart to apply it.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -2912,103 +2946,103 @@ It&apos;s incompatible and may cause unexpected issues.</source>
         <translation>உள்ளமைக்கப்பட்ட விட்செட்டுகள்</translation>
     </message>
     <message>
-        <location filename="../../src/qml/ClassWidgets/pages/tutorial/Plugins.qml" line="21"/>
+        <location filename="../../src/qml/ClassWidgets/pages/tutorial/Plugins.qml" line="31"/>
         <source>Recommended plugins</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/qml/ClassWidgets/pages/tutorial/Plugins.qml" line="22"/>
+        <location filename="../../src/qml/ClassWidgets/pages/tutorial/Plugins.qml" line="32"/>
         <source>Pick certified plugins from Plugin Plaza to install with your first setup.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/qml/ClassWidgets/pages/tutorial/Plugins.qml" line="28"/>
+        <location filename="../../src/qml/ClassWidgets/pages/tutorial/Plugins.qml" line="38"/>
         <source>Installing plugins</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/qml/ClassWidgets/pages/tutorial/Plugins.qml" line="30"/>
+        <location filename="../../src/qml/ClassWidgets/pages/tutorial/Plugins.qml" line="40"/>
         <source>Finish</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/qml/ClassWidgets/pages/tutorial/Plugins.qml" line="32"/>
+        <location filename="../../src/qml/ClassWidgets/pages/tutorial/Plugins.qml" line="42"/>
         <source>Skip</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/qml/ClassWidgets/pages/tutorial/Plugins.qml" line="33"/>
+        <location filename="../../src/qml/ClassWidgets/pages/tutorial/Plugins.qml" line="43"/>
         <source>Finish &amp; Install</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/qml/ClassWidgets/pages/tutorial/Plugins.qml" line="39"/>
-        <location filename="../../src/qml/ClassWidgets/pages/tutorial/Plugins.qml" line="475"/>
+        <location filename="../../src/qml/ClassWidgets/pages/tutorial/Plugins.qml" line="49"/>
+        <location filename="../../src/qml/ClassWidgets/pages/tutorial/Plugins.qml" line="503"/>
         <source>Retry</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/qml/ClassWidgets/pages/tutorial/Plugins.qml" line="170"/>
+        <location filename="../../src/qml/ClassWidgets/pages/tutorial/Plugins.qml" line="188"/>
         <source>%1 selected</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/qml/ClassWidgets/pages/tutorial/Plugins.qml" line="171"/>
+        <location filename="../../src/qml/ClassWidgets/pages/tutorial/Plugins.qml" line="189"/>
         <source>No plugins selected</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/qml/ClassWidgets/pages/tutorial/Plugins.qml" line="173"/>
+        <location filename="../../src/qml/ClassWidgets/pages/tutorial/Plugins.qml" line="191"/>
         <source>%1/%2 plugins</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/qml/ClassWidgets/pages/tutorial/Plugins.qml" line="196"/>
+        <location filename="../../src/qml/ClassWidgets/pages/tutorial/Plugins.qml" line="214"/>
         <source>Installation failed</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/qml/ClassWidgets/pages/tutorial/Plugins.qml" line="271"/>
+        <location filename="../../src/qml/ClassWidgets/pages/tutorial/Plugins.qml" line="295"/>
         <source>Unable to start installation</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/qml/ClassWidgets/pages/tutorial/Plugins.qml" line="312"/>
+        <location filename="../../src/qml/ClassWidgets/pages/tutorial/Plugins.qml" line="340"/>
         <source>Installation cancelled</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/qml/ClassWidgets/pages/tutorial/Plugins.qml" line="369"/>
+        <location filename="../../src/qml/ClassWidgets/pages/tutorial/Plugins.qml" line="397"/>
         <source>Select all</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/qml/ClassWidgets/pages/tutorial/Plugins.qml" line="378"/>
+        <location filename="../../src/qml/ClassWidgets/pages/tutorial/Plugins.qml" line="406"/>
         <source>Clear selection</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/qml/ClassWidgets/pages/tutorial/Plugins.qml" line="462"/>
+        <location filename="../../src/qml/ClassWidgets/pages/tutorial/Plugins.qml" line="490"/>
         <source>Could not load recommendations</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/qml/ClassWidgets/pages/tutorial/Plugins.qml" line="463"/>
+        <location filename="../../src/qml/ClassWidgets/pages/tutorial/Plugins.qml" line="491"/>
         <source>No recommendations available</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/qml/ClassWidgets/pages/tutorial/Plugins.qml" line="466"/>
+        <location filename="../../src/qml/ClassWidgets/pages/tutorial/Plugins.qml" line="494"/>
         <source>You can browse Plugin Plaza after setup.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/qml/ClassWidgets/pages/tutorial/Plugins.qml" line="489"/>
+        <location filename="../../src/qml/ClassWidgets/pages/tutorial/Plugins.qml" line="520"/>
         <source>Some plugins were not installed</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/qml/ClassWidgets/pages/tutorial/Plugins.qml" line="490"/>
+        <location filename="../../src/qml/ClassWidgets/pages/tutorial/Plugins.qml" line="521"/>
         <source>%1 installed, %2 failed. Retry the failed plugins or continue without them.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -3979,6 +4013,45 @@ If it takes place in another location, such as a sport field, lab, or another cl
     <message>
         <location filename="../../src/qml/ClassWidgets/Components/plaza/TagShowcase.qml" line="35"/>
         <source>View all %1 plugins</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>Text</name>
+    <message>
+        <location filename="../../src/qml/widgets/Text.qml" line="20"/>
+        <source>Text</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../src/qml/widgets/Text.qml" line="52"/>
+        <location filename="../../src/qml/widgets/Text.qml" line="58"/>
+        <source>Enter Text</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../src/qml/widgets/settings/Text.qml" line="12"/>
+        <source>Marquee Text</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../src/qml/widgets/settings/Text.qml" line="13"/>
+        <source>If enabled, the text will scroll from left to right, if the widget is not wide enough.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../src/qml/widgets/settings/Text.qml" line="29"/>
+        <source>Maximum Width</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../src/qml/widgets/settings/Text.qml" line="30"/>
+        <source>Set the maximum width of the widget to display</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../src/qml/widgets/settings/Text.qml" line="50"/>
+        <source>Custom Text</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -5028,26 +5101,31 @@ then tap &quot;Edit Widget Screen&quot; in the menu to experience it.</source>
         <source>Dynamic Notification</source>
         <translation>மாறும் அறிவிப்பு</translation>
     </message>
+    <message>
+        <location filename="../../src/plugins/cw_widgets/widgets.py" line="69"/>
+        <source>Text</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>WidgetsContainer</name>
     <message>
-        <location filename="../../src/qml/ClassWidgets/Components/WidgetsContainer.qml" line="269"/>
+        <location filename="../../src/qml/ClassWidgets/Components/WidgetsContainer.qml" line="287"/>
         <source>Edit </source>
         <translation>திருத்தவும் </translation>
     </message>
     <message>
-        <location filename="../../src/qml/ClassWidgets/Components/WidgetsContainer.qml" line="284"/>
+        <location filename="../../src/qml/ClassWidgets/Components/WidgetsContainer.qml" line="302"/>
         <source>Delete</source>
         <translation>நீக்கு</translation>
     </message>
     <message>
-        <location filename="../../src/qml/ClassWidgets/Components/WidgetsContainer.qml" line="293"/>
+        <location filename="../../src/qml/ClassWidgets/Components/WidgetsContainer.qml" line="311"/>
         <source>Edit Widgets Screen</source>
         <translation>விட்செட்கள் திரையைத் திருத்து</translation>
     </message>
     <message>
-        <location filename="../../src/qml/ClassWidgets/Components/WidgetsContainer.qml" line="367"/>
+        <location filename="../../src/qml/ClassWidgets/Components/WidgetsContainer.qml" line="385"/>
         <source>Add</source>
         <translation>கூட்டு</translation>
     </message>
@@ -5101,12 +5179,7 @@ then tap &quot;Edit Widget Screen&quot; in the menu to experience it.</source>
         <translation>மீதமுள்ளவை</translation>
     </message>
     <message>
-        <location filename="../../src/qml/widgets/eventCountdown.qml" line="46"/>
-        <source>&lt; </source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../../src/qml/widgets/eventCountdown.qml" line="55"/>
+        <location filename="../../src/qml/widgets/eventCountdown.qml" line="51"/>
         <source> min</source>
         <translation type="unfinished"></translation>
     </message>

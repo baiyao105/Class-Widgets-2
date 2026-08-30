@@ -26,7 +26,7 @@ Licensed under the MIT license</source>
 根据 麻省理工学院 许可证获得许可</translation>
     </message>
     <message>
-        <location filename="../../src/qml/ClassWidgets/pages/settings/About.qml" line="91"/>
+        <location filename="../../src/qml/ClassWidgets/pages/settings/About.qml" line="92"/>
         <source>To view this repository</source>
         <translation>视奸此项目</translation>
     </message>
@@ -39,37 +39,37 @@ Licensed under the MIT license</source>
         <translation type="vanished">在全球最大的男性交友平台创建问题</translation>
     </message>
     <message>
-        <location filename="../../src/qml/ClassWidgets/pages/settings/About.qml" line="129"/>
+        <location filename="../../src/qml/ClassWidgets/pages/settings/About.qml" line="130"/>
         <source>Dependencies &amp; references</source>
         <translation>前置模组与参考文献</translation>
     </message>
     <message>
-        <location filename="../../src/qml/ClassWidgets/pages/settings/About.qml" line="132"/>
+        <location filename="../../src/qml/ClassWidgets/pages/settings/About.qml" line="133"/>
         <source>Qt &amp; Qt Quick</source>
         <translation>Qt &amp; Qt 极速版</translation>
     </message>
     <message>
-        <location filename="../../src/qml/ClassWidgets/pages/settings/About.qml" line="136"/>
+        <location filename="../../src/qml/ClassWidgets/pages/settings/About.qml" line="137"/>
         <source>Fluent Design System</source>
         <translation>流畅设计系统</translation>
     </message>
     <message>
-        <location filename="../../src/qml/ClassWidgets/pages/settings/About.qml" line="140"/>
+        <location filename="../../src/qml/ClassWidgets/pages/settings/About.qml" line="141"/>
         <source>RinUI</source>
         <translation>琳丽塔 UI</translation>
     </message>
     <message>
-        <location filename="../../src/qml/ClassWidgets/pages/settings/About.qml" line="144"/>
+        <location filename="../../src/qml/ClassWidgets/pages/settings/About.qml" line="145"/>
         <source>Loguru</source>
         <translation>Loguru</translation>
     </message>
     <message>
-        <location filename="../../src/qml/ClassWidgets/pages/settings/About.qml" line="148"/>
+        <location filename="../../src/qml/ClassWidgets/pages/settings/About.qml" line="149"/>
         <source>Pydantic</source>
         <translation>Pydantic</translation>
     </message>
     <message>
-        <location filename="../../src/qml/ClassWidgets/pages/settings/About.qml" line="154"/>
+        <location filename="../../src/qml/ClassWidgets/pages/settings/About.qml" line="155"/>
         <source>License</source>
         <translation>驾驶证</translation>
     </message>
@@ -82,93 +82,93 @@ Licensed under the MIT license</source>
         <translation type="vanished">GPL-3 许可证</translation>
     </message>
     <message>
-        <location filename="../../src/qml/ClassWidgets/pages/settings/About.qml" line="115"/>
+        <location filename="../../src/qml/ClassWidgets/pages/settings/About.qml" line="116"/>
         <source>File a bug or request new feature</source>
         <translation>释放甲虫或者许愿</translation>
     </message>
     <message>
-        <location filename="../../src/qml/ClassWidgets/pages/settings/About.qml" line="155"/>
+        <location filename="../../src/qml/ClassWidgets/pages/settings/About.qml" line="156"/>
         <source>This project is licensed under the MIT license</source>
         <translation>此项目根据 麻省理工学院 许可证获得许可</translation>
     </message>
     <message>
-        <location filename="../../src/qml/ClassWidgets/pages/settings/About.qml" line="158"/>
+        <location filename="../../src/qml/ClassWidgets/pages/settings/About.qml" line="159"/>
         <source>MIT License</source>
         <translation>麻省理工学院 协议</translation>
     </message>
     <message>
-        <location filename="../../src/qml/ClassWidgets/pages/settings/About.qml" line="172"/>
+        <location filename="../../src/qml/ClassWidgets/pages/settings/About.qml" line="173"/>
         <source>Advances</source>
         <translation>我能做什么？</translation>
     </message>
     <message>
-        <location filename="../../src/qml/ClassWidgets/pages/settings/About.qml" line="178"/>
+        <location filename="../../src/qml/ClassWidgets/pages/settings/About.qml" line="179"/>
         <source>Log Storage Disabled</source>
         <translation>不写遗书</translation>
     </message>
     <message>
-        <location filename="../../src/qml/ClassWidgets/pages/settings/About.qml" line="179"/>
+        <location filename="../../src/qml/ClassWidgets/pages/settings/About.qml" line="180"/>
         <source>When enabled, the app will &lt;b&gt;not&lt;/b&gt; save logs.</source>
         <translation>启用后，吸大鼻流鹅将&lt;b&gt;完全放飞自我。&lt;/b&gt;</translation>
     </message>
     <message>
-        <location filename="../../src/qml/ClassWidgets/pages/settings/About.qml" line="188"/>
+        <location filename="../../src/qml/ClassWidgets/pages/settings/About.qml" line="189"/>
         <source>Clear Logs</source>
         <translation>删掉！删掉！全部都要删掉！</translation>
     </message>
     <message>
-        <location filename="../../src/qml/ClassWidgets/pages/settings/About.qml" line="192"/>
+        <location filename="../../src/qml/ClassWidgets/pages/settings/About.qml" line="193"/>
         <source>Clear</source>
         <translation>弄死它</translation>
     </message>
     <message>
-        <location filename="../../src/qml/ClassWidgets/pages/settings/About.qml" line="197"/>
+        <location filename="../../src/qml/ClassWidgets/pages/settings/About.qml" line="198"/>
         <source>Cleared</source>
         <translation>卖掉了~</translation>
     </message>
     <message>
-        <location filename="../../src/qml/ClassWidgets/pages/settings/About.qml" line="198"/>
+        <location filename="../../src/qml/ClassWidgets/pages/settings/About.qml" line="199"/>
         <source>All logs have been cleared about </source>
         <translation>全都被卖掉了！ </translation>
     </message>
     <message>
-        <location filename="../../src/qml/ClassWidgets/pages/settings/About.qml" line="204"/>
+        <location filename="../../src/qml/ClassWidgets/pages/settings/About.qml" line="205"/>
         <source>Failed</source>
         <translation>TRACK LOST</translation>
     </message>
     <message>
-        <location filename="../../src/qml/ClassWidgets/pages/settings/About.qml" line="205"/>
+        <location filename="../../src/qml/ClassWidgets/pages/settings/About.qml" line="206"/>
         <source>Failed to clear logs.</source>
         <translation>卡车丢失。</translation>
     </message>
     <message>
-        <location filename="../../src/qml/ClassWidgets/pages/settings/About.qml" line="218"/>
+        <location filename="../../src/qml/ClassWidgets/pages/settings/About.qml" line="219"/>
         <source>Debug Mode</source>
         <translation>调教模式</translation>
     </message>
     <message>
-        <location filename="../../src/qml/ClassWidgets/pages/settings/About.qml" line="219"/>
+        <location filename="../../src/qml/ClassWidgets/pages/settings/About.qml" line="220"/>
         <source>Enable Debug Mode to access core widget information, and debugging tools 
 * Requires restart</source>
         <translation>你需要重新打开2WC来使用妙妙工具</translation>
     </message>
     <message>
-        <location filename="../../src/qml/ClassWidgets/pages/settings/About.qml" line="235"/>
+        <location filename="../../src/qml/ClassWidgets/pages/settings/About.qml" line="236"/>
         <source>Show Tutorials again</source>
         <translation>我重生了，这一次，我要夺回属于我的一切！…当然你需要重新看一次新手教程。</translation>
     </message>
     <message>
-        <location filename="../../src/qml/ClassWidgets/pages/settings/About.qml" line="238"/>
+        <location filename="../../src/qml/ClassWidgets/pages/settings/About.qml" line="239"/>
         <source>Restart</source>
         <translation>重新访问2WC</translation>
     </message>
     <message>
-        <location filename="../../src/qml/ClassWidgets/pages/settings/About.qml" line="250"/>
+        <location filename="../../src/qml/ClassWidgets/pages/settings/About.qml" line="251"/>
         <source>License Agreement</source>
         <translation>伊甸园条约</translation>
     </message>
     <message>
-        <location filename="../../src/qml/ClassWidgets/pages/settings/About.qml" line="257"/>
+        <location filename="../../src/qml/ClassWidgets/pages/settings/About.qml" line="258"/>
         <source>This project (Class Widgets 2) is licensed under the MIT license. For details, see:</source>
         <translation>西大不丢饿使用了 麻省理工学院 许可证，你可以看→</translation>
     </message>
@@ -411,7 +411,7 @@ Do you want to continue using them, or discard and restore the original schedule
 <context>
     <name>Configs</name>
     <message>
-        <location filename="../../src/core/config/model.py" line="228"/>
+        <location filename="../../src/core/config/model.py" line="230"/>
         <source>New Schedule 1</source>
         <translation>新的配料表 1</translation>
     </message>
@@ -726,110 +726,120 @@ Do you want to continue using them, or discard and restore the original schedule
 <context>
     <name>Downloads</name>
     <message>
-        <location filename="../../src/qml/ClassWidgets/pages/plaza/Downloads.qml" line="30"/>
+        <location filename="../../src/qml/ClassWidgets/pages/plaza/Downloads.qml" line="31"/>
         <source>Link copied</source>
         <translation>链接已克隆</translation>
     </message>
     <message>
-        <location filename="../../src/qml/ClassWidgets/pages/plaza/Downloads.qml" line="38"/>
+        <location filename="../../src/qml/ClassWidgets/pages/plaza/Downloads.qml" line="39"/>
         <source>%1 B</source>
         <translation>%1 B</translation>
     </message>
     <message>
-        <location filename="../../src/qml/ClassWidgets/pages/plaza/Downloads.qml" line="40"/>
+        <location filename="../../src/qml/ClassWidgets/pages/plaza/Downloads.qml" line="41"/>
         <source>%1 KB</source>
         <translation>%1 KB</translation>
     </message>
     <message>
-        <location filename="../../src/qml/ClassWidgets/pages/plaza/Downloads.qml" line="41"/>
+        <location filename="../../src/qml/ClassWidgets/pages/plaza/Downloads.qml" line="42"/>
         <source>%1 MB</source>
         <translation>%1 * 8,388,608 bits （第 11 代视窗）或 %1 * 8 * 10^6 bits（金苹果拱门）</translation>
     </message>
     <message>
-        <location filename="../../src/qml/ClassWidgets/pages/plaza/Downloads.qml" line="45"/>
+        <location filename="../../src/qml/ClassWidgets/pages/plaza/Downloads.qml" line="46"/>
         <source>%1/s</source>
         <translation>%1/禾少</translation>
     </message>
     <message>
-        <location filename="../../src/qml/ClassWidgets/pages/plaza/Downloads.qml" line="97"/>
+        <location filename="../../src/qml/ClassWidgets/pages/plaza/Downloads.qml" line="108"/>
         <source>Paused</source>
         <translation>静止画面</translation>
     </message>
     <message>
-        <location filename="../../src/qml/ClassWidgets/pages/plaza/Downloads.qml" line="99"/>
+        <location filename="../../src/qml/ClassWidgets/pages/plaza/Downloads.qml" line="110"/>
         <source>Installing</source>
         <translation>正在装载，请勿 TM 关闭程序</translation>
     </message>
     <message>
-        <location filename="../../src/qml/ClassWidgets/pages/plaza/Downloads.qml" line="102"/>
+        <location filename="../../src/qml/ClassWidgets/pages/plaza/Downloads.qml" line="112"/>
+        <source>Downloaded. Restart to apply</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../src/qml/ClassWidgets/pages/plaza/Downloads.qml" line="115"/>
         <source>Downloaded: %1 / %2</source>
         <translation>已下 %1 ，共 %2</translation>
     </message>
     <message>
-        <location filename="../../src/qml/ClassWidgets/pages/plaza/Downloads.qml" line="109"/>
+        <location filename="../../src/qml/ClassWidgets/pages/plaza/Downloads.qml" line="122"/>
         <source>Downloading</source>
         <translation>正在下崽</translation>
     </message>
     <message>
-        <location filename="../../src/qml/ClassWidgets/pages/plaza/Downloads.qml" line="129"/>
+        <location filename="../../src/qml/ClassWidgets/pages/plaza/Downloads.qml" line="142"/>
         <source>Updates and downloads</source>
         <translation>上日期和下崽</translation>
     </message>
     <message>
-        <location filename="../../src/qml/ClassWidgets/pages/plaza/Downloads.qml" line="139"/>
+        <location filename="../../src/qml/ClassWidgets/pages/plaza/Downloads.qml" line="152"/>
         <source>Check for updates</source>
         <translation>查查更加眼前一亮的屁股</translation>
     </message>
     <message>
-        <location filename="../../src/qml/ClassWidgets/pages/plaza/Downloads.qml" line="178"/>
+        <location filename="../../src/qml/ClassWidgets/pages/plaza/Downloads.qml" line="192"/>
         <source>Resume</source>
         <translation>让吸大鼻流鹅启动 RE 系统</translation>
     </message>
     <message>
-        <location filename="../../src/qml/ClassWidgets/pages/plaza/Downloads.qml" line="178"/>
+        <location filename="../../src/qml/ClassWidgets/pages/plaza/Downloads.qml" line="192"/>
         <source>Pause</source>
         <translation>停下</translation>
     </message>
     <message>
-        <location filename="../../src/qml/ClassWidgets/pages/plaza/Downloads.qml" line="202"/>
-        <location filename="../../src/qml/ClassWidgets/pages/plaza/Downloads.qml" line="250"/>
+        <location filename="../../src/qml/ClassWidgets/pages/plaza/Downloads.qml" line="221"/>
+        <location filename="../../src/qml/ClassWidgets/pages/plaza/Downloads.qml" line="270"/>
         <source>Unknown author</source>
         <translation>不道是谁</translation>
     </message>
     <message>
-        <location filename="../../src/qml/ClassWidgets/pages/plaza/Downloads.qml" line="204"/>
-        <location filename="../../src/qml/ClassWidgets/pages/plaza/Downloads.qml" line="255"/>
+        <location filename="../../src/qml/ClassWidgets/pages/plaza/Downloads.qml" line="223"/>
+        <location filename="../../src/qml/ClassWidgets/pages/plaza/Downloads.qml" line="277"/>
         <source>v%1 -&gt; v%2</source>
         <translation>v%2 &lt;- v%1</translation>
     </message>
     <message>
-        <location filename="../../src/qml/ClassWidgets/pages/plaza/Downloads.qml" line="207"/>
-        <location filename="../../src/qml/ClassWidgets/pages/plaza/Downloads.qml" line="262"/>
+        <location filename="../../src/qml/ClassWidgets/pages/plaza/Downloads.qml" line="227"/>
+        <location filename="../../src/qml/ClassWidgets/pages/plaza/Downloads.qml" line="287"/>
         <source>Update</source>
         <translation>以旧换新</translation>
     </message>
     <message>
-        <location filename="../../src/qml/ClassWidgets/pages/plaza/Downloads.qml" line="235"/>
+        <location filename="../../src/qml/ClassWidgets/pages/plaza/Downloads.qml" line="255"/>
         <source>Installed Plugin Plaza plugins</source>
         <translation>已在屁股广场购买的屁股</translation>
     </message>
     <message>
-        <location filename="../../src/qml/ClassWidgets/pages/plaza/Downloads.qml" line="253"/>
+        <location filename="../../src/qml/ClassWidgets/pages/plaza/Downloads.qml" line="273"/>
+        <source>Update downloaded. Restart to apply</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../src/qml/ClassWidgets/pages/plaza/Downloads.qml" line="275"/>
         <source>Update check unavailable</source>
         <translation>上日期检查不能</translation>
     </message>
     <message>
-        <location filename="../../src/qml/ClassWidgets/pages/plaza/Downloads.qml" line="256"/>
+        <location filename="../../src/qml/ClassWidgets/pages/plaza/Downloads.qml" line="278"/>
         <source>Updated at %1</source>
         <translation>在 %1 更新过了</translation>
     </message>
     <message>
-        <location filename="../../src/qml/ClassWidgets/pages/plaza/Downloads.qml" line="256"/>
+        <location filename="../../src/qml/ClassWidgets/pages/plaza/Downloads.qml" line="278"/>
         <source>Unknown</source>
         <translation>这啥？</translation>
     </message>
     <message>
-        <location filename="../../src/qml/ClassWidgets/pages/plaza/Downloads.qml" line="280"/>
+        <location filename="../../src/qml/ClassWidgets/pages/plaza/Downloads.qml" line="305"/>
         <source>No installed Plugin Plaza plugins</source>
         <translation>没有购买屁股广场的屁股</translation>
     </message>
@@ -1193,32 +1203,32 @@ Do you want to continue using them, or discard and restore the original schedule
 <context>
     <name>FloatingWidget</name>
     <message>
-        <location filename="../../src/qml/ClassWidgets/Theme/components/FloatingWidget.qml" line="151"/>
+        <location filename="../../src/qml/ClassWidgets/Theme/components/FloatingWidget.qml" line="159"/>
         <source>Class</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/qml/ClassWidgets/Theme/components/FloatingWidget.qml" line="153"/>
+        <location filename="../../src/qml/ClassWidgets/Theme/components/FloatingWidget.qml" line="161"/>
         <source>Activity</source>
         <translation type="unfinished">运行</translation>
     </message>
     <message>
-        <location filename="../../src/qml/ClassWidgets/Theme/components/FloatingWidget.qml" line="155"/>
+        <location filename="../../src/qml/ClassWidgets/Theme/components/FloatingWidget.qml" line="163"/>
         <source>Take a break</source>
         <translation type="unfinished">休息</translation>
     </message>
     <message>
-        <location filename="../../src/qml/ClassWidgets/Theme/components/FloatingWidget.qml" line="156"/>
+        <location filename="../../src/qml/ClassWidgets/Theme/components/FloatingWidget.qml" line="164"/>
         <source>Nothing right now</source>
         <translation type="unfinished">放飞自我</translation>
     </message>
     <message>
-        <location filename="../../src/qml/ClassWidgets/Theme/components/FloatingWidget.qml" line="168"/>
+        <location filename="../../src/qml/ClassWidgets/Theme/components/FloatingWidget.qml" line="176"/>
         <source>&lt; </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/qml/ClassWidgets/Theme/components/FloatingWidget.qml" line="179"/>
+        <location filename="../../src/qml/ClassWidgets/Theme/components/FloatingWidget.qml" line="187"/>
         <source> min</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1739,16 +1749,19 @@ Do you want to continue using them, or discard and restore the original schedule
     </message>
     <message>
         <location filename="../../src/qml/ClassWidgets/pages/settings/General/Interactions.qml" line="145"/>
+        <location filename="../../src/qml/ClassWidgets/pages/tutorial/Interactions.qml" line="132"/>
         <source>Hide when in class</source>
         <translation>上课时藏起来</translation>
     </message>
     <message>
         <location filename="../../src/qml/ClassWidgets/pages/settings/General/Interactions.qml" line="152"/>
+        <location filename="../../src/qml/ClassWidgets/pages/tutorial/Interactions.qml" line="139"/>
         <source>Hide when a window is maximized</source>
         <translation>允许被挤掉</translation>
     </message>
     <message>
         <location filename="../../src/qml/ClassWidgets/pages/settings/General/Interactions.qml" line="159"/>
+        <location filename="../../src/qml/ClassWidgets/pages/tutorial/Interactions.qml" line="146"/>
         <source>Hide when a window enters fullscreen</source>
         <translation>允许被挤掉（严格）</translation>
     </message>
@@ -1955,7 +1968,7 @@ Do you want to continue using them, or discard and restore the original schedule
 <context>
     <name>NotificationProviders</name>
     <message>
-        <location filename="../../src/core/utils/backend.py" line="61"/>
+        <location filename="../../src/core/utils/backend.py" line="62"/>
         <source>Debug Notification</source>
         <translation>你不会用</translation>
     </message>
@@ -2155,209 +2168,214 @@ If translations are missing after a theme change, please restart</source>
 <context>
     <name>Plugin</name>
     <message>
-        <location filename="../../src/qml/ClassWidgets/pages/plaza/Plugin.qml" line="127"/>
+        <location filename="../../src/qml/ClassWidgets/pages/plaza/Plugin.qml" line="144"/>
         <source>%1 B</source>
         <translation>%1 字节跳动</translation>
     </message>
     <message>
-        <location filename="../../src/qml/ClassWidgets/pages/plaza/Plugin.qml" line="129"/>
+        <location filename="../../src/qml/ClassWidgets/pages/plaza/Plugin.qml" line="146"/>
         <source>%1 KB</source>
         <translation>%1 千字节跳动</translation>
     </message>
     <message>
-        <location filename="../../src/qml/ClassWidgets/pages/plaza/Plugin.qml" line="130"/>
+        <location filename="../../src/qml/ClassWidgets/pages/plaza/Plugin.qml" line="147"/>
         <source>%1 MB</source>
         <translation>%1 兆字节跳动</translation>
     </message>
     <message>
-        <location filename="../../src/qml/ClassWidgets/pages/plaza/Plugin.qml" line="185"/>
-        <location filename="../../src/qml/ClassWidgets/pages/plaza/Plugin.qml" line="771"/>
+        <location filename="../../src/qml/ClassWidgets/pages/plaza/Plugin.qml" line="202"/>
+        <location filename="../../src/qml/ClassWidgets/pages/plaza/Plugin.qml" line="794"/>
         <source>No data</source>
         <translation>滚木</translation>
     </message>
     <message>
-        <location filename="../../src/qml/ClassWidgets/pages/plaza/Plugin.qml" line="233"/>
+        <location filename="../../src/qml/ClassWidgets/pages/plaza/Plugin.qml" line="250"/>
         <source>Failed to parse plugin information.</source>
         <translation>无法理解屁股信息。</translation>
     </message>
     <message>
-        <location filename="../../src/qml/ClassWidgets/pages/plaza/Plugin.qml" line="239"/>
+        <location filename="../../src/qml/ClassWidgets/pages/plaza/Plugin.qml" line="256"/>
         <source>Failed to load plugin information: </source>
         <translation>无法加崽屁股信息 </translation>
     </message>
     <message>
-        <location filename="../../src/qml/ClassWidgets/pages/plaza/Plugin.qml" line="255"/>
+        <location filename="../../src/qml/ClassWidgets/pages/plaza/Plugin.qml" line="272"/>
         <source>No description</source>
         <translation>请输入文本。</translation>
     </message>
     <message>
-        <location filename="../../src/qml/ClassWidgets/pages/plaza/Plugin.qml" line="255"/>
+        <location filename="../../src/qml/ClassWidgets/pages/plaza/Plugin.qml" line="272"/>
         <source>This plugin does not provide README content.</source>
         <translation>屁股没有提供读我。</translation>
     </message>
     <message>
-        <location filename="../../src/qml/ClassWidgets/pages/plaza/Plugin.qml" line="412"/>
+        <location filename="../../src/qml/ClassWidgets/pages/plaza/Plugin.qml" line="429"/>
         <source>Load failed</source>
         <translation>加不了崽</translation>
     </message>
     <message>
-        <location filename="../../src/qml/ClassWidgets/pages/plaza/Plugin.qml" line="478"/>
+        <location filename="../../src/qml/ClassWidgets/pages/plaza/Plugin.qml" line="495"/>
         <source>Loading plugin...</source>
         <translation>屁股正在加崽…</translation>
     </message>
     <message>
-        <location filename="../../src/qml/ClassWidgets/pages/plaza/Plugin.qml" line="485"/>
+        <location filename="../../src/qml/ClassWidgets/pages/plaza/Plugin.qml" line="502"/>
         <source>Unknown author</source>
         <translation>不道是谁</translation>
     </message>
     <message>
-        <location filename="../../src/qml/ClassWidgets/pages/plaza/Plugin.qml" line="518"/>
+        <location filename="../../src/qml/ClassWidgets/pages/plaza/Plugin.qml" line="535"/>
         <source>%1 Ratings</source>
         <translation>%1 个评级</translation>
     </message>
     <message>
-        <location filename="../../src/qml/ClassWidgets/pages/plaza/Plugin.qml" line="574"/>
+        <location filename="../../src/qml/ClassWidgets/pages/plaza/Plugin.qml" line="591"/>
         <source>Pause</source>
         <translation>停下</translation>
     </message>
     <message>
-        <location filename="../../src/qml/ClassWidgets/pages/plaza/Plugin.qml" line="576"/>
+        <location filename="../../src/qml/ClassWidgets/pages/plaza/Plugin.qml" line="593"/>
         <source>Resume</source>
         <translation>接着</translation>
     </message>
     <message>
-        <location filename="../../src/qml/ClassWidgets/pages/plaza/Plugin.qml" line="578"/>
+        <location filename="../../src/qml/ClassWidgets/pages/plaza/Plugin.qml" line="595"/>
         <source>Installing</source>
         <translation>正在安装</translation>
     </message>
     <message>
-        <location filename="../../src/qml/ClassWidgets/pages/plaza/Plugin.qml" line="580"/>
+        <location filename="../../src/qml/ClassWidgets/pages/plaza/Plugin.qml" line="597"/>
+        <source>Restart to apply</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../src/qml/ClassWidgets/pages/plaza/Plugin.qml" line="599"/>
         <source>Installed</source>
         <translation>安装了</translation>
     </message>
     <message>
-        <location filename="../../src/qml/ClassWidgets/pages/plaza/Plugin.qml" line="581"/>
+        <location filename="../../src/qml/ClassWidgets/pages/plaza/Plugin.qml" line="600"/>
         <source>Get</source>
         <translation>获得</translation>
     </message>
     <message>
-        <location filename="../../src/qml/ClassWidgets/pages/plaza/Plugin.qml" line="610"/>
+        <location filename="../../src/qml/ClassWidgets/pages/plaza/Plugin.qml" line="630"/>
         <source>Paused</source>
         <translation>停下</translation>
     </message>
     <message>
-        <location filename="../../src/qml/ClassWidgets/pages/plaza/Plugin.qml" line="612"/>
+        <location filename="../../src/qml/ClassWidgets/pages/plaza/Plugin.qml" line="632"/>
         <source>Downloaded: %1 / %2</source>
         <translation>已下崽 %1 ，共 %2</translation>
     </message>
     <message>
-        <location filename="../../src/qml/ClassWidgets/pages/plaza/Plugin.qml" line="615"/>
+        <location filename="../../src/qml/ClassWidgets/pages/plaza/Plugin.qml" line="635"/>
         <source>Downloading</source>
         <translation>正在下崽</translation>
     </message>
     <message>
-        <location filename="../../src/qml/ClassWidgets/pages/plaza/Plugin.qml" line="626"/>
+        <location filename="../../src/qml/ClassWidgets/pages/plaza/Plugin.qml" line="646"/>
         <source>Enable</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/qml/ClassWidgets/pages/plaza/Plugin.qml" line="626"/>
+        <location filename="../../src/qml/ClassWidgets/pages/plaza/Plugin.qml" line="646"/>
         <source>Disable</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/qml/ClassWidgets/pages/plaza/Plugin.qml" line="658"/>
+        <location filename="../../src/qml/ClassWidgets/pages/plaza/Plugin.qml" line="681"/>
         <source>Open in Web</source>
         <translation>打开在Web中</translation>
     </message>
     <message>
-        <location filename="../../src/qml/ClassWidgets/pages/plaza/Plugin.qml" line="664"/>
+        <location filename="../../src/qml/ClassWidgets/pages/plaza/Plugin.qml" line="687"/>
         <source>Copy link</source>
         <translation>克隆领克</translation>
     </message>
     <message>
-        <location filename="../../src/qml/ClassWidgets/pages/plaza/Plugin.qml" line="670"/>
+        <location filename="../../src/qml/ClassWidgets/pages/plaza/Plugin.qml" line="693"/>
         <source>Link copied</source>
         <translation>领克已克隆</translation>
     </message>
     <message>
-        <location filename="../../src/qml/ClassWidgets/pages/plaza/Plugin.qml" line="681"/>
+        <location filename="../../src/qml/ClassWidgets/pages/plaza/Plugin.qml" line="704"/>
         <source>Cancel download</source>
         <translation>不下了</translation>
     </message>
     <message>
-        <location filename="../../src/qml/ClassWidgets/pages/plaza/Plugin.qml" line="702"/>
+        <location filename="../../src/qml/ClassWidgets/pages/plaza/Plugin.qml" line="725"/>
         <source>More options</source>
         <translation>摩尔观点</translation>
     </message>
     <message>
-        <location filename="../../src/qml/ClassWidgets/pages/plaza/Plugin.qml" line="719"/>
+        <location filename="../../src/qml/ClassWidgets/pages/plaza/Plugin.qml" line="742"/>
         <source>Description</source>
         <translation>介绍</translation>
     </message>
     <message>
-        <location filename="../../src/qml/ClassWidgets/pages/plaza/Plugin.qml" line="752"/>
+        <location filename="../../src/qml/ClassWidgets/pages/plaza/Plugin.qml" line="775"/>
         <source>Other information</source>
         <translation>凑近看看这个屁股</translation>
     </message>
     <message>
-        <location filename="../../src/qml/ClassWidgets/pages/plaza/Plugin.qml" line="766"/>
+        <location filename="../../src/qml/ClassWidgets/pages/plaza/Plugin.qml" line="789"/>
         <source>Plugin ID</source>
         <translation>屁股编号</translation>
     </message>
     <message>
-        <location filename="../../src/qml/ClassWidgets/pages/plaza/Plugin.qml" line="767"/>
+        <location filename="../../src/qml/ClassWidgets/pages/plaza/Plugin.qml" line="790"/>
         <source>Version</source>
         <translation>版本</translation>
     </message>
     <message>
-        <location filename="../../src/qml/ClassWidgets/pages/plaza/Plugin.qml" line="767"/>
-        <location filename="../../src/qml/ClassWidgets/pages/plaza/Plugin.qml" line="768"/>
+        <location filename="../../src/qml/ClassWidgets/pages/plaza/Plugin.qml" line="790"/>
+        <location filename="../../src/qml/ClassWidgets/pages/plaza/Plugin.qml" line="791"/>
         <source>Unknown</source>
         <translation>这啥？</translation>
     </message>
     <message>
-        <location filename="../../src/qml/ClassWidgets/pages/plaza/Plugin.qml" line="768"/>
+        <location filename="../../src/qml/ClassWidgets/pages/plaza/Plugin.qml" line="791"/>
         <source>API version</source>
         <translation>应用程序接口 版本</translation>
     </message>
     <message>
-        <location filename="../../src/qml/ClassWidgets/pages/plaza/Plugin.qml" line="769"/>
+        <location filename="../../src/qml/ClassWidgets/pages/plaza/Plugin.qml" line="792"/>
         <source>Branch</source>
         <translation>分叉</translation>
     </message>
     <message>
-        <location filename="../../src/qml/ClassWidgets/pages/plaza/Plugin.qml" line="770"/>
+        <location filename="../../src/qml/ClassWidgets/pages/plaza/Plugin.qml" line="793"/>
         <source>Last updated</source>
         <translation>最后上日期</translation>
     </message>
     <message>
-        <location filename="../../src/qml/ClassWidgets/pages/plaza/Plugin.qml" line="771"/>
+        <location filename="../../src/qml/ClassWidgets/pages/plaza/Plugin.qml" line="794"/>
         <source>Repository</source>
         <translation>库房</translation>
     </message>
     <message>
-        <location filename="../../src/qml/ClassWidgets/pages/plaza/Plugin.qml" line="795"/>
+        <location filename="../../src/qml/ClassWidgets/pages/plaza/Plugin.qml" line="818"/>
         <source>Ratings and reviews</source>
         <translation>分数和锐评</translation>
     </message>
     <message>
-        <location filename="../../src/qml/ClassWidgets/pages/plaza/Plugin.qml" line="811"/>
+        <location filename="../../src/qml/ClassWidgets/pages/plaza/Plugin.qml" line="834"/>
         <source>See all (%1)</source>
         <translation>看光 (%1)</translation>
     </message>
     <message>
-        <location filename="../../src/qml/ClassWidgets/pages/plaza/Plugin.qml" line="819"/>
+        <location filename="../../src/qml/ClassWidgets/pages/plaza/Plugin.qml" line="842"/>
         <source>Write a review</source>
         <translation>畅所欲言！</translation>
     </message>
     <message>
-        <location filename="../../src/qml/ClassWidgets/pages/plaza/Plugin.qml" line="843"/>
+        <location filename="../../src/qml/ClassWidgets/pages/plaza/Plugin.qml" line="866"/>
         <source>Discover more</source>
         <translation>还要更多</translation>
     </message>
     <message>
-        <location filename="../../src/qml/ClassWidgets/pages/plaza/Plugin.qml" line="884"/>
+        <location filename="../../src/qml/ClassWidgets/pages/plaza/Plugin.qml" line="907"/>
         <source>No recommendations</source>
         <translation>没有推荐</translation>
     </message>
@@ -2435,12 +2453,12 @@ If translations are missing after a theme change, please restart</source>
 <context>
     <name>PluginManager</name>
     <message>
-        <location filename="../../src/core/plugin/manager.py" line="123"/>
+        <location filename="../../src/core/plugin/manager.py" line="120"/>
         <source>Incompatible</source>
         <translation>不合适</translation>
     </message>
     <message>
-        <location filename="../../src/core/plugin/manager.py" line="127"/>
+        <location filename="../../src/core/plugin/manager.py" line="124"/>
         <source>{count} incompatible plugin(s) have been loaded, which may cause unknown issues.</source>
         <translation>发现 {count} 个屁股可能不合适Class Widgets，运行过程中可能会把 Class Widgets 弄坏。</translation>
     </message>
@@ -2744,9 +2762,8 @@ Do you want to %3 this plugin?</source>
         <translation>成功人士</translation>
     </message>
     <message>
-        <location filename="../../src/qml/ClassWidgets/pages/settings/Plugins.qml" line="28"/>
         <source>The plugin has been uninstalled successfully. Restart to take effect.</source>
-        <translation>屁股已经清除掉了。重启后生效。</translation>
+        <translation type="vanished">屁股已经清除掉了。重启后生效。</translation>
     </message>
     <message>
         <location filename="../../src/qml/ClassWidgets/pages/settings/Plugins.qml" line="37"/>
@@ -2792,9 +2809,8 @@ It&apos;s incompatible and may cause unexpected issues.</source>
 不兼容可能导致西大不丢饿原地爆炸。</translation>
     </message>
     <message>
-        <location filename="../../src/qml/ClassWidgets/pages/settings/Plugins.qml" line="191"/>
         <source>The plugin has been imported successfully.</source>
-        <translation>入已成。</translation>
+        <translation type="vanished">入已成。</translation>
     </message>
     <message>
         <source>The plugin system is still under development. </source>
@@ -2814,9 +2830,8 @@ It&apos;s incompatible and may cause unexpected issues.</source>
         <translation>导入不了</translation>
     </message>
     <message>
-        <location filename="../../src/qml/ClassWidgets/pages/settings/Plugins.qml" line="108"/>
         <source>Importing</source>
-        <translation>正在入</translation>
+        <translation type="vanished">正在入</translation>
     </message>
     <message>
         <location filename="../../src/qml/ClassWidgets/pages/settings/Plugins.qml" line="17"/>
@@ -2829,9 +2844,23 @@ It&apos;s incompatible and may cause unexpected issues.</source>
         <translation>屁股广场已开业！</translation>
     </message>
     <message>
-        <location filename="../../src/qml/ClassWidgets/pages/settings/Plugins.qml" line="109"/>
         <source>Importing the selected plugin. Please wait...</source>
-        <translation>正在入你选择的屁股。</translation>
+        <translation type="vanished">正在入你选择的屁股。</translation>
+    </message>
+    <message>
+        <location filename="../../src/qml/ClassWidgets/pages/settings/Plugins.qml" line="28"/>
+        <source>The plugin uninstall has been queued. Restart to apply it.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../src/qml/ClassWidgets/pages/settings/Plugins.qml" line="108"/>
+        <source>Import queued</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../src/qml/ClassWidgets/pages/settings/Plugins.qml" line="109"/>
+        <source>The plugin will be installed after restart.</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../../src/qml/ClassWidgets/pages/settings/Plugins.qml" line="123"/>
@@ -2857,6 +2886,11 @@ It&apos;s incompatible and may cause unexpected issues.</source>
         <location filename="../../src/qml/ClassWidgets/pages/settings/Plugins.qml" line="152"/>
         <source>Automatically install plugin updates</source>
         <translation>自动换新屁股</translation>
+    </message>
+    <message>
+        <location filename="../../src/qml/ClassWidgets/pages/settings/Plugins.qml" line="191"/>
+        <source>The plugin import has been queued. Restart to apply it.</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../../src/qml/ClassWidgets/pages/settings/Plugins.qml" line="222"/>
@@ -2926,103 +2960,103 @@ It&apos;s incompatible and may cause unexpected issues.</source>
         <translation>内脏</translation>
     </message>
     <message>
-        <location filename="../../src/qml/ClassWidgets/pages/tutorial/Plugins.qml" line="21"/>
+        <location filename="../../src/qml/ClassWidgets/pages/tutorial/Plugins.qml" line="31"/>
         <source>Recommended plugins</source>
         <translation>大家都喜欢的屁股</translation>
     </message>
     <message>
-        <location filename="../../src/qml/ClassWidgets/pages/tutorial/Plugins.qml" line="22"/>
+        <location filename="../../src/qml/ClassWidgets/pages/tutorial/Plugins.qml" line="32"/>
         <source>Pick certified plugins from Plugin Plaza to install with your first setup.</source>
         <translation>在屁股集市挑选大家都喜欢的屁股，然后预装这些屁股。</translation>
     </message>
     <message>
-        <location filename="../../src/qml/ClassWidgets/pages/tutorial/Plugins.qml" line="28"/>
+        <location filename="../../src/qml/ClassWidgets/pages/tutorial/Plugins.qml" line="38"/>
         <source>Installing plugins</source>
         <translation>正在准备屁股</translation>
     </message>
     <message>
-        <location filename="../../src/qml/ClassWidgets/pages/tutorial/Plugins.qml" line="30"/>
+        <location filename="../../src/qml/ClassWidgets/pages/tutorial/Plugins.qml" line="40"/>
         <source>Finish</source>
         <translation>鱼.sh</translation>
     </message>
     <message>
-        <location filename="../../src/qml/ClassWidgets/pages/tutorial/Plugins.qml" line="32"/>
+        <location filename="../../src/qml/ClassWidgets/pages/tutorial/Plugins.qml" line="42"/>
         <source>Skip</source>
         <translation>跳</translation>
     </message>
     <message>
-        <location filename="../../src/qml/ClassWidgets/pages/tutorial/Plugins.qml" line="33"/>
+        <location filename="../../src/qml/ClassWidgets/pages/tutorial/Plugins.qml" line="43"/>
         <source>Finish &amp; Install</source>
         <translation>一键下崽</translation>
     </message>
     <message>
-        <location filename="../../src/qml/ClassWidgets/pages/tutorial/Plugins.qml" line="39"/>
-        <location filename="../../src/qml/ClassWidgets/pages/tutorial/Plugins.qml" line="475"/>
+        <location filename="../../src/qml/ClassWidgets/pages/tutorial/Plugins.qml" line="49"/>
+        <location filename="../../src/qml/ClassWidgets/pages/tutorial/Plugins.qml" line="503"/>
         <source>Retry</source>
         <translation>再来一瓶</translation>
     </message>
     <message>
-        <location filename="../../src/qml/ClassWidgets/pages/tutorial/Plugins.qml" line="170"/>
+        <location filename="../../src/qml/ClassWidgets/pages/tutorial/Plugins.qml" line="188"/>
         <source>%1 selected</source>
         <translation>挑选了 %1 个</translation>
     </message>
     <message>
-        <location filename="../../src/qml/ClassWidgets/pages/tutorial/Plugins.qml" line="171"/>
+        <location filename="../../src/qml/ClassWidgets/pages/tutorial/Plugins.qml" line="189"/>
         <source>No plugins selected</source>
         <translation>没有选中屁股</translation>
     </message>
     <message>
-        <location filename="../../src/qml/ClassWidgets/pages/tutorial/Plugins.qml" line="173"/>
+        <location filename="../../src/qml/ClassWidgets/pages/tutorial/Plugins.qml" line="191"/>
         <source>%1/%2 plugins</source>
         <translation>%1/%2 个屁股</translation>
     </message>
     <message>
-        <location filename="../../src/qml/ClassWidgets/pages/tutorial/Plugins.qml" line="196"/>
+        <location filename="../../src/qml/ClassWidgets/pages/tutorial/Plugins.qml" line="214"/>
         <source>Installation failed</source>
         <translation>哦不！</translation>
     </message>
     <message>
-        <location filename="../../src/qml/ClassWidgets/pages/tutorial/Plugins.qml" line="271"/>
+        <location filename="../../src/qml/ClassWidgets/pages/tutorial/Plugins.qml" line="295"/>
         <source>Unable to start installation</source>
         <translation>不能开始😭</translation>
     </message>
     <message>
-        <location filename="../../src/qml/ClassWidgets/pages/tutorial/Plugins.qml" line="312"/>
+        <location filename="../../src/qml/ClassWidgets/pages/tutorial/Plugins.qml" line="340"/>
         <source>Installation cancelled</source>
         <translation>你转身就走，像是下定了某种决心</translation>
     </message>
     <message>
-        <location filename="../../src/qml/ClassWidgets/pages/tutorial/Plugins.qml" line="369"/>
+        <location filename="../../src/qml/ClassWidgets/pages/tutorial/Plugins.qml" line="397"/>
         <source>Select all</source>
         <translation>我！全！都！要！</translation>
     </message>
     <message>
-        <location filename="../../src/qml/ClassWidgets/pages/tutorial/Plugins.qml" line="378"/>
+        <location filename="../../src/qml/ClassWidgets/pages/tutorial/Plugins.qml" line="406"/>
         <source>Clear selection</source>
         <translation>嫑</translation>
     </message>
     <message>
-        <location filename="../../src/qml/ClassWidgets/pages/tutorial/Plugins.qml" line="462"/>
+        <location filename="../../src/qml/ClassWidgets/pages/tutorial/Plugins.qml" line="490"/>
         <source>Could not load recommendations</source>
         <translation>没有好的屁股</translation>
     </message>
     <message>
-        <location filename="../../src/qml/ClassWidgets/pages/tutorial/Plugins.qml" line="463"/>
+        <location filename="../../src/qml/ClassWidgets/pages/tutorial/Plugins.qml" line="491"/>
         <source>No recommendations available</source>
         <translation>真的没有好的屁股</translation>
     </message>
     <message>
-        <location filename="../../src/qml/ClassWidgets/pages/tutorial/Plugins.qml" line="466"/>
+        <location filename="../../src/qml/ClassWidgets/pages/tutorial/Plugins.qml" line="494"/>
         <source>You can browse Plugin Plaza after setup.</source>
         <translation>屁股集市有很多屁股可供选择。</translation>
     </message>
     <message>
-        <location filename="../../src/qml/ClassWidgets/pages/tutorial/Plugins.qml" line="489"/>
+        <location filename="../../src/qml/ClassWidgets/pages/tutorial/Plugins.qml" line="520"/>
         <source>Some plugins were not installed</source>
         <translation>有些屁股没买到</translation>
     </message>
     <message>
-        <location filename="../../src/qml/ClassWidgets/pages/tutorial/Plugins.qml" line="490"/>
+        <location filename="../../src/qml/ClassWidgets/pages/tutorial/Plugins.qml" line="521"/>
         <source>%1 installed, %2 failed. Retry the failed plugins or continue without them.</source>
         <translation>买到了 %1 个，%2 个没买到。你可以再去买一次屁股或者先继续。</translation>
     </message>
@@ -3992,6 +4026,45 @@ If it takes place in another location, such as a sport field, lab, or another cl
         <location filename="../../src/qml/ClassWidgets/Components/plaza/TagShowcase.qml" line="35"/>
         <source>View all %1 plugins</source>
         <translation>看看所有 %1 的屁股</translation>
+    </message>
+</context>
+<context>
+    <name>Text</name>
+    <message>
+        <location filename="../../src/qml/widgets/Text.qml" line="20"/>
+        <source>Text</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../src/qml/widgets/Text.qml" line="52"/>
+        <location filename="../../src/qml/widgets/Text.qml" line="58"/>
+        <source>Enter Text</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../src/qml/widgets/settings/Text.qml" line="12"/>
+        <source>Marquee Text</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../src/qml/widgets/settings/Text.qml" line="13"/>
+        <source>If enabled, the text will scroll from left to right, if the widget is not wide enough.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../src/qml/widgets/settings/Text.qml" line="29"/>
+        <source>Maximum Width</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../src/qml/widgets/settings/Text.qml" line="30"/>
+        <source>Set the maximum width of the widget to display</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../src/qml/widgets/settings/Text.qml" line="50"/>
+        <source>Custom Text</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -5041,26 +5114,31 @@ then tap &quot;Edit Widget Screen&quot; in the menu to experience it.</source>
         <source>Dynamic Notification</source>
         <translation>更优雅的QQ消息</translation>
     </message>
+    <message>
+        <location filename="../../src/plugins/cw_widgets/widgets.py" line="69"/>
+        <source>Text</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>WidgetsContainer</name>
     <message>
-        <location filename="../../src/qml/ClassWidgets/Components/WidgetsContainer.qml" line="269"/>
+        <location filename="../../src/qml/ClassWidgets/Components/WidgetsContainer.qml" line="287"/>
         <source>Edit </source>
         <translation>修改 </translation>
     </message>
     <message>
-        <location filename="../../src/qml/ClassWidgets/Components/WidgetsContainer.qml" line="284"/>
+        <location filename="../../src/qml/ClassWidgets/Components/WidgetsContainer.qml" line="302"/>
         <source>Delete</source>
         <translation>丢掉！</translation>
     </message>
     <message>
-        <location filename="../../src/qml/ClassWidgets/Components/WidgetsContainer.qml" line="293"/>
+        <location filename="../../src/qml/ClassWidgets/Components/WidgetsContainer.qml" line="311"/>
         <source>Edit Widgets Screen</source>
         <translation>调教小方块页面</translation>
     </message>
     <message>
-        <location filename="../../src/qml/ClassWidgets/Components/WidgetsContainer.qml" line="367"/>
+        <location filename="../../src/qml/ClassWidgets/Components/WidgetsContainer.qml" line="385"/>
         <source>Add</source>
         <translation>咖啡不断加加加加到厌倦～</translation>
     </message>
@@ -5118,12 +5196,7 @@ then tap &quot;Edit Widget Screen&quot; in the menu to experience it.</source>
         <translation>死期</translation>
     </message>
     <message>
-        <location filename="../../src/qml/widgets/eventCountdown.qml" line="46"/>
-        <source>&lt; </source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../../src/qml/widgets/eventCountdown.qml" line="55"/>
+        <location filename="../../src/qml/widgets/eventCountdown.qml" line="51"/>
         <source> min</source>
         <translation type="unfinished"></translation>
     </message>
