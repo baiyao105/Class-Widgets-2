@@ -47,12 +47,6 @@ class ThemeUrlInterceptor(QQmlAbstractUrlInterceptor):
         # 统一路径分隔符以便匹配
         source_path_str = source_path_str.replace('\\', '/')
 
-        # Keep the built-in qmldir authoritative. A theme qmldir commonly
-        # declares only overridden components, but replacing the descriptor
-        # would hide the default components from QML at process startup.
-        if Path(source_path_str).name.lower() == "qmldir":
-            return url
-        
         lower_source = source_path_str.lower()
         lower_target = self._target_path.lower()
         idx = lower_source.rfind(lower_target)
@@ -62,6 +56,17 @@ class ThemeUrlInterceptor(QQmlAbstractUrlInterceptor):
         # 提取相对路径
 
         relative_part = source_path_str[idx:]
+
+        # The base theme module is an overlay: its theme qmldir usually lists
+        # only overridden components, so replacing the default descriptor
+        # would hide the components that the overlay does not redefine. Nested
+        # modules, such as ClassWidgets.Theme.Material, are real theme-owned
+        # modules and must resolve their own qmldir descriptor.
+        if (
+            Path(source_path_str).name.lower() == "qmldir"
+            and relative_part.lower() == "classwidgets/theme/qmldir"
+        ):
+            return url
 
         # 防止循环重定向：如果当前路径已经在当前主题目录下
         current_theme_str = str(self._current_theme_path).replace('\\', '/')
