@@ -61,9 +61,10 @@ Widget {
 
     Title {
         id: titleLabel
-        width: !settings || !settings.marquee ? Math.min(contentWidth, 275) : 0
+        // width: !settings || !settings.marquee ? contentWidth : contentWidth
         visible: !settings || !settings.marquee
         anchors.centerIn: parent
         text: root.title
+        maximumLineCount: 1
     }
 }
