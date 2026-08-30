@@ -3,7 +3,7 @@ import QtQuick.Controls
 import QtQuick.Layouts
 import Qt5Compat.GraphicalEffects
 import RinUI
-import ClassWidgets.Theme 1.0
+import ClassWidgets.Theme
 
 // 独立的单例内容组件。外壳直接复用当前主题的 Widget，主题只需覆盖
 // ClassWidgets/theme/components/FloatingWidget.qml 即可定制浮窗内容。

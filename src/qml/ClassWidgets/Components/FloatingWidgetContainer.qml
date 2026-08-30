@@ -268,9 +268,10 @@ Item {
         transformOrigin: Item.TopLeft
 
         onStatusChanged: {
-            if (status === Loader.Error)
+            if (status === Loader.Error) {
                 console.error("Failed to load FloatingWidget")
-            else if (status === Loader.Ready) {
+                AppCentral.reportThemeLoadFailure("FloatingWidget.qml")
+            } else if (status === Loader.Ready) {
                 root.ensurePosition()
                 root.reconcilePosition()
                 if (root.floatingMode)

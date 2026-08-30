@@ -23,6 +23,10 @@ Loader {
             anim.start()
         } else if (status === Loader.Error) {
             console.error("Unable to load widget:", model.typeId, widgetSource)
+            // A themed component can fail while the Loader source itself is
+            // a widget/plugin URL, so the source path cannot identify this
+            // as a theme failure.
+            AppCentral.reportThemeLoadFailure(widgetSource)
         }
     }
 
