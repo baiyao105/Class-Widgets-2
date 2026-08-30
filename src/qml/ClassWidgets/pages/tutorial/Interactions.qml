@@ -124,6 +124,32 @@ TutorialComponents.TutorialPage {
                 onCurrentValueChanged: if (focus) Configs.set("interactions.hide.action", currentValue)
                 Component.onCompleted: currentIndex = indexOfValue(Configs.data.interactions.hide.action)
             }
+            SettingItem {
+                ColumnLayout {
+                    Layout.fillWidth: true
+                    CheckBox {
+                        Layout.fillWidth: true
+                        text: qsTr("Hide when in class")
+                        enabled: !Configs.isKeyLocked("interactions.hide.in_class")
+                        onCheckedChanged: Configs.set("interactions.hide.in_class", checked)
+                        Component.onCompleted: checked = Configs.data.interactions.hide.in_class
+                    }
+                    CheckBox {
+                        Layout.fillWidth: true
+                        text: qsTr("Hide when a window is maximized")
+                        enabled: !Configs.isKeyLocked("interactions.hide.maximized") && Qt.platform.os === "windows"
+                        onCheckedChanged: Configs.set("interactions.hide.maximized", checked)
+                        Component.onCompleted: checked = Configs.data.interactions.hide.maximized
+                    }
+                    CheckBox {
+                        Layout.fillWidth: true
+                        text: qsTr("Hide when a window enters fullscreen")
+                        enabled: !Configs.isKeyLocked("interactions.hide.fullscreen") && Qt.platform.os === "windows"
+                        onCheckedChanged: Configs.set("interactions.hide.fullscreen", checked)
+                        Component.onCompleted: checked = Configs.data.interactions.hide.fullscreen
+                    }
+                }
+            }
         }
     }
 }

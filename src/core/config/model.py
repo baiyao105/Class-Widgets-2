@@ -211,6 +211,8 @@ class InteractionsConfig(ConfigBaseModel):
 class PluginsConfig(ConfigBaseModel):
     enabled: list[str] = ["builtin.classwidgets.widgets"]
     configs: dict[str, dict[str, JsonData]] = Field(default_factory=dict)
+    # Archives are downloaded while the app is running and applied on startup.
+    pending_operations: list[dict[str, JsonData]] = Field(default_factory=list)
     auto_check_plaza_updates: bool = True
     auto_install_plaza_updates: bool = False
 

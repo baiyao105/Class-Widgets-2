@@ -1,3 +1,4 @@
+import os
 import platform
 import subprocess
 import sys
@@ -275,20 +276,26 @@ class UtilsBackend(QObject):
             "$shell = New-Object -ComObject WScript.Shell; "
             "$desktop = [Environment]::GetFolderPath('Desktop'); "
             "$shortcut = $shell.CreateShortcut((Join-Path $desktop 'Class Widgets 2.lnk')); "
-            "$shortcut.TargetPath = $args[0]; "
-            "$shortcut.WorkingDirectory = $args[1]; "
-            "$shortcut.IconLocation = $args[2]; "
+            "$shortcut.TargetPath = $env:CW2_SHORTCUT_TARGET; "
+            "$shortcut.WorkingDirectory = $env:CW2_SHORTCUT_WORKDIR; "
+            "$shortcut.IconLocation = $env:CW2_SHORTCUT_ICON; "
             "$shortcut.Save()"
         )
         try:
+            environment = os.environ.copy()
+            environment.update({
+                "CW2_SHORTCUT_TARGET": str(target),
+                "CW2_SHORTCUT_WORKDIR": str(target.parent),
+                "CW2_SHORTCUT_ICON": f"{target},0",
+            })
             subprocess.run(
                 [
                     "powershell", "-NoProfile", "-NonInteractive", "-Command", script,
-                    str(target), str(target.parent), f"{target},0",
                 ],
                 check=True,
                 capture_output=True,
                 text=True,
+                env=environment,
             )
             return True
         except (OSError, subprocess.CalledProcessError) as error:

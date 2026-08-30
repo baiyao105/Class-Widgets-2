@@ -475,7 +475,9 @@ class AppCentral(QObject):  # Class Widgets 的中枢
         self.theme_manager.load()
         logger.info("Themes loaded successfully")
 
+        # Plugin files must only change before the plugin scan/load phase.
         self.plugin_manager.set_enabled_plugins(self.configs.plugins.enabled)
+        self.plugin_manager.apply_pending_operations()
         # 加载插件（内置+外部）
         self.plugin_manager.scan()  # 延迟扫描插件，确保翻译器已加载
         self.plugin_manager.load_plugins()
