@@ -1457,6 +1457,10 @@ Do you want to continue using them, or discard and restore the original schedule
     </message>
     <message>
         <location filename="../../src/qml/ClassWidgets/pages/settings/Home.qml" line="326"/>
+        <source>Set up your schedule</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <location filename="../../src/qml/ClassWidgets/pages/settings/Home.qml" line="329"/>
         <source>Open schedule editor</source>
         <translation>开箱配料表编者</translation>
@@ -1665,7 +1669,7 @@ Do you want to continue using them, or discard and restore the original schedule
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/qml/ClassWidgets/pages/settings/General/Interactions.qml" line="95"/>
+        <location filename="../../src/qml/ClassWidgets/pages/settings/General/Interactions.qml" line="96"/>
         <source>Hover fade</source>
         <translation>我放上去你就得死</translation>
     </message>
@@ -1674,7 +1678,7 @@ Do you want to continue using them, or discard and restore the original schedule
         <translation type="vanished">含羞草</translation>
     </message>
     <message>
-        <location filename="../../src/qml/ClassWidgets/pages/settings/General/Interactions.qml" line="96"/>
+        <location filename="../../src/qml/ClassWidgets/pages/settings/General/Interactions.qml" line="97"/>
         <source>Hover to make the widget transparent and let clicks go through, move away to bring it back</source>
         <translation>薛定谔的minecraft:barrier</translation>
     </message>
@@ -1689,43 +1693,48 @@ Do you want to continue using them, or discard and restore the original schedule
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/qml/ClassWidgets/pages/settings/General/Interactions.qml" line="61"/>
-        <location filename="../../src/qml/ClassWidgets/pages/tutorial/Interactions.qml" line="55"/>
+        <location filename="../../src/qml/ClassWidgets/pages/settings/General/Interactions.qml" line="62"/>
+        <location filename="../../src/qml/ClassWidgets/pages/tutorial/Interactions.qml" line="62"/>
         <source>Floating Widget</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/qml/ClassWidgets/pages/settings/General/Interactions.qml" line="111"/>
+        <location filename="../../src/qml/ClassWidgets/pages/settings/General/Interactions.qml" line="116"/>
+        <source>Automations</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../src/qml/ClassWidgets/pages/settings/General/Interactions.qml" line="121"/>
         <source>More hide behavior</source>
         <translation>更多小方块死法</translation>
     </message>
     <message>
-        <location filename="../../src/qml/ClassWidgets/pages/settings/General/Interactions.qml" line="113"/>
+        <location filename="../../src/qml/ClassWidgets/pages/settings/General/Interactions.qml" line="123"/>
         <source>Choose whether widgets hide or switch to Mini Mode when triggered</source>
         <translation>选择触发时部件躲起来或变得小小的</translation>
     </message>
     <message>
-        <location filename="../../src/qml/ClassWidgets/pages/settings/General/Interactions.qml" line="119"/>
+        <location filename="../../src/qml/ClassWidgets/pages/settings/General/Interactions.qml" line="129"/>
         <source>Hide Widgets</source>
         <translation>捉迷藏</translation>
     </message>
     <message>
-        <location filename="../../src/qml/ClassWidgets/pages/settings/General/Interactions.qml" line="120"/>
+        <location filename="../../src/qml/ClassWidgets/pages/settings/General/Interactions.qml" line="130"/>
         <source>Switch to mini mode</source>
         <translation>变得小小的</translation>
     </message>
     <message>
-        <location filename="../../src/qml/ClassWidgets/pages/settings/General/Interactions.qml" line="134"/>
+        <location filename="../../src/qml/ClassWidgets/pages/settings/General/Interactions.qml" line="144"/>
         <source>Hide when in class</source>
         <translation>上课时藏起来</translation>
     </message>
     <message>
-        <location filename="../../src/qml/ClassWidgets/pages/settings/General/Interactions.qml" line="141"/>
+        <location filename="../../src/qml/ClassWidgets/pages/settings/General/Interactions.qml" line="151"/>
         <source>Hide when a window is maximized</source>
         <translation>允许被挤掉</translation>
     </message>
     <message>
-        <location filename="../../src/qml/ClassWidgets/pages/settings/General/Interactions.qml" line="148"/>
+        <location filename="../../src/qml/ClassWidgets/pages/settings/General/Interactions.qml" line="158"/>
         <source>Hide when a window enters fullscreen</source>
         <translation>允许被挤掉（严格）</translation>
     </message>
@@ -1748,34 +1757,32 @@ Do you want to continue using them, or discard and restore the original schedule
         <translation type="vanished">小型桌宠如何退场</translation>
     </message>
     <message>
-        <location filename="../../src/qml/ClassWidgets/pages/settings/General/Interactions.qml" line="51"/>
-        <location filename="../../src/qml/ClassWidgets/pages/tutorial/Interactions.qml" line="45"/>
+        <location filename="../../src/qml/ClassWidgets/pages/settings/General/Interactions.qml" line="52"/>
+        <location filename="../../src/qml/ClassWidgets/pages/tutorial/Interactions.qml" line="52"/>
         <source>Hide</source>
         <translation>你看不见我</translation>
     </message>
     <message>
-        <location filename="../../src/qml/ClassWidgets/pages/settings/General/Interactions.qml" line="56"/>
-        <location filename="../../src/qml/ClassWidgets/pages/tutorial/Interactions.qml" line="50"/>
+        <location filename="../../src/qml/ClassWidgets/pages/settings/General/Interactions.qml" line="57"/>
+        <location filename="../../src/qml/ClassWidgets/pages/tutorial/Interactions.qml" line="57"/>
         <source>Mini Mode</source>
         <translation>小小的也很可爱</translation>
     </message>
     <message>
-        <location filename="../../src/qml/ClassWidgets/pages/tutorial/Interactions.qml" line="90"/>
         <source>Tap to Hide</source>
-        <translation>摸一下就死</translation>
+        <translation type="vanished">摸一下就死</translation>
     </message>
     <message>
-        <location filename="../../src/qml/ClassWidgets/pages/tutorial/Interactions.qml" line="91"/>
         <source>Click on a widget to hide it, click it again to bring it back</source>
-        <translation>摸一下就死，再摸一下复活</translation>
+        <translation type="vanished">摸一下就死，再摸一下复活</translation>
     </message>
     <message>
-        <location filename="../../src/qml/ClassWidgets/pages/tutorial/Interactions.qml" line="103"/>
+        <location filename="../../src/qml/ClassWidgets/pages/tutorial/Interactions.qml" line="97"/>
         <source>Hover Fade</source>
         <translation>魂飞魄散</translation>
     </message>
     <message>
-        <location filename="../../src/qml/ClassWidgets/pages/tutorial/Interactions.qml" line="104"/>
+        <location filename="../../src/qml/ClassWidgets/pages/tutorial/Interactions.qml" line="98"/>
         <source>Hover to make widgets transparent and let clicks pass through</source>
         <translation>魂飞魄散变成幽灵</translation>
     </message>

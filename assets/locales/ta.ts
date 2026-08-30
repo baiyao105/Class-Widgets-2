@@ -1459,6 +1459,10 @@ Do you want to continue using them, or discard and restore the original schedule
     </message>
     <message>
         <location filename="../../src/qml/ClassWidgets/pages/settings/Home.qml" line="326"/>
+        <source>Set up your schedule</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <location filename="../../src/qml/ClassWidgets/pages/settings/Home.qml" line="329"/>
         <source>Open schedule editor</source>
         <translation type="unfinished"></translation>
@@ -1667,7 +1671,7 @@ Do you want to continue using them, or discard and restore the original schedule
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/qml/ClassWidgets/pages/settings/General/Interactions.qml" line="95"/>
+        <location filename="../../src/qml/ClassWidgets/pages/settings/General/Interactions.qml" line="96"/>
         <source>Hover fade</source>
         <translation>மறைந்துவிடும்</translation>
     </message>
@@ -1676,7 +1680,7 @@ Do you want to continue using them, or discard and restore the original schedule
         <translation type="vanished">மறைக்க தட்டவும்</translation>
     </message>
     <message>
-        <location filename="../../src/qml/ClassWidgets/pages/settings/General/Interactions.qml" line="96"/>
+        <location filename="../../src/qml/ClassWidgets/pages/settings/General/Interactions.qml" line="97"/>
         <source>Hover to make the widget transparent and let clicks go through, move away to bring it back</source>
         <translation>விட்செட்டை வெளிப்படையானதாக மாற்ற வட்டமிடவும் மற்றும் கிளிக்குகள் செல்ல அனுமதிக்கவும், அதை மீண்டும் கொண்டு வர நகர்த்தவும்</translation>
     </message>
@@ -1691,43 +1695,48 @@ Do you want to continue using them, or discard and restore the original schedule
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/qml/ClassWidgets/pages/settings/General/Interactions.qml" line="61"/>
-        <location filename="../../src/qml/ClassWidgets/pages/tutorial/Interactions.qml" line="55"/>
+        <location filename="../../src/qml/ClassWidgets/pages/settings/General/Interactions.qml" line="62"/>
+        <location filename="../../src/qml/ClassWidgets/pages/tutorial/Interactions.qml" line="62"/>
         <source>Floating Widget</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/qml/ClassWidgets/pages/settings/General/Interactions.qml" line="111"/>
+        <location filename="../../src/qml/ClassWidgets/pages/settings/General/Interactions.qml" line="116"/>
+        <source>Automations</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../src/qml/ClassWidgets/pages/settings/General/Interactions.qml" line="121"/>
         <source>More hide behavior</source>
         <translation>மேலும் மறை நடத்தை</translation>
     </message>
     <message>
-        <location filename="../../src/qml/ClassWidgets/pages/settings/General/Interactions.qml" line="113"/>
+        <location filename="../../src/qml/ClassWidgets/pages/settings/General/Interactions.qml" line="123"/>
         <source>Choose whether widgets hide or switch to Mini Mode when triggered</source>
         <translation>தூண்டப்படும்போது விட்செட்டுகள் மறைக்க வேண்டுமா அல்லது மினி பயன்முறைக்கு மாற வேண்டுமா என்பதைத் தேர்வுசெய்யவும்</translation>
     </message>
     <message>
-        <location filename="../../src/qml/ClassWidgets/pages/settings/General/Interactions.qml" line="119"/>
+        <location filename="../../src/qml/ClassWidgets/pages/settings/General/Interactions.qml" line="129"/>
         <source>Hide Widgets</source>
         <translation>விட்செட்களை மறை</translation>
     </message>
     <message>
-        <location filename="../../src/qml/ClassWidgets/pages/settings/General/Interactions.qml" line="120"/>
+        <location filename="../../src/qml/ClassWidgets/pages/settings/General/Interactions.qml" line="130"/>
         <source>Switch to mini mode</source>
         <translation>மினி பயன்முறைக்கு மாறவும்</translation>
     </message>
     <message>
-        <location filename="../../src/qml/ClassWidgets/pages/settings/General/Interactions.qml" line="134"/>
+        <location filename="../../src/qml/ClassWidgets/pages/settings/General/Interactions.qml" line="144"/>
         <source>Hide when in class</source>
         <translation>வகுப்பில் இருக்கும்போது மறைக்கவும்</translation>
     </message>
     <message>
-        <location filename="../../src/qml/ClassWidgets/pages/settings/General/Interactions.qml" line="141"/>
+        <location filename="../../src/qml/ClassWidgets/pages/settings/General/Interactions.qml" line="151"/>
         <source>Hide when a window is maximized</source>
         <translation>ஒரு சாளரம் பெரிதாக்கப்படும் போது மறை</translation>
     </message>
     <message>
-        <location filename="../../src/qml/ClassWidgets/pages/settings/General/Interactions.qml" line="148"/>
+        <location filename="../../src/qml/ClassWidgets/pages/settings/General/Interactions.qml" line="158"/>
         <source>Hide when a window enters fullscreen</source>
         <translation>ஒரு சாளரம் முழுத்திரையில் நுழையும் போது மறை</translation>
     </message>
@@ -1742,34 +1751,24 @@ Do you want to continue using them, or discard and restore the original schedule
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/qml/ClassWidgets/pages/settings/General/Interactions.qml" line="51"/>
-        <location filename="../../src/qml/ClassWidgets/pages/tutorial/Interactions.qml" line="45"/>
+        <location filename="../../src/qml/ClassWidgets/pages/settings/General/Interactions.qml" line="52"/>
+        <location filename="../../src/qml/ClassWidgets/pages/tutorial/Interactions.qml" line="52"/>
         <source>Hide</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/qml/ClassWidgets/pages/settings/General/Interactions.qml" line="56"/>
-        <location filename="../../src/qml/ClassWidgets/pages/tutorial/Interactions.qml" line="50"/>
+        <location filename="../../src/qml/ClassWidgets/pages/settings/General/Interactions.qml" line="57"/>
+        <location filename="../../src/qml/ClassWidgets/pages/tutorial/Interactions.qml" line="57"/>
         <source>Mini Mode</source>
         <translation type="unfinished">மினி பயன்முறை</translation>
     </message>
     <message>
-        <location filename="../../src/qml/ClassWidgets/pages/tutorial/Interactions.qml" line="90"/>
-        <source>Tap to Hide</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../../src/qml/ClassWidgets/pages/tutorial/Interactions.qml" line="91"/>
-        <source>Click on a widget to hide it, click it again to bring it back</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../../src/qml/ClassWidgets/pages/tutorial/Interactions.qml" line="103"/>
+        <location filename="../../src/qml/ClassWidgets/pages/tutorial/Interactions.qml" line="97"/>
         <source>Hover Fade</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/qml/ClassWidgets/pages/tutorial/Interactions.qml" line="104"/>
+        <location filename="../../src/qml/ClassWidgets/pages/tutorial/Interactions.qml" line="98"/>
         <source>Hover to make widgets transparent and let clicks pass through</source>
         <translation type="unfinished"></translation>
     </message>
