@@ -1707,36 +1707,50 @@ Do you want to continue using them, or discard and restore the original schedule
     </message>
     <message>
         <location filename="../../src/qml/ClassWidgets/pages/settings/General/Interactions.qml" line="121"/>
+        <location filename="../../src/qml/ClassWidgets/pages/tutorial/Interactions.qml" line="111"/>
         <source>More hide behavior</source>
         <translation>மேலும் மறை நடத்தை</translation>
     </message>
     <message>
-        <location filename="../../src/qml/ClassWidgets/pages/settings/General/Interactions.qml" line="123"/>
         <source>Choose whether widgets hide or switch to Mini Mode when triggered</source>
-        <translation>தூண்டப்படும்போது விட்செட்டுகள் மறைக்க வேண்டுமா அல்லது மினி பயன்முறைக்கு மாற வேண்டுமா என்பதைத் தேர்வுசெய்யவும்</translation>
+        <translation type="vanished">தூண்டப்படும்போது விட்செட்டுகள் மறைக்க வேண்டுமா அல்லது மினி பயன்முறைக்கு மாற வேண்டுமா என்பதைத் தேர்வுசெய்யவும்</translation>
+    </message>
+    <message>
+        <location filename="../../src/qml/ClassWidgets/pages/settings/General/Interactions.qml" line="123"/>
+        <location filename="../../src/qml/ClassWidgets/pages/tutorial/Interactions.qml" line="112"/>
+        <source>Choose whether widgets hide, switch to Mini Mode, or open a floating widget when triggered</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../../src/qml/ClassWidgets/pages/settings/General/Interactions.qml" line="129"/>
+        <location filename="../../src/qml/ClassWidgets/pages/tutorial/Interactions.qml" line="117"/>
         <source>Hide Widgets</source>
         <translation>விட்செட்களை மறை</translation>
     </message>
     <message>
         <location filename="../../src/qml/ClassWidgets/pages/settings/General/Interactions.qml" line="130"/>
+        <location filename="../../src/qml/ClassWidgets/pages/tutorial/Interactions.qml" line="118"/>
         <source>Switch to mini mode</source>
         <translation>மினி பயன்முறைக்கு மாறவும்</translation>
     </message>
     <message>
-        <location filename="../../src/qml/ClassWidgets/pages/settings/General/Interactions.qml" line="144"/>
+        <location filename="../../src/qml/ClassWidgets/pages/settings/General/Interactions.qml" line="131"/>
+        <location filename="../../src/qml/ClassWidgets/pages/tutorial/Interactions.qml" line="119"/>
+        <source>Floating widget</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../src/qml/ClassWidgets/pages/settings/General/Interactions.qml" line="145"/>
         <source>Hide when in class</source>
         <translation>வகுப்பில் இருக்கும்போது மறைக்கவும்</translation>
     </message>
     <message>
-        <location filename="../../src/qml/ClassWidgets/pages/settings/General/Interactions.qml" line="151"/>
+        <location filename="../../src/qml/ClassWidgets/pages/settings/General/Interactions.qml" line="152"/>
         <source>Hide when a window is maximized</source>
         <translation>ஒரு சாளரம் பெரிதாக்கப்படும் போது மறை</translation>
     </message>
     <message>
-        <location filename="../../src/qml/ClassWidgets/pages/settings/General/Interactions.qml" line="158"/>
+        <location filename="../../src/qml/ClassWidgets/pages/settings/General/Interactions.qml" line="159"/>
         <source>Hide when a window enters fullscreen</source>
         <translation>ஒரு சாளரம் முழுத்திரையில் நுழையும் போது மறை</translation>
     </message>
@@ -5018,22 +5032,22 @@ then tap &quot;Edit Widget Screen&quot; in the menu to experience it.</source>
 <context>
     <name>WidgetsContainer</name>
     <message>
-        <location filename="../../src/qml/ClassWidgets/Components/WidgetsContainer.qml" line="267"/>
+        <location filename="../../src/qml/ClassWidgets/Components/WidgetsContainer.qml" line="269"/>
         <source>Edit </source>
         <translation>திருத்தவும் </translation>
     </message>
     <message>
-        <location filename="../../src/qml/ClassWidgets/Components/WidgetsContainer.qml" line="282"/>
+        <location filename="../../src/qml/ClassWidgets/Components/WidgetsContainer.qml" line="284"/>
         <source>Delete</source>
         <translation>நீக்கு</translation>
     </message>
     <message>
-        <location filename="../../src/qml/ClassWidgets/Components/WidgetsContainer.qml" line="291"/>
+        <location filename="../../src/qml/ClassWidgets/Components/WidgetsContainer.qml" line="293"/>
         <source>Edit Widgets Screen</source>
         <translation>விட்செட்கள் திரையைத் திருத்து</translation>
     </message>
     <message>
-        <location filename="../../src/qml/ClassWidgets/Components/WidgetsContainer.qml" line="365"/>
+        <location filename="../../src/qml/ClassWidgets/Components/WidgetsContainer.qml" line="367"/>
         <source>Add</source>
         <translation>கூட்டு</translation>
     </message>

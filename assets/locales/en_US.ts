@@ -1570,36 +1570,46 @@ Do you want to continue using them, or discard and restore the original schedule
     </message>
     <message>
         <location filename="../../src/qml/ClassWidgets/pages/settings/General/Interactions.qml" line="121"/>
+        <location filename="../../src/qml/ClassWidgets/pages/tutorial/Interactions.qml" line="111"/>
         <source>More hide behavior</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../../src/qml/ClassWidgets/pages/settings/General/Interactions.qml" line="123"/>
-        <source>Choose whether widgets hide or switch to Mini Mode when triggered</source>
+        <location filename="../../src/qml/ClassWidgets/pages/tutorial/Interactions.qml" line="112"/>
+        <source>Choose whether widgets hide, switch to Mini Mode, or open a floating widget when triggered</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../../src/qml/ClassWidgets/pages/settings/General/Interactions.qml" line="129"/>
+        <location filename="../../src/qml/ClassWidgets/pages/tutorial/Interactions.qml" line="117"/>
         <source>Hide Widgets</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../../src/qml/ClassWidgets/pages/settings/General/Interactions.qml" line="130"/>
+        <location filename="../../src/qml/ClassWidgets/pages/tutorial/Interactions.qml" line="118"/>
         <source>Switch to mini mode</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/qml/ClassWidgets/pages/settings/General/Interactions.qml" line="144"/>
+        <location filename="../../src/qml/ClassWidgets/pages/settings/General/Interactions.qml" line="131"/>
+        <location filename="../../src/qml/ClassWidgets/pages/tutorial/Interactions.qml" line="119"/>
+        <source>Floating widget</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../src/qml/ClassWidgets/pages/settings/General/Interactions.qml" line="145"/>
         <source>Hide when in class</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/qml/ClassWidgets/pages/settings/General/Interactions.qml" line="151"/>
+        <location filename="../../src/qml/ClassWidgets/pages/settings/General/Interactions.qml" line="152"/>
         <source>Hide when a window is maximized</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/qml/ClassWidgets/pages/settings/General/Interactions.qml" line="158"/>
+        <location filename="../../src/qml/ClassWidgets/pages/settings/General/Interactions.qml" line="159"/>
         <source>Hide when a window enters fullscreen</source>
         <translation type="unfinished"></translation>
     </message>
@@ -4652,22 +4662,22 @@ then tap &quot;Edit Widget Screen&quot; in the menu to experience it.</source>
 <context>
     <name>WidgetsContainer</name>
     <message>
-        <location filename="../../src/qml/ClassWidgets/Components/WidgetsContainer.qml" line="267"/>
+        <location filename="../../src/qml/ClassWidgets/Components/WidgetsContainer.qml" line="269"/>
         <source>Edit </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/qml/ClassWidgets/Components/WidgetsContainer.qml" line="282"/>
+        <location filename="../../src/qml/ClassWidgets/Components/WidgetsContainer.qml" line="284"/>
         <source>Delete</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/qml/ClassWidgets/Components/WidgetsContainer.qml" line="291"/>
+        <location filename="../../src/qml/ClassWidgets/Components/WidgetsContainer.qml" line="293"/>
         <source>Edit Widgets Screen</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/qml/ClassWidgets/Components/WidgetsContainer.qml" line="365"/>
+        <location filename="../../src/qml/ClassWidgets/Components/WidgetsContainer.qml" line="367"/>
         <source>Add</source>
         <translation type="unfinished"></translation>
     </message>
