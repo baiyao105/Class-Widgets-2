@@ -29,6 +29,13 @@ TutorialComponents.TutorialPage {
             title: qsTr("Tap Action")
             description: qsTr("Choose whether tapping a widget hides it, switches to mini mode, or opens a floating widget")
             expanded: true
+            enabled: !hoverFadeSwitch.checked
+
+            action: Switch {
+                enabled: !Configs.isKeyLocked("interactions.hide.clicked")
+                onCheckedChanged: Configs.set("interactions.hide.clicked", checked)
+                Component.onCompleted: checked = Configs.data.interactions.hide.clicked
+            }
 
             ButtonGroup {
                 id: hideModeGroup
@@ -54,7 +61,7 @@ TutorialComponents.TutorialPage {
                             {
                                 "name": qsTr("Floating Widget"),
                                 "value": "floating_widget",
-                                "preview": "hide_float"
+                                "preview": "hide_floating"
                             }
                         ]
 
@@ -86,24 +93,12 @@ TutorialComponents.TutorialPage {
 
         SettingCard {
             Layout.fillWidth: true
-            icon.name: "ic_fluent_tap_single_20_regular"
-            title: qsTr("Tap to Hide")
-            description: qsTr("Click on a widget to hide it, click it again to bring it back")
-
-            Switch {
-                enabled: !Configs.isKeyLocked("interactions.hide.clicked")
-                onCheckedChanged: Configs.set("interactions.hide.clicked", checked)
-                Component.onCompleted: checked = Configs.data.interactions.hide.clicked
-            }
-        }
-
-        SettingCard {
-            Layout.fillWidth: true
             icon.name: "ic_fluent_cursor_20_regular"
             title: qsTr("Hover Fade")
             description: qsTr("Hover to make widgets transparent and let clicks pass through")
 
             Switch {
+                id: hoverFadeSwitch
                 enabled: !Configs.isKeyLocked("interactions.hover_fade")
                 onCheckedChanged: Configs.set("interactions.hover_fade", checked)
                 Component.onCompleted: checked = Configs.data.interactions.hover_fade

@@ -28,6 +28,7 @@ FluentPage {
             title: qsTr("Tap Action")
             description: qsTr("Choose whether tapping a widget hides it, switches to mini mode, or opens a floating widget")
             expanded: true
+            enabled: !hoverFadeSwitch.checked
 
             action: Switch {
                 id: tapToHideSwitch
@@ -104,6 +105,15 @@ FluentPage {
                 onCheckedChanged: Configs.set("interactions.hover_fade", checked)
                 Component.onCompleted: checked = Configs.data.interactions.hover_fade
             }
+        }
+    }
+
+    ColumnLayout {
+        Layout.fillWidth: true
+        spacing: 4
+        Text {
+            typography: Typography.BodyStrong
+            text: qsTr("Automations")
         }
 
         SettingExpander {
