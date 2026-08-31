@@ -119,11 +119,26 @@ class ScheduleEditor(QObject):
         self._rebuild_schedule_caches()
         self.daysChanged.emit()
 
-    def _emit_entries_changed(self):
-        if self.schedule:
+    def _emit_entries_changed(self, changed_day: Optional[Timeline] = None):
+        """Refresh the QML entry cache without serializing unrelated days."""
+        if not self.schedule:
+            self._entries_data = []
+        elif changed_day is None:
+            # Some operations (for example removing a subject) can affect
+            # entries in multiple days, so those callers request a full sync.
             self._entries_data = [day.model_dump() for day in self.schedule.days]
         else:
-            self._entries_data = []
+            day_index = next(
+                (i for i, day in enumerate(self.schedule.days)
+                 if day.id == changed_day.id),
+                -1,
+            )
+            if day_index < 0:
+                self._entries_data = [day.model_dump() for day in self.schedule.days]
+            else:
+                entries_data = self._entries_data.copy()
+                entries_data[day_index] = changed_day.model_dump()
+                self._entries_data = entries_data
         self._entries_revision += 1
         self.entriesChanged.emit()
 
@@ -304,7 +319,7 @@ class ScheduleEditor(QObject):
         )
         day.entries.append(entry)
         day.entries.sort(key=lambda e: e.startTime)  # 排序
-        self._emit_entries_changed()
+        self._emit_entries_changed(day)
         self.updated.emit()
         return entry.id
 
@@ -337,11 +352,13 @@ class ScheduleEditor(QObject):
         entry.subjectId = subject_id
         entry.title = title
 
+        changed_day = None
         for day in self.schedule.days:  # 排序
             if entry in day.entries:
                 day.entries.sort(key=lambda e: e.startTime)
+                changed_day = day
                 break
-        self._emit_entries_changed()
+        self._emit_entries_changed(changed_day)
         self.updated.emit()
 
     @Slot(str)
@@ -351,7 +368,7 @@ class ScheduleEditor(QObject):
             entry = next((e for e in day.entries if e.id == entry_id), None)
             if entry:
                 day.entries.remove(entry)
-                self._emit_entries_changed()
+                self._emit_entries_changed(day)
                 self.updated.emit()
                 return
 

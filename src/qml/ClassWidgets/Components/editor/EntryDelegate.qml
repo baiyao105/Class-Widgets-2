@@ -25,12 +25,6 @@ Clip {
         radius: entryDelegate.radius
         opacity: checked ? 1 : 0.3
 
-        Behavior on opacity {
-            NumberAnimation {
-                duration: 250
-                easing.type: Easing.OutQuint
-            }
-        }
     }
 
     property int tempStart: parseTime(entry.startTime)
@@ -68,12 +62,23 @@ Clip {
 
     onClicked: {
         currentIndex = entryDelegate.index
-        detailFlyout.refresh(entry)
+        // Loader creation is asynchronous when the selection changes.
+        Qt.callLater(function() {
+            if (detailViewLoader.item)
+                detailViewLoader.item.refresh(entry)
+        })
     }
 
-    EntryDetailView {
-        id: detailFlyout
-        sourceItem: entryDelegate.listViewRoot
+    // The flyout contains a subject Repeater and several controls. Keeping
+    // one instance per entry makes large schedules expensive to build.
+    Loader {
+        id: detailViewLoader
+        active: entryDelegate.checked
+        sourceComponent: Component {
+            EntryDetailView {
+                sourceItem: entryDelegate.listViewRoot
+            }
+        }
     }
 
     // 上拖拽调整
