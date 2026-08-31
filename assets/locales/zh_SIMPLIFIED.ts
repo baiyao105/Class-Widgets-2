@@ -4342,7 +4342,7 @@ Class Widgets has restored the default theme.</source>
     </message>
     <message>
         <location filename="../../src/qml/ClassWidgets/Components/TrayShortcuts.qml" line="38"/>
-        <location filename="../../src/qml/ClassWidgets/Components/TrayShortcuts.qml" line="251"/>
+        <location filename="../../src/qml/ClassWidgets/Components/TrayShortcuts.qml" line="315"/>
         <source>Add</source>
         <translation>咖啡不断加加加加到厌倦～</translation>
     </message>
@@ -4358,21 +4358,27 @@ Class Widgets has restored the default theme.</source>
     </message>
     <message>
         <location filename="../../src/qml/ClassWidgets/Components/TrayShortcuts.qml" line="56"/>
+        <location filename="../../src/qml/ClassWidgets/Components/TrayShortcuts.qml" line="207"/>
+        <source>All Shortcuts</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../src/qml/ClassWidgets/Components/TrayShortcuts.qml" line="64"/>
         <source>No shortcuts yet</source>
         <translation>不快速</translation>
     </message>
     <message>
-        <location filename="../../src/qml/ClassWidgets/Components/TrayShortcuts.qml" line="57"/>
+        <location filename="../../src/qml/ClassWidgets/Components/TrayShortcuts.qml" line="65"/>
         <source>Click &quot;+&quot; to add shortcuts.</source>
         <translation>“+”让西大不丢更快速。</translation>
     </message>
     <message>
-        <location filename="../../src/qml/ClassWidgets/Components/TrayShortcuts.qml" line="165"/>
+        <location filename="../../src/qml/ClassWidgets/Components/TrayShortcuts.qml" line="173"/>
         <source>Remove</source>
         <translation>草飞</translation>
     </message>
     <message>
-        <location filename="../../src/qml/ClassWidgets/Components/TrayShortcuts.qml" line="200"/>
+        <location filename="../../src/qml/ClassWidgets/Components/TrayShortcuts.qml" line="264"/>
         <source>Add Shortcuts</source>
         <translation>加快</translation>
     </message>

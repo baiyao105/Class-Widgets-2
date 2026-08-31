@@ -4003,7 +4003,7 @@ Class Widgets has restored the default theme.</source>
     </message>
     <message>
         <location filename="../../src/qml/ClassWidgets/Components/TrayShortcuts.qml" line="38"/>
-        <location filename="../../src/qml/ClassWidgets/Components/TrayShortcuts.qml" line="251"/>
+        <location filename="../../src/qml/ClassWidgets/Components/TrayShortcuts.qml" line="315"/>
         <source>Add</source>
         <translation type="unfinished"></translation>
     </message>
@@ -4019,21 +4019,27 @@ Class Widgets has restored the default theme.</source>
     </message>
     <message>
         <location filename="../../src/qml/ClassWidgets/Components/TrayShortcuts.qml" line="56"/>
+        <location filename="../../src/qml/ClassWidgets/Components/TrayShortcuts.qml" line="207"/>
+        <source>All Shortcuts</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../src/qml/ClassWidgets/Components/TrayShortcuts.qml" line="64"/>
         <source>No shortcuts yet</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/qml/ClassWidgets/Components/TrayShortcuts.qml" line="57"/>
+        <location filename="../../src/qml/ClassWidgets/Components/TrayShortcuts.qml" line="65"/>
         <source>Click &quot;+&quot; to add shortcuts.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/qml/ClassWidgets/Components/TrayShortcuts.qml" line="165"/>
+        <location filename="../../src/qml/ClassWidgets/Components/TrayShortcuts.qml" line="173"/>
         <source>Remove</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/qml/ClassWidgets/Components/TrayShortcuts.qml" line="200"/>
+        <location filename="../../src/qml/ClassWidgets/Components/TrayShortcuts.qml" line="264"/>
         <source>Add Shortcuts</source>
         <translation type="unfinished"></translation>
     </message>
