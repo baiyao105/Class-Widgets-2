@@ -158,6 +158,10 @@ class UtilsBackend(QObject):
             if shortcut["id"] not in configured_ids
         ]
 
+    @Property(list, notify=shortcutsChanged)
+    def allShortcuts(self):
+        return [dict(shortcut) for shortcut in self.app.plugin_api.ui.shortcuts]
+
     @Slot(str, result=bool)
     def executeShortcut(self, shortcut_id: str) -> bool:
         return self.app.plugin_api.ui.invoke_shortcut(shortcut_id)
