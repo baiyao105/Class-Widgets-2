@@ -4398,38 +4398,38 @@ If it takes place in another location, such as a sport field, lab, or another cl
     <message>
         <location filename="../../src/qml/widgets/Text.qml" line="20"/>
         <source>Text</source>
-        <translation type="unfinished"></translation>
+        <translation>文本</translation>
     </message>
     <message>
         <location filename="../../src/qml/widgets/Text.qml" line="52"/>
         <location filename="../../src/qml/widgets/Text.qml" line="58"/>
         <source>Enter Text</source>
-        <translation type="unfinished"></translation>
+        <translation>请输入文本</translation>
     </message>
     <message>
         <location filename="../../src/qml/widgets/settings/Text.qml" line="12"/>
         <source>Marquee Text</source>
-        <translation type="unfinished"></translation>
+        <translation>跑马灯文字</translation>
     </message>
     <message>
         <location filename="../../src/qml/widgets/settings/Text.qml" line="13"/>
         <source>If enabled, the text will scroll from left to right, if the widget is not wide enough.</source>
-        <translation type="unfinished"></translation>
+        <translation>启用后，文字将在屏幕上从左向右滚动显示。</translation>
     </message>
     <message>
         <location filename="../../src/qml/widgets/settings/Text.qml" line="29"/>
         <source>Maximum Width</source>
-        <translation type="unfinished"></translation>
+        <translation>最大宽度</translation>
     </message>
     <message>
         <location filename="../../src/qml/widgets/settings/Text.qml" line="30"/>
         <source>Set the maximum width of the widget to display</source>
-        <translation type="unfinished"></translation>
+        <translation>设置小组件所能显示的最大宽度</translation>
     </message>
     <message>
         <location filename="../../src/qml/widgets/settings/Text.qml" line="50"/>
         <source>Custom Text</source>
-        <translation type="unfinished"></translation>
+        <translation>自定义文本</translation>
     </message>
 </context>
 <context>
@@ -4789,7 +4789,7 @@ Class Widgets has restored the default theme.</source>
         <location filename="../../src/qml/ClassWidgets/Components/TrayShortcuts.qml" line="56"/>
         <location filename="../../src/qml/ClassWidgets/Components/TrayShortcuts.qml" line="207"/>
         <source>All Shortcuts</source>
-        <translation type="unfinished"></translation>
+        <translation>全部快捷方式</translation>
     </message>
     <message>
         <location filename="../../src/qml/ClassWidgets/Components/TrayShortcuts.qml" line="64"/>
@@ -5568,7 +5568,7 @@ then tap &quot;Edit Widget Screen&quot; in the menu to experience it.</source>
     <message>
         <location filename="../../src/plugins/cw_widgets/widgets.py" line="69"/>
         <source>Text</source>
-        <translation type="unfinished"></translation>
+        <translation>自定义文本</translation>
     </message>
 </context>
 <context>
