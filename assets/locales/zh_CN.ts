@@ -1338,12 +1338,12 @@ Please try again later.</source>
         <translation>暂无日程</translation>
     </message>
     <message>
-        <location filename="../../src/qml/ClassWidgets/Theme/components/FloatingWidget.qml" line="177"/>
+        <location filename="../../src/qml/ClassWidgets/Theme/components/FloatingWidget.qml" line="178"/>
         <source>&lt; </source>
         <translation>&lt; </translation>
     </message>
     <message>
-        <location filename="../../src/qml/ClassWidgets/Theme/components/FloatingWidget.qml" line="188"/>
+        <location filename="../../src/qml/ClassWidgets/Theme/components/FloatingWidget.qml" line="189"/>
         <source> min</source>
         <translation> 分钟</translation>
     </message>
