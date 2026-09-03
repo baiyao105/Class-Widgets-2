@@ -39,6 +39,7 @@ class ScheduleEditor(QObject):
     entriesChanged = Signal()
     metaChanged = Signal()
     overridesChanged = Signal()
+    overridesRevisionChanged = Signal()
     dirtyChanged = Signal()
 
     def __init__(self, manager: ScheduleManager):
@@ -48,6 +49,7 @@ class ScheduleEditor(QObject):
         self.schedule: ScheduleData = self.manager.schedule
         self._dirty = False
         self._entries_revision = 0
+        self._overrides_revision = 0
         self._days_data: list[dict] = []
         self._entries_data: list[dict] = []
         self._suppress_update = False
@@ -99,6 +101,8 @@ class ScheduleEditor(QObject):
         self.entriesChanged.emit()
         self.metaChanged.emit()
         self.overridesChanged.emit()
+        self._overrides_revision += 1
+        self.overridesRevisionChanged.emit()
 
     def _on_updated(self):
         if self._suppress_update:
@@ -412,6 +416,8 @@ class ScheduleEditor(QObject):
         )
         self.schedule.overrides.append(override)
         self.overridesChanged.emit()
+        self._overrides_revision += 1
+        self.overridesRevisionChanged.emit()
         self.updated.emit()
         return True
 
@@ -424,6 +430,8 @@ class ScheduleEditor(QObject):
                 if title is not None:
                     o.title = title
                 self.overridesChanged.emit()
+                self._overrides_revision += 1
+                self.overridesRevisionChanged.emit()
                 self.updated.emit()
                 return True
         return False
@@ -434,6 +442,8 @@ class ScheduleEditor(QObject):
             if override.id == override_id:
                 self.schedule.overrides.remove(override)
                 self.overridesChanged.emit()
+                self._overrides_revision += 1
+                self.overridesRevisionChanged.emit()
                 self.updated.emit()
                 return True
         return False
@@ -454,8 +464,7 @@ class ScheduleEditor(QObject):
         week = _jsvalue_to_python(week)
 
         data = entry.model_dump()
-        applicable = None
-        best_priority = -1
+        applicable = []
 
         # 当 week 是列表时，拆成单个元素逐个匹配
         week_list = week if isinstance(week, list) else [week]
@@ -485,19 +494,53 @@ class ScheduleEditor(QObject):
             else:
                 continue
 
-            if priority > best_priority:
-                applicable = o
-                best_priority = priority
+            applicable.append((priority, o))
 
-        if applicable:
-            if applicable.subjectId:
-                data["subjectId"] = applicable.subjectId
-            if applicable.title:
-                data["title"] = applicable.title
+        # Apply matching overrides from least to most specific.  Overrides
+        # are field-wise: a high-priority subject-only override must not hide
+        # a title supplied by another matching override.
+        subject_overridden = False
+        title_overridden = False
+        for _, override in sorted(applicable, key=lambda item: item[0]):
+            if override.subjectId:
+                data["subjectId"] = override.subjectId
+                subject_overridden = True
+            if override.title:
+                data["title"] = override.title
+                title_overridden = True
+
+        # A subject override replaces the timeline's implicit label.  Keep a
+        # custom override title when one was explicitly supplied.
+        if subject_overridden and not title_overridden:
+            data["title"] = None
 
         return data
 
-    # 加急做的，要发prerelease了忘记做了也是神人了
+    @Slot(str, int, int, result=str)
+    def getOverrideTitle(self, entry_id: str, week: int, day_of_week: int) -> str:
+        """Return only the title explicitly supplied by a matching override."""
+        week = _jsvalue_to_python(week)
+        week_list = week if isinstance(week, list) else [week]
+        titles = []
+        for o in self.schedule.overrides:
+            if o.entryId != entry_id or (o.dayOfWeek and day_of_week not in o.dayOfWeek):
+                continue
+            if isinstance(o.weeks, list):
+                if not any(w in o.weeks for w in week_list):
+                    continue
+                priority = 3
+            elif isinstance(o.weeks, int):
+                if not any(w >= o.weeks and (w - o.weeks) % self.schedule.meta.maxWeekCycle == 0 for w in week_list):
+                    continue
+                priority = 2
+            elif o.weeks == "all" or o.weeks is None:
+                priority = 1
+            else:
+                continue
+            if o.title:
+                titles.append((priority, o.title))
+        return sorted(titles, key=lambda item: item[0])[-1][1] if titles else ""
+
     @Slot(str, result=bool)
     def setStartDate(self, date_str: str) -> bool:
         """
@@ -619,6 +662,11 @@ class ScheduleEditor(QObject):
             return []
 
         return [override.model_dump() for override in self.schedule.overrides]
+
+    @Property(int, notify=overridesRevisionChanged)
+    def overridesRevision(self) -> int:
+        """Override content version for refreshing QML bindings."""
+        return self._overrides_revision
 
     @Property("QVariant", notify=updated)
     def scheduleData(self) -> dict:

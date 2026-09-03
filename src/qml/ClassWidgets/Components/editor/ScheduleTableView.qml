@@ -105,7 +105,7 @@ Item {
         property var selectedCell: ({ row: -1, column: -1 })
         property var currentEntry: null
         property int entriesRevision: AppCentral.scheduleEditor.entriesRevision
-        property int overridesRevision: AppCentral.scheduleEditor.overrides.length
+        property int overridesRevision: AppCentral.scheduleEditor.overridesRevision
 
         // 动态计算行数（最大 class 数量）
         property int maxRows: {

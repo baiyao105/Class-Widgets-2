@@ -64,18 +64,25 @@ class ScheduleServices:
 
             # 应用 override 到副本
             for entry in day_copy.entries:
+                subject_overridden = False
+                title_overridden = False
                 for override in schedule.overrides:
                     if override.entryId != entry.id:
                         continue
                     if self._override_applies(override, weekday, current_week, max_week_cycle):
                         if override.subjectId:
                             entry.subjectId = override.subjectId
+                            subject_overridden = True
                         if override.title:
                             entry.title = override.title
+                            title_overridden = True
                         if override.startTime:
                             entry.startTime = override.startTime
                         if override.endTime:
                             entry.endTime = override.endTime
+
+                if subject_overridden and not title_overridden:
+                    entry.title = None
 
             return day_copy
         return None
