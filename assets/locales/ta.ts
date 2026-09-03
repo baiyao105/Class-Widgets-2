@@ -5116,22 +5116,22 @@ then tap &quot;Edit Widget Screen&quot; in the menu to experience it.</source>
 <context>
     <name>WidgetsContainer</name>
     <message>
-        <location filename="../../src/qml/ClassWidgets/Components/WidgetsContainer.qml" line="287"/>
+        <location filename="../../src/qml/ClassWidgets/Components/WidgetsContainer.qml" line="292"/>
         <source>Edit </source>
         <translation>திருத்தவும் </translation>
     </message>
     <message>
-        <location filename="../../src/qml/ClassWidgets/Components/WidgetsContainer.qml" line="302"/>
+        <location filename="../../src/qml/ClassWidgets/Components/WidgetsContainer.qml" line="307"/>
         <source>Delete</source>
         <translation>நீக்கு</translation>
     </message>
     <message>
-        <location filename="../../src/qml/ClassWidgets/Components/WidgetsContainer.qml" line="311"/>
+        <location filename="../../src/qml/ClassWidgets/Components/WidgetsContainer.qml" line="316"/>
         <source>Edit Widgets Screen</source>
         <translation>விட்செட்கள் திரையைத் திருத்து</translation>
     </message>
     <message>
-        <location filename="../../src/qml/ClassWidgets/Components/WidgetsContainer.qml" line="385"/>
+        <location filename="../../src/qml/ClassWidgets/Components/WidgetsContainer.qml" line="390"/>
         <source>Add</source>
         <translation>கூட்டு</translation>
     </message>
