@@ -272,6 +272,7 @@ Widget {
                     color: "#FFF"
                     text: root.notificationTitle
                     speed: 100
+                    visible: text
                 }
                 MarqueeTitle {
                     opacity: 0.6
@@ -281,6 +282,7 @@ Widget {
                     color: "#FFF"
                     text: root.notificationMessage
                     speed: 100
+                    visible: text
                 }
             }
         }
