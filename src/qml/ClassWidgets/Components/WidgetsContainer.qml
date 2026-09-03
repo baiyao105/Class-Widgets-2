@@ -221,7 +221,12 @@ Column {
 
                 WidgetLoader {
                     id: loader
-                    transformOrigin: Item.TopLeft
+                    transformOrigin: Item.Center
+                    // widgetContainer is sized to the scaled content while
+                    // the loader keeps its native size. Offset the loader so
+                    // its transform center stays at widgetContainer's center.
+                    x: (widgetContainer.width - width) / 2
+                    y: (widgetContainer.height - height) / 2
                     scale: tapHandler.pressed ? visualScale * 0.975 : visualScale
                     onWidthChanged: widgetsContainer.contentGeometryChanged()
                     onHeightChanged: widgetsContainer.contentGeometryChanged()
