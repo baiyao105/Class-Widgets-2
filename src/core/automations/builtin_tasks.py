@@ -33,6 +33,12 @@ if IS_WINDOWS:
     def is_window_fullscreen(hwnd) -> bool:
         if not win32gui.IsWindowVisible(hwnd):
             return False
+        # A standard maximized window can have the same bounds as the monitor,
+        # but borderless fullscreen applications may also report SW_MAXIMIZE.
+        style = win32gui.GetWindowLong(hwnd, win32con.GWL_STYLE)
+        has_standard_frame = style & (win32con.WS_CAPTION | win32con.WS_THICKFRAME)
+        if is_window_maximized(hwnd) and has_standard_frame:
+            return False
         rect = win32gui.GetWindowRect(hwnd)
         screen_width = ctypes.windll.user32.GetSystemMetrics(0)
         screen_height = ctypes.windll.user32.GetSystemMetrics(1)
@@ -49,6 +55,7 @@ class AutoHideTask(AutomationTask):
 
         self._window_states: dict[int, dict[str, bool]] = {}
         self.previous_state: bool = False
+        self._fullscreen_window: int | None = None
         
         # Check initial state on startup
         if self.app_central.configs.interactions.hide.in_class:
@@ -82,9 +89,11 @@ class AutoHideTask(AutomationTask):
         any_fullscreen = False
 
         if self.app_central.configs.interactions.hide.maximized:
-            # 最大化检测仍检查所有可见的应用窗口。
+            # Maximum state is global and still checks all visible windows.
             self._window_states.clear()
             win32gui.EnumWindows(self._enum_windows_callback, None)
+
+        if self.app_central.configs.interactions.hide.maximized:
             any_maximized = any(state['maximized'] for state in self._window_states.values())
 
         if self.app_central.configs.interactions.hide.fullscreen:
@@ -92,7 +101,17 @@ class AutoHideTask(AutomationTask):
             try:
                 class_name = win32gui.GetClassName(foreground_window)
                 if class_name not in SYSTEM_WINDOW_CLASSES:
-                    any_fullscreen = is_window_fullscreen(foreground_window)
+                    if is_window_fullscreen(foreground_window):
+                        self._fullscreen_window = foreground_window
+
+                # Moving focus to another window does not make the fullscreen
+                # window leave fullscreen. Clear the state only when the
+                # tracked window actually leaves fullscreen or disappears.
+                if self._fullscreen_window is not None:
+                    if is_window_fullscreen(self._fullscreen_window):
+                        any_fullscreen = True
+                    else:
+                        self._fullscreen_window = None
             except Exception as e:
                 logger.debug(f"Check foreground window {foreground_window} failed: {e}")
 
