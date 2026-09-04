@@ -475,22 +475,22 @@ Do you want to continue using them, or discard and restore the original schedule
     <message>
         <location filename="../../src/qml/ClassWidgets/Components/editor/dialogs/DayEditor.qml" line="23"/>
         <source>Week {value} of every %1 weeks</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">毎％１週の｛value｝週</translation>
     </message>
     <message>
         <location filename="../../src/qml/ClassWidgets/Components/editor/dialogs/DayEditor.qml" line="26"/>
         <source>Week {value}</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">第｛value｝週</translation>
     </message>
     <message>
         <location filename="../../src/qml/ClassWidgets/Components/editor/dialogs/DayEditor.qml" line="36"/>
         <source>1</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">单</translation>
     </message>
     <message>
         <location filename="../../src/qml/ClassWidgets/Components/editor/dialogs/DayEditor.qml" line="36"/>
         <source>2</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">双</translation>
     </message>
     <message>
         <location filename="../../src/qml/ClassWidgets/Components/editor/dialogs/DayEditor.qml" line="37"/>
@@ -575,12 +575,12 @@ Do you want to continue using them, or discard and restore the original schedule
     <message>
         <location filename="../../src/qml/ClassWidgets/Components/editor/dialogs/DayEditor.qml" line="198"/>
         <source>Repeat on a Cycle</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">複数週ローテーション</translation>
     </message>
     <message>
         <location filename="../../src/qml/ClassWidgets/Components/editor/dialogs/DayEditor.qml" line="199"/>
         <source>One Specific Week</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">指定週</translation>
     </message>
     <message>
         <source>Specific Round</source>
@@ -2259,7 +2259,7 @@ Applying an incompatible theme may cause serious errors, crashes, or unexpected 
     <message>
         <location filename="../../src/qml/ClassWidgets/pages/plaza/Plugin.qml" line="502"/>
         <source>Unknown author</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">作者不明</translation>
     </message>
     <message>
         <location filename="../../src/qml/ClassWidgets/pages/plaza/Plugin.qml" line="535"/>
@@ -2435,7 +2435,7 @@ Applying an incompatible theme may cause serious errors, crashes, or unexpected 
         <location filename="../../src/qml/ClassWidgets/Components/plaza/PluginCard.qml" line="21"/>
         <location filename="../../src/qml/ClassWidgets/Components/plaza/PluginCard.qml" line="22"/>
         <source>Unknown author</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">作者不明</translation>
     </message>
     <message>
         <location filename="../../src/qml/ClassWidgets/Components/plaza/PluginCard.qml" line="209"/>
@@ -2454,7 +2454,7 @@ Applying an incompatible theme may cause serious errors, crashes, or unexpected 
         <location filename="../../src/qml/ClassWidgets/Components/plaza/PluginCardRounded.qml" line="23"/>
         <location filename="../../src/qml/ClassWidgets/Components/plaza/PluginCardRounded.qml" line="24"/>
         <source>Unknown author</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">作者不明</translation>
     </message>
 </context>
 <context>
@@ -2633,7 +2633,7 @@ Applying an incompatible theme may cause serious errors, crashes, or unexpected 
     <message>
         <location filename="../../src/qml/ClassWidgets/Windows/PluginPlaza.qml" line="273"/>
         <source>Downloads</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">ダウンロード</translation>
     </message>
     <message>
         <location filename="../../src/core/plugin/errors.py" line="23"/>
@@ -2904,7 +2904,7 @@ Do you want to %3 this plugin?</source>
     <message>
         <location filename="../../src/qml/ClassWidgets/pages/settings/Plugins.qml" line="137"/>
         <source>Downloads</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">ダウンロード</translation>
     </message>
     <message>
         <location filename="../../src/qml/ClassWidgets/pages/settings/Plugins.qml" line="143"/>
@@ -3060,7 +3060,7 @@ It&apos;s incompatible and may cause unexpected issues.</source>
         <location filename="../../src/qml/ClassWidgets/pages/tutorial/Plugins.qml" line="49"/>
         <location filename="../../src/qml/ClassWidgets/pages/tutorial/Plugins.qml" line="503"/>
         <source>Retry</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">再試</translation>
     </message>
     <message>
         <location filename="../../src/qml/ClassWidgets/pages/tutorial/Plugins.qml" line="188"/>
@@ -3561,7 +3561,7 @@ It&apos;s incompatible and may cause unexpected issues.</source>
         <location filename="../../src/qml/ClassWidgets/pages/plaza/Search.qml" line="356"/>
         <location filename="../../src/qml/ClassWidgets/pages/plaza/Search.qml" line="364"/>
         <source>Name</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">名称</translation>
     </message>
     <message>
         <location filename="../../src/qml/ClassWidgets/pages/plaza/Search.qml" line="357"/>
@@ -3573,13 +3573,13 @@ It&apos;s incompatible and may cause unexpected issues.</source>
         <location filename="../../src/qml/ClassWidgets/pages/plaza/Search.qml" line="358"/>
         <location filename="../../src/qml/ClassWidgets/pages/plaza/Search.qml" line="366"/>
         <source>Downloads</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">ダウンロード</translation>
     </message>
     <message>
         <location filename="../../src/qml/ClassWidgets/pages/plaza/Search.qml" line="359"/>
         <location filename="../../src/qml/ClassWidgets/pages/plaza/Search.qml" line="363"/>
         <source>Latest</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">最新発表</translation>
     </message>
     <message>
         <location filename="../../src/qml/ClassWidgets/pages/plaza/Search.qml" line="330"/>
@@ -5170,7 +5170,7 @@ then tap &quot;Edit Widget Screen&quot; in the menu to experience it.</source>
     <message>
         <location filename="../../src/qml/ClassWidgets/pages/settings/General/Widgets.qml" line="150"/>
         <source>Set how rounded widget corners appear</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">ウィジェットの角丸表示の設定</translation>
     </message>
     <message>
         <location filename="../../src/qml/ClassWidgets/pages/settings/General/Widgets.qml" line="169"/>
