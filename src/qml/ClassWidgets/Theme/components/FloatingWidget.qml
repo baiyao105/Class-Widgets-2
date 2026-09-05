@@ -152,6 +152,7 @@ Widget {
                 spacing: 2
                 Layout.alignment: Qt.AlignVCenter
                 Title {
+                    font.pixelSize: 28
                     Layout.alignment: Qt.AlignRight
                     text: AppCentral.scheduleRuntime.currentEntry.title
                         || AppCentral.scheduleRuntime.currentSubject.name
@@ -270,6 +271,7 @@ Widget {
                     Layout.alignment: Qt.AlignRight
                     maximumWidth: 180
                     color: "#FFF"
+                    font.pixelSize: 28
                     text: root.notificationTitle
                     speed: 100
                     visible: text
