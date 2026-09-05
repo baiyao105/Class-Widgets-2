@@ -3863,38 +3863,38 @@ If it takes place in another location, such as a sport field, lab, or another cl
 <context>
     <name>Text</name>
     <message>
-        <location filename="../../src/qml/widgets/Text.qml" line="20"/>
+        <location filename="../../src/qml/widgets/Title.qml" line="20"/>
         <source>Text</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/qml/widgets/Text.qml" line="52"/>
-        <location filename="../../src/qml/widgets/Text.qml" line="58"/>
+        <location filename="../../src/qml/widgets/Title.qml" line="52"/>
+        <location filename="../../src/qml/widgets/Title.qml" line="58"/>
         <source>Enter Text</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/qml/widgets/settings/Text.qml" line="12"/>
+        <location filename="../../src/qml/widgets/settings/Title.qml" line="12"/>
         <source>Marquee Text</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/qml/widgets/settings/Text.qml" line="13"/>
+        <location filename="../../src/qml/widgets/settings/Title.qml" line="13"/>
         <source>If enabled, the text will scroll from left to right, if the widget is not wide enough.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/qml/widgets/settings/Text.qml" line="29"/>
+        <location filename="../../src/qml/widgets/settings/Title.qml" line="29"/>
         <source>Maximum Width</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/qml/widgets/settings/Text.qml" line="30"/>
+        <location filename="../../src/qml/widgets/settings/Title.qml" line="30"/>
         <source>Set the maximum width of the widget to display</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/qml/widgets/settings/Text.qml" line="50"/>
+        <location filename="../../src/qml/widgets/settings/Title.qml" line="50"/>
         <source>Custom Text</source>
         <translation type="unfinished"></translation>
     </message>

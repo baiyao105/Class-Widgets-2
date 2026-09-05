@@ -74,7 +74,7 @@ Widget {
                 Layout.alignment: Qt.AlignHCenter
                 Layout.preferredWidth: Configs.data.preferences.countdown_precision === "minute" ?
                     (countdownLayout.implicitWidth - 16) : 82
-                Layout.preferredHeight: 4
+                // Layout.preferredHeight: 4
                 value: AppCentral.scheduleRuntime.progress
                 visible: !miniMode
                 primaryColor: {
