@@ -1226,32 +1226,32 @@ Do you want to continue using them, or discard and restore the original schedule
 <context>
     <name>FloatingWidget</name>
     <message>
-        <location filename="../../src/qml/ClassWidgets/Theme/components/FloatingWidget.qml" line="159"/>
+        <location filename="../../src/qml/ClassWidgets/Theme/components/FloatingWidget.qml" line="160"/>
         <source>Class</source>
         <translation type="unfinished">班級</translation>
     </message>
     <message>
-        <location filename="../../src/qml/ClassWidgets/Theme/components/FloatingWidget.qml" line="161"/>
+        <location filename="../../src/qml/ClassWidgets/Theme/components/FloatingWidget.qml" line="162"/>
         <source>Activity</source>
         <translation type="unfinished">活動</translation>
     </message>
     <message>
-        <location filename="../../src/qml/ClassWidgets/Theme/components/FloatingWidget.qml" line="163"/>
+        <location filename="../../src/qml/ClassWidgets/Theme/components/FloatingWidget.qml" line="164"/>
         <source>Take a break</source>
         <translation type="unfinished">休息一下</translation>
     </message>
     <message>
-        <location filename="../../src/qml/ClassWidgets/Theme/components/FloatingWidget.qml" line="164"/>
+        <location filename="../../src/qml/ClassWidgets/Theme/components/FloatingWidget.qml" line="165"/>
         <source>Nothing right now</source>
         <translation type="unfinished">目前沒有</translation>
     </message>
     <message>
-        <location filename="../../src/qml/ClassWidgets/Theme/components/FloatingWidget.qml" line="178"/>
+        <location filename="../../src/qml/ClassWidgets/Theme/components/FloatingWidget.qml" line="179"/>
         <source>&lt; </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/qml/ClassWidgets/Theme/components/FloatingWidget.qml" line="189"/>
+        <location filename="../../src/qml/ClassWidgets/Theme/components/FloatingWidget.qml" line="190"/>
         <source> min</source>
         <translation type="unfinished"></translation>
     </message>
@@ -4138,38 +4138,38 @@ If it takes place in another location, such as a sport field, lab, or another cl
 <context>
     <name>Text</name>
     <message>
-        <location filename="../../src/qml/widgets/Title.qml" line="20"/>
+        <location filename="../../src/qml/widgets/Text.qml" line="20"/>
         <source>Text</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/qml/widgets/Title.qml" line="52"/>
-        <location filename="../../src/qml/widgets/Title.qml" line="58"/>
+        <location filename="../../src/qml/widgets/Text.qml" line="52"/>
+        <location filename="../../src/qml/widgets/Text.qml" line="58"/>
         <source>Enter Text</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/qml/widgets/settings/Title.qml" line="12"/>
+        <location filename="../../src/qml/widgets/settings/Text.qml" line="12"/>
         <source>Marquee Text</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/qml/widgets/settings/Title.qml" line="13"/>
+        <location filename="../../src/qml/widgets/settings/Text.qml" line="13"/>
         <source>If enabled, the text will scroll from left to right, if the widget is not wide enough.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/qml/widgets/settings/Title.qml" line="29"/>
+        <location filename="../../src/qml/widgets/settings/Text.qml" line="29"/>
         <source>Maximum Width</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/qml/widgets/settings/Title.qml" line="30"/>
+        <location filename="../../src/qml/widgets/settings/Text.qml" line="30"/>
         <source>Set the maximum width of the widget to display</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/qml/widgets/settings/Title.qml" line="50"/>
+        <location filename="../../src/qml/widgets/settings/Text.qml" line="50"/>
         <source>Custom Text</source>
         <translation type="unfinished"></translation>
     </message>
