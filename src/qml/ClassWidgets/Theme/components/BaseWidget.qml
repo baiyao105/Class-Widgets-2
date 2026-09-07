@@ -31,6 +31,7 @@ Item {
     property alias actions: actionButtons.children
     property alias backgroundArea: backgroundAreaItem.children
     default property alias content: contentArea.data
+    property alias mainLayout: mainColumnLayout.data
 
     implicitWidth: Math.max(headerRow.implicitWidth, contentArea.childrenRect.width) + 48
     height: miniMode ? 56 : 100
@@ -58,7 +59,7 @@ Item {
     }
 
     ColumnLayout {
-        id: mainLayout
+        id: mainColumnLayout
         anchors.fill: parent
         anchors.topMargin: miniMode ? 12 : 16
         anchors.bottomMargin: miniMode ? 10 : 18
