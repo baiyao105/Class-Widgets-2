@@ -63,6 +63,13 @@ Item {
         property int maxWeekCycle: AppCentral.scheduleEditor.meta.maxWeekCycle
     }
 
+    // 点击页面空白背景取消选择（表格区域的点击由 ScheduleTableView 自行处理）
+    MouseArea {
+        anchors.fill: parent
+        acceptedButtons: Qt.LeftButton
+        onClicked: scheduleTable.clearSelection()
+    }
+
     ColumnLayout {
         id: mainLayout
         anchors.fill: parent
@@ -132,6 +139,9 @@ Item {
                 entryFlyout.parent = delegate   // 定位到点击的 cell
                 entryFlyout.open()
             }
+
+            // 点击背景取消选择时，一并关闭悬浮编辑面板
+            onSelectionCleared: entryFlyout.close()
         }
 
 

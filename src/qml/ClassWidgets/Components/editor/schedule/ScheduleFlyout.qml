@@ -13,6 +13,8 @@ Flyout {
     property bool syncing: false
     property var baseDayEntries: []
     property var effectiveDayEntries: []
+    property bool _repositionAfterAnimation: false
+    property bool _repositionCallPending: false
 
     readonly property real overlayWidth: Overlay.overlay ? Overlay.overlay.width : 0
     readonly property real overlayHeight: Overlay.overlay ? Overlay.overlay.height : 0
@@ -42,11 +44,63 @@ Flyout {
     onAboutToShow: reloadOverrides()
     onEntryChanged: reloadOverrides()
     onOverridesRevisionChanged: if (!syncing) reloadOverrides()
+
+    function requestReposition() {
+        if (!visible || position === Position.None)
+            return
+
+        // RinUI ignores reposition requests while Popup enter/exit animations run.
+        // Remember them and apply after the animation settles.
+        if (enter.running || exit.running) {
+            _repositionAfterAnimation = true
+            return
+        }
+
+        _repositionAfterAnimation = false
+        if (_repositionCallPending)
+            return
+
+        _repositionCallPending = true
+        Qt.callLater(function() {
+            root._repositionCallPending = false
+            if (!root.visible || root.position === Position.None)
+                return
+            if (root.enter.running || root.exit.running) {
+                root._repositionAfterAnimation = true
+                return
+            }
+            root.autoPosition()
+        })
+    }
+
+    Connections {
+        target: root
+        function onVisibleChanged() {
+            if (root.visible)
+                root.requestReposition()
+        }
+        function onHeightChanged() {
+            root.requestReposition()
+        }
+        function onImplicitHeightChanged() {
+            root.requestReposition()
+        }
+    }
+
+    Connections {
+        target: root.enter
+        function onRunningChanged() {
+            if (!root.enter.running && root._repositionAfterAnimation)
+                root.requestReposition()
+        }
+    }
+
     // ── Data normalization ─────────────────────────────────────────────
+    // Rows keep ids and their encoded form; the readable form is derived on
+    // demand. `weeks` is either "all", a cycle week or a list of weeks.
     function sameValue(left, right) {
         return JSON.stringify(left) === JSON.stringify(right)
     }
-
 
     function encodeDays(value) {
         return JSON.stringify((value || []).map(item => Number(item)))
@@ -65,6 +119,7 @@ Flyout {
         }
         return []
     }
+
     function encodeWeeks(value) {
         if (value === "all" || value === null || value === undefined || value === "")
             return "all"
@@ -94,6 +149,22 @@ Flyout {
         return isFinite(number) ? number : "all"
     }
 
+    // Ids travel as a JSON string inside the model roles. `field` keeps the
+    // three id lists of a row behind one accessor.
+    function idList(item, field) {
+        const value = item ? item[field] : null
+        if (Array.isArray(value))
+            return value.map(entry => String(entry))
+        if (typeof value !== "string" || value.charAt(0) !== "[")
+            return []
+        try {
+            const parsed = JSON.parse(value)
+            return Array.isArray(parsed) ? parsed.map(entry => String(entry)) : []
+        } catch (error) {
+            return []
+        }
+    }
+
     // ── Schedule context ───────────────────────────────────────────────
     function cycleCount() {
         return Math.max(1, Number(weekSelector ? weekSelector.maxWeekCycle : 1) || 1)
@@ -103,32 +174,30 @@ Flyout {
         return Math.max(1, Number(weekSelector ? weekSelector.currentWeek : 1) || 1)
     }
 
+    // Sunday-first column index -> Monday-first day of week.
     function selectedDayOfWeek() {
         const column = Number(selectedCell ? selectedCell.column : -1)
         if (!isFinite(column) || column < 0)
-            return []
-        // ScheduleTableView columns: Sunday, Monday ... Saturday.
-        // Schedule data: Monday=1 ... Sunday=7.
-        return [(column + 6) % 7 + 1]
+            return ""
+        return (column + 6) % 7 + 1
     }
 
-    function entryDayForId(entryId) {
+    function baseEntriesForId(entryId) {
         const days = AppCentral.scheduleEditor.entriesData || []
         for (const day of days) {
             for (const item of (day.entries || [])) {
                 if (item.id === entryId)
-                    return day
+                    return (day.entries || []).filter(entry => entry.type === "class")
             }
         }
-        return null
+        return []
     }
 
+    // The base day of the edited entry, not the clicked column: an override may
+    // span several periods of it. Times and period numbers always come from it.
     function refreshContext() {
         const entryId = entry ? (entry.id || "") : ""
-        const day = entryId ? entryDayForId(entryId) : null
-        baseDayEntries = day
-            ? (day.entries || []).filter(item => item.type === "class")
-            : []
+        baseDayEntries = entryId ? baseEntriesForId(entryId) : []
 
         const columns = AppCentral.scheduleEditor.getEffectiveEntries(currentWeek()) || []
         const column = Number(selectedCell ? selectedCell.column : -1)
@@ -137,162 +206,121 @@ Flyout {
             : []
     }
 
-    function classEntriesForId(entryId) {
-        if (!entryId || baseDayEntries.length === 0)
-            return baseDayEntries
-        for (const item of baseDayEntries) {
-            if (item.id === entryId)
-                return baseDayEntries
-        }
-        const day = entryDayForId(entryId)
-        if (!day || !day.entries)
-            return []
-        return day.entries.filter(item => item.type === "class")
-    }
-
-    function basePeriodForId(entryId) {
-        const items = classEntriesForId(entryId)
-        for (let i = 0; i < items.length; ++i) {
-            if (items[i].id === entryId)
-                return i + 1
-        }
-        const row = Number(selectedCell ? selectedCell.row : -1)
-        return isFinite(row) && row >= 0 ? row + 1 : 1
-    }
-
-    function baseEndPeriodForId(entryId) {
-        const fallback = basePeriodForId(entryId)
-        const source = entryForId(entryId)
-        return endPeriodForTime(entryId, source ? source.endTime : "", fallback)
-    }
-
-    function periodCountForId(entryId) {
-        return Math.max(1, classEntriesForId(entryId).length)
-    }
-
-    function periodForTime(entryId, time, fallback) {
-        if (!time)
-            return fallback
-        const items = classEntriesForId(entryId)
-        for (let i = 0; i < items.length; ++i) {
-            if (items[i].startTime === time)
-                return i + 1
-        }
-        for (let i = 0; i < items.length; ++i) {
-            if (time >= items[i].startTime && time < items[i].endTime)
-                return i + 1
-        }
-        return fallback
-    }
-
-    function endPeriodForTime(entryId, time, fallback) {
-        if (!time)
-            return fallback
-        const items = classEntriesForId(entryId)
-        for (let i = 0; i < items.length; ++i) {
-            if (items[i].endTime === time)
-                return i + 1
-        }
-        for (let i = 0; i < items.length; ++i) {
-            if (time > items[i].startTime && time <= items[i].endTime)
-                return i + 1
-        }
-        return fallback
-    }
-
-    function startTimeForPeriod(entryId, period) {
-        const items = classEntriesForId(entryId)
-        const item = items[Math.max(0, Number(period) - 1)]
-        return item ? (item.startTime || "") : ""
-    }
-
-    function endTimeForPeriod(entryId, period) {
-        const items = classEntriesForId(entryId)
-        const item = items[Math.max(0, Number(period) - 1)]
-        return item ? (item.endTime || "") : ""
-    }
-
-    function entryForId(entryId) {
-        for (const item of effectiveDayEntries) {
-            if (item.id === entryId)
-                return item
-        }
-        for (const item of baseDayEntries) {
-            if (item.id === entryId)
-                return item
-        }
-        return AppCentral.scheduleEditor.getEntry(entryId)
-    }
-
-    function decodeIdList(value) {
-        if (Array.isArray(value))
-            return value.map(item => String(item))
-        if (typeof value !== "string" || value.charAt(0) !== "[")
-            return []
-        try {
-            const parsed = JSON.parse(value)
-            return Array.isArray(parsed) ? parsed.map(item => String(item)) : []
-        } catch (error) {
-            return []
-        }
-    }
-
-    function overrideGroupKey(item) {
+    // ── Overrides of one entry on one day ──────────────────────────────
+    // Rows are grouped by this signature: one row covers the contiguous run of
+    // periods that shares it.
+    function overrideKey(item) {
         return encodeDays(item.dayOfWeek || []) + "|"
             + encodeWeeks(item.weeks) + "|"
             + String(item.subjectId || "") + "|"
             + String(item.title || "")
     }
 
-    function overridesForEntryOnDay(entryId, dayOfWeek) {
+    function overrideMatchesDay(item, dayOfWeek) {
+        const days = Array.isArray(item.dayOfWeek)
+            ? item.dayOfWeek.map(value => Number(value))
+            : []
+        return days.length === 0 || days.indexOf(dayOfWeek) !== -1
+    }
+
+    // Overrides covering the given entry ids on the given day. `predicate`
+    // selects the subset the caller cares about, so one walk serves grouping,
+    // option building and status checks.
+    function overridesOnDay(entryIds, dayOfWeek, predicate) {
         const result = []
-        for (const item of (AppCentral.scheduleEditor.overrides || [])) {
-            if (item.entryId === entryId && overrideMatchesDay(item, dayOfWeek))
-                result.push(item)
+        if (!entryIds || entryIds.length === 0)
+            return result
+        const overrides = AppCentral.scheduleEditor.overrides || []
+        for (const item of overrides) {
+            if (entryIds.indexOf(item.entryId) === -1)
+                continue
+            if (!overrideMatchesDay(item, dayOfWeek))
+                continue
+            if (predicate && !predicate(item))
+                continue
+            result.push(item)
         }
         return result
     }
 
-    function recordWithSignature(records, key) {
-        for (const item of records) {
-            if (overrideGroupKey(item) === key)
-                return item
-        }
-        return null
+    // Number of override rows currently shown.
+    function rowCount() {
+        return overrideModel.count
     }
 
-    function appendOverrideGroup(group) {
-        if (!group || group.start < 0 || group.records.length === 0)
+    // Rebuild the rows for the selected entry: one row per override signature,
+    // spanning every period the run of that signature covers.
+    function reloadOverrides() {
+        overrideModel.clear()
+        refreshContext()
+
+        const selectedEntryId = entry ? (entry.id || "") : ""
+        const selectedIndex = baseDayEntries.findIndex(item => item.id === selectedEntryId)
+        if (selectedIndex < 0)
             return
+
+        const dayOfWeek = selectedDayOfWeek()
+        const recordsByIndex = baseDayEntries.map(
+            item => overridesOnDay([item.id], dayOfWeek)
+        )
+
+        const keys = []
+        for (const item of recordsByIndex[selectedIndex]) {
+            const key = overrideKey(item)
+            if (keys.indexOf(key) === -1)
+                keys.push(key)
+        }
+
+        for (const key of keys) {
+            const matches = records => records.filter(
+                item => overrideKey(item) === key
+            )
+            let start = selectedIndex
+            let end = selectedIndex
+            while (start > 0 && matches(recordsByIndex[start - 1]).length > 0)
+                --start
+            while (end + 1 < recordsByIndex.length
+                    && matches(recordsByIndex[end + 1]).length > 0)
+                ++end
+
+            const records = []
+            for (let i = start; i <= end; ++i)
+                records.push(matches(recordsByIndex[i])[0])
+            appendRow({ start: start, end: end, records: records })
+        }
+    }
+
+    function appendRow(group) {
         const firstEntry = baseDayEntries[group.start]
         const lastEntry = baseDayEntries[group.end]
-        const firstOverride = group.records[0]
-        const lastOverride = group.records[group.records.length - 1]
-        if (!firstEntry || !lastEntry)
+        if (!firstEntry || !lastEntry || group.records.length === 0)
             return
 
         const entryIds = []
         const overrideIds = []
         for (let i = group.start; i <= group.end; ++i) {
             entryIds.push(baseDayEntries[i].id)
-            const override = group.records[i - group.start]
-            overrideIds.push(override ? (override.id || "") : "")
+            const record = group.records[i - group.start]
+            overrideIds.push(record ? (record.id || "") : "")
         }
 
+        const first = group.records[0]
+        const days = encodeDays(first.dayOfWeek || [])
+        const weeks = encodeWeeks(first.weeks)
         overrideModel.append({
-            id: firstOverride.id || "",
             entryId: firstEntry.id,
             entryIds: JSON.stringify(entryIds),
             originalEntryIds: JSON.stringify(entryIds),
             overrideIds: JSON.stringify(overrideIds),
-            dayOfWeek: encodeDays(firstOverride.dayOfWeek || []),
-            weeks: encodeWeeks(firstOverride.weeks),
-            subjectId: firstOverride.subjectId || "",
-            title: firstOverride.title || "",
+            dayOfWeek: days,
+            weeks: weeks,
+            subjectId: first.subjectId || "",
+            title: first.title || "",
+            // Display-only range metadata, never persisted on its own.
             startTime: firstEntry.startTime || "",
             endTime: lastEntry.endTime || "",
-            originalDayOfWeek: encodeDays(firstOverride.dayOfWeek || []),
-            originalWeeks: encodeWeeks(firstOverride.weeks),
+            originalDayOfWeek: days,
+            originalWeeks: weeks,
             startPeriod: group.start + 1,
             endPeriod: group.end + 1,
             isDraft: false,
@@ -301,383 +329,36 @@ Flyout {
         })
     }
 
-    function collapseAllOverrides() {
-        for (let i = 0; i < overrideModel.count; ++i)
-            overrideModel.setProperty(i, "expanded", false)
-    }
-
-    function toggleOverride(index) {
-        const item = overrideModel.get(index)
-        if (!item)
-            return
-        const expand = !item.expanded
-        collapseAllOverrides()
-        overrideModel.setProperty(index, "expanded", expand)
-    }
-
-    function entryIdsForRange(startPeriod, endPeriod) {
-        const result = []
-        for (let period = startPeriod; period <= endPeriod; ++period) {
-            const target = baseDayEntries[period - 1]
-            if (target)
-                result.push(target.id)
-        }
-        return result
-    }
-
-    function itemEntryIds(item) {
-        return decodeIdList(item ? item.entryIds : "[]")
-    }
-
-    function itemOriginalEntryIds(item) {
-        return decodeIdList(item ? item.originalEntryIds : "[]")
-    }
-
-    function itemOverrideIds(item) {
-        return decodeIdList(item ? item.overrideIds : "[]")
-    }
-
-    function isOwnedPeriod(item, entryId) {
-        return itemEntryIds(item).indexOf(entryId) !== -1
-            || itemOriginalEntryIds(item).indexOf(entryId) !== -1
-    }
-
-    function isPeriodAvailable(item, period) {
-        const target = effectiveDayEntries[period - 1]
-        if (!target)
-            return false
-        if (isOwnedPeriod(item, target.id))
-            return true
-        return !target.subjectId && !target.title
-    }
-
-    function isRangeAvailable(item, startPeriod, endPeriod) {
-        if (startPeriod < 1 || endPeriod < startPeriod || endPeriod > effectiveDayEntries.length)
-            return false
-        for (let period = startPeriod; period <= endPeriod; ++period) {
-            if (!isPeriodAvailable(item, period))
-                return false
-        }
-        return true
-    }
-
-    function startPeriodOptionsForItem(startPeriodValue, endPeriodValue, entryIdsValue, originalEntryIdsValue) {
-        const result = []
-        const item = {
-            startPeriod: startPeriodValue,
-            endPeriod: endPeriodValue,
-            entryIds: entryIdsValue,
-            originalEntryIds: originalEntryIdsValue
-        }
-        for (let period = 1; period <= endPeriodValue; ++period) {
-            if (isRangeAvailable(item, period, endPeriodValue))
-                result.push(period)
-        }
-        return result
-    }
-
-    function endPeriodOptionsForItem(startPeriodValue, endPeriodValue, entryIdsValue, originalEntryIdsValue) {
-        const result = []
-        const item = {
-            startPeriod: startPeriodValue,
-            endPeriod: endPeriodValue,
-            entryIds: entryIdsValue,
-            originalEntryIds: originalEntryIdsValue
-        }
-        for (let period = startPeriodValue; period <= effectiveDayEntries.length; ++period) {
-            if (isRangeAvailable(item, startPeriodValue, period))
-                result.push(period)
-        }
-        return result
-    }
-
-    function applyPeriodSelection(index, role, period) {
-        const item = overrideModel.get(index)
-        const selectedPeriod = Number(period)
-        if (!item || !isFinite(selectedPeriod))
-            return
-        let startPeriod = item.startPeriod
-        let endPeriod = item.endPeriod
-        if (role === "startTime") {
-            startPeriod = Math.min(selectedPeriod, endPeriod)
-        } else {
-            endPeriod = Math.max(selectedPeriod, startPeriod)
-        }
-        if (!isRangeAvailable(item, startPeriod, endPeriod))
-            return
-
-        const entryIds = entryIdsForRange(startPeriod, endPeriod)
-        if (entryIds.length === 0)
-            return
-        const firstEntry = baseDayEntries[startPeriod - 1]
-        const lastEntry = baseDayEntries[endPeriod - 1]
-        overrideModel.setProperty(index, "entryId", entryIds[0])
-        overrideModel.setProperty(index, "entryIds", JSON.stringify(entryIds))
-        overrideModel.setProperty(index, "startPeriod", startPeriod)
-        overrideModel.setProperty(index, "endPeriod", endPeriod)
-        overrideModel.setProperty(index, "startTime", firstEntry ? (firstEntry.startTime || "") : "")
-        overrideModel.setProperty(index, "endTime", lastEntry ? (lastEntry.endTime || "") : "")
-    }
-
-    function repeatTypeFor(weeks) {
-        if (weeks === "all" || weeks === null || weeks === undefined || weeks === "")
-            return "all"
-        return Array.isArray(weeks) ? "custom" : "round"
-    }
-
-    function cycleName(value) {
-        const number = Math.max(1, Number(value) || 1)
-        if (cycleCount() === 2)
-            return number === 1 ? qsTr("Odd") : qsTr("Even")
-        return qsTr("Week %1").arg(number)
-    }
-
-    function cycleOptions() {
-        const result = []
-        for (let i = 1; i <= cycleCount(); ++i)
-            result.push(cycleName(i))
-        return result
-    }
-
-    function cycleOptionsForValues(values) {
-        const result = []
-        for (const value of values)
-            result.push(cycleName(value))
-        return result
-    }
-
-    function overrideMatchesDay(item, dayOfWeek) {
-        if (!item)
-            return false
-        const days = Array.isArray(item.dayOfWeek)
-            ? item.dayOfWeek.map(value => Number(value))
-            : []
-        return days.length === 0 || days.indexOf(dayOfWeek) !== -1
-    }
-
-    function existingScopesForItem(entryIdsValue, dayOfWeek, overrideIdsValue) {
-        const entryIds = decodeIdList(entryIdsValue)
-        const excludedIds = decodeIdList(overrideIdsValue)
-        const result = []
-        for (const item of (AppCentral.scheduleEditor.overrides || [])) {
-            if (entryIds.indexOf(item.entryId) === -1)
-                continue
-            if (excludedIds.indexOf(item.id) !== -1)
-                continue
-            if (!overrideMatchesDay(item, dayOfWeek))
-                continue
-            result.push(item)
-        }
-        return result
-    }
-
-    function everyWeekOptionEnabled(entryIdsValue, dayOfWeek, overrideIdsValue) {
-        const scopes = existingScopesForItem(entryIdsValue, dayOfWeek, overrideIdsValue)
-        for (const item of scopes) {
-            if (decodeWeeks(item.weeks) === "all")
-                return false
-        }
-        return true
-    }
-
-    function cycleValuesForItem(entryIdsValue, dayOfWeek, overrideIdsValue) {
-        const scopes = existingScopesForItem(entryIdsValue, dayOfWeek, overrideIdsValue)
-        const used = []
+    // The most specific week rule still free for a new override on that entry.
+    function defaultWeeksForNewItem(entryId) {
+        const dayOfWeek = selectedDayOfWeek()
+        const scopes = overridesOnDay([entryId], dayOfWeek)
+        let everyWeekFree = true
+        const usedCycles = []
+        const blocked = []
         for (const item of scopes) {
             const value = decodeWeeks(item.weeks)
-            if (typeof value === "number" && used.indexOf(value) === -1)
-                used.push(value)
-        }
-        const result = []
-        for (let value = 1; value <= cycleCount(); ++value) {
-            if (used.indexOf(value) === -1)
-                result.push(value)
-        }
-        return result
-    }
-
-    function blockedCustomWeeks(entryIdsValue, dayOfWeek, overrideIdsValue) {
-        const scopes = existingScopesForItem(entryIdsValue, dayOfWeek, overrideIdsValue)
-        const result = []
-        for (const item of scopes) {
-            const value = decodeWeeks(item.weeks)
-            if (!Array.isArray(value))
-                continue
-            for (const week of value) {
-                if (result.indexOf(week) === -1)
-                    result.push(week)
+            if (value === "all")
+                everyWeekFree = false
+            else if (typeof value === "number")
+                usedCycles.push(value)
+            else if (Array.isArray(value)) {
+                for (const week of value) {
+                    if (blocked.indexOf(week) === -1)
+                        blocked.push(week)
+                }
             }
         }
-        return result
-    }
-
-    function defaultWeeksForNewItem(entryIdsValue, dayOfWeek) {
-        if (everyWeekOptionEnabled(entryIdsValue, dayOfWeek, "[]"))
+        if (everyWeekFree)
             return "all"
-
-        const cycleValues = cycleValuesForItem(entryIdsValue, dayOfWeek, "[]")
-        if (cycleValues.length > 0)
-            return cycleValues[0]
-
-        const blocked = blockedCustomWeeks(entryIdsValue, dayOfWeek, "[]")
+        for (let value = 1; value <= cycleCount(); ++value) {
+            if (usedCycles.indexOf(value) === -1)
+                return value
+        }
         let week = currentWeek()
         while (blocked.indexOf(week) !== -1)
             ++week
         return [week]
-    }
-
-    function weeksLabel(weeks) {
-        if (weeks === "all" || weeks === null || weeks === undefined || weeks === "")
-            return qsTr("Every Week")
-        if (Array.isArray(weeks)) {
-            return weeks.length
-                ? qsTr("Week %1").arg(weeks.join(", "))
-                : qsTr("Every Week")
-        }
-        if (cycleCount() === 2)
-            return Number(weeks) === 1 ? qsTr("Odd Week") : qsTr("Even Week")
-        return qsTr("Week %2 of every %1 weeks").arg(cycleCount()).arg(weeks)
-    }
-
-    function overrideAppliesThisWeek(weeks) {
-        const decoded = decodeWeeks(weeks)
-        if (decoded === "all" || decoded === null || decoded === undefined || decoded === "")
-            return true
-        if (Array.isArray(decoded))
-            return decoded.indexOf(currentWeek()) !== -1
-        const firstWeek = Number(decoded)
-        return isFinite(firstWeek)
-            && currentWeek() >= firstWeek
-            && (currentWeek() - firstWeek) % cycleCount() === 0
-    }
-
-    function overridePriorityValue(weeks) {
-        const decoded = decodeWeeks(weeks)
-        if (Array.isArray(decoded))
-            return 3
-        if (typeof decoded === "number")
-            return 2
-        return 1
-    }
-
-    function overrideRecordIsOverridden(overrideId, dayOfWeek) {
-        const overrides = AppCentral.scheduleEditor.overrides || []
-        let targetIndex = -1
-        for (let i = 0; i < overrides.length; ++i) {
-            if (overrides[i].id === overrideId) {
-                targetIndex = i
-                break
-            }
-        }
-        if (targetIndex < 0 || !overrideAppliesThisWeek(overrides[targetIndex].weeks))
-            return false
-
-        const target = overrides[targetIndex]
-        const targetPriority = overridePriorityValue(target.weeks)
-        for (let i = 0; i < overrides.length; ++i) {
-            const candidate = overrides[i]
-            if (candidate.entryId !== target.entryId)
-                continue
-            if (!overrideMatchesDay(candidate, dayOfWeek))
-                continue
-            if (!overrideAppliesThisWeek(candidate.weeks))
-                continue
-            const candidatePriority = overridePriorityValue(candidate.weeks)
-            if (candidatePriority > targetPriority)
-                return true
-            if (candidatePriority === targetPriority && i > targetIndex)
-                return true
-        }
-        return false
-    }
-
-    function overrideStatusSuffix(overrideIdsValue, weeks, dayOfWeek) {
-        if (!overrideAppliesThisWeek(weeks))
-            return " " + qsTr("(Not This Week)")
-
-        const overrideIds = decodeIdList(overrideIdsValue).filter(value => value !== "")
-        if (overrideIds.length === 0)
-            return ""
-
-        let overriddenCount = 0
-        for (const overrideId of overrideIds) {
-            if (overrideRecordIsOverridden(overrideId, dayOfWeek))
-                ++overriddenCount
-        }
-        if (overriddenCount === overrideIds.length)
-            return " " + qsTr("(Overridden)")
-        if (overriddenCount > 0)
-            return " " + qsTr("(Partially Overridden)")
-        return ""
-    }
-
-    function entryTitleFor(entryId, subjectId, title) {
-        const source = entryForId(entryId)
-        return title || subjectId && AppCentral.scheduleEditor.subjectNameById(subjectId)
-            || source && (source.title || source.subjectId && AppCentral.scheduleEditor.subjectNameById(source.subjectId))
-            || qsTr("Unnamed Course")
-    }
-
-    function timeLabelFor(entryId, startTime, endTime) {
-        const source = entryForId(entryId)
-        const start = startTime || source && source.startTime || "--:--"
-        const end = endTime || source && source.endTime || "--:--"
-        return start + " - " + end
-    }
-
-    function periodLabelFor(startPeriod, endPeriod) {
-        return startPeriod === endPeriod
-            ? qsTr("Period %1").arg(startPeriod)
-            : qsTr("Periods %1-%2").arg(startPeriod).arg(endPeriod)
-    }
-
-    function summaryFor(entryId, weeks, startPeriod, endPeriod, startTime, endTime) {
-        return weeksLabel(weeks) + " | " + periodLabelFor(startPeriod, endPeriod)
-            + " (" + timeLabelFor(entryId, startTime, endTime) + ")"
-    }
-
-    // ── Model lifecycle ────────────────────────────────────────────────
-    function reloadOverrides() {
-        overrideModel.clear()
-        refreshContext()
-
-        const selectedEntryId = entry ? (entry.id || "") : ""
-        let selectedIndex = -1
-        for (let i = 0; i < baseDayEntries.length; ++i) {
-            if (baseDayEntries[i].id === selectedEntryId) {
-                selectedIndex = i
-                break
-            }
-        }
-        if (selectedIndex < 0)
-            return
-
-        const dayOfWeek = selectedDayOfWeek()[0]
-        const recordsByIndex = []
-        for (let i = 0; i < baseDayEntries.length; ++i)
-            recordsByIndex.push(overridesForEntryOnDay(baseDayEntries[i].id, dayOfWeek))
-
-        const signatures = []
-        for (const item of recordsByIndex[selectedIndex]) {
-            const key = overrideGroupKey(item)
-            if (signatures.indexOf(key) === -1)
-                signatures.push(key)
-        }
-
-        for (const key of signatures) {
-            let start = selectedIndex
-            let end = selectedIndex
-            while (start > 0 && recordWithSignature(recordsByIndex[start - 1], key))
-                --start
-            while (end + 1 < recordsByIndex.length
-                    && recordWithSignature(recordsByIndex[end + 1], key))
-                ++end
-
-            const records = []
-            for (let i = start; i <= end; ++i)
-                records.push(recordWithSignature(recordsByIndex[i], key))
-            appendOverrideGroup({ key: key, start: start, end: end, records: records })
-        }
     }
 
     function addDraft() {
@@ -685,29 +366,27 @@ Flyout {
             return
 
         refreshContext()
-        const source = entry
-        const period = basePeriodForId(entry.id)
-        const entryIds = [entry.id]
-        const dayOfWeek = selectedDayOfWeek()[0]
-        const defaultWeeks = defaultWeeksForNewItem(JSON.stringify(entryIds), dayOfWeek)
+        const period = baseDayEntries.findIndex(item => item.id === entry.id) + 1
+        const weeks = encodeWeeks(defaultWeeksForNewItem(entry.id))
+        const days = encodeDays([selectedDayOfWeek()])
 
-        collapseAllOverrides()
+        for (let i = 0; i < overrideModel.count; ++i)
+            overrideModel.setProperty(i, "expanded", false)
         overrideModel.append({
-            id: "",
             entryId: entry.id,
-            entryIds: JSON.stringify(entryIds),
+            entryIds: JSON.stringify([entry.id]),
             originalEntryIds: "[]",
             overrideIds: "[]",
-            dayOfWeek: encodeDays(selectedDayOfWeek()),
-            weeks: encodeWeeks(defaultWeeks),
-            subjectId: source.subjectId || "",
-            title: source.title || "",
-            startTime: source.startTime || "",
-            endTime: source.endTime || "",
-            originalDayOfWeek: encodeDays(selectedDayOfWeek()),
-            originalWeeks: encodeWeeks(defaultWeeks),
-            startPeriod: period,
-            endPeriod: period,
+            dayOfWeek: days,
+            weeks: weeks,
+            subjectId: entry.subjectId || "",
+            title: entry.title || "",
+            startTime: entry.startTime || "",
+            endTime: entry.endTime || "",
+            originalDayOfWeek: days,
+            originalWeeks: weeks,
+            startPeriod: period > 0 ? period : 1,
+            endPeriod: period > 0 ? period : 1,
             isDraft: true,
             removed: false,
             expanded: true
@@ -718,24 +397,118 @@ Flyout {
         })
     }
 
-    // ── Persistence ───────────────────────────────────────────────────
-    function saveModelItem(index) {
-        // startTime/endTime above are display-only range metadata. Override
-        // persistence intentionally stores only subject/title/week/day.
+    // Move a row to the period range the user picked. The times follow the base
+    // entries of that range; persistence stores subject / title / day / week.
+    function applyPeriodSelection(index, role, period) {
         const item = overrideModel.get(index)
-        if (!item || item.removed)
+        const selectedPeriod = Number(period)
+        if (!item || !isFinite(selectedPeriod))
             return
 
-        const targetEntryIds = itemEntryIds(item)
-        const originalEntryIds = itemOriginalEntryIds(item)
-        const overrideIds = itemOverrideIds(item)
-        if (targetEntryIds.length === 0)
+        const startPeriod = role === "startTime"
+            ? Math.min(selectedPeriod, item.endPeriod)
+            : item.startPeriod
+        const endPeriod = role === "startTime"
+            ? item.endPeriod
+            : Math.max(selectedPeriod, item.startPeriod)
+
+        const owned = idList(item, "entryIds").concat(idList(item, "originalEntryIds"))
+        const available = function(target) {
+            return !target || owned.indexOf(target.id) !== -1
+                || (!target.subjectId && !target.title)
+        }
+        if (endPeriod > effectiveDayEntries.length)
+            return
+        for (let index2 = startPeriod; index2 <= endPeriod; ++index2) {
+            if (!available(effectiveDayEntries[index2 - 1]))
+                return
+        }
+
+        const entryIds = []
+        for (let index2 = startPeriod; index2 <= endPeriod; ++index2) {
+            const target = effectiveDayEntries[index2 - 1]
+            if (!target)
+                return
+            entryIds.push(target.id)
+        }
+        const firstEntry = effectiveDayEntries[startPeriod - 1]
+        const lastEntry = effectiveDayEntries[endPeriod - 1]
+        overrideModel.setProperty(index, "entryId", entryIds[0])
+        overrideModel.setProperty(index, "entryIds", JSON.stringify(entryIds))
+        overrideModel.setProperty(index, "startPeriod", startPeriod)
+        overrideModel.setProperty(index, "endPeriod", endPeriod)
+        overrideModel.setProperty(index, "startTime", firstEntry.startTime || "")
+        overrideModel.setProperty(index, "endTime", lastEntry.endTime || "")
+    }
+
+    // Only one row is expanded at a time.
+    function toggleOverride(index) {
+        const item = overrideModel.get(index)
+        if (!item)
+            return
+        const expand = !item.expanded
+        for (let i = 0; i < overrideModel.count; ++i)
+            overrideModel.setProperty(i, "expanded", false)
+        overrideModel.setProperty(index, "expanded", expand)
+    }
+
+    // Drafts disappear, saved rows are only flagged: their overrides are
+    // removed on save, so cancelling leaves them untouched.
+    function clearItem(index) {
+        if (index < 0 || index >= overrideModel.count)
+            return
+        if (overrideModel.get(index).isDraft) {
+            // Removing a delegate from inside the loop that emitted the request
+            // is not safe, so let the current pass finish first.
+            Qt.callLater(function() {
+                if (index < overrideModel.count)
+                    overrideModel.remove(index)
+            })
+            return
+        }
+        overrideModel.setProperty(index, "removed", true)
+        overrideModel.setProperty(index, "expanded", false)
+    }
+
+    // ── Persistence ───────────────────────────────────────────────────
+    // Overrides are field-wise, so one row may cover several entries. When the
+    // day or week rule changed the row's records no longer describe it and are
+    // replaced; otherwise only the entries it no longer covers are dropped.
+    function saveAll() {
+        syncing = true
+
+        for (let i = 0; i < overrideModel.count; ++i) {
+            const item = overrideModel.get(i)
+            if (!item)
+                continue
+            if (item.removed) {
+                for (const overrideId of idList(item, "overrideIds")) {
+                    if (overrideId)
+                        AppCentral.scheduleEditor.removeOverride(overrideId)
+                }
+                continue
+            }
+            saveRow(item)
+        }
+
+        syncing = false
+        reloadOverrides()
+        close()
+    }
+
+    function saveRow(item) {
+        const entryIds = idList(item, "entryIds")
+        const originalEntryIds = idList(item, "originalEntryIds")
+        const overrideIds = idList(item, "overrideIds")
+        if (entryIds.length === 0)
             return
 
-        const daysValue = decodeDays(item.dayOfWeek)
-        const weeksValue = decodeWeeks(item.weeks)
+        const days = decodeDays(item.dayOfWeek)
+        const weeks = decodeWeeks(item.weeks)
         const scheduleChanged = !sameValue(item.dayOfWeek, item.originalDayOfWeek)
             || !sameValue(item.weeks, item.originalWeeks)
+
+        // Entry -> record id, as the row was loaded.
         const overrideByEntry = ({})
         for (let i = 0; i < originalEntryIds.length; ++i)
             overrideByEntry[originalEntryIds[i]] = overrideIds[i] || ""
@@ -747,21 +520,20 @@ Flyout {
             }
         } else {
             for (const originalEntryId of originalEntryIds) {
-                if (targetEntryIds.indexOf(originalEntryId) !== -1)
+                if (entryIds.indexOf(originalEntryId) !== -1)
                     continue
-                const overrideId = overrideByEntry[originalEntryId]
-                if (overrideId)
-                    AppCentral.scheduleEditor.removeOverride(overrideId)
+                if (overrideByEntry[originalEntryId])
+                    AppCentral.scheduleEditor.removeOverride(overrideByEntry[originalEntryId])
             }
         }
 
-        for (let i = 0; i < targetEntryIds.length; ++i) {
-            const targetEntryId = targetEntryIds[i]
-            let existingId = scheduleChanged ? "" : (overrideByEntry[targetEntryId] || "")
-            if (!existingId)
+        for (const entryId of entryIds) {
+            let existingId = scheduleChanged ? "" : (overrideByEntry[entryId] || "")
+            if (!existingId) {
                 existingId = AppCentral.scheduleEditor.findOverride(
-                    targetEntryId, daysValue, weeksValue
+                    entryId, days, weeks
                 ) || ""
+            }
 
             if (existingId) {
                 AppCentral.scheduleEditor.updateOverride(
@@ -769,42 +541,9 @@ Flyout {
                 )
             } else {
                 AppCentral.scheduleEditor.addOverride(
-                    targetEntryId, daysValue, weeksValue, item.subjectId,
-                    item.title
+                    entryId, days, weeks, item.subjectId, item.title
                 )
             }
-        }
-    }
-
-    function saveAll() {
-        syncing = true
-
-        for (let i = 0; i < overrideModel.count; ++i) {
-            const item = overrideModel.get(i)
-            if (item && item.removed && !item.isDraft) {
-                for (const overrideId of itemOverrideIds(item)) {
-                    if (overrideId)
-                        AppCentral.scheduleEditor.removeOverride(overrideId)
-                }
-            }
-        }
-        for (let i = 0; i < overrideModel.count; ++i)
-            saveModelItem(i)
-
-        syncing = false
-        reloadOverrides()
-        close()
-    }
-
-    function clearItem(index) {
-        if (index < 0 || index >= overrideModel.count)
-            return
-        const item = overrideModel.get(index)
-        if (item.isDraft) {
-            overrideModel.remove(index)
-        } else {
-            overrideModel.setProperty(index, "removed", true)
-            overrideModel.setProperty(index, "expanded", false)
         }
     }
 
@@ -836,42 +575,32 @@ Flyout {
                     model: overrideModel
 
                     delegate: ScheduleOverrideItem {
-                        weeksValue: decodeWeeks(weeks)
+                        context: {
+                            // Explicit dependency reads keep the row in sync
+                            // with the week and the two day views.
+                            baseDayEntries
+                            effectiveDayEntries
+                            return {
+                                week: {
+                                    current: root.currentWeek(),
+                                    cycle: root.cycleCount(),
+                                    dayOfWeek: root.selectedDayOfWeek()
+                                },
+                                baseEntries: root.baseDayEntries,
+                                effectiveEntries: root.effectiveDayEntries,
+                                overrides: AppCentral.scheduleEditor.overrides || []
+                            }
+                        }
 
-                        displayTitle: entryTitleFor(entryId, subjectId, title)
-                            + overrideStatusSuffix(
-                                overrideIds, weeks, root.selectedDayOfWeek()[0]
-                            )
-                        summaryText: summaryFor(
-                            entryId, weeks, startPeriod, endPeriod, startTime, endTime
-                        )
-                        everyWeekEnabled: root.everyWeekOptionEnabled(
-                            entryIds, root.selectedDayOfWeek()[0], overrideIds
-                        )
-                        cycleValues: root.cycleValuesForItem(
-                            entryIds, root.selectedDayOfWeek()[0], overrideIds
-                        )
-                        cycleOptions: root.cycleOptionsForValues(cycleValues)
-                        blockedWeeks: root.blockedCustomWeeks(
-                            entryIds, root.selectedDayOfWeek()[0], overrideIds
-                        )
-                        startPeriodOptions: root.startPeriodOptionsForItem(
-                            startPeriod, endPeriod, entryIds, originalEntryIds
-                        )
-                        endPeriodOptions: root.endPeriodOptionsForItem(
-                            startPeriod, endPeriod, entryIds, originalEntryIds
-                        )
-
-                        onToggleRequested: toggleOverride(index)
+                        onToggleRequested: root.toggleOverride(index)
                         onFieldEdited: (role, value) => overrideModel.setProperty(index, role, value)
                         onWeeksEdited: value => overrideModel.setProperty(
-                            index, "weeks", encodeWeeks(value)
+                            index, "weeks", root.encodeWeeks(value)
                         )
-
-                        onPeriodSelected: (role, period) => applyPeriodSelection(
+                        onPeriodSelected: (role, period) => root.applyPeriodSelection(
                             index, role, period
                         )
-                        onClearRequested: clearItem(index)
+                        onClearRequested: root.clearItem(index)
                     }
                 }
             }
@@ -909,14 +638,12 @@ Flyout {
 
             Button {
                 Layout.fillWidth: true
-                Layout.preferredHeight: 32
                 highlighted: true
                 text: qsTr("OK")
                 onClicked: saveAll()
             }
             Button {
                 Layout.fillWidth: true
-                Layout.preferredHeight: 32
                 text: qsTr("Cancel")
                 onClicked: {
                     reloadOverrides()

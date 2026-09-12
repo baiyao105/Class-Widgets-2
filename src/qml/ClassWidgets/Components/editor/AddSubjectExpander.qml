@@ -4,27 +4,6 @@ import QtQuick.Layouts
 import RinUI
 
 
-/**
- * AddSubjectExpander
- * ------------------
- * Schedule 编辑器「快捷添加学科」悬浮组件（基于 RinUI Expander，root 即 Expander）。
- * 由调用侧作为页面 root 的直接子项使用（不进任何 Layout），位置完全自管理。
- *
- *  行为：
- *  • Header 区域（不含右侧展开按钮）可 X / Y 双向拖动；内部 Flickable 滚动互不影响
- *  • 拖动用 Qt 标准 drag.target 机制：Qt 用全局光标追踪直接移动 root.x/y，
- *    无任何手动坐标换算 → 不存在反馈循环 / 坐标系漂移问题
- *  • 松手后 Y 用 OutBack 弹性动画吸附回「底部对齐」（动态值：按当前展开高度实时计算）
- *  • 展开/收起动画过程中 y 逐帧跟随高度变化，底部始终对齐；页面尺寸变化时自动重对齐
- *  • 默认悬浮在父级右下角（edgeMargin 边距），默认展开
- *  • 点击 Header（非拖动）触发展开/折叠；右侧展开按钮独立可点
- *  • 点击学科按钮发出 subjectClicked(subjectId)
- *
- *  注意：
- *  • 不使用 anchors —— drag.target 需要直接写 root.x/y，anchors 会与之冲突
- *  • Expander 的默认属性是 contentData（未命名子项会进内容区），
- *    拖动层/动画/Connections 必须显式挂到 data: [...] 才是 root 的直接子项
- */
 Expander {
     id: root
 
@@ -125,8 +104,6 @@ Expander {
     // ================================================================
     data: [
         AcrylicBrush {
-            blur: 32
-            tintOpacity: 0.8
             sourceItem: root.sourceItem
         },
         MouseArea {

@@ -35,6 +35,7 @@ EntryListView 1.0 editor/timeline/EntryListView.qml
 
 # Editor / Schedule
 ScheduleClip 1.0 editor/schedule/ScheduleClip.qml
+ScheduleCourseCard 1.0 editor/schedule/ScheduleCourseCard.qml
 ScheduleFlyout 1.0 editor/schedule/ScheduleFlyout.qml
 ScheduleHeader 1.0 editor/schedule/ScheduleHeader.qml
 ScheduleOverrideItem 1.0 editor/schedule/ScheduleOverrideItem.qml
