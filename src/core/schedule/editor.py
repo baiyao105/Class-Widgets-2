@@ -456,49 +456,65 @@ class ScheduleEditor(QObject):
             return subject.name
         return None
 
-    @Slot(str, int, int, result="QVariant")
-    def getEntryOverride(self, entry_id: str, week: int, day_of_week: int):
-        entry = self.getEntry(entry_id)
-        if not entry:
+    @staticmethod
+    def _weeks_match(weeks, week_list: list[int], max_week_cycle: int) -> bool:
+        """Return whether a timeline/override applies to one of the given weeks."""
+        if not weeks or weeks == WeekType.ALL:
+            return True
+        if isinstance(weeks, list):
+            return any(week in weeks for week in week_list)
+        if isinstance(weeks, int):
+            return any(
+                week >= weeks and (week - weeks) % max_week_cycle == 0
+                for week in week_list
+            )
+        return False
+
+    @classmethod
+    def _override_priority(
+        cls,
+        override: Timetable,
+        week_list: list[int],
+        day_of_week: int,
+        max_week_cycle: int,
+    ) -> Optional[int]:
+        if override.dayOfWeek and day_of_week not in override.dayOfWeek:
             return None
-        week = _jsvalue_to_python(week)
+        if isinstance(override.weeks, list):
+            return 3 if any(week in override.weeks for week in week_list) else None
+        if isinstance(override.weeks, int):
+            if any(
+                week >= override.weeks
+                and (week - override.weeks) % max_week_cycle == 0
+                for week in week_list
+            ):
+                return 2
+            return None
+        if override.weeks == WeekType.ALL or override.weeks is None:
+            return 1
+        return None
 
+    def _resolve_entry_override(
+        self,
+        entry: Entry,
+        week_list: list[int],
+        day_of_week: int,
+        overrides: list[Timetable],
+    ) -> dict:
         data = entry.model_dump()
+        max_week_cycle = max(1, self.schedule.meta.maxWeekCycle)
         applicable = []
-
-        # 当 week 是列表时，拆成单个元素逐个匹配
-        week_list = week if isinstance(week, list) else [week]
-
-        for o in self.schedule.overrides:
-            if o.entryId != entry_id:
+        for override in overrides:
+            if override.entryId != entry.id:
                 continue
+            priority = self._override_priority(
+                override, week_list, day_of_week, max_week_cycle
+            )
+            if priority is not None:
+                applicable.append((priority, override))
 
-            valid_day = not o.dayOfWeek or day_of_week in o.dayOfWeek
-            if not valid_day:
-                continue
-
-            # 判断优先级
-            if isinstance(o.weeks, list):
-                # week 和 o.weeks 都是列表，检查是否有交集
-                if any(w in o.weeks for w in week_list):
-                    priority = 3
-                else:
-                    continue
-            elif isinstance(o.weeks, int):
-                if any(w >= o.weeks and (w - o.weeks) % self.schedule.meta.maxWeekCycle == 0 for w in week_list):
-                    priority = 2
-                else:
-                    continue
-            elif o.weeks == "all" or o.weeks is None:
-                priority = 1
-            else:
-                continue
-
-            applicable.append((priority, o))
-
-        # Apply matching overrides from least to most specific.  Overrides
-        # are field-wise: a high-priority subject-only override must not hide
-        # a title supplied by another matching override.
+        # Apply matching overrides from least to most specific. Overrides are
+        # field-wise, matching the existing single-entry resolution behavior.
         subject_overridden = False
         title_overridden = False
         for _, override in sorted(applicable, key=lambda item: item[0]):
@@ -508,16 +524,72 @@ class ScheduleEditor(QObject):
             if override.title:
                 data["title"] = override.title
                 title_overridden = True
-
-        # A subject override replaces the timeline's implicit label.  Keep a
-        # custom override title when one was explicitly supplied.
         if subject_overridden and not title_overridden:
             data["title"] = None
-
         return data
 
-    @Slot(str, int, int, result=str)
-    def getOverrideTitle(self, entry_id: str, week: int, day_of_week: int) -> str:
+    @Slot(str, int, int, result="QVariant")
+    def getEntryOverride(self, entry_id: str, week: int, day_of_week: int):
+        entry = self.getEntry(entry_id)
+        if not entry:
+            return None
+        week = _jsvalue_to_python(week)
+        week_list = week if isinstance(week, list) else [week]
+        return self._resolve_entry_override(
+            entry, week_list, day_of_week, self.schedule.overrides
+        )
+
+    @Slot(int, result="QVariant")
+    def getEffectiveEntries(self, week: int) -> list[list[dict]]:
+        """Return effective class entries for all seven columns at once."""
+        if not self.schedule:
+            return []
+
+        week = _jsvalue_to_python(week)
+        week_list = week if isinstance(week, list) else [week]
+        max_week_cycle = max(1, self.schedule.meta.maxWeekCycle)
+
+        overrides_by_entry: dict[str, list[Timetable]] = {}
+        for override in self.schedule.overrides:
+            overrides_by_entry.setdefault(override.entryId, []).append(override)
+
+        columns: list[list[dict]] = []
+        # Match the editor table's Sunday, Monday ... Saturday column order.
+        for day_of_week in (7, 1, 2, 3, 4, 5, 6):
+            day = next(
+                (
+                    candidate
+                    for candidate in self.schedule.days
+                    if not candidate.date
+                    and (
+                        not candidate.dayOfWeek
+                        or day_of_week in candidate.dayOfWeek
+                    )
+                    and self._weeks_match(candidate.weeks, week_list, max_week_cycle)
+                ),
+                None,
+            )
+            if not day:
+                columns.append([])
+                continue
+
+            columns.append(
+                [
+                    self._resolve_entry_override(
+                        entry,
+                        week_list,
+                        day_of_week,
+                        overrides_by_entry.get(entry.id, []),
+                    )
+                    for entry in day.entries
+                    if entry.type == EntryType.CLASS
+                ]
+            )
+
+        return columns
+
+    @Slot(str, "QVariant", int, result=str)
+    def getOverrideTitle(self, entry_id: str, week, day_of_week: int) -> str:
         """Return only the title explicitly supplied by a matching override."""
         week = _jsvalue_to_python(week)
         week_list = week if isinstance(week, list) else [week]

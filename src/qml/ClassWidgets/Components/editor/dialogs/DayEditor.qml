@@ -13,7 +13,7 @@ Dialog {
     property string currentId: ""         // 如果有 id = 编辑，否则 = 新建
     property var currentData: ({})        // 临时缓存的数据副本
 
-    // 周循环文案格式（与 WeekSelector.qml 同步）
+    // 周循环文案格式
     property int maxWeekCycle: AppCentral.scheduleEditor.meta.maxWeekCycle
     property int roundWeek: 1
     property int customWeek: 1
@@ -79,26 +79,22 @@ Dialog {
         if (currentData.date) dayDate.selectedDate = currentData.date
 
         // 星期
-        for (var i = 0; i < dayButtons.count; i++) {
-            dayButtons.itemAt(i).checked = false
-        }
-        if (currentData.dayOfWeek) {
-            var indices = []
+        var selectedDays = []
+        if (currentData.dayOfWeek !== undefined && currentData.dayOfWeek !== null) {
             if (currentData.dayOfWeek.length !== undefined) {
                 for (var i = 0; i < currentData.dayOfWeek.length; i++) {
                     var n = Number(currentData.dayOfWeek[i])
-                    if (!isNaN(n)) indices.push(n - 1)
+                    if (!isNaN(n) && selectedDays.indexOf(n) === -1)
+                        selectedDays.push(n)
                 }
             } else {
-                var n = Number(currentData.dayOfWeek)
-                if (!isNaN(n)) indices.push(n - 1)
-            }
-            for (var j = 0; j < indices.length; j++) {
-                if (indices[j] >= 0 && indices[j] < dayButtons.count) {
-                    dayButtons.itemAt(indices[j]).checked = true
-                }
+                var singleDay = Number(currentData.dayOfWeek)
+                if (!isNaN(singleDay))
+                    selectedDays.push(singleDay)
             }
         }
+        selectedDays.sort((left, right) => left - right)
+        dayButtons.days = selectedDays
 
         // 周循环
         weekCycleTypeAll.checked = currentData.weeks === "all" || currentData.weeks === undefined || currentData.weeks === null
@@ -116,10 +112,7 @@ Dialog {
 
         if (daySegmented.currentIndex === 0) {
             // 星期模式
-            var hasDaySelected = false
-            for (var i = 0; i < dayButtons.count; i++) {
-                if (dayButtons.itemAt(i).checked) { hasDaySelected = true; break }
-            }
+            var hasDaySelected = dayButtons.selectedDays.length > 0
             if (!hasDaySelected) valid = false
             else if (weekCycleTypeAll.checked || weekCycleTypeCustom.checked) valid = true
             else if (weekCycleTypeRound.checked && roundWeek >= 1) valid = true
@@ -168,21 +161,12 @@ Dialog {
 
             ColumnLayout {
                 spacing: 6
-                Text { text: qsTr("Days of Week")}
-                Flow {
+                Text { text: qsTr("Days of Week") }
+
+                WeekdaySelector {
+                    id: dayButtons
                     Layout.fillWidth: true
-                    spacing: 4
-                    Repeater {
-                        id: dayButtons
-                        model: [
-                            qsTr("Mon"), qsTr("Tue"), qsTr("Wed"),
-                            qsTr("Thu"), qsTr("Fri"), qsTr("Sat"), qsTr("Sun")
-                        ]
-                        delegate: PillButton {
-                            text: modelData
-                            onCheckedChanged: dayEditor.checkValid()
-                        }
-                    }
+                    onSelectionChanged: dayEditor.checkValid()
                 }
             }
 
@@ -243,9 +227,7 @@ Dialog {
 
             if (daySegmented.currentIndex === 0) {
                 // 星期模式
-                for (let i = 0; i < dayButtons.count; i++) {
-                    if (dayButtons.itemAt(i).checked) dayOfWeekValue.push(i + 1)
-                }
+                dayOfWeekValue = dayButtons.selectedDays.slice()
                 if (weekCycleTypeAll.checked) {
                     weeks = "all"
                 } else if (weekCycleTypeRound.checked) {

@@ -8,6 +8,7 @@ import QtQuick.Effects  // shadow
 
 Item {
     id: root
+
     function quickAddSubject(subjectid) {
         let row = scheduleTable.selectedCell.row
         let column = scheduleTable.selectedCell.column
@@ -22,16 +23,9 @@ Item {
         let entry = scheduleTable.getEntryByDayAndRow(day, row, column)
         if (!entry) return;
 
-        let weeks;
-        if (scheduleTable.currentWeek === -1) {
-            weeks = "all"; // 字符串
-        } else if (Array.isArray(scheduleTable.currentWeek)) {
-            weeks = scheduleTable.currentWeek.map(w => Number(w)); // 强制 int
-        } else {
-            weeks = Number(scheduleTable.currentWeek); // 单 int
-        }
-
-        let dayOfWeek = [column + 1]
+        // 新设计下 currentWeek 恒为绝对周次，写入 override 时统一换算成周期内周次
+        let weeks = scheduleTable.cycleWeekFor(root.currentWeek);
+        let dayOfWeek = [scheduleTable.dayOfWeekForColumn(column)]
 
         // 调用 scheduleEditor 的逻辑
         const existingId = AppCentral.scheduleEditor.findOverride(entry.id, dayOfWeek, weeks)
@@ -59,61 +53,66 @@ Item {
 
     property bool editable: !AppCentral.scheduleManager.isReadonly()  // 是否可编辑
 
+    // 当前显示的绝对周次，默认直接跳转到本周（周数由开学日期计算得出）
+    property int currentWeek: Math.max(1, AppCentral.scheduleRuntime.currentWeek || 1)
+
+    // 供 ScheduleFlyout 读取的周上下文
+    QtObject {
+        id: weekContext
+        property int currentWeek: root.currentWeek
+        property int maxWeekCycle: AppCentral.scheduleEditor.meta.maxWeekCycle
+    }
+
     ColumnLayout {
         id: mainLayout
         anchors.fill: parent
         anchors.margins: 24
-        // anchors.topMargin: 24 + saveFlyout.height
         spacing: 10
 
-        // Segmented {
-        //     id: segmented
-        //     Layout.alignment: Qt.AlignCenter
-        //
-        //     SegmentedItem {
-        //         icon.name: "ic_fluent_content_view_20_regular"
-        //         text: qsTr("Preview")
-        //     }
-        //
-        //     SegmentedItem {
-        //         enabled: !AppCentral.scheduleManager.isReadonly()
-        //         icon.name: "ic_fluent_calendar_edit_20_regular"
-        //         text: qsTr("Edit")
-        //     }
-        // }
-        WeekSelector {
-            enabled: !AppCentral.scheduleManager.isReadonly()
-            id: weekSelector
-            onCurrentWeekChanged: {
-                scheduleTable.currentWeek = currentWeek
-            }
-        }
-
+        // 顶部：周标题 + 月份 + 上一周 / 今日 / 下一周
         RowLayout {
-            id: scheduleViewer
-            visible: !editable
-            Layout.alignment: Qt.AlignCenter
+            Layout.fillWidth: true
 
-            property int currentWeek: 1  // 当前周数
+            ColumnLayout {
+                spacing: 0
+                Layout.alignment: Qt.AlignBottom
 
-            ToolButton {
-                id: previousButton
-                icon.name: "ic_fluent_chevron_left_20_regular"
-                flat: true
-                enabled: scheduleViewer.currentWeek > 1
-                onClicked: scheduleViewer.currentWeek--
+                Text {
+                    text: qsTr("Week %1").arg(root.currentWeek)
+                    typography: Typography.Title
+                }
+                Text {
+                    text: Qt.locale().toString(scheduleTable.weekStart, "yyyy 年 M 月")
+                    typography: Typography.Body
+                    color: Colors.proxy.textSecondaryColor
+                }
             }
 
-            Text {
-                id: weekText
-                text: qsTr("Week %1").arg(scheduleViewer.currentWeek)
+            Item {
+                Layout.fillWidth: true
             }
 
-            ToolButton {
-                id: nextButton
-                icon.name: "ic_fluent_chevron_right_20_regular"
-                flat: true
-                onClicked: scheduleViewer.currentWeek++
+            RowLayout {
+                Layout.alignment: Qt.AlignBottom
+                spacing: 8
+
+                ToolButton {
+                    icon.name: "ic_fluent_chevron_left_20_regular"
+                    implicitWidth: 32
+                    implicitHeight: 32
+                    onClicked: root.currentWeek--
+                }
+                Button {
+                    text: qsTr("今日")
+                    implicitHeight: 32
+                    onClicked: root.currentWeek = Math.max(1, AppCentral.scheduleRuntime.currentWeek || 1)
+                }
+                ToolButton {
+                    icon.name: "ic_fluent_chevron_right_20_regular"
+                    implicitWidth: 32
+                    implicitHeight: 32
+                    onClicked: root.currentWeek++
+                }
             }
         }
 
@@ -121,15 +120,15 @@ Item {
             id: scheduleTable
             Layout.fillWidth: true
             Layout.fillHeight: true
-            currentWeek: editable ? weekSelector.currentWeek : scheduleViewer.currentWeek || 1
+            currentWeek: root.currentWeek
 
             onCellClicked: (row, column, entry, delegate) => {
                 if (!editable) {
                     return
                 }
                 entryFlyout.entry = entry
-                entryFlyout.selectedCell = selectedCell
-                entryFlyout.weekSelector = weekSelector
+                entryFlyout.selectedCell = { row: row, column: column }
+                entryFlyout.weekSelector = weekContext
                 entryFlyout.parent = delegate   // 定位到点击的 cell
                 entryFlyout.open()
             }
@@ -139,7 +138,7 @@ Item {
         ScheduleFlyout {
             id: entryFlyout
         }
-    } 
+    }
 
 
     // 快速添加学科：悬浮于页面右下角（不进布局，位置由组件自管理），Header 可 XY 拖动，松手 Y 吸附回底部

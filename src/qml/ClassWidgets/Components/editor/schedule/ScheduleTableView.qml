@@ -11,8 +11,13 @@ Item {
 
     property int itemWidth: Math.max(root.width / 7, 120)
 
+    // 当前显示的绝对周次（从开学日期计算）
+    property int currentWeek: 1
+
+    // 当前周的起始日期（周日）
+    readonly property var weekStart: weekStartFor(currentWeek)
+
     // 暴露当前选中状态
-    property alias currentWeek: table.currentWeek
     property alias selectedCell: table.selectedCell
     property alias currentEntry: table.currentEntry
     property alias maxRows: table.maxRows
@@ -20,9 +25,50 @@ Item {
     // 发出信号
     signal cellClicked(int row, int column, var entry, Item delegate)
 
+    // ── 日期 / 星期工具 ────────────────────────────────
+
+    function parseDate(str) {
+        var p = String(str).split("-");
+        return new Date(Number(p[0]), Number(p[1]) - 1, Number(p[2]));
+    }
+
+    // 第 week 周（绝对周次）的起始日期，回退到本周的周日
+    function weekStartFor(week) {
+        var start = parseDate(AppCentral.scheduleEditor.meta.startDate);
+        if (!isFinite(start.getTime()))
+            start = new Date(); // 无开学日期时回退到本周
+        var block = new Date(start.getTime() + (week - 1) * 7 * 86400000);
+        block.setDate(block.getDate() - block.getDay()); // getDay(): 0=周日
+        return block;
+    }
+
+    // 第 column 列的日期
+    function columnDate(columnIndex) {
+        return new Date(weekStart.getTime() + columnIndex * 86400000);
+    }
+
+    // 第 column 列对应的星期几（1=周一 ... 7=周日）。列序：周日、周一 … 周六
+    function dayOfWeekForColumn(columnIndex) {
+        return (columnIndex + 6) % 7 + 1;
+    }
+
+    // 绝对周次 → 周期内周次
+    function cycleWeekFor(week) {
+        var cycle = Math.max(1, AppCentral.scheduleEditor.meta.maxWeekCycle);
+        if (week >= 1) return ((week - 1) % cycle) + 1;
+        return (((week % cycle) + cycle) % cycle) + 1;
+    }
+
+    function isToday(date) {
+        var now = new Date();
+        return date.getFullYear() === now.getFullYear()
+            && date.getMonth() === now.getMonth()
+            && date.getDate() === now.getDate();
+    }
+
     // 根据列号找到 day
     function getDayByColumn(columnIndex) {
-        var weekday = columnIndex + 1;
+        var weekday = dayOfWeekForColumn(columnIndex);
         var days = AppCentral.scheduleEditor.entriesData;
 
         for (let i = 0; i < days.length; i++) {
@@ -52,43 +98,21 @@ Item {
         return false;
     }
 
-
-    // 根据 day 和 row 找 entry，并应用 overrides
+    // 根据 row / column 从批量快照中取已应用 override 的 entry。
     function getEntryByDayAndRow(day, row, columnIndex) {
-        // The function calls into Python, so make the QML binding explicitly
-        // depend on override changes. Otherwise changing a subject can leave
-        // an already-created cell displaying the old entry data.
-        const revision = table.overridesRevision
-        if (!day || !day.entries) return null;
-
-        let classEntries = day.entries.filter(e => e.type === "class");
-        if (row >= classEntries.length) return null;
-
-        let e = classEntries[row];
-        let dayOfWeek = columnIndex + 1;
-
-        return AppCentral.scheduleEditor.getEntryOverride(e.id, table.currentWeek, dayOfWeek);
+        const columns = table.effectiveEntries;
+        if (!columns || columnIndex < 0 || columnIndex >= columns.length)
+            return null;
+        const entries = columns[columnIndex];
+        return entries && row >= 0 && row < entries.length ? entries[row] : null;
     }
 
-    // 表头
-    Row {
+    // 表头（日历样式：日期 + 星期，横排）
+    ScheduleHeader {
         id: headerRow
-        height: 40
-        x: -table.contentX
-
-        Repeater {
-            model: 7
-            delegate: Item {
-                width: itemWidth
-                height: parent.height
-                Text {
-                    anchors.centerIn: parent
-                    text: Qt.locale().dayName((index + 1) % 7, Locale.ShortFormat)
-                    color: Colors.proxy.textSecondaryColor
-                    font.bold: true
-                }
-            }
-        }
+        weekStart: root.weekStart
+        itemWidth: root.itemWidth
+        contentX: table.contentX
     }
 
     TableView {
@@ -101,24 +125,25 @@ Item {
         rowSpacing: 0
         columnSpacing: 0
 
-        property var currentWeek: -1 // -1 表示全周
+        property var currentWeek: root.currentWeek
         property var selectedCell: ({ row: -1, column: -1 })
         property var currentEntry: null
         property int entriesRevision: AppCentral.scheduleEditor.entriesRevision
         property int overridesRevision: AppCentral.scheduleEditor.overridesRevision
+        property var effectiveEntries: {
+            // Explicit dependencies keep the one batch query in sync with edits.
+            const entriesRevisionValue = entriesRevision
+            const overridesRevisionValue = overridesRevision
+            return AppCentral.scheduleEditor.getEffectiveEntries(currentWeek)
+        }
 
         // 动态计算行数（最大 class 数量）
         property int maxRows: {
-            // Re-evaluate when an entry is added, removed, or moved between rows.
-            const revision = entriesRevision
             var maxLen = 0;
-            for (var col = 0; col < 7; col++) {
-                var day = root.getDayByColumn(col);
-                if (!day || !day.entries) continue;
-
-                let classEntries = day.entries.filter(function(e) { return e.type === "class"; });
-                if (classEntries.length > maxLen)
-                    maxLen = classEntries.length;
+            const columns = effectiveEntries || [];
+            for (var col = 0; col < columns.length; col++) {
+                if (columns[col].length > maxLen)
+                    maxLen = columns[col].length;
             }
             return maxLen;
         }
@@ -150,8 +175,7 @@ Item {
                         checkable: true
                         checked: (table.selectedCell.row === row && table.selectedCell.column === index)
 
-                        day: root.getDayByColumn(index)
-                        entry: root.getEntryByDayAndRow(day, row, index)
+                        entry: root.getEntryByDayAndRow(null, row, index)
 
                         onClicked: {
                             table.selectedCell = { row: row, column: index }
