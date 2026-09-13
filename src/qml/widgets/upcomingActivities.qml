@@ -61,8 +61,10 @@ Widget {
 
     Title {
         id: titleLabel
-        // width: !settings || !settings.marquee ? contentWidth : contentWidth
         visible: !settings || !settings.marquee
+        // 隐藏时收敛宽度，避免其完整文本宽度参与 composite contentArea.childrenRect 而把组件撑大
+        width: visible ? implicitWidth : 0
+        height: visible ? implicitHeight : 0
         anchors.centerIn: parent
         text: root.title
         maximumLineCount: 1
