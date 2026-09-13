@@ -13,7 +13,6 @@ Item {
         let row = scheduleTable.selectedCell.row
         let column = scheduleTable.selectedCell.column
 
-        // 如果没有选中单元格，默认选择第一行第一列
         if (row < 0 || column < 0) {
             row = 0
             column = 0
@@ -23,11 +22,11 @@ Item {
         let entry = scheduleTable.getEntryByDayAndRow(day, row, column)
         if (!entry) return;
 
-        // 新设计下 currentWeek 恒为绝对周次，写入 override 时统一换算成周期内周次
+        // currentWeek is always an absolute week here; it is converted to a
+        // week within the cycle when the override is written.
         let weeks = scheduleTable.cycleWeekFor(root.currentWeek);
         let dayOfWeek = [scheduleTable.dayOfWeekForColumn(column)]
 
-        // 调用 scheduleEditor 的逻辑
         const existingId = AppCentral.scheduleEditor.findOverride(entry.id, dayOfWeek, weeks)
         if (existingId) {
             AppCentral.scheduleEditor.updateOverride(existingId, subjectid, null)
@@ -35,35 +34,55 @@ Item {
             AppCentral.scheduleEditor.addOverride(entry.id, dayOfWeek, weeks, subjectid, null)
         }
 
-        // 更新表格显示
         scheduleTable.currentEntry = scheduleTable.getEntryByDayAndRow(day, row, column)
+        advanceQuickAddSelection()
+    }
 
-        // 移动焦点到下一行
+    function advanceQuickAddSelection() {
+        let row = scheduleTable.selectedCell.row
+        let column = scheduleTable.selectedCell.column
+
+        if (row < 0 || column < 0) {
+            row = 0
+            column = 0
+        }
+
         let nextRow = row + 1
         let nextColumn = column
 
         if (nextRow === scheduleTable.maxRows) {
             nextRow = 0
             nextColumn = column + 1
-            if (nextColumn >= 7) nextColumn = 0 // 超出一周列就回到第一列
+            if (nextColumn >= 7) nextColumn = 0
         }
 
         scheduleTable.selectedCell = { row: nextRow, column: nextColumn }
+        scheduleTable.currentEntry = scheduleTable.getEntryByDayAndRow(
+            scheduleTable.getDayByColumn(nextColumn), nextRow, nextColumn
+        )
     }
 
-    property bool editable: !AppCentral.scheduleManager.isReadonly()  // 是否可编辑
+    // Jump back to the backend's current week and focus today's column.
+    function goToToday() {
+        root.currentWeek = Math.max(1, AppCentral.scheduleRuntime.currentWeek || 1)
+        scheduleTable.selectToday()
+    }
 
-    // 当前显示的绝对周次，默认直接跳转到本周（周数由开学日期计算得出）
+    property bool editable: !AppCentral.scheduleManager.isReadonly()
+
+    // Absolute week currently shown; defaults to the current week, which is
+    // derived from the term start date.
     property int currentWeek: Math.max(1, AppCentral.scheduleRuntime.currentWeek || 1)
 
-    // 供 ScheduleFlyout 读取的周上下文
+    // Week context read by ScheduleFlyout.
     QtObject {
         id: weekContext
         property int currentWeek: root.currentWeek
         property int maxWeekCycle: AppCentral.scheduleEditor.meta.maxWeekCycle
     }
 
-    // 点击页面空白背景取消选择（表格区域的点击由 ScheduleTableView 自行处理）
+    // Clicking empty page background clears the selection; clicks inside the
+    // table are handled by ScheduleTableView.
     MouseArea {
         anchors.fill: parent
         acceptedButtons: Qt.LeftButton
@@ -76,7 +95,7 @@ Item {
         anchors.margins: 24
         spacing: 10
 
-        // 顶部：周标题 + 月份 + 上一周 / 今日 / 下一周
+        // Top row: week title + month + previous / today / next week.
         RowLayout {
             Layout.fillWidth: true
 
@@ -89,7 +108,10 @@ Item {
                     typography: Typography.Title
                 }
                 Text {
-                    text: Qt.locale().toString(scheduleTable.weekStart, "yyyy 年 M 月")
+                    // Year and month only. The format string is translated, so
+                    // each language can reorder the fields and supply its own
+                    // year/month markers.
+                    text: Qt.formatDate(scheduleTable.weekStart, qsTr("MMMM yyyy"))
                     typography: Typography.Body
                     color: Colors.proxy.textSecondaryColor
                 }
@@ -101,7 +123,7 @@ Item {
 
             RowLayout {
                 Layout.alignment: Qt.AlignBottom
-                spacing: 8
+                spacing: 4
 
                 ToolButton {
                     icon.name: "ic_fluent_chevron_left_20_regular"
@@ -110,9 +132,9 @@ Item {
                     onClicked: root.currentWeek--
                 }
                 Button {
-                    text: qsTr("今日")
+                    text: qsTr("Today")
                     implicitHeight: 32
-                    onClicked: root.currentWeek = Math.max(1, AppCentral.scheduleRuntime.currentWeek || 1)
+                    onClicked: root.goToToday()
                 }
                 ToolButton {
                     icon.name: "ic_fluent_chevron_right_20_regular"
@@ -128,6 +150,7 @@ Item {
             Layout.fillWidth: true
             Layout.fillHeight: true
             currentWeek: root.currentWeek
+            zoomFactor: zoomSlider.value
 
             onCellClicked: (row, column, entry, delegate) => {
                 if (!editable) {
@@ -136,14 +159,51 @@ Item {
                 entryFlyout.entry = entry
                 entryFlyout.selectedCell = { row: row, column: column }
                 entryFlyout.weekSelector = weekContext
-                entryFlyout.parent = delegate   // 定位到点击的 cell
+                entryFlyout.parent = delegate
                 entryFlyout.open()
             }
 
-            // 点击背景取消选择时，一并关闭悬浮编辑面板
             onSelectionCleared: entryFlyout.close()
         }
 
+
+        RowLayout {
+            id: bottomBar
+            Layout.fillWidth: true
+            Layout.preferredHeight: 32
+            spacing: 8
+
+            Button {
+                id: quickFillButton
+                implicitHeight: 32
+                icon.name: "ic_fluent_flash_20_regular"
+                text: qsTr("Quick Fill")
+                onClicked: addSubjectPanel.toggle()
+            }
+
+            Item {
+                Layout.fillWidth: true
+            }
+
+            Text {
+                Layout.alignment: Qt.AlignVCenter
+                text: Math.round(zoomSlider.value * 100) + "%"
+                typography: Typography.Body
+            }
+
+            Slider {
+                id: zoomSlider
+                Layout.preferredWidth: 120
+                Layout.alignment: Qt.AlignVCenter
+                from: 0.75
+                to: 2.0
+                stepSize: 0.25
+                value: 1.0
+                // The percentage is already shown on the left, so disable the
+                // hover tooltip to avoid duplicating it.
+                toolTip.visible: false
+            }
+        }
 
         ScheduleFlyout {
             id: entryFlyout
@@ -151,13 +211,14 @@ Item {
     }
 
 
-    // 快速添加学科：悬浮于页面右下角（不进布局，位置由组件自管理），Header 可 XY 拖动，松手 Y 吸附回底部
+    // Not affected by a Popup's click-outside-to-close or automatic
+    // positioning, so the header stays draggable.
     AddSubjectExpander {
-        id: addSubject
-        width: 350
-        snapDuration: 380
-        maxDragUp: 420
-        onSubjectClicked: (subjectId) => quickAddSubject(subjectId)
+        id: addSubjectPanel
+        bottomAnchorY: mainLayout.y + bottomBar.y
+        bottomGap: 10
         sourceItem: mainLayout
+        onSubjectClicked: (subjectId) => quickAddSubject(subjectId)
+        onNextRequested: advanceQuickAddSelection()
     }
 }

@@ -109,6 +109,7 @@ Item {
     property bool hasJoinBelow: false
     property bool showContent: true
     property real groupContentHeight: 0
+    property real groupTailBottomInset: 0
     property int hiddenGroupTimeIndex: -1
     property bool showOnlyFirstTime: false
     // `selected` is the logical entry that owns the flyout/content. A merged
@@ -185,7 +186,18 @@ Item {
             + visibleTimeLineCount * (timeLineHeight + contentSpacing)
         : visibleTimeLineCount * timeLineHeight
             + Math.max(0, visibleTimeLineCount - 1) * contentSpacing
-    readonly property real contentY: contentTopInset
+    // Below this height a card cannot spare the usual top inset without
+    // pushing its content into the lower half, so the content is centred in
+    // the card instead of being pinned to the top.
+    readonly property int minimumTopAlignedHeight: 36
+    // A merged group lead is excluded: its content is laid out across the whole
+    // group (contentLayoutHeight), not inside its own segment, so its own
+    // height is not the box the content should be centred in.
+    readonly property bool centerContentVertically: !isGroupLead
+        && height < minimumTopAlignedHeight
+    readonly property real contentY: centerContentVertically
+        ? Math.max(0, (height - contentHeight) / 2)
+        : contentTopInset
 
     signal clicked(var entry, Item card)
 
@@ -213,7 +225,12 @@ Item {
         anchors.right: parent.right
         anchors.top: parent.top
         height: root.isGroupLead
-            ? Math.max(parent.height, root.groupContentHeight - root.effectiveTopInset)
+            ? Math.max(
+                parent.height,
+                root.groupContentHeight
+                    - root.effectiveTopInset
+                    - root.groupTailBottomInset
+            )
             : parent.height
         visible: root.isGroupLead || (!root.hasJoinAbove && !root.hasJoinBelow)
         topLeftRadius: root.cornerRadius
@@ -233,12 +250,10 @@ Item {
         anchors.right: parent.right
         anchors.top: parent.top
         anchors.bottom: parent.bottom
-        // A merged run's base extends to the group's true bottom, while a
-        // final segment can stop at its own inset above that edge. Match the
-        // highlight to the base so the selected tail is fully covered.
-        anchors.bottomMargin: root.highlighted && root.isGroupTail
-            ? -root.effectiveBottomInset
-            : 0
+        // The group base now stops at the tail's effective bottom edge, and
+        // the tail delegate already ends there. No extra bottom margin is
+        // needed, so the selected highlight matches the unselected geometry.
+        anchors.bottomMargin: 0
         visible: root.highlighted
         topLeftRadius: root.hasJoinAbove ? 0 : root.cornerRadius
         topRightRadius: root.hasJoinAbove ? 0 : root.cornerRadius

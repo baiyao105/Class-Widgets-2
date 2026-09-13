@@ -16,7 +16,8 @@ Item {
 
     readonly property int timeGutterWidth: 60
     readonly property int headerHeight: 60
-    readonly property real pxPerMin: 1.45
+    property real zoomFactor: 1.0
+    readonly property real pxPerMin: 1.45 * zoomFactor
     // One grid division is always half an hour, matching the timeline ruler.
     readonly property int gridIntervalMinutes: 30
     // Only gaps longer than this collapse into a divider band. Shorter gaps
@@ -40,7 +41,7 @@ Item {
     // Current absolute week (calculated from the semester start date).
     property int currentWeek: 1
 
-    // First date of the current week (Sunday).
+    // First date of the current week (Monday).
     readonly property var weekStart: weekStartFor(currentWeek)
 
     // Existing public selection state.
@@ -92,19 +93,24 @@ Item {
         return new Date(Number(parts[0]), Number(parts[1]) - 1, Number(parts[2]))
     }
 
-    // Start date of the given absolute week, falling back to this week.
+    // Start date (Monday) of the given absolute week, falling back to this week.
+    // The backend numbers weeks from meta.startDate (get_week_number) and
+    // numbers days ISO-style, so the displayed week is the Monday-based week
+    // holding the backend's week. A Monday startDate makes the two the same day.
     function weekStartFor(week) {
         let start = parseDate(AppCentral.scheduleEditor.meta.startDate)
         if (!isFinite(start.getTime()))
             start = new Date()
         const block = new Date(start.getTime() + (week - 1) * 7 * 86400000)
-        block.setDate(block.getDate() - block.getDay())
+        const isoDay = block.getDay() === 0 ? 7 : block.getDay()
+        block.setDate(block.getDate() - (isoDay - 1))
         return block
     }
 
-    // 1=Monday ... 7=Sunday. Column order is Sunday, Monday ... Saturday.
+    // 1=Monday ... 7=Sunday, matching the backend. Columns run Monday ... Sunday,
+    // the same order getEffectiveEntries() returns.
     function dayOfWeekForColumn(columnIndex) {
-        return (columnIndex + 6) % 7 + 1
+        return columnIndex + 1
     }
 
     // Absolute week -> cycle week.
@@ -208,7 +214,8 @@ Item {
     }
 
     // Only a real subject can opt into the connected visual style. A title is
-    // just display text, so subject-less courses such as 晚自习 stay separate.
+    // just display text, so subject-less courses such as evening self-study
+    // stay separate.
     function entryVisualKey(entry) {
         return entry && entry.subjectId ? "subject:" + entry.subjectId : ""
     }
@@ -414,6 +421,7 @@ Item {
                 joinBottom: false,
                 showContent: true,
                 groupContentHeight: 0,
+                groupTailBottomInset: 0,
                 groupLeadIndex: 0,
                 timeTextIndex: -1,
                 canShowOwnTime: false,
@@ -460,12 +468,30 @@ Item {
             const groupLead = result[previous.groupLeadIndex]
             current.timeTextIndex = groupLead.timeTexts.length
             groupLead.timeTexts.push(current.timeTexts[0])
-            groupLead.groupContentHeight = current.span.y
-                + current.span.height - groupLead.span.y
-            previous.joinBottom = true
             current.joinTop = true
             current.groupLeadIndex = previous.groupLeadIndex
             current.showContent = false
+            previous.joinBottom = true
+        }
+
+        // The lead owns the group's painted background, so give it the same
+        // bottom edge as the final segment. That segment's inset is only final
+        // after every adjacent pair has been normalized above.
+        for (let i = 0; i < result.length; ++i) {
+            const lead = result[i]
+            if (lead.joinBottom !== true)
+                continue
+            let tail = lead
+            for (let j = i + 1; j < result.length; ++j) {
+                if (result[j].groupLeadIndex !== i)
+                    break
+                tail = result[j]
+            }
+            lead.groupContentHeight = tail.span.y
+                + tail.span.height - lead.span.y
+            lead.groupTailBottomInset = tail.tightBelow
+                ? tail.tightBottomInset
+                : cardTopInset
         }
 
         // Mirror ScheduleCourseCard's geometry so a selected continuation only
@@ -529,6 +555,98 @@ Item {
         }
         return -1
     }
+    // Animate only when the selected card is outside the calendar viewport.
+    // The viewport is the actual Flickable, not the whole schedule page.
+    function ensureCellVisible(row, column) {
+        if (!calendarFlick || row < 0 || column < 0)
+            return
+
+        const entries = visualEntriesForDay(column) || []
+        let target = null
+        for (let i = 0; i < entries.length; ++i) {
+            if (entries[i].row === row) {
+                target = entries[i]
+                break
+            }
+        }
+        if (!target || !target.card)
+            return
+
+        const viewportWidth = calendarFlick.width
+        const viewportHeight = calendarFlick.height
+        const maxX = Math.max(0, calendarFlick.contentWidth - viewportWidth)
+        const maxY = Math.max(0, calendarFlick.contentHeight - viewportHeight)
+        const cardX = column * root.itemWidth
+        const cardY = Number(target.card.startY) || 0
+        const cardWidth = root.itemWidth
+        const cardHeight = Math.max(1, Number(target.card.cardHeight) || 0)
+        const viewportRight = calendarFlick.contentX + viewportWidth
+        const viewportBottom = calendarFlick.contentY + viewportHeight
+        const needsHorizontal = cardX < calendarFlick.contentX
+            || cardX + cardWidth > viewportRight
+        const needsVertical = cardY < calendarFlick.contentY
+            || cardY + cardHeight > viewportBottom
+
+        if (!needsHorizontal && !needsVertical)
+            return
+
+        horizontalScrollAnimation.stop()
+        verticalScrollAnimation.stop()
+
+        if (needsHorizontal) {
+            const contentX = cardX - (viewportWidth - cardWidth) / 2
+            horizontalScrollAnimation.to = Math.max(0, Math.min(maxX, contentX))
+            horizontalScrollAnimation.start()
+        }
+
+        if (needsVertical) {
+            const contentY = cardHeight >= viewportHeight
+                ? cardY - 16
+                : cardY - (viewportHeight - cardHeight) / 2
+            verticalScrollAnimation.to = Math.max(0, Math.min(maxY, contentY))
+            verticalScrollAnimation.start()
+        }
+    }
+
+    NumberAnimation {
+        id: horizontalScrollAnimation
+        target: calendarFlick
+        property: "contentX"
+        duration: 240
+        easing.type: Easing.OutCubic
+    }
+
+    NumberAnimation {
+        id: verticalScrollAnimation
+        target: calendarFlick
+        property: "contentY"
+        duration: 240
+        easing.type: Easing.OutCubic
+    }
+
+    function scrollToSelectedCell() {
+        const selected = selectedCell || ({ row: -1, column: -1 })
+        if (selected.row < 0 || selected.column < 0)
+            return
+        ensureCellVisible(selected.row, selected.column)
+    }
+
+    // Column index of the backend's current day, or -1 when it reports none.
+    readonly property int todayColumn: {
+        const weekday = AppCentral.scheduleRuntime.currentDayOfWeek
+        return weekday >= 1 && weekday <= 7 ? weekday - 1 : -1
+    }
+
+    // Select today's column so the table scrolls it into view.
+    function selectToday() {
+        if (todayColumn < 0)
+            return
+        const row = selectedCell && selectedCell.row >= 0 ? selectedCell.row : 0
+        selectedCell = { row: row, column: todayColumn }
+    }
+
+    onSelectedCellChanged: Qt.callLater(scrollToSelectedCell)
+
     // Clicking empty grid space drops the selection and closes its flyout.
     function clearSelection() {
         const hasSelection = (selectedCell && (selectedCell.row >= 0
@@ -635,20 +753,10 @@ Item {
             }
         }
 
-        Rectangle {
-            id: timeRailDivider
-            anchors.top: parent.top
-            anchors.bottom: parent.bottom
-            anchors.left: timeRail.right
-            width: 1
-            color: Colors.proxy.dividerBorderColor
-            z: 2
-        }
-
         Flickable {
             id: calendarFlick
             anchors.top: parent.top
-            anchors.left: timeRailDivider.right
+            anchors.left: timeRail.right
             anchors.right: parent.right
             anchors.bottom: parent.bottom
             clip: true
@@ -656,6 +764,12 @@ Item {
             contentWidth: root.itemWidth * 7
             contentHeight: Math.max(height, root.timeAxis.height + root.bottomPadding)
             flickableDirection: Flickable.HorizontalAndVerticalFlick
+
+            // User scrolling takes priority over an in-flight auto-scroll.
+            onMovementStarted: {
+                horizontalScrollAnimation.stop()
+                verticalScrollAnimation.stop()
+            }
 
             ScrollBar.vertical: ScrollBar {
                 policy: ScrollBar.AsNeeded
@@ -763,6 +877,7 @@ Item {
                             hasJoinBelow: modelData.joinBottom
                             showContent: modelData.showContent
                             groupContentHeight: modelData.groupContentHeight
+                            groupTailBottomInset: modelData.groupTailBottomInset
                             hiddenGroupTimeIndex: modelData.showContent !== false
                                 ? root.selectedContinuationTimeIndex(
                                     dayLayer.entries,

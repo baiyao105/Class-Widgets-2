@@ -554,8 +554,9 @@ class ScheduleEditor(QObject):
             overrides_by_entry.setdefault(override.entryId, []).append(override)
 
         columns: list[list[dict]] = []
-        # Match the editor table's Sunday, Monday ... Saturday column order.
-        for day_of_week in (7, 1, 2, 3, 4, 5, 6):
+        # ISO weekday order, Monday ... Sunday, matching the editor table's
+        # Monday-first columns: column index i is dayOfWeek i + 1.
+        for day_of_week in (1, 2, 3, 4, 5, 6, 7):
             day = next(
                 (
                     candidate

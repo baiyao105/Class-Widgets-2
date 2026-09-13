@@ -174,12 +174,13 @@ Flyout {
         return Math.max(1, Number(weekSelector ? weekSelector.currentWeek : 1) || 1)
     }
 
-    // Sunday-first column index -> Monday-first day of week.
+    // Column index -> ISO day of week (1=Monday ... 7=Sunday), matching the
+    // backend and the Monday-first table columns.
     function selectedDayOfWeek() {
         const column = Number(selectedCell ? selectedCell.column : -1)
         if (!isFinite(column) || column < 0)
             return ""
-        return (column + 6) % 7 + 1
+        return column + 1
     }
 
     function baseEntriesForId(entryId) {
@@ -632,18 +633,29 @@ Flyout {
         }
 
         RowLayout {
+            id: buttonRow
             Layout.fillWidth: true
             Layout.topMargin: 18
             spacing: 8
 
+            // Both buttons share one preferred width, otherwise the layout
+            // splits the free space by implicit width and they end up uneven.
+            readonly property real buttonWidth: Math.max(
+                okButton.implicitWidth, cancelButton.implicitWidth
+            )
+
             Button {
+                id: okButton
                 Layout.fillWidth: true
+                Layout.preferredWidth: buttonRow.buttonWidth
                 highlighted: true
                 text: qsTr("OK")
                 onClicked: saveAll()
             }
             Button {
+                id: cancelButton
                 Layout.fillWidth: true
+                Layout.preferredWidth: buttonRow.buttonWidth
                 text: qsTr("Cancel")
                 onClicked: {
                     reloadOverrides()
