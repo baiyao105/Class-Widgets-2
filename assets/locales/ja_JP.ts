@@ -472,72 +472,85 @@ Do you want to continue using them, or discard and restore the original schedule
 <context>
     <name>DayEditor</name>
     <message>
-        <location filename="../../src/qml/ClassWidgets/Components/editor/dialogs/DayEditor.qml" line="11"/>
+        <location filename="../../src/qml/ClassWidgets/Components/editor/dialogs/DayEditor.qml" line="12"/>
         <source>Edit Timeline</source>
         <translation>タイムラインを編集</translation>
     </message>
     <message>
-        <location filename="../../src/qml/ClassWidgets/Components/editor/dialogs/DayEditor.qml" line="11"/>
+        <location filename="../../src/qml/ClassWidgets/Components/editor/dialogs/DayEditor.qml" line="12"/>
         <source>New Timeline</source>
         <translation>新しいタイムライン</translation>
     </message>
     <message>
-        <location filename="../../src/qml/ClassWidgets/Components/editor/dialogs/DayEditor.qml" line="29"/>
+        <location filename="../../src/qml/ClassWidgets/Components/editor/dialogs/DayEditor.qml" line="31"/>
         <source>Week {value} of every %1 weeks</source>
         <translation type="unfinished">毎%1週の{value}週</translation>
     </message>
     <message>
-        <location filename="../../src/qml/ClassWidgets/Components/editor/dialogs/DayEditor.qml" line="32"/>
+        <location filename="../../src/qml/ClassWidgets/Components/editor/dialogs/DayEditor.qml" line="40"/>
         <source>Week {value}</source>
         <translation type="unfinished">第{value}週</translation>
     </message>
     <message>
-        <location filename="../../src/qml/ClassWidgets/Components/editor/dialogs/DayEditor.qml" line="42"/>
+        <location filename="../../src/qml/ClassWidgets/Components/editor/dialogs/DayEditor.qml" line="58"/>
         <source>1</source>
         <translation type="unfinished">单</translation>
     </message>
     <message>
-        <location filename="../../src/qml/ClassWidgets/Components/editor/dialogs/DayEditor.qml" line="42"/>
+        <location filename="../../src/qml/ClassWidgets/Components/editor/dialogs/DayEditor.qml" line="58"/>
         <source>2</source>
         <translation type="unfinished">双</translation>
     </message>
     <message>
-        <location filename="../../src/qml/ClassWidgets/Components/editor/dialogs/DayEditor.qml" line="43"/>
+        <location filename="../../src/qml/ClassWidgets/Components/editor/dialogs/DayEditor.qml" line="49"/>
+        <location filename="../../src/qml/ClassWidgets/Components/editor/dialogs/DayEditor.qml" line="59"/>
         <source>%1</source>
         <translation type="unfinished">%1</translation>
     </message>
     <message>
-        <location filename="../../src/qml/ClassWidgets/Components/editor/dialogs/DayEditor.qml" line="115"/>
+        <location filename="../../src/qml/ClassWidgets/Components/editor/dialogs/DayEditor.qml" line="46"/>
+        <location filename="../../src/qml/ClassWidgets/Components/editor/dialogs/DayEditor.qml" line="66"/>
+        <source>Odd Week</source>
+        <translation type="unfinished">奇数週</translation>
+    </message>
+    <message>
+        <location filename="../../src/qml/ClassWidgets/Components/editor/dialogs/DayEditor.qml" line="48"/>
+        <location filename="../../src/qml/ClassWidgets/Components/editor/dialogs/DayEditor.qml" line="67"/>
+        <source>Even Week</source>
+        <translation type="unfinished">偶数週</translation>
+    </message>
+    <message>
+        <location filename="../../src/qml/ClassWidgets/Components/editor/dialogs/DayEditor.qml" line="159"/>
         <source>(auto)</source>
         <translation>(自動)</translation>
     </message>
     <message>
-        <location filename="../../src/qml/ClassWidgets/Components/editor/dialogs/DayEditor.qml" line="181"/>
+        <location filename="../../src/qml/ClassWidgets/Components/editor/dialogs/DayEditor.qml" line="232"/>
         <source>By Week</source>
         <translation>週別</translation>
     </message>
     <message>
-        <location filename="../../src/qml/ClassWidgets/Components/editor/dialogs/DayEditor.qml" line="182"/>
+        <location filename="../../src/qml/ClassWidgets/Components/editor/dialogs/DayEditor.qml" line="233"/>
         <source>By Date</source>
         <translation>日別</translation>
     </message>
     <message>
-        <location filename="../../src/qml/ClassWidgets/Components/editor/dialogs/DayEditor.qml" line="186"/>
+        <location filename="../../src/qml/ClassWidgets/Components/editor/dialogs/DayEditor.qml" line="237"/>
         <source>ID</source>
         <translation>ID</translation>
     </message>
     <message>
-        <location filename="../../src/qml/ClassWidgets/Components/editor/dialogs/DayEditor.qml" line="193"/>
+        <location filename="../../src/qml/ClassWidgets/Components/editor/dialogs/DayEditor.qml" line="244"/>
         <source>Date</source>
         <translation>日付</translation>
     </message>
     <message>
-        <location filename="../../src/qml/ClassWidgets/Components/editor/dialogs/DayEditor.qml" line="210"/>
+        <location filename="../../src/qml/ClassWidgets/Components/editor/dialogs/DayEditor.qml" line="261"/>
         <source>Days of Week</source>
         <translation>曜日</translation>
     </message>
     <message>
-        <location filename="../../src/qml/ClassWidgets/Components/editor/dialogs/DayEditor.qml" line="231"/>
+        <location filename="../../src/qml/ClassWidgets/Components/editor/dialogs/DayEditor.qml" line="282"/>
         <source>Specific Weeks</source>
         <translation>指定週</translation>
     </message>
@@ -570,17 +583,17 @@ Do you want to continue using them, or discard and restore the original schedule
         <translation type="vanished">日</translation>
     </message>
     <message>
-        <location filename="../../src/qml/ClassWidgets/Components/editor/dialogs/DayEditor.qml" line="222"/>
+        <location filename="../../src/qml/ClassWidgets/Components/editor/dialogs/DayEditor.qml" line="273"/>
         <source>Week</source>
         <translation type="unfinished">週</translation>
     </message>
     <message>
-        <location filename="../../src/qml/ClassWidgets/Components/editor/dialogs/DayEditor.qml" line="227"/>
+        <location filename="../../src/qml/ClassWidgets/Components/editor/dialogs/DayEditor.qml" line="278"/>
         <source>Every Week</source>
         <translation>毎週</translation>
     </message>
     <message>
-        <location filename="../../src/qml/ClassWidgets/Components/editor/dialogs/DayEditor.qml" line="228"/>
+        <location filename="../../src/qml/ClassWidgets/Components/editor/dialogs/DayEditor.qml" line="279"/>
         <source>Repeat on a Cycle</source>
         <translation type="unfinished">サイクルで繰り返す</translation>
     </message>
@@ -604,72 +617,82 @@ Do you want to continue using them, or discard and restore the original schedule
 <context>
     <name>DayListView</name>
     <message>
-        <location filename="../../src/qml/ClassWidgets/Components/editor/timeline/DayListView.qml" line="26"/>
+        <location filename="../../src/qml/ClassWidgets/Components/editor/timeline/DayListView.qml" line="27"/>
         <source>%1</source>
         <translation>%1</translation>
     </message>
     <message>
-        <location filename="../../src/qml/ClassWidgets/Components/editor/timeline/DayListView.qml" line="34"/>
+        <location filename="../../src/qml/ClassWidgets/Components/editor/timeline/DayListView.qml" line="35"/>
         <source>Weekdays</source>
         <translation>平日</translation>
     </message>
     <message>
-        <location filename="../../src/qml/ClassWidgets/Components/editor/timeline/DayListView.qml" line="36"/>
+        <location filename="../../src/qml/ClassWidgets/Components/editor/timeline/DayListView.qml" line="37"/>
         <source>Weekends</source>
         <translation>休日</translation>
     </message>
     <message>
-        <location filename="../../src/qml/ClassWidgets/Components/editor/timeline/DayListView.qml" line="43"/>
+        <location filename="../../src/qml/ClassWidgets/Components/editor/timeline/DayListView.qml" line="44"/>
         <source>Unknown</source>
         <translation>不明</translation>
     </message>
     <message>
-        <location filename="../../src/qml/ClassWidgets/Components/editor/timeline/DayListView.qml" line="55"/>
+        <location filename="../../src/qml/ClassWidgets/Components/editor/timeline/DayListView.qml" line="59"/>
         <source>Every Week</source>
         <translation>毎週</translation>
     </message>
     <message>
-        <location filename="../../src/qml/ClassWidgets/Components/editor/timeline/DayListView.qml" line="56"/>
+        <location filename="../../src/qml/ClassWidgets/Components/editor/timeline/DayListView.qml" line="64"/>
         <source>week %1 of the cycle</source>
         <translation>サイクルの%1週</translation>
     </message>
     <message>
-        <location filename="../../src/qml/ClassWidgets/Components/editor/timeline/DayListView.qml" line="57"/>
+        <location filename="../../src/qml/ClassWidgets/Components/editor/timeline/DayListView.qml" line="63"/>
         <source>Weeks %1</source>
         <translation>%1週</translation>
     </message>
     <message>
-        <location filename="../../src/qml/ClassWidgets/Components/editor/timeline/DayListView.qml" line="79"/>
+        <location filename="../../src/qml/ClassWidgets/Components/editor/timeline/DayListView.qml" line="60"/>
+        <source>Odd Week</source>
+        <translation type="unfinished">奇数週</translation>
+    </message>
+    <message>
+        <location filename="../../src/qml/ClassWidgets/Components/editor/timeline/DayListView.qml" line="61"/>
+        <source>Even Week</source>
+        <translation type="unfinished">偶数週</translation>
+    </message>
+    <message>
+        <location filename="../../src/qml/ClassWidgets/Components/editor/timeline/DayListView.qml" line="86"/>
         <source>Mon</source>
         <translation>月</translation>
     </message>
     <message>
-        <location filename="../../src/qml/ClassWidgets/Components/editor/timeline/DayListView.qml" line="79"/>
+        <location filename="../../src/qml/ClassWidgets/Components/editor/timeline/DayListView.qml" line="86"/>
         <source>Tue</source>
         <translation>火</translation>
     </message>
     <message>
-        <location filename="../../src/qml/ClassWidgets/Components/editor/timeline/DayListView.qml" line="79"/>
+        <location filename="../../src/qml/ClassWidgets/Components/editor/timeline/DayListView.qml" line="86"/>
         <source>Wed</source>
         <translation>水</translation>
     </message>
     <message>
-        <location filename="../../src/qml/ClassWidgets/Components/editor/timeline/DayListView.qml" line="80"/>
+        <location filename="../../src/qml/ClassWidgets/Components/editor/timeline/DayListView.qml" line="87"/>
         <source>Thu</source>
         <translation>木</translation>
     </message>
     <message>
-        <location filename="../../src/qml/ClassWidgets/Components/editor/timeline/DayListView.qml" line="80"/>
+        <location filename="../../src/qml/ClassWidgets/Components/editor/timeline/DayListView.qml" line="87"/>
         <source>Fri</source>
         <translation>金</translation>
     </message>
     <message>
-        <location filename="../../src/qml/ClassWidgets/Components/editor/timeline/DayListView.qml" line="80"/>
+        <location filename="../../src/qml/ClassWidgets/Components/editor/timeline/DayListView.qml" line="87"/>
         <source>Sat</source>
         <translation>土</translation>
     </message>
     <message>
-        <location filename="../../src/qml/ClassWidgets/Components/editor/timeline/DayListView.qml" line="80"/>
+        <location filename="../../src/qml/ClassWidgets/Components/editor/timeline/DayListView.qml" line="87"/>
         <source>Sun</source>
         <translation>日</translation>
     </message>
@@ -730,32 +753,32 @@ Do you want to continue using them, or discard and restore the original schedule
         <translation type="obsolete">アクティビティ</translation>
     </message>
     <message>
-        <location filename="../../src/qml/ClassWidgets/Components/editor/timeline/DayListView.qml" line="104"/>
+        <location filename="../../src/qml/ClassWidgets/Components/editor/timeline/DayListView.qml" line="111"/>
         <source>No timelines yet</source>
         <translation>No timelines yet</translation>
     </message>
     <message>
-        <location filename="../../src/qml/ClassWidgets/Components/editor/timeline/DayListView.qml" line="110"/>
+        <location filename="../../src/qml/ClassWidgets/Components/editor/timeline/DayListView.qml" line="117"/>
         <source>No timelines yet. Click &quot;New Timeline&quot; to get started.</source>
         <translation>タイムラインがまだありません。『新しいタイムライン』をクリックして開始してください。</translation>
     </message>
     <message>
-        <location filename="../../src/qml/ClassWidgets/Components/editor/timeline/DayListView.qml" line="156"/>
+        <location filename="../../src/qml/ClassWidgets/Components/editor/timeline/DayListView.qml" line="163"/>
         <source>Edit</source>
         <translation>編集</translation>
     </message>
     <message>
-        <location filename="../../src/qml/ClassWidgets/Components/editor/timeline/DayListView.qml" line="161"/>
+        <location filename="../../src/qml/ClassWidgets/Components/editor/timeline/DayListView.qml" line="168"/>
         <source>Remove</source>
         <translation>削除</translation>
     </message>
     <message>
-        <location filename="../../src/qml/ClassWidgets/Components/editor/timeline/DayListView.qml" line="186"/>
+        <location filename="../../src/qml/ClassWidgets/Components/editor/timeline/DayListView.qml" line="193"/>
         <source>New Timeline</source>
         <translation>新しいタイムライン</translation>
     </message>
     <message>
-        <location filename="../../src/qml/ClassWidgets/Components/editor/timeline/DayListView.qml" line="190"/>
+        <location filename="../../src/qml/ClassWidgets/Components/editor/timeline/DayListView.qml" line="197"/>
         <source>Duplicate</source>
         <translation>複製</translation>
     </message>
@@ -3278,17 +3301,17 @@ It&apos;s incompatible and may cause unexpected issues.</source>
         <translation type="vanished">科目の即時追加</translation>
     </message>
     <message>
-        <location filename="../../src/core/convertor/base.py" line="76"/>
+        <location filename="../../src/core/convertor/base.py" line="75"/>
         <source>All Weeks</source>
         <translation type="unfinished">すべての週</translation>
     </message>
     <message>
-        <location filename="../../src/core/convertor/base.py" line="78"/>
+        <location filename="../../src/core/convertor/base.py" line="77"/>
         <source>Odd Weeks</source>
         <translation type="unfinished">奇数週</translation>
     </message>
     <message>
-        <location filename="../../src/core/convertor/base.py" line="80"/>
+        <location filename="../../src/core/convertor/base.py" line="79"/>
         <source>Even Weeks</source>
         <translation type="unfinished">偶数週</translation>
     </message>
@@ -3422,7 +3445,7 @@ It&apos;s incompatible and may cause unexpected issues.</source>
 <context>
     <name>ScheduleConverter</name>
     <message>
-        <location filename="../../src/core/convertor/cw2.py" line="91"/>
+        <location filename="../../src/core/convertor/cw2.py" line="86"/>
         <source>Class</source>
         <translation type="unfinished">Class</translation>
     </message>
@@ -3454,17 +3477,17 @@ It&apos;s incompatible and may cause unexpected issues.</source>
         <translation type="vanished">クリア</translation>
     </message>
     <message>
-        <location filename="../../src/qml/ClassWidgets/Components/editor/schedule/ScheduleFlyout.qml" line="662"/>
+        <location filename="../../src/qml/ClassWidgets/Components/editor/schedule/ScheduleFlyout.qml" line="639"/>
         <source>New Course</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/qml/ClassWidgets/Components/editor/schedule/ScheduleFlyout.qml" line="686"/>
+        <location filename="../../src/qml/ClassWidgets/Components/editor/schedule/ScheduleFlyout.qml" line="663"/>
         <source>OK</source>
         <translation type="unfinished">OK</translation>
     </message>
     <message>
-        <location filename="../../src/qml/ClassWidgets/Components/editor/schedule/ScheduleFlyout.qml" line="693"/>
+        <location filename="../../src/qml/ClassWidgets/Components/editor/schedule/ScheduleFlyout.qml" line="670"/>
         <source>Cancel</source>
         <translation type="unfinished">キャンセル</translation>
     </message>
@@ -3472,115 +3495,117 @@ It&apos;s incompatible and may cause unexpected issues.</source>
 <context>
     <name>ScheduleOverrideItem</name>
     <message>
-        <location filename="../../src/qml/ClassWidgets/Components/editor/schedule/ScheduleOverrideItem.qml" line="111"/>
+        <location filename="../../src/qml/ClassWidgets/Components/editor/schedule/ScheduleOverrideItem.qml" line="126"/>
         <source>Week {value} of every %1 weeks</source>
         <translation type="unfinished">毎%1週の{value}週</translation>
     </message>
     <message>
-        <location filename="../../src/qml/ClassWidgets/Components/editor/schedule/ScheduleOverrideItem.qml" line="114"/>
+        <location filename="../../src/qml/ClassWidgets/Components/editor/schedule/ScheduleOverrideItem.qml" line="133"/>
         <source>Week {value}</source>
         <translation type="unfinished">第{value}週</translation>
     </message>
     <message>
-        <location filename="../../src/qml/ClassWidgets/Components/editor/schedule/ScheduleOverrideItem.qml" line="123"/>
         <source>1</source>
-        <translation type="unfinished">单</translation>
+        <translation type="obsolete">单</translation>
     </message>
     <message>
-        <location filename="../../src/qml/ClassWidgets/Components/editor/schedule/ScheduleOverrideItem.qml" line="123"/>
         <source>2</source>
-        <translation type="unfinished">双</translation>
+        <translation type="obsolete">双</translation>
     </message>
     <message>
-        <location filename="../../src/qml/ClassWidgets/Components/editor/schedule/ScheduleOverrideItem.qml" line="124"/>
+        <location filename="../../src/qml/ClassWidgets/Components/editor/schedule/ScheduleOverrideItem.qml" line="142"/>
         <source>%1</source>
         <translation type="unfinished">%1</translation>
     </message>
     <message>
-        <location filename="../../src/qml/ClassWidgets/Components/editor/schedule/ScheduleOverrideItem.qml" line="186"/>
-        <location filename="../../src/qml/ClassWidgets/Components/editor/schedule/ScheduleOverrideItem.qml" line="421"/>
+        <location filename="../../src/qml/ClassWidgets/Components/editor/schedule/ScheduleOverrideItem.qml" line="228"/>
+        <location filename="../../src/qml/ClassWidgets/Components/editor/schedule/ScheduleOverrideItem.qml" line="449"/>
         <source>Class</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/qml/ClassWidgets/Components/editor/schedule/ScheduleOverrideItem.qml" line="194"/>
-        <location filename="../../src/qml/ClassWidgets/Components/editor/schedule/ScheduleOverrideItem.qml" line="483"/>
+        <location filename="../../src/qml/ClassWidgets/Components/editor/schedule/ScheduleOverrideItem.qml" line="236"/>
+        <location filename="../../src/qml/ClassWidgets/Components/editor/schedule/ScheduleOverrideItem.qml" line="511"/>
         <source>Every Week</source>
         <translation type="unfinished">毎週</translation>
     </message>
     <message>
-        <location filename="../../src/qml/ClassWidgets/Components/editor/schedule/ScheduleOverrideItem.qml" line="197"/>
+        <location filename="../../src/qml/ClassWidgets/Components/editor/schedule/ScheduleOverrideItem.qml" line="240"/>
         <source>Week %1</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/qml/ClassWidgets/Components/editor/schedule/ScheduleOverrideItem.qml" line="198"/>
-        <location filename="../../src/qml/ClassWidgets/Components/editor/schedule/ScheduleOverrideItem.qml" line="501"/>
+        <location filename="../../src/qml/ClassWidgets/Components/editor/schedule/ScheduleOverrideItem.qml" line="241"/>
+        <location filename="../../src/qml/ClassWidgets/Components/editor/schedule/ScheduleOverrideItem.qml" line="538"/>
         <source>Specific Weeks</source>
         <translation>指定週</translation>
     </message>
     <message>
-        <location filename="../../src/qml/ClassWidgets/Components/editor/schedule/ScheduleOverrideItem.qml" line="201"/>
+        <location filename="../../src/qml/ClassWidgets/Components/editor/schedule/ScheduleOverrideItem.qml" line="139"/>
+        <location filename="../../src/qml/ClassWidgets/Components/editor/schedule/ScheduleOverrideItem.qml" line="244"/>
+        <location filename="../../src/qml/ClassWidgets/Components/editor/schedule/ScheduleOverrideItem.qml" line="249"/>
         <source>Odd Week</source>
         <translation type="unfinished">奇数週</translation>
     </message>
     <message>
-        <location filename="../../src/qml/ClassWidgets/Components/editor/schedule/ScheduleOverrideItem.qml" line="201"/>
+        <location filename="../../src/qml/ClassWidgets/Components/editor/schedule/ScheduleOverrideItem.qml" line="141"/>
+        <location filename="../../src/qml/ClassWidgets/Components/editor/schedule/ScheduleOverrideItem.qml" line="246"/>
+        <location filename="../../src/qml/ClassWidgets/Components/editor/schedule/ScheduleOverrideItem.qml" line="249"/>
         <source>Even Week</source>
         <translation type="unfinished">偶数週</translation>
     </message>
     <message>
-        <location filename="../../src/qml/ClassWidgets/Components/editor/schedule/ScheduleOverrideItem.qml" line="202"/>
+        <location filename="../../src/qml/ClassWidgets/Components/editor/schedule/ScheduleOverrideItem.qml" line="250"/>
         <source>Week %2 of every %1 weeks</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/qml/ClassWidgets/Components/editor/schedule/ScheduleOverrideItem.qml" line="206"/>
+        <location filename="../../src/qml/ClassWidgets/Components/editor/schedule/ScheduleOverrideItem.qml" line="254"/>
         <source>Period %1</source>
         <translation>第%1時限</translation>
     </message>
     <message>
-        <location filename="../../src/qml/ClassWidgets/Components/editor/schedule/ScheduleOverrideItem.qml" line="207"/>
+        <location filename="../../src/qml/ClassWidgets/Components/editor/schedule/ScheduleOverrideItem.qml" line="255"/>
         <source>Periods %1-%2</source>
         <translation>第%1～%2時限</translation>
     </message>
     <message>
-        <location filename="../../src/qml/ClassWidgets/Components/editor/schedule/ScheduleOverrideItem.qml" line="209"/>
+        <location filename="../../src/qml/ClassWidgets/Components/editor/schedule/ScheduleOverrideItem.qml" line="257"/>
         <source>Period {from} to {to}</source>
         <translation>第{from}～{to}時限</translation>
     </message>
     <message>
-        <location filename="../../src/qml/ClassWidgets/Components/editor/schedule/ScheduleOverrideItem.qml" line="231"/>
+        <location filename="../../src/qml/ClassWidgets/Components/editor/schedule/ScheduleOverrideItem.qml" line="279"/>
         <source>(Not This Week)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/qml/ClassWidgets/Components/editor/schedule/ScheduleOverrideItem.qml" line="244"/>
+        <location filename="../../src/qml/ClassWidgets/Components/editor/schedule/ScheduleOverrideItem.qml" line="292"/>
         <source>(Overridden)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/qml/ClassWidgets/Components/editor/schedule/ScheduleOverrideItem.qml" line="246"/>
+        <location filename="../../src/qml/ClassWidgets/Components/editor/schedule/ScheduleOverrideItem.qml" line="294"/>
         <source>(Partially Overridden)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/qml/ClassWidgets/Components/editor/schedule/ScheduleOverrideItem.qml" line="436"/>
+        <location filename="../../src/qml/ClassWidgets/Components/editor/schedule/ScheduleOverrideItem.qml" line="464"/>
         <source>Clear</source>
         <translation type="unfinished">クリア</translation>
     </message>
     <message>
-        <location filename="../../src/qml/ClassWidgets/Components/editor/schedule/ScheduleOverrideItem.qml" line="451"/>
+        <location filename="../../src/qml/ClassWidgets/Components/editor/schedule/ScheduleOverrideItem.qml" line="479"/>
         <source>Name</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/qml/ClassWidgets/Components/editor/schedule/ScheduleOverrideItem.qml" line="463"/>
+        <location filename="../../src/qml/ClassWidgets/Components/editor/schedule/ScheduleOverrideItem.qml" line="491"/>
         <source>Subject</source>
         <translation type="unfinished">科目</translation>
     </message>
     <message>
-        <location filename="../../src/qml/ClassWidgets/Components/editor/schedule/ScheduleOverrideItem.qml" line="492"/>
+        <location filename="../../src/qml/ClassWidgets/Components/editor/schedule/ScheduleOverrideItem.qml" line="520"/>
         <source>Repeat on a Cycle</source>
         <translation type="unfinished">サイクルで繰り返す</translation>
     </message>
@@ -3593,7 +3618,7 @@ It&apos;s incompatible and may cause unexpected issues.</source>
         <translation type="obsolete">週</translation>
     </message>
     <message>
-        <location filename="../../src/qml/ClassWidgets/Components/editor/schedule/ScheduleOverrideItem.qml" line="549"/>
+        <location filename="../../src/qml/ClassWidgets/Components/editor/schedule/ScheduleOverrideItem.qml" line="587"/>
         <source>Class Time</source>
         <translation>授業時間</translation>
     </message>
@@ -3693,13 +3718,13 @@ It&apos;s incompatible and may cause unexpected issues.</source>
 <context>
     <name>ScheduleTableView</name>
     <message>
-        <location filename="../../src/qml/ClassWidgets/Components/editor/schedule/ScheduleTableView.qml" line="204"/>
-        <location filename="../../src/qml/ClassWidgets/Components/editor/schedule/ScheduleTableView.qml" line="207"/>
+        <location filename="../../src/qml/ClassWidgets/Components/editor/schedule/ScheduleTableView.qml" line="197"/>
+        <location filename="../../src/qml/ClassWidgets/Components/editor/schedule/ScheduleTableView.qml" line="200"/>
         <source>Class</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/qml/ClassWidgets/Components/editor/schedule/ScheduleTableView.qml" line="918"/>
+        <location filename="../../src/qml/ClassWidgets/Components/editor/schedule/ScheduleTableView.qml" line="911"/>
         <source>No classes this week</source>
         <translation type="unfinished"></translation>
     </message>
@@ -3897,12 +3922,12 @@ It&apos;s incompatible and may cause unexpected issues.</source>
 <context>
     <name>SpecificWeekEditor</name>
     <message>
-        <location filename="../../src/qml/ClassWidgets/Components/editor/SpecificWeekEditor.qml" line="45"/>
+        <location filename="../../src/qml/ClassWidgets/Components/editor/SpecificWeekEditor.qml" line="31"/>
         <source>Week {value}</source>
         <translation>第{value}週</translation>
     </message>
     <message>
-        <location filename="../../src/qml/ClassWidgets/Components/editor/SpecificWeekEditor.qml" line="152"/>
+        <location filename="../../src/qml/ClassWidgets/Components/editor/SpecificWeekEditor.qml" line="138"/>
         <source>Add</source>
         <translation>追加</translation>
     </message>
@@ -5138,48 +5163,40 @@ Go to &quot;Settings&quot; → &quot;Update&quot; for more details.</source>
 <context>
     <name>WeekSelector</name>
     <message>
-        <location filename="../../src/qml/ClassWidgets/Components/editor/WeekSelector.qml" line="38"/>
         <source>1</source>
-        <translation>单</translation>
+        <translation type="vanished">单</translation>
     </message>
     <message>
-        <location filename="../../src/qml/ClassWidgets/Components/editor/WeekSelector.qml" line="38"/>
         <source>2</source>
-        <translation>双</translation>
+        <translation type="vanished">双</translation>
     </message>
     <message>
         <source>Week %1</source>
         <translation type="obsolete">週 %1</translation>
     </message>
     <message>
-        <location filename="../../src/qml/ClassWidgets/Components/editor/WeekSelector.qml" line="39"/>
         <source>%1</source>
-        <translation type="unfinished">%1</translation>
+        <translation type="obsolete">%1</translation>
     </message>
     <message>
-        <location filename="../../src/qml/ClassWidgets/Components/editor/WeekSelector.qml" line="66"/>
         <source>Week {value} of every %1 weeks</source>
-        <translation>毎%1週の{value}週</translation>
+        <translation type="vanished">毎%1週の{value}週</translation>
     </message>
     <message>
-        <location filename="../../src/qml/ClassWidgets/Components/editor/WeekSelector.qml" line="69"/>
         <source>Week {value}</source>
-        <translation>第{value}週</translation>
+        <translation type="vanished">第{value}週</translation>
     </message>
     <message>
-        <location filename="../../src/qml/ClassWidgets/Components/editor/WeekSelector.qml" line="78"/>
         <source>Every Week</source>
-        <translation>毎週</translation>
+        <translation type="vanished">毎週</translation>
     </message>
     <message>
-        <location filename="../../src/qml/ClassWidgets/Components/editor/WeekSelector.qml" line="83"/>
         <source>Repeat on a Cycle</source>
-        <translation type="unfinished">サイクルで繰り返す</translation>
+        <translation type="obsolete">サイクルで繰り返す</translation>
     </message>
     <message>
-        <location filename="../../src/qml/ClassWidgets/Components/editor/WeekSelector.qml" line="87"/>
         <source>Specific Weeks</source>
-        <translation>指定週</translation>
+        <translation type="vanished">指定週</translation>
     </message>
     <message>
         <source>One Specific Week</source>

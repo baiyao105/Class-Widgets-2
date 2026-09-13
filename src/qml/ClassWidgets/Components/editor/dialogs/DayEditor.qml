@@ -3,6 +3,7 @@ import QtQuick.Controls
 import QtQuick.Layouts
 import RinUI
 import ClassWidgets.Components
+import "../WeekRule.js" as WeekRule
 
 Dialog {
     id: dayEditor
@@ -15,7 +16,8 @@ Dialog {
 
     // 周循环文案格式
     property int maxWeekCycle: AppCentral.scheduleEditor.meta.maxWeekCycle
-    property int roundWeek: 1
+    // A cycle position (1 ... maxWeekCycle) or a parity rule ("odd" / "even").
+    property var roundWeek: 1
     property var customWeeks: []
     property bool canAccept: false
     property bool initialized: false
@@ -27,11 +29,25 @@ Dialog {
     }
     property var roundWeekOptions: []
     property string weekCycleFormat: qsTr("Week {value} of every %1 weeks").arg(maxWeekCycle)
-    property string weekCyclePrefix: weekCycleFormat.split("{value}")[0]
-    property string weekCycleSuffix: weekCycleFormat.split("{value}")[1]
+    // A parity rule reads as a complete phrase, so the surrounding cycle
+    // sentence is dropped while one is selected.
+    readonly property bool paritySelected: typeof roundWeek === "string"
+        && (roundWeek === "odd" || roundWeek === "even")
+    property string weekCyclePrefix: paritySelected
+        ? "" : weekCycleFormat.split("{value}")[0]
+    property string weekCycleSuffix: paritySelected
+        ? "" : weekCycleFormat.split("{value}")[1]
     property string weekFormat: qsTr("Week {value}")
     property string weekPrefix: weekFormat.split("{value}")[0]
     property string weekSuffix: weekFormat.split("{value}")[1]
+
+    function cycleLabel(value) {
+        if (value === "odd")
+            return qsTr("Odd Week")
+        if (value === "even")
+            return qsTr("Even Week")
+        return qsTr("%1").arg(value)
+    }
 
     function updateRoundWeekOptions() {
         var options = []
@@ -44,32 +60,60 @@ Dialog {
                 value: i
             })
         }
+        // 单双周 is a rule of its own and must stay selectable next to the cycle
+        // positions whenever the two are not the same thing.
+        if (cycleLength !== 2) {
+            options.push({ text: qsTr("Odd Week"), value: "odd" })
+            options.push({ text: qsTr("Even Week"), value: "even" })
+        }
         roundWeekOptions = options
     }
+
+    function roundWeekIndex(value) {
+        for (var i = 0; i < roundWeekOptions.length; i++) {
+            if (roundWeekOptions[i].value === value)
+                return i
+        }
+        return -1
+    }
+
     function normalizeRoundWeek() {
         var cycleLength = Math.max(1, maxWeekCycle)
-        if (roundWeek < 1) {
-            roundWeek = 1
-        } else if (roundWeek > cycleLength) {
-            roundWeek = cycleLength
+        var rule = WeekRule.decode(roundWeek)
+        if (rule === "odd" || rule === "even") {
+            // Inside a two-week cycle a parity rule is exactly cycle position
+            // 1 / 2, so the numeric form is used there. A longer cycle keeps
+            // the parity rule apart from the cycle positions.
+            roundWeek = cycleLength === 2
+                ? (rule === "odd" ? 1 : 2)
+                : rule
+            return
         }
+        var number = Math.floor(Number(rule))
+        if (!isFinite(number) || number < 1) {
+            roundWeek = 1
+        } else if (number > cycleLength) {
+            roundWeek = cycleLength
+        } else {
+            roundWeek = number
+        }
+    }
+
+    function validRoundWeek() {
+        var type = WeekRule.kind(roundWeek)
+        if (type === "odd" || type === "even")
+            return true
+        if (type !== "cycle")
+            return false
+        return Number(roundWeek) >= 1 && Number(roundWeek) <= Math.max(1, maxWeekCycle)
     }
 
     function normalizedCustomWeeks(values) {
-        var result = []
-        var source = Array.isArray(values) ? values : []
-        for (var i = 0; i < source.length; i++) {
-            var value = Number(source[i])
-            if (isFinite(value) && value >= 1
-                    && result.indexOf(value) === -1)
-                result.push(value)
-        }
-        result.sort((left, right) => left - right)
-        return result
+        return WeekRule.specificWeeks(values)
     }
 
     function normalizeCustomWeeks() {
-        customWeeks = normalizedCustomWeeks(customWeeks)
+        customWeeks = WeekRule.specificWeeks(customWeeks)
     }
 
     function firstAvailableCustomWeek() {
@@ -135,13 +179,20 @@ Dialog {
         selectedDays.sort((left, right) => left - right)
         dayButtons.days = selectedDays
 
-        // 周循环
-        weekCycleTypeAll.checked = currentData.weeks === "all" || currentData.weeks === undefined || currentData.weeks === null
-        weekCycleTypeRound.checked = typeof currentData.weeks === "number"
-        if (weekCycleTypeRound.checked) roundWeek = Number(currentData.weeks)
-        weekCycleTypeCustom.checked = Array.isArray(currentData.weeks)
+        // 周循环。weeks 可能是 "all"、"odd"/"even"、周期内周次或指定周列表，
+        // 判定必须走 WeekRule，因为 Python 列表在 QML 里不是 JS Array。
+        const weeksRule = WeekRule.decode(currentData.weeks)
+        const weeksKind = WeekRule.kind(weeksRule)
+        weekCycleTypeAll.checked = weeksKind === "all"
+        weekCycleTypeRound.checked = weeksKind === "cycle"
+            || weeksKind === "odd" || weeksKind === "even"
+        weekCycleTypeCustom.checked = weeksKind === "specific"
+        if (weekCycleTypeRound.checked)
+            roundWeek = (maxWeekCycle === 2 && weeksKind === "odd") ? 1
+                : (maxWeekCycle === 2 && weeksKind === "even") ? 2
+                : weeksRule
         customWeeks = weekCycleTypeCustom.checked
-            ? normalizedCustomWeeks(currentData.weeks)
+            ? WeekRule.specificWeeks(weeksRule)
             : []
 
         checkValid()
@@ -160,7 +211,7 @@ Dialog {
             if (!hasDaySelected) valid = false
             else if (weekCycleTypeAll.checked) valid = true
             else if (weekCycleTypeCustom.checked && customWeeks.length > 0) valid = true
-            else if (weekCycleTypeRound.checked && roundWeek >= 1) valid = true
+            else if (weekCycleTypeRound.checked && validRoundWeek()) valid = true
         } else {
             // 日期模式
             valid = !!dayDate.selectedDate
@@ -250,8 +301,12 @@ Dialog {
                         Layout.preferredWidth: 72
                         textRole: "text"
                         valueRole: "value"
-                        currentIndex: Math.max(0, dayEditor.roundWeek - 1)
-                        onActivated: dayEditor.roundWeek = currentIndex + 1
+                        currentIndex: dayEditor.roundWeekIndex(dayEditor.roundWeek)
+                        onActivated: {
+                            const option = dayEditor.roundWeekOptions[currentIndex]
+                            if (option)
+                                dayEditor.roundWeek = option.value
+                        }
                     }
                     Text { text: weekCycleSuffix }
                 }

@@ -2,6 +2,7 @@ import QtQuick
 import QtQuick.Controls
 import QtQuick.Layouts
 import RinUI
+import "../WeekRule.js" as WeekRule
 
 Flyout {
     id: root
@@ -126,56 +127,28 @@ Flyout {
 
     // ── Data normalization ─────────────────────────────────────────────
     // Rows keep ids and their encoded form; the readable form is derived on
-    // demand. `weeks` is either "all", a cycle week or a list of weeks.
+    // demand. `weeks` is either "all", "odd"/"even", a cycle week or a list of
+    // absolute semester weeks. All conversions go through WeekRule.js, because
+    // Python lists reach QML as array-like sequences that `Array.isArray()`
+    // rejects (see that file for the details).
     function sameValue(left, right) {
-        return JSON.stringify(left) === JSON.stringify(right)
+        return WeekRule.equals(left, right)
     }
 
     function encodeDays(value) {
-        return JSON.stringify((value || []).map(item => Number(item)))
+        return WeekRule.encodeDays(value)
     }
 
     function decodeDays(value) {
-        if (Array.isArray(value))
-            return value.map(item => Number(item))
-        if (typeof value === "string" && value.charAt(0) === "[") {
-            try {
-                const parsed = JSON.parse(value)
-                return Array.isArray(parsed) ? parsed.map(item => Number(item)) : []
-            } catch (error) {
-                return []
-            }
-        }
-        return []
+        return WeekRule.dayList(value)
     }
 
     function encodeWeeks(value) {
-        if (value === "all" || value === null || value === undefined || value === "")
-            return "all"
-        if (Array.isArray(value))
-            return JSON.stringify(value.map(item => Number(item)))
-        const number = Number(value)
-        return isFinite(number) ? String(number) : "all"
+        return WeekRule.encode(value)
     }
 
     function decodeWeeks(value) {
-        if (Array.isArray(value))
-            return value.slice()
-        if (typeof value === "number")
-            return value
-        if (value === "all" || value === null || value === undefined || value === "")
-            return "all"
-        const text = String(value)
-        if (text.charAt(0) === "[") {
-            try {
-                const parsed = JSON.parse(text)
-                return Array.isArray(parsed) ? parsed : "all"
-            } catch (error) {
-                return "all"
-            }
-        }
-        const number = Number(text)
-        return isFinite(number) ? number : "all"
+        return WeekRule.decode(value)
     }
 
     // Ids travel as a JSON string inside the model roles. `field` keeps the
@@ -247,10 +220,9 @@ Flyout {
     }
 
     function overrideMatchesDay(item, dayOfWeek) {
-        const days = Array.isArray(item.dayOfWeek)
-            ? item.dayOfWeek.map(value => Number(value))
-            : []
-        return days.length === 0 || days.indexOf(dayOfWeek) !== -1
+        // `item` usually comes straight from ScheduleEditor.overrides, so its
+        // dayOfWeek is an array-like sequence rather than a JS Array.
+        return WeekRule.dayMatches(item ? item.dayOfWeek : null, dayOfWeek)
     }
 
     // Overrides covering the given entry ids on the given day. `predicate`
@@ -368,11 +340,16 @@ Flyout {
         const blocked = []
         for (const item of scopes) {
             const value = decodeWeeks(item.weeks)
-            if (value === "all")
+            const type = WeekRule.kind(value)
+            if (type === "all")
                 everyWeekFree = false
-            else if (typeof value === "number")
+            else if (type === "cycle")
                 usedCycles.push(value)
-            else if (Array.isArray(value)) {
+            else if (type === "odd" || type === "even")
+                // A parity rule already covers half of the semester, so an
+                // "every week" rule would collide with it.
+                everyWeekFree = false
+            else if (type === "specific") {
                 for (const week of value) {
                     if (blocked.indexOf(week) === -1)
                         blocked.push(week)

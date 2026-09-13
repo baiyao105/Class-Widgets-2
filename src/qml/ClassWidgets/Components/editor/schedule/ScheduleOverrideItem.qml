@@ -3,6 +3,7 @@ import QtQuick.Controls
 import QtQuick.Layouts
 import RinUI
 import ClassWidgets.Components
+import "../WeekRule.js" as WeekRule
 
 /*
  * One editable override row of the course flyout.
@@ -41,22 +42,32 @@ Item {
 
     readonly property var weeksValue: decodeWeeks(weeks)
     readonly property int cycleCount: context ? context.week.cycle : 1
-    readonly property string repeatType: weeksValue === "all"
-        ? "all"
-        : (Array.isArray(weeksValue) ? "custom" : "round")
-    readonly property int repeatValue: Array.isArray(weeksValue)
-        ? Number(weeksValue[0] || 1)
-        : (typeof weeksValue === "number" ? weeksValue : 1)
-    readonly property var customWeeks: {
-        const result = []
-        for (let i = 0; i < weeksValue.length; ++i) {
-            const value = Number(weeksValue[i])
-            if (isFinite(value) && value >= 1 && result.indexOf(value) === -1)
-                result.push(value)
-        }
-        result.sort((left, right) => left - right)
-        return result
+    // "all" | "cycle" | "specific". Odd/even is a rule of its own and is edited
+    // through the same combo box as a cycle position (see `cycleOptions`), so
+    // it must not be folded into either of the other two modes.
+    readonly property string repeatType: {
+        const type = WeekRule.kind(weeksValue)
+        if (type === "all")
+            return "all"
+        return type === "specific" ? "specific" : "cycle"
     }
+    readonly property var customWeeks: WeekRule.specificWeeks(weeksValue)
+    // The value the cycle combo box carries. Inside a two-week cycle a cycle
+    // position and the semester parity are the same rule, so the numeric form
+    // is used there; longer cycles keep the parity rule as its own value.
+    readonly property var repeatValue: {
+        const rule = WeekRule.decode(weeksValue)
+        if (WeekRule.isList(rule))
+            return rule.length > 0 ? rule[0] : 1
+        if (rule === "odd")
+            return cycleCount === 2 ? 1 : "odd"
+        if (rule === "even")
+            return cycleCount === 2 ? 2 : "even"
+        if (rule === "all")
+            return 1
+        return rule
+    }
+
 
     // Overrides that already claim a week rule for the same entry and day. The
     // row's own records are excluded, so they never block the row itself.
@@ -74,7 +85,7 @@ Item {
                 continue
             if (excludedIds.indexOf(item.id) !== -1)
                 continue
-            const days = Array.isArray(item.dayOfWeek) ? item.dayOfWeek : []
+            const days = WeekRule.dayList(item.dayOfWeek)
             if (days.length > 0 && days.indexOf(contextValue.week.dayOfWeek) === -1)
                 continue
             result.push(item)
@@ -84,7 +95,10 @@ Item {
 
     readonly property bool everyWeekEnabled: {
         for (let i = 0; i < scopes.length; ++i) {
-            if (decodeWeeks(scopes[i].weeks) === "all")
+            const type = WeekRule.kind(scopes[i].weeks)
+            // Both an "every week" and a parity rule already cover weeks that a
+            // new "every week" rule would collide with.
+            if (type === "all" || type === "odd" || type === "even")
                 return false
         }
         return true
@@ -106,34 +120,62 @@ Item {
     }
 
     // The week-cycle sentence is translated as one string with a {value}
-    // placeholder, so translators may move the number (see DayEditor /
-    // WeekSelector). The combo box only carries the bare number.
+    // placeholder, so translators may move the number (see DayEditor). The
+    // combo box only carries the bare number, except for a stored parity rule,
+    // which reads as a complete phrase of its own.
     readonly property string weekCycleFormat: qsTr("Week {value} of every %1 weeks").arg(cycleCount)
-    readonly property string weekCyclePrefix: weekCycleFormat.split("{value}")[0]
-    readonly property string weekCycleSuffix: weekCycleFormat.split("{value}")[1]
+    readonly property bool paritySelected: typeof repeatValue === "string"
+        && (repeatValue === "odd" || repeatValue === "even")
+    readonly property string weekCyclePrefix: paritySelected
+        ? "" : weekCycleFormat.split("{value}")[0]
+    readonly property string weekCycleSuffix: paritySelected
+        ? "" : weekCycleFormat.split("{value}")[1]
     readonly property string weekFormat: qsTr("Week {value}")
     readonly property string weekPrefix: weekFormat.split("{value}")[0]
     readonly property string weekSuffix: weekFormat.split("{value}")[1]
 
+    function cycleLabel(value) {
+        if (value === "odd")
+            return qsTr("Odd Week")
+        if (value === "even")
+            return qsTr("Even Week")
+        return qsTr("%1").arg(value)
+    }
+
+    // 单双周 and 第 x 周 are different rules and are offered side by side, so a
+    // stored parity rule is never read back as a cycle position. The row's own
+    // value is always present, even when another override claims it.
     readonly property var cycleOptions: {
         const result = []
-        for (let i = 0; i < cycleValues.length; ++i) {
-            result.push({
-                text: cycleCount === 2
-                    ? cycleValues[i] === 1 ? qsTr("1") : qsTr("2")
-                    : qsTr("%1").arg(cycleValues[i]),
-                value: cycleValues[i]
-            })
+        const append = function(value) {
+            for (let i = 0; i < result.length; ++i) {
+                if (result[i].value === value)
+                    return
+            }
+            result.push({ text: cycleLabel(value), value: value })
         }
+        for (let i = 0; i < cycleValues.length; ++i)
+            append(cycleValues[i])
+        if (paritySelected) {
+            append("odd")
+            append("even")
+        }
+        append(repeatValue)
         return result
+    }
+
+    function cycleIndex(value) {
+        for (let i = 0; i < cycleOptions.length; ++i) {
+            if (cycleOptions[i].value === value)
+                return i
+        }
+        return -1
     }
 
     readonly property var blockedWeeks: {
         const result = []
         for (let i = 0; i < scopes.length; ++i) {
-            const value = decodeWeeks(scopes[i].weeks)
-            if (!Array.isArray(value))
-                continue
+            const value = WeekRule.specificWeeks(scopes[i].weeks)
             for (let j = 0; j < value.length; ++j) {
                 if (result.indexOf(value[j]) === -1)
                     result.push(value[j])
@@ -189,14 +231,20 @@ Item {
         + " (" + timeLabel + ")"
 
     readonly property string weeksLabel: {
-        const value = weeksValue
-        if (value === "all")
+        const type = WeekRule.kind(weeksValue)
+        if (type === "all")
             return qsTr("Every Week")
-        if (Array.isArray(value)) {
+        if (type === "specific") {
+            const value = WeekRule.specificWeeks(weeksValue)
             return value.length
                 ? qsTr("Week %1").arg(value.join(", "))
                 : qsTr("Specific Weeks")
         }
+        if (type === "odd")
+            return qsTr("Odd Week")
+        if (type === "even")
+            return qsTr("Even Week")
+        const value = WeekRule.decode(weeksValue)
         if (cycleCount === 2)
             return Number(value) === 1 ? qsTr("Odd Week") : qsTr("Even Week")
         return qsTr("Week %2 of every %1 weeks").arg(cycleCount).arg(value)
@@ -255,27 +303,11 @@ Item {
 
     // ── Helpers ────────────────────────────────────────────────────────
     function decodeWeeks(value) {
-        if (Array.isArray(value))
-            return value.slice()
-        if (typeof value === "number")
-            return value
-        if (value === "all" || value === null || value === undefined || value === "")
-            return "all"
-        const text = String(value)
-        if (text.charAt(0) === "[") {
-            try {
-                const parsed = JSON.parse(text)
-                return Array.isArray(parsed) ? parsed : "all"
-            } catch (error) {
-                return "all"
-            }
-        }
-        const number = Number(text)
-        return isFinite(number) ? number : "all"
+        return WeekRule.decode(value)
     }
 
     function decodeIdList(value) {
-        if (Array.isArray(value))
+        if (WeekRule.isList(value))
             return value.map(item => String(item))
         if (typeof value !== "string" || value.charAt(0) !== "[")
             return []
@@ -310,20 +342,16 @@ Item {
     }
 
     function appliesThisWeek(value, week) {
-        if (value === "all")
-            return true
-        if (Array.isArray(value))
-            return value.indexOf(week.current) !== -1
-        const firstWeek = Number(value)
-        return isFinite(firstWeek)
-            && week.current >= firstWeek
-            && (week.current - firstWeek) % week.cycle === 0
+        return WeekRule.matches(value, week.current, week.cycle)
     }
 
     function priorityOf(value) {
-        if (Array.isArray(value))
+        const type = WeekRule.kind(value)
+        if (type === "specific")
             return 3
-        return typeof value === "number" ? 2 : 1
+        if (type === "cycle" || type === "odd" || type === "even")
+            return 2
+        return 1
     }
 
     function isOverridden(overrideId, week, overrides) {
@@ -347,7 +375,7 @@ Item {
             const candidate = overrides[i]
             if (candidate.entryId !== target.entryId)
                 continue
-            const days = Array.isArray(candidate.dayOfWeek) ? candidate.dayOfWeek : []
+            const days = WeekRule.dayList(candidate.dayOfWeek)
             if (days.length > 0 && days.indexOf(contextValue.week.dayOfWeek) === -1)
                 continue
             if (!appliesThisWeek(decodeWeeks(candidate.weeks), week))
@@ -491,16 +519,25 @@ Item {
                             implicitHeight: 32
                             text: qsTr("Repeat on a Cycle")
                             ButtonGroup.group: repeatGroup
-                            checked: root.repeatType === "round"
-                            enabled: root.cycleValues.length > 0
-                            onClicked: root.weeksEdited(root.cycleValues[0])
+                            checked: root.repeatType === "cycle"
+                            enabled: root.cycleOptions.length > 0
+                            onClicked: {
+                                // Keep the current value when the row already
+                                // carries a valid rule; only a fresh row takes
+                                // the most specific free value.
+                                if (root.repeatType === "cycle")
+                                    return
+                                const option = root.cycleOptions[0]
+                                if (option)
+                                    root.weeksEdited(option.value)
+                            }
                         }
                         RadioButton {
                             Layout.fillWidth: true
                             implicitHeight: 32
                             text: qsTr("Specific Weeks")
                             ButtonGroup.group: repeatGroup
-                            checked: root.repeatType === "custom"
+                            checked: root.repeatType === "specific"
                             onClicked: {
                                 if (root.customWeeks.length > 0)
                                     return
@@ -512,7 +549,7 @@ Item {
                     }
 
                     RowLayout {
-                        visible: root.repeatType === "round"
+                        visible: root.repeatType === "cycle"
                         Layout.fillWidth: true
                         Layout.preferredHeight: 32
                         spacing: 2
@@ -523,17 +560,18 @@ Item {
                             model: root.cycleOptions
                             textRole: "text"
                             valueRole: "value"
-                            currentIndex: root.cycleValues.indexOf(root.repeatValue)
+                            currentIndex: root.cycleIndex(root.repeatValue)
                             onActivated: {
-                                if (currentIndex >= 0)
-                                    root.weeksEdited(Number(currentValue))
+                                const option = root.cycleOptions[currentIndex]
+                                if (option)
+                                    root.weeksEdited(option.value)
                             }
                         }
                         Text { text: root.weekCycleSuffix }
                     }
 
                     SpecificWeekEditor {
-                        visible: root.repeatType === "custom"
+                        visible: root.repeatType === "specific"
                         Layout.fillWidth: true
                         weeks: root.customWeeks
                         blockedWeeks: root.blockedWeeks

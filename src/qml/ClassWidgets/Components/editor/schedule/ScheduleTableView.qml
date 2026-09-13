@@ -2,6 +2,7 @@ import QtQuick
 import QtQuick.Controls
 import RinUI
 import ClassWidgets.Components
+import "../WeekRule.js" as WeekRule
 
 /*
  * Calendar-style schedule table.
@@ -115,21 +116,13 @@ Item {
 
     // Absolute week -> cycle week.
     function cycleWeekFor(week) {
-        const cycle = Math.max(1, AppCentral.scheduleEditor.meta.maxWeekCycle)
-        if (week >= 1) return ((week - 1) % cycle) + 1
-        return (((week % cycle) + cycle) % cycle) + 1
+        return WeekRule.cycleWeek(week, AppCentral.scheduleEditor.meta.maxWeekCycle)
     }
 
     function isWeekActive(weeks) {
-        if (!weeks || weeks === "all")
-            return true
-
-        const maxWeekCycle = AppCentral.scheduleEditor.meta.maxWeekCycle
-        if (Array.isArray(weeks))
-            return weeks.indexOf(currentWeek) !== -1
-        if (typeof weeks === "number")
-            return currentWeek >= weeks && (currentWeek - weeks) % maxWeekCycle === 0
-        return false
+        // `weeks` comes from ScheduleEditor.entriesData, where a Python list is
+        // an array-like sequence rather than a JS Array.
+        return WeekRule.matches(weeks, currentWeek, AppCentral.scheduleEditor.meta.maxWeekCycle)
     }
 
     function getDayByColumn(columnIndex) {
@@ -141,7 +134,7 @@ Item {
             if (day.date)
                 continue
 
-            const validDay = !day.dayOfWeek || day.dayOfWeek.indexOf(weekday) !== -1
+            const validDay = WeekRule.dayMatches(day.dayOfWeek, weekday)
             const validWeek = isWeekActive(day.weeks)
             if (validDay && validWeek)
                 return day

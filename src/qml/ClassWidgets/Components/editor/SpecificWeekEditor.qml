@@ -2,6 +2,7 @@ import QtQuick
 import QtQuick.Controls
 import QtQuick.Layouts
 import RinUI
+import "WeekRule.js" as WeekRule
 
 ColumnLayout {
     id: root
@@ -13,31 +14,16 @@ ColumnLayout {
     signal weeksEdited(var weeks)
 
     readonly property int maxSpinBoxValue: 2147483647
-    readonly property var selectedWeeks: {
-        const result = []
-        const values = Array.isArray(weeks) ? weeks : []
-        for (let i = 0; i < values.length; ++i) {
-            const value = Number(values[i])
-            if (isFinite(value) && value >= 1 && result.indexOf(value) === -1)
-                result.push(value)
-        }
-        result.sort((left, right) => left - right)
-        return result
-    }
+    // `weeks` may arrive straight from a C++ property, where a Python list is
+    // an array-like sequence rather than a JS Array (see WeekRule.js).
+    readonly property var selectedWeeks: WeekRule.specificWeeks(weeks)
     readonly property var unavailableWeeks: {
-        const result = []
-        const append = function(value) {
-            const number = Number(value)
-            if (!isFinite(number) || number < 1)
-                return
-            if (result.indexOf(number) === -1)
-                result.push(number)
+        const result = selectedWeeks.slice()
+        const blocked = WeekRule.specificWeeks(blockedWeeks)
+        for (let i = 0; i < blocked.length; ++i) {
+            if (result.indexOf(blocked[i]) === -1)
+                result.push(blocked[i])
         }
-        for (let i = 0; i < selectedWeeks.length; ++i)
-            append(selectedWeeks[i])
-        const blocked = Array.isArray(blockedWeeks) ? blockedWeeks : []
-        for (let i = 0; i < blocked.length; ++i)
-            append(blocked[i])
         return result
     }
     readonly property bool canAddWeek: pendingWeek >= 1
