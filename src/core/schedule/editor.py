@@ -8,7 +8,12 @@ from loguru import logger
 
 from src.core.schedule import ScheduleData, Subject, Timeline, Entry, EntryType
 from src.core.schedule import ScheduleManager
-from src.core.schedule.model import WeekType, Timetable
+from src.core.schedule.model import (
+    Timetable,
+    WeekType,
+    normalize_week_rule,
+    week_rule_matches,
+)
 from src.core.utils import generate_id, get_default_subjects
 
 
@@ -222,7 +227,7 @@ class ScheduleEditor(QObject):
             id=generate_id("day"),
             entries=[],
             dayOfWeek=day_of_week or None,
-            weeks=_jsvalue_to_python(weeks),
+            weeks=normalize_week_rule(_jsvalue_to_python(weeks)),
             date=date or None
         )
         self.schedule.days.append(day)
@@ -244,8 +249,8 @@ class ScheduleEditor(QObject):
         # previous mode so a stale date cannot keep taking precedence.
         day.dayOfWeek = day_of_week or None
         if weeks is not None:
-            weeks = _jsvalue_to_python(weeks)
-            if isinstance(weeks, str) and weeks == WeekType.ALL.value:
+            weeks = normalize_week_rule(_jsvalue_to_python(weeks))
+            if weeks == WeekType.ALL:
                 day.weeks = WeekType.ALL
             else:
                 day.weeks = weeks
@@ -392,7 +397,7 @@ class ScheduleEditor(QObject):
         查找已有 override，返回其 id，如不存在返回空字符串
         """
         day_of_week_list = day_of_week or None
-        weeks = _jsvalue_to_python(weeks)
+        weeks = normalize_week_rule(_jsvalue_to_python(weeks))
         for o in self.schedule.overrides:
             if o.entryId != entry_id:
                 continue
@@ -405,7 +410,7 @@ class ScheduleEditor(QObject):
 
     @Slot(str, list, "QVariant", str, str, result=bool)
     def addOverride(self, entry_id: str, day_of_week, weeks, subject_id="", title=""):
-        weeks = _jsvalue_to_python(weeks)
+        weeks = normalize_week_rule(_jsvalue_to_python(weeks))
         override = Timetable(
             id=generate_id("override"),
             entryId=entry_id,
@@ -770,3 +775,4 @@ class ScheduleEditor(QObject):
     def dirty(self) -> bool:
         """检查是否有未保存的更改"""
         return self._dirty
+
