@@ -47,6 +47,16 @@ Item {
     readonly property int repeatValue: Array.isArray(weeksValue)
         ? Number(weeksValue[0] || 1)
         : (typeof weeksValue === "number" ? weeksValue : 1)
+    readonly property var customWeeks: {
+        const result = []
+        for (let i = 0; i < weeksValue.length; ++i) {
+            const value = Number(weeksValue[i])
+            if (isFinite(value) && value >= 1 && result.indexOf(value) === -1)
+                result.push(value)
+        }
+        result.sort((left, right) => left - right)
+        return result
+    }
 
     // Overrides that already claim a week rule for the same entry and day. The
     // row's own records are excluded, so they never block the row itself.
@@ -95,10 +105,26 @@ Item {
         return result
     }
 
-    readonly property var cycleLabels: {
+    // The week-cycle sentence is translated as one string with a {value}
+    // placeholder, so translators may move the number (see DayEditor /
+    // WeekSelector). The combo box only carries the bare number.
+    readonly property string weekCycleFormat: qsTr("Week {value} of every %1 weeks").arg(cycleCount)
+    readonly property string weekCyclePrefix: weekCycleFormat.split("{value}")[0]
+    readonly property string weekCycleSuffix: weekCycleFormat.split("{value}")[1]
+    readonly property string weekFormat: qsTr("Week {value}")
+    readonly property string weekPrefix: weekFormat.split("{value}")[0]
+    readonly property string weekSuffix: weekFormat.split("{value}")[1]
+
+    readonly property var cycleOptions: {
         const result = []
-        for (let i = 0; i < cycleValues.length; ++i)
-            result.push(cycleName(cycleValues[i]))
+        for (let i = 0; i < cycleValues.length; ++i) {
+            result.push({
+                text: cycleCount === 2
+                    ? cycleValues[i] === 1 ? qsTr("1") : qsTr("2")
+                    : qsTr("%1").arg(cycleValues[i]),
+                value: cycleValues[i]
+            })
+        }
         return result
     }
 
@@ -157,7 +183,7 @@ Item {
         || (entryForId() && (entryForId().title
             || entryForId().subjectId
                 && AppCentral.scheduleEditor.subjectNameById(entryForId().subjectId)))
-        || qsTr("Unnamed Course")
+        || qsTr("Class")
 
     readonly property string summaryText: weeksLabel + " | " + periodLabel
         + " (" + timeLabel + ")"
@@ -169,7 +195,7 @@ Item {
         if (Array.isArray(value)) {
             return value.length
                 ? qsTr("Week %1").arg(value.join(", "))
-                : qsTr("Every Week")
+                : qsTr("Specific Weeks")
         }
         if (cycleCount === 2)
             return Number(value) === 1 ? qsTr("Odd Week") : qsTr("Even Week")
@@ -179,6 +205,11 @@ Item {
     readonly property string periodLabel: startPeriod === endPeriod
         ? qsTr("Period %1").arg(startPeriod)
         : qsTr("Periods %1-%2").arg(startPeriod).arg(endPeriod)
+
+    readonly property string periodRangeFormat: qsTr("Period {from} to {to}")
+    readonly property string periodPrefix: periodRangeFormat.split("{from}")[0]
+    readonly property string periodMiddle: periodRangeFormat.split("{from}")[1].split("{to}")[0]
+    readonly property string periodSuffix: periodRangeFormat.split("{to}")[1]
 
     readonly property string timeLabel: {
         const source = entryForId()
@@ -216,7 +247,8 @@ Item {
         return ""
     }
 
-    width: parent ? parent.width : 0
+    implicitWidth: removed ? 0 : card.implicitWidth
+    width: Math.max(parent ? parent.width : 0, implicitWidth)
     implicitHeight: removed ? 0 : card.implicitHeight
     height: implicitHeight
     visible: !removed
@@ -329,45 +361,18 @@ Item {
         return false
     }
 
-    // A cycle of two weeks is odd / even, longer cycles are numbered.
-    function cycleName(value) {
-        const number = Math.max(1, Number(value) || 1)
-        if (cycleCount === 2)
-            return number === 1 ? qsTr("Odd") : qsTr("Even")
-        return qsTr("Week %1").arg(number)
-    }
-
-    function customWeeksText(value) {
-        return Array.isArray(value)
-            ? value.join("、")
-            : String(Math.max(1, Number(value) || 1))
-    }
-
-    function editCustomWeeks(text) {
-        const result = []
-        const parts = String(text).split(/[,\s，、]+/)
-        for (const part of parts) {
-            const value = Number(part)
-            if (!isFinite(value) || value < 1
-                    || result.indexOf(value) !== -1
-                    || blockedWeeks.indexOf(value) !== -1)
-                continue
-            result.push(value)
-        }
-        if (result.length > 0)
-            weeksEdited(result)
-    }
-
     function firstAvailableCustomWeek() {
-        let value = 1
-        while (blockedWeeks.indexOf(value) !== -1)
-            ++value
-        return value
+        for (let value = 1; value <= cycleCount; ++value) {
+            if (customWeeks.indexOf(value) === -1
+                    && blockedWeeks.indexOf(value) === -1)
+                return value
+        }
+        return 0
     }
 
     Frame {
         id: card
-        width: parent.width
+        width: root.width
         topPadding: root.expanded ? 12 : 4
         bottomPadding: root.expanded ? 10 : 8
         leftPadding: 12
@@ -413,7 +418,8 @@ Item {
                             Layout.fillWidth: true
                             text: root.displayTitle + root.statusSuffix
                             typography: Typography.BodyStrong
-                            wrapMode: Text.WordWrap
+                            opacity: text === qsTr("Class") ? 0.7 : 1  // 当你懒得判断状态的时候be like， 但是确实非常方便硬核（）
+                            wrapMode: Text.WordWrap  // 我看看谁能找到这）
                         }
                         Text {
                             Layout.fillWidth: true
@@ -492,10 +498,16 @@ Item {
                         RadioButton {
                             Layout.fillWidth: true
                             implicitHeight: 32
-                            text: qsTr("One Specific Week")
+                            text: qsTr("Specific Weeks")
                             ButtonGroup.group: repeatGroup
                             checked: root.repeatType === "custom"
-                            onClicked: root.weeksEdited([root.firstAvailableCustomWeek()])
+                            onClicked: {
+                                if (root.customWeeks.length > 0)
+                                    return
+                                const week = root.firstAvailableCustomWeek()
+                                if (week > 0)
+                                    root.weeksEdited([week])
+                            }
                         }
                     }
 
@@ -503,33 +515,29 @@ Item {
                         visible: root.repeatType === "round"
                         Layout.fillWidth: true
                         Layout.preferredHeight: 32
-                        spacing: 10
-                        Text { text: qsTr("Week") }
+                        spacing: 2
+                        Text { text: root.weekCyclePrefix }
                         ComboBox {
                             Layout.fillWidth: true
-                            model: root.cycleLabels
+                            Layout.minimumWidth: 72
+                            model: root.cycleOptions
+                            textRole: "text"
+                            valueRole: "value"
                             currentIndex: root.cycleValues.indexOf(root.repeatValue)
                             onActivated: {
                                 if (currentIndex >= 0)
-                                    root.weeksEdited(root.cycleValues[currentIndex])
+                                    root.weeksEdited(Number(currentValue))
                             }
                         }
-                        Text { text: qsTr("of every %1 weeks").arg(root.cycleCount) }
+                        Text { text: root.weekCycleSuffix }
                     }
 
-                    RowLayout {
+                    SpecificWeekEditor {
                         visible: root.repeatType === "custom"
                         Layout.fillWidth: true
-                        Layout.preferredHeight: 32
-                        spacing: 10
-                        Text { text: qsTr("Weeks") }
-                        TextField {
-                            Layout.fillWidth: true
-                            Layout.preferredHeight: 32
-                            text: root.customWeeksText(root.weeksValue)
-                            placeholderText: qsTr("e.g. 2, 4, 6")
-                            onTextEdited: root.editCustomWeeks(text)
-                        }
+                        weeks: root.customWeeks
+                        blockedWeeks: root.blockedWeeks
+                        onWeeksEdited: value => root.weeksEdited(value)
                     }
                 }
 
@@ -545,8 +553,8 @@ Item {
                     RowLayout {
                         Layout.fillWidth: true
                         Layout.preferredHeight: 32
-                        spacing: 10
-                        Text { text: qsTr("Period") }
+                        spacing: 4
+                        Text { text: root.periodPrefix }
                         ComboBox {
                             Layout.fillWidth: true
                             Layout.minimumWidth: 42
@@ -559,7 +567,7 @@ Item {
                                     )
                             }
                         }
-                        Text { text: qsTr("to") }
+                        Text { text: root.periodMiddle }
                         ComboBox {
                             Layout.fillWidth: true
                             Layout.minimumWidth: 42
@@ -572,6 +580,7 @@ Item {
                                     )
                             }
                         }
+                        Text { text: root.periodSuffix }
                     }
                 }
 

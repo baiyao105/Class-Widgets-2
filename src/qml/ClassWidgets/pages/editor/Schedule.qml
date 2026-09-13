@@ -207,6 +207,7 @@ Item {
 
         ScheduleFlyout {
             id: entryFlyout
+            sourceItem: scheduleTable
         }
     }
 

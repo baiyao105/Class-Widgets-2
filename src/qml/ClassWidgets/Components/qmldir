@@ -25,6 +25,7 @@ SaveFlyout 1.0 editor/SaveFlyout.qml
 SubjectClip 1.0 editor/SubjectClip.qml
 SubjectPickerButton 1.0 editor/SubjectPickerButton.qml
 WeekSelector 1.0 editor/WeekSelector.qml
+SpecificWeekEditor 1.0 editor/SpecificWeekEditor.qml
 WeekdaySelector 1.0 editor/WeekdaySelector.qml
 
 # Editor / Timeline

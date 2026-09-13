@@ -23,6 +23,16 @@ Item {
         return new Date(weekStart.getTime() + columnIndex * 86400000)
     }
 
+    // A CJK short month name is bare digits, which reads as a number rather
+    // than as a month name, so those locales fall back to the written name.
+    // Latin locales keep their abbreviation, uppercased ("SEP").
+    function monthLabel(month) {
+        const shortName = Qt.locale().monthName(month, Locale.ShortFormat)
+        return /\d/.test(shortName)
+            ? Qt.locale().monthName(month, Locale.LongFormat)
+            : shortName.toUpperCase()
+    }
+
     x: -contentX
 
     Row {
@@ -68,7 +78,7 @@ Item {
                             anchors.horizontalCenter: parent.horizontalCenter
                             anchors.top: parent.top
                             anchors.topMargin: 1
-                            text: Qt.locale().monthName(dayHeaderDelegate.dayDate.getMonth(), Locale.LongFormat)
+                            text: root.monthLabel(dayHeaderDelegate.dayDate.getMonth())
                             font.pixelSize: 8
                             color: dayHeaderDelegate.isToday ? Colors.proxy.textOnAccentColor : Colors.proxy.textSecondaryColor
                             visible: dayHeaderDelegate.showMonth

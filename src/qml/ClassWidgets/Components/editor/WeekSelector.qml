@@ -84,7 +84,7 @@ RowLayout {
             onCheckedChanged: if (checked) weekCycleEditor.selectedType = "round"
         }
         SegmentedItem {
-            text: qsTr("One Specific Week")
+            text: qsTr("Specific Weeks")
             onCheckedChanged: if (checked) weekCycleEditor.selectedType = "custom"
         }
     }

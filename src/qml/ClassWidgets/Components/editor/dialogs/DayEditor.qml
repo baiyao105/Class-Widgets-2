@@ -16,9 +16,15 @@ Dialog {
     // 周循环文案格式
     property int maxWeekCycle: AppCentral.scheduleEditor.meta.maxWeekCycle
     property int roundWeek: 1
-    property int customWeek: 1
+    property var customWeeks: []
+    property bool canAccept: false
+    property bool initialized: false
     onRoundWeekChanged: checkValid()
-    onCustomWeekChanged: checkValid()
+    onCustomWeeksChanged: {
+        checkValid()
+        if (weekCycleCustom)
+            weekCycleCustom.weeks = customWeeks
+    }
     property var roundWeekOptions: []
     property string weekCycleFormat: qsTr("Week {value} of every %1 weeks").arg(maxWeekCycle)
     property string weekCyclePrefix: weekCycleFormat.split("{value}")[0]
@@ -48,13 +54,46 @@ Dialog {
             roundWeek = cycleLength
         }
     }
+
+    function normalizedCustomWeeks(values) {
+        var result = []
+        var source = Array.isArray(values) ? values : []
+        for (var i = 0; i < source.length; i++) {
+            var value = Number(source[i])
+            if (isFinite(value) && value >= 1
+                    && result.indexOf(value) === -1)
+                result.push(value)
+        }
+        result.sort((left, right) => left - right)
+        return result
+    }
+
+    function normalizeCustomWeeks() {
+        customWeeks = normalizedCustomWeeks(customWeeks)
+    }
+
+    function firstAvailableCustomWeek() {
+        var value = 1
+        while (customWeeks.indexOf(value) !== -1)
+            value++
+        return value
+    }
+
+    function setOkEnabled(enabled) {
+        if (footer && footer.okButton)
+            footer.okButton.enabled = enabled
+    }
     onMaxWeekCycleChanged: {
         normalizeRoundWeek()
+        normalizeCustomWeeks()
         updateRoundWeekOptions()
     }
     Component.onCompleted: {
         normalizeRoundWeek()
+        normalizeCustomWeeks()
         updateRoundWeekOptions()
+        initialized = true
+        checkValid()
     }
 
     // 打开方式
@@ -101,27 +140,34 @@ Dialog {
         weekCycleTypeRound.checked = typeof currentData.weeks === "number"
         if (weekCycleTypeRound.checked) roundWeek = Number(currentData.weeks)
         weekCycleTypeCustom.checked = Array.isArray(currentData.weeks)
-        if (weekCycleTypeCustom.checked && currentData.weeks.length > 0) customWeek = Number(currentData.weeks[0])
+        customWeeks = weekCycleTypeCustom.checked
+            ? normalizedCustomWeeks(currentData.weeks)
+            : []
 
         checkValid()
     }
 
     // 检查是否可以启用 Ok
     function checkValid() {
+        if (!initialized)
+            return
+
         var valid = false
 
         if (daySegmented.currentIndex === 0) {
             // 星期模式
             var hasDaySelected = dayButtons.selectedDays.length > 0
             if (!hasDaySelected) valid = false
-            else if (weekCycleTypeAll.checked || weekCycleTypeCustom.checked) valid = true
+            else if (weekCycleTypeAll.checked) valid = true
+            else if (weekCycleTypeCustom.checked && customWeeks.length > 0) valid = true
             else if (weekCycleTypeRound.checked && roundWeek >= 1) valid = true
         } else {
             // 日期模式
             valid = !!dayDate.selectedDate
         }
 
-        footer.okButton.enabled = valid
+        canAccept = valid
+        setOkEnabled(valid)
     }
 
     ColumnLayout {
@@ -180,7 +226,18 @@ Dialog {
                     spacing: 12
                     RadioButton { id: weekCycleTypeAll; text: qsTr("Every Week"); onCheckedChanged: dayEditor.checkValid() }
                     RadioButton { id: weekCycleTypeRound; text: qsTr("Repeat on a Cycle"); onCheckedChanged: dayEditor.checkValid() }
-                    RadioButton { id: weekCycleTypeCustom; text: qsTr("One Specific Week"); onCheckedChanged: dayEditor.checkValid() }
+                    RadioButton {
+                        id: weekCycleTypeCustom
+                        text: qsTr("Specific Weeks")
+                        onCheckedChanged: dayEditor.checkValid()
+                        onClicked: {
+                            if (dayEditor.customWeeks.length > 0)
+                                return
+                            const week = dayEditor.firstAvailableCustomWeek()
+                            if (week > 0)
+                                dayEditor.customWeeks = [week]
+                        }
+                    }
                 }
 
                 RowLayout {
@@ -199,18 +256,11 @@ Dialog {
                     Text { text: weekCycleSuffix }
                 }
 
-                RowLayout {
+                SpecificWeekEditor {
+                    id: weekCycleCustom
                     visible: weekCycleTypeCustom.checked
-                    spacing: 2
-                    Text { text: weekPrefix }
-                    SpinBox {
-                        id: weekCycleCustom
-                        from: 1
-                        to: 9999
-                        value: dayEditor.customWeek
-                        onValueChanged: dayEditor.customWeek = value
-                    }
-                    Text { text: weekSuffix }
+                    Layout.fillWidth: true
+                    onWeeksEdited: value => dayEditor.customWeeks = value
                 }
             }
         }
@@ -233,7 +283,7 @@ Dialog {
                 } else if (weekCycleTypeRound.checked) {
                     weeks = roundWeek
                 } else if (weekCycleTypeCustom.checked) {
-                    weeks = [customWeek]
+                    weeks = customWeeks.slice()
                 }
             } else {
                 // 日期模式
@@ -250,7 +300,9 @@ Dialog {
         onRejected: dayEditor.close()
 
         Component.onCompleted: {
-            okButton.enabled = false
+            Qt.callLater(function() {
+                dayEditor.setOkEnabled(dayEditor.canAccept)
+            })
         }
     }
 }

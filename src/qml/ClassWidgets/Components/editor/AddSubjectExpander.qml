@@ -38,6 +38,7 @@ Item {
 
     // —— Drag state —— //
     property bool _positionInitialized: false
+    property bool _userPositioned: false
     property real _velocityX: 0
     property real _velocityY: 0
     property var _dragSamples: []
@@ -74,16 +75,20 @@ Item {
         return pos
     }
 
-    function _ensurePosition() {
-        // bottomAnchorY can still be 0 while the page layout is being built.
-        // Waiting avoids initializing the panel at the top before it settles.
-        if (_positionInitialized || !parent || width <= 0 || height <= 0
+    function _placeDefaultPosition() {
+        // Layout anchors can briefly report incomplete values. Keep defaulting
+        // to the bottom-right corner until the user actually drags the panel.
+        if (!parent || width <= 0 || height <= 0
                 || parent.width <= 0 || parent.height <= 0 || bottomAnchorY <= 0)
             return
 
         const bounds = _bounds()
         x = bounds.maxX
-        y = bounds.maxY
+        // If the anchor is temporarily too high to fit the panel, use the
+        // page bottom instead of locking the panel to the top edge.
+        y = bounds.maxY <= bounds.minY
+            ? Math.max(bounds.minY, parent.height - edgeMargin - height)
+            : bounds.maxY
         _positionInitialized = true
     }
 
@@ -97,10 +102,12 @@ Item {
     }
 
     function _syncPosition() {
+        if (!_userPositioned) {
+            _placeDefaultPosition()
+            return
+        }
         if (_positionInitialized)
             _reconcilePosition()
-        else
-            _ensurePosition()
     }
 
     function _startInertia() {
@@ -113,6 +120,9 @@ Item {
     function showPanel() {
         visible = true
         _syncPosition()
+        // Re-run after the popup/layout pass in case bottomAnchorY settles
+        // on the next event-loop turn.
+        Qt.callLater(_syncPosition)
     }
 
     function hidePanel() {
@@ -124,10 +134,10 @@ Item {
         visible ? hidePanel() : showPanel()
     }
 
-    Component.onCompleted: _ensurePosition()
+    Component.onCompleted: _syncPosition()
 
-    // Re-clamp the current position when the parent, panel or anchor geometry
-    // changes; never re-dock it.
+    // Before the first drag, keep recalculating the default bottom-right
+    // position while page geometry settles. Afterwards only clamp it.
     onWidthChanged: _syncPosition()
     onHeightChanged: _syncPosition()
     onBottomAnchorYChanged: _syncPosition()
@@ -269,6 +279,7 @@ Item {
 
             onActiveChanged: {
                 if (active) {
+                    root._userPositioned = true
                     physicsAnimation.running = false
                     root._velocityX = 0
                     root._velocityY = 0

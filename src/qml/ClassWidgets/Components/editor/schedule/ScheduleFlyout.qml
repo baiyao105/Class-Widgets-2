@@ -9,6 +9,7 @@ Flyout {
     property var entry: null
     property var selectedCell: null
     property var weekSelector: null
+    property Item sourceItem: null
     property int overridesRevision: AppCentral.scheduleEditor.overridesRevision
     property bool syncing: false
     property var baseDayEntries: []
@@ -36,6 +37,34 @@ Flyout {
     leftPadding: 16
     rightPadding: 16
     position: Position.Right
+
+    background: Item {
+        id: backgroundContainer
+        clip: true
+
+        layer.enabled: true
+        layer.effect: Shadow {
+            style: "flyout"
+            source: backgroundContainer
+        }
+
+        AcrylicBrush {
+            anchors.fill: parent
+            sourceItem: root.sourceItem
+            enabled: root.sourceItem !== null
+            radius: 8
+            z: 0
+        }
+
+        Rectangle {
+            anchors.fill: parent
+            radius: 8
+            color: "transparent"
+            border.color: Theme.currentTheme.colors.flyoutBorderColor
+            border.width: 1
+            z: 1
+        }
+    }
 
     ListModel {
         id: overrideModel
@@ -556,11 +585,16 @@ Flyout {
 
         Flickable {
             id: overrideFlick
-            implicitWidth: 0
+            implicitWidth: Math.min(
+                overrideColumn.implicitWidth,
+                root.overlayWidth > 0
+                    ? Math.max(0, root.overlayWidth - 32)
+                    : overrideColumn.implicitWidth
+            )
             Layout.fillWidth: true
             Layout.preferredHeight: Math.min(contentHeight, root.maxListHeight)
             implicitHeight: Math.min(contentHeight, root.maxListHeight)
-            contentWidth: width
+            contentWidth: Math.max(width, overrideColumn.implicitWidth)
             contentHeight: overrideColumn.implicitHeight
             clip: true
             boundsBehavior: Flickable.StopAtBounds
@@ -569,7 +603,7 @@ Flyout {
 
             Column {
                 id: overrideColumn
-                width: overrideFlick.width
+                width: Math.max(overrideFlick.width, overrideColumn.implicitWidth)
                 spacing: 4
 
                 Repeater {
