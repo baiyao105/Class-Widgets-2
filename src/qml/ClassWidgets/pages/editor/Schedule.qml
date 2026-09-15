@@ -22,9 +22,7 @@ Item {
         let entry = scheduleTable.getEntryByDayAndRow(day, row, column)
         if (!entry) return;
 
-        // currentWeek is always an absolute week here; it is converted to a
-        // week within the cycle when the override is written.
-        let weeks = scheduleTable.cycleWeekFor(root.currentWeek);
+        let weeks = "all";  // 默认每周
         let dayOfWeek = [scheduleTable.dayOfWeekForColumn(column)]
 
         const existingId = AppCentral.scheduleEditor.findOverride(entry.id, dayOfWeek, weeks)
