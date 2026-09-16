@@ -33,10 +33,6 @@ Item {
     readonly property int cardTimeLineHeight: 14
     readonly property int mergedContentTopInset: 12
     readonly property int bottomPadding: 28
-    // Courses without an explicit subject color (the default course) use
-    // RinUI's neutral system color instead of the theme accent color.
-    readonly property color defaultCourseColor: Colors.proxy.systemNeutralColor
-
     property int itemWidth: Math.max((width - timeGutterWidth) / 7, 120)
 
     // Current absolute week (calculated from the semester start date).
@@ -511,17 +507,12 @@ Item {
         // invalidate the clicked entry.
         for (let i = 0; i < result.length; ++i) {
             const visual = result[i]
-            const subject = subjectById(visual.entry.subjectId)
             visual.card = {
                 entry: visual.entry,
                 row: visual.row,
                 startY: visual.span.y,
                 cardHeight: visual.span.height,
-                color: subject && subject.color ? subject.color : defaultCourseColor,
                 title: entryTitle(visual.entry),
-                iconName: subject && subject.icon
-                    ? subject.icon
-                    : "ic_fluent_hexagon_three_20_regular",
                 timeTexts: visual.timeTexts
             }
         }
@@ -856,9 +847,7 @@ Item {
                                 && root.selectedCell.row === modelData.row
 
                             entry: cardData.entry
-                            cardColor: cardData.color
                             cardTitle: cardData.title
-                            iconName: cardData.iconName
                             timeTexts: cardData.timeTexts
                             startY: cardData.startY
                             cardHeight: cardData.cardHeight

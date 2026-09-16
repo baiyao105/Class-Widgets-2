@@ -15,10 +15,33 @@ Item {
     clip: false
 
     property var entry: null
-    // Courses without an explicit subject color (the default course) use
-    // RinUI's neutral system color instead of the theme accent color.
+    property var subjects: AppCentral.scheduleEditor
+        ? AppCentral.scheduleEditor.subjects || []
+        : []
+
+    // The timeline's default subject is stored on the entry itself. Resolve it
+    // here so the card can render its icon and color before any day-specific
+    // override is involved.
+    function subjectForEntry() {
+        const subjectId = entry ? entry.subjectId : ""
+        if (!subjectId)
+            return null
+        for (let i = 0; i < subjects.length; ++i) {
+            if (String(subjects[i].id) === String(subjectId))
+                return subjects[i]
+        }
+        return null
+    }
+
+    readonly property var entrySubject: subjectForEntry()
     readonly property color defaultCourseColor: Colors.proxy.systemNeutralColor
-    property color cardColor: defaultCourseColor
+    readonly property string defaultCourseIcon: "ic_fluent_hexagon_three_20_regular"
+    property color cardColor: entrySubject && entrySubject.color
+        ? entrySubject.color
+        : defaultCourseColor
+    property string iconName: entrySubject && entrySubject.icon
+        ? entrySubject.icon
+        : defaultCourseIcon
 
     // --- Derived card palette -------------------------------------------
     // `cardColor` is subject data: any hue at any brightness. Stacking it at
@@ -97,7 +120,6 @@ Item {
     property string cardTitle: ""
     property string timeText: ""
     property var timeTexts: []
-    property string iconName: ""
 
     property real startY: 0
     property real cardHeight: 2
