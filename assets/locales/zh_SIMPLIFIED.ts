@@ -3195,22 +3195,22 @@ It&apos;s incompatible and may cause unexpected issues.</source>
         <translation type="vanished">写！</translation>
     </message>
     <message>
-        <location filename="../../src/qml/ClassWidgets/pages/editor/Schedule.qml" line="107"/>
+        <location filename="../../src/qml/ClassWidgets/pages/editor/Schedule.qml" line="105"/>
         <source>Week %1</source>
         <translation>微弱的 %1</translation>
     </message>
     <message>
-        <location filename="../../src/qml/ClassWidgets/pages/editor/Schedule.qml" line="114"/>
+        <location filename="../../src/qml/ClassWidgets/pages/editor/Schedule.qml" line="112"/>
         <source>MMMM yyyy</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/qml/ClassWidgets/pages/editor/Schedule.qml" line="135"/>
+        <location filename="../../src/qml/ClassWidgets/pages/editor/Schedule.qml" line="133"/>
         <source>Today</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/qml/ClassWidgets/pages/editor/Schedule.qml" line="180"/>
+        <location filename="../../src/qml/ClassWidgets/pages/editor/Schedule.qml" line="178"/>
         <source>Quick Fill</source>
         <translation type="unfinished"></translation>
     </message>
@@ -3616,13 +3616,13 @@ It&apos;s incompatible and may cause unexpected issues.</source>
 <context>
     <name>ScheduleTableView</name>
     <message>
-        <location filename="../../src/qml/ClassWidgets/Components/editor/schedule/ScheduleTableView.qml" line="197"/>
-        <location filename="../../src/qml/ClassWidgets/Components/editor/schedule/ScheduleTableView.qml" line="200"/>
+        <location filename="../../src/qml/ClassWidgets/Components/editor/schedule/ScheduleTableView.qml" line="193"/>
+        <location filename="../../src/qml/ClassWidgets/Components/editor/schedule/ScheduleTableView.qml" line="196"/>
         <source>Class</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/qml/ClassWidgets/Components/editor/schedule/ScheduleTableView.qml" line="911"/>
+        <location filename="../../src/qml/ClassWidgets/Components/editor/schedule/ScheduleTableView.qml" line="900"/>
         <source>No classes this week</source>
         <translation type="unfinished"></translation>
     </message>
