@@ -1,8 +1,9 @@
 from collections import defaultdict
 
+from pydantic import BaseModel, ConfigDict, Field
 from PySide6.QtCore import QLocale
 from PySide6.QtWidgets import QApplication
-from pydantic import BaseModel, ConfigDict, Field
+
 from src import __CSES_SCHEMA_VERSION__
 from src.core.schedule.model import (
     Entry,

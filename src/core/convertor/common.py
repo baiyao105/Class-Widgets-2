@@ -1,5 +1,6 @@
 import json
 from datetime import date, datetime
+from itertools import pairwise
 from pathlib import Path
 from typing import Any
 
@@ -12,7 +13,7 @@ from src.core.utils import generate_id
 
 
 def load_json(path: str | Path) -> Any:
-    with open(path, "r", encoding="utf-8") as f:
+    with open(path, encoding="utf-8") as f:
         return json.load(f)
 
 
@@ -24,7 +25,7 @@ def dump_json(document: Any, output: str | Path) -> Path:
 
 
 def load_yaml(path: str | Path) -> Any:
-    with open(path, "r", encoding="utf-8") as f:
+    with open(path, encoding="utf-8") as f:
         return yaml.safe_load(f)
 
 
@@ -112,7 +113,7 @@ def fill_short_breaks(entries: list[Entry], max_gap_minutes: int = 30) -> list[E
     ]
     result = list(entries)
 
-    for previous, current in zip(class_entries, class_entries[1:]):
+    for previous, current in pairwise(class_entries):
         gap_start = _time_to_minutes(previous.endTime)
         gap_end = _time_to_minutes(current.startTime)
         gap_minutes = gap_end - gap_start

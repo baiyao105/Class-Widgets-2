@@ -32,71 +32,6 @@ FluentPage {
                 onClicked: AppCentral.scheduleManager.openSchedulesFolder()
             }
 
-            DropDownButton {
-                enabled: !AppCentral.scheduleManager.isReadonly()
-                flat: true
-                icon.name: "ic_fluent_arrow_enter_20_regular"
-                text: qsTr("Import Schedule")
-
-                MenuItem {
-                    icon.name: "ic_fluent_checkmark_starburst_20_regular"
-                    text: qsTr("Import from Class Widgets 2")
-                    onTriggered: {
-                        if (!AppCentral.scheduleManager.importSchedule()) {
-                            floatLayer.createInfoBar(
-                            {
-                                severity: Severity.Error,
-                                title: qsTr("Import Failed"),
-                                text: qsTr(
-                                    "Failed to import the schedule." +
-                                    "Please check if the schedule file is valid."
-                                )
-                            }
-                        )
-                        }
-                    }
-                }
-                MenuSeparator {}
-                MenuItem {
-                    icon.source: PathManager.images("icons/smart_teach.svg")
-                    text: qsTr("Import from CSES")
-                    onTriggered: {
-                        if (AppCentral.scheduleManager.scheduleIO.importCSES()) {
-                            floatLayer.createInfoBar({
-                                severity: Severity.Success,
-                                title: qsTr("Import Success"),
-                                text: qsTr("The schedule has been imported successfully.")
-                            })
-                        } else {
-                            floatLayer.createInfoBar({
-                                severity: Severity.Error,
-                                title: qsTr("Import Failed"),
-                                text: qsTr("Failed to import the schedule. Please check if the schedule file is valid.")
-                            })
-                        }
-                    }
-                }
-                MenuItem {
-                    icon.name: "ic_fluent_arrow_upload_20_regular"
-                    text: qsTr("Import from Class Widgets 1")
-                    onTriggered: {
-                        if (AppCentral.scheduleManager.scheduleIO.importCW1()) {
-                            floatLayer.createInfoBar({
-                                severity: Severity.Success,
-                                title: qsTr("Import Success"),
-                                text: qsTr("The schedule has been imported successfully.")
-                            })
-                        } else {
-                            floatLayer.createInfoBar({
-                                severity: Severity.Error,
-                                title: qsTr("Import Failed"),
-                                text: qsTr("Failed to import the schedule. Please check if the schedule file is valid.")
-                            })
-                        }
-                    }
-                }
-            }
-
             ToolSeparator {
                 Layout.fillHeight: true
             }
@@ -105,8 +40,8 @@ FluentPage {
                 flat: true
                 highlighted: true
                 icon.name: "ic_fluent_add_20_regular"
-                text: qsTr("Create a new schedule")
-                onClicked: createScheduleDialog.open()
+                text: qsTr("New Schedule")
+                onClicked: scheduleSetupDialog.open()
             }
         }
     }
@@ -176,67 +111,15 @@ FluentPage {
         }
     }
 
-    Dialog {
-        id: createScheduleDialog
-        modal: true
-        title: qsTr("Create a new schedule")
-        Text {
-            Layout.fillWidth: true
-            text: qsTr("Enter a name for your new schedule")
-        }
+    ScheduleSetupDialog {
+        id: scheduleSetupDialog
 
-        ColumnLayout {
-            Layout.fillWidth: true
-            TextField {
-                id: scheduleNameField
-                Layout.fillWidth: true
-                placeholderText: qsTr("Schedule name")
-                onTextChanged: {
-                    const okBtn = createScheduleDialog.footer.standardButton(DialogButtonBox.Ok)
-                    okBtn.enabled = scheduleNameField.text.length > 0 &&
-                        !AppCentral.scheduleManager.checkNameExists(scheduleNameField.text)
-                    validator.visible = true
-                }
-            }
-            Text {
-                id: validator
-                visible: false
-                Layout.fillWidth: true
-                typography: Typography.Caption
-                color: {
-                    if (!scheduleNameField.text) {
-                        return Colors.proxy.systemCriticalColor
-                    }
-                    if (AppCentral.scheduleManager.checkNameExists(scheduleNameField.text)) {
-                        return Colors.proxy.systemCriticalColor
-                    }
-                    return Colors.proxy.systemSuccessColor
-                }
-                text: {
-                    if (!scheduleNameField.text) {
-                        return qsTr("Cannot be empty (⊙x⊙;)")
-                    }
-                    if (AppCentral.scheduleManager.checkNameExists(scheduleNameField.text)) {
-                        return qsTr("Cannot duplicate existing name (⊙x⊙;)")
-                    }
-                    return qsTr("Great! That's it. ヾ(≧▽≦*)o")
-                }
-            }
-        }
-
-        footer: DialogButtonBox {
-            standardButtons: DialogButtonBox.Ok | DialogButtonBox.Cancel
-
-            onAccepted: {
-                AppCentral.scheduleManager.add(scheduleNameField.text)
-                createScheduleDialog.close()
-            }
-            onRejected: createScheduleDialog.close()
-
-            Component.onCompleted: {
-                const okBtn = standardButton(DialogButtonBox.Ok)
-                okBtn.enabled = false // 初始禁用
-            }
+        onScheduleCreated: {
+            floatLayer.createInfoBar({
+                severity: Severity.Success,
+                title: qsTr("Schedule Created"),
+                text: qsTr("The schedule has been created successfully.")
+            })
         }
     }
 }

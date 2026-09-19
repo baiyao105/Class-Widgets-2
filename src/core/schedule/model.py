@@ -8,7 +8,7 @@ from src import __SCHEDULE_SCHEMA_VERSION__
 
 class EntryType(str, Enum):
     CLASS = "class"
-    BREAK = "break"
+    BREAK = "break" 
     ACTIVITY = "activity"
     FREE = "free"
     PREPARATION = "preparation"

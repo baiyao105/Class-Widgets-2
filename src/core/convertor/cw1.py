@@ -162,7 +162,7 @@ def _build_entries(
     return fill_short_breaks(entries)
 
 
-def _append_timeline_days(
+def _append_timeline_days(  # noqa: PLR0917
     days: list[Timeline],
     cw1: dict,
     subject_id_map: dict[str, str],
