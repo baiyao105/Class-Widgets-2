@@ -71,6 +71,9 @@ Item {
     readonly property real textLuminance: darkTheme ? 0.60 : 0.05
     readonly property real toneSaturationCap: 0.8
     readonly property real surfaceAlpha: 0.75
+    // The selected card is highlighted with a fully opaque tone so it reads
+    // as clearly selected instead of just a slightly heavier tint.
+    readonly property real highlightAlpha: 1.0
 
     function channelLuminance(c) {
         return c <= 0.04045
@@ -113,7 +116,7 @@ Item {
     )
     readonly property color cardHighlightColor: Qt.alpha(
         atLuminance(cardColor, highlightLuminance),
-        surfaceAlpha
+        highlightAlpha
     )
     readonly property color cardTextColor: atLuminance(cardColor, textLuminance)
 
@@ -263,10 +266,10 @@ Item {
     }
 
     // Selection remains per logical entry, but a merged run is highlighted as
-    // one visual course. The overlay is a brighter tone of the same base,
-    // not a more opaque copy of it, so selecting a card no longer changes how
-    // much of the panel shows through. Each segment supplies its own corners
-    // so the overlay still follows the rounded silhouette of the whole run.
+    // one visual course. The overlay is a fully opaque brighter tone of the
+    // same base, so selecting a card reads as a clear, solid highlight. Each
+    // segment supplies its own corners so the overlay still follows the
+    // rounded silhouette of the whole run.
     Rectangle {
         anchors.left: parent.left
         anchors.right: parent.right

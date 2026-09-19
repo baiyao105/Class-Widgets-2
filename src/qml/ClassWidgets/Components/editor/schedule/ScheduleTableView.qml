@@ -466,9 +466,14 @@ Item {
         // The lead owns the group's painted background, so give it the same
         // bottom edge as the final segment. That segment's inset is only final
         // after every adjacent pair has been normalized above.
+        //
+        // `joinBottom` alone would also match a middle segment of a run of
+        // three or more entries (every interior card is joined both above and
+        // below). Only the head of the run points to itself, so require
+        // `groupLeadIndex === i` to grant it the shared group geometry.
         for (let i = 0; i < result.length; ++i) {
             const lead = result[i]
-            if (lead.joinBottom !== true)
+            if (lead.joinBottom !== true || lead.groupLeadIndex !== i)
                 continue
             let tail = lead
             for (let j = i + 1; j < result.length; ++j) {
