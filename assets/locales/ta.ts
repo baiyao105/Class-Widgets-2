@@ -1165,7 +1165,7 @@ Do you want to continue using them, or discard and restore the original schedule
     <name>ExportScheduleDialog</name>
     <message>
         <location filename="../../src/core/convertor/slots.py" line="23"/>
-        <location filename="../../src/core/schedule/manager.py" line="286"/>
+        <location filename="../../src/core/schedule/manager.py" line="317"/>
         <source>Export Schedule</source>
         <translation>ஏற்றுமதி அட்டவணை</translation>
     </message>
@@ -1175,7 +1175,7 @@ Do you want to continue using them, or discard and restore the original schedule
         <translation>CSES வடிவம் (*.yaml *.yml)</translation>
     </message>
     <message>
-        <location filename="../../src/core/schedule/manager.py" line="289"/>
+        <location filename="../../src/core/schedule/manager.py" line="320"/>
         <source>Class Widgets 2 JSON Files (*.json)</source>
         <translation>வகுப்பு விட்செட்டுகள் 2 சாதொபொகு கோப்புகள் (*.json)</translation>
     </message>
@@ -1285,110 +1285,104 @@ Do you want to continue using them, or discard and restore the original schedule
         <translation>அட்டவணை கோப்புறையைத் திறக்கவும்</translation>
     </message>
     <message>
-        <location filename="../../src/qml/ClassWidgets/pages/editor/Home.qml" line="39"/>
         <source>Import Schedule</source>
-        <translation>இறக்குமதி அட்டவணை</translation>
+        <translation type="vanished">இறக்குமதி அட்டவணை</translation>
+    </message>
+    <message>
+        <source>Import from Class Widgets 2</source>
+        <translation type="vanished">வகுப்பு விட்செட்டுகள் 2 இலிருந்து இறக்குமதி செய்யவும்</translation>
+    </message>
+    <message>
+        <source>Import Failed</source>
+        <translation type="vanished">இறக்குமதி தோல்வி</translation>
+    </message>
+    <message>
+        <source>Failed to import the schedule.Please check if the schedule file is valid.</source>
+        <translation type="vanished">அட்டவணையை இறக்குமதி செய்ய முடியவில்லை. அட்டவணை கோப்பு சரியானதா என சரிபார்க்கவும்.</translation>
+    </message>
+    <message>
+        <source>Import from CSES</source>
+        <translation type="vanished">CSES இலிருந்து இறக்குமதி செய்யவும்</translation>
+    </message>
+    <message>
+        <source>Import Success</source>
+        <translation type="vanished">இறக்குமதி செய்</translation>
+    </message>
+    <message>
+        <source>The schedule has been imported successfully.</source>
+        <translation type="vanished">அட்டவணை வெற்றிகரமாக இறக்குமதி செய்யப்பட்டது.</translation>
+    </message>
+    <message>
+        <source>Failed to import the schedule. Please check if the schedule file is valid.</source>
+        <translation type="vanished">அட்டவணையை இறக்குமதி செய்ய முடியவில்லை. அட்டவணை கோப்பு சரியானதா என சரிபார்க்கவும்.</translation>
+    </message>
+    <message>
+        <source>Import from Class Widgets 1</source>
+        <translation type="vanished">வகுப்பு விட்செட்டுகள் 1 இலிருந்து இறக்குமதி செய்யவும்</translation>
+    </message>
+    <message>
+        <source>Create a new schedule</source>
+        <translation type="vanished">புதிய அட்டவணையை உருவாக்கவும்</translation>
     </message>
     <message>
         <location filename="../../src/qml/ClassWidgets/pages/editor/Home.qml" line="43"/>
-        <source>Import from Class Widgets 2</source>
-        <translation>வகுப்பு விட்செட்டுகள் 2 இலிருந்து இறக்குமதி செய்யவும்</translation>
+        <source>New Schedule</source>
+        <translation type="unfinished">புதிய அட்டவணை</translation>
     </message>
     <message>
-        <location filename="../../src/qml/ClassWidgets/pages/editor/Home.qml" line="49"/>
-        <location filename="../../src/qml/ClassWidgets/pages/editor/Home.qml" line="73"/>
-        <location filename="../../src/qml/ClassWidgets/pages/editor/Home.qml" line="92"/>
-        <source>Import Failed</source>
-        <translation>இறக்குமதி தோல்வி</translation>
-    </message>
-    <message>
-        <location filename="../../src/qml/ClassWidgets/pages/editor/Home.qml" line="50"/>
-        <source>Failed to import the schedule.Please check if the schedule file is valid.</source>
-        <translation>அட்டவணையை இறக்குமதி செய்ய முடியவில்லை. அட்டவணை கோப்பு சரியானதா என சரிபார்க்கவும்.</translation>
-    </message>
-    <message>
-        <location filename="../../src/qml/ClassWidgets/pages/editor/Home.qml" line="62"/>
-        <source>Import from CSES</source>
-        <translation>CSES இலிருந்து இறக்குமதி செய்யவும்</translation>
-    </message>
-    <message>
-        <location filename="../../src/qml/ClassWidgets/pages/editor/Home.qml" line="67"/>
-        <location filename="../../src/qml/ClassWidgets/pages/editor/Home.qml" line="86"/>
-        <source>Import Success</source>
-        <translation>இறக்குமதி செய்</translation>
-    </message>
-    <message>
-        <location filename="../../src/qml/ClassWidgets/pages/editor/Home.qml" line="68"/>
-        <location filename="../../src/qml/ClassWidgets/pages/editor/Home.qml" line="87"/>
-        <source>The schedule has been imported successfully.</source>
-        <translation>அட்டவணை வெற்றிகரமாக இறக்குமதி செய்யப்பட்டது.</translation>
-    </message>
-    <message>
-        <location filename="../../src/qml/ClassWidgets/pages/editor/Home.qml" line="74"/>
-        <location filename="../../src/qml/ClassWidgets/pages/editor/Home.qml" line="93"/>
-        <source>Failed to import the schedule. Please check if the schedule file is valid.</source>
-        <translation>அட்டவணையை இறக்குமதி செய்ய முடியவில்லை. அட்டவணை கோப்பு சரியானதா என சரிபார்க்கவும்.</translation>
-    </message>
-    <message>
-        <location filename="../../src/qml/ClassWidgets/pages/editor/Home.qml" line="81"/>
-        <source>Import from Class Widgets 1</source>
-        <translation>வகுப்பு விட்செட்டுகள் 1 இலிருந்து இறக்குமதி செய்யவும்</translation>
-    </message>
-    <message>
-        <location filename="../../src/qml/ClassWidgets/pages/editor/Home.qml" line="108"/>
-        <location filename="../../src/qml/ClassWidgets/pages/editor/Home.qml" line="182"/>
-        <source>Create a new schedule</source>
-        <translation>புதிய அட்டவணையை உருவாக்கவும்</translation>
-    </message>
-    <message>
-        <location filename="../../src/qml/ClassWidgets/pages/editor/Home.qml" line="118"/>
+        <location filename="../../src/qml/ClassWidgets/pages/editor/Home.qml" line="53"/>
         <source>Your schedules</source>
         <translation>உங்கள் அட்டவணைகள்</translation>
     </message>
     <message>
-        <location filename="../../src/qml/ClassWidgets/pages/editor/Home.qml" line="150"/>
+        <location filename="../../src/qml/ClassWidgets/pages/editor/Home.qml" line="85"/>
         <source>Save changes to the timetable</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/qml/ClassWidgets/pages/editor/Home.qml" line="153"/>
+        <location filename="../../src/qml/ClassWidgets/pages/editor/Home.qml" line="88"/>
         <source>Do you want to save the changes to &quot;%1&quot;?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/qml/ClassWidgets/pages/editor/Home.qml" line="164"/>
+        <location filename="../../src/qml/ClassWidgets/pages/editor/Home.qml" line="99"/>
         <source>Save Failed</source>
         <translation type="unfinished">சேமிக்க முடியவில்லை</translation>
     </message>
     <message>
-        <location filename="../../src/qml/ClassWidgets/pages/editor/Home.qml" line="166"/>
+        <location filename="../../src/qml/ClassWidgets/pages/editor/Home.qml" line="101"/>
         <source>Failed to save schedule, see log for details</source>
         <translation type="unfinished">அட்டவணையைச் சேமிக்க முடியவில்லை, விவரங்களுக்கு பதிவைப் பார்க்கவும்</translation>
     </message>
     <message>
-        <location filename="../../src/qml/ClassWidgets/pages/editor/Home.qml" line="185"/>
+        <location filename="../../src/qml/ClassWidgets/pages/editor/Home.qml" line="120"/>
+        <source>Schedule Created</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../src/qml/ClassWidgets/pages/editor/Home.qml" line="121"/>
+        <source>The schedule has been created successfully.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <source>Enter a name for your new schedule</source>
-        <translation>உங்கள் புதிய அட்டவணைக்கு ஒரு பெயரை உள்ளிடவும்</translation>
+        <translation type="vanished">உங்கள் புதிய அட்டவணைக்கு ஒரு பெயரை உள்ளிடவும்</translation>
     </message>
     <message>
-        <location filename="../../src/qml/ClassWidgets/pages/editor/Home.qml" line="193"/>
         <source>Schedule name</source>
-        <translation>அட்டவணை பெயர்</translation>
+        <translation type="vanished">அட்டவணை பெயர்</translation>
     </message>
     <message>
-        <location filename="../../src/qml/ClassWidgets/pages/editor/Home.qml" line="217"/>
         <source>Cannot be empty (⊙x⊙;)</source>
-        <translation>காலியாக இருக்க முடியாது (⊙x⊙;)</translation>
+        <translation type="vanished">காலியாக இருக்க முடியாது (⊙x⊙;)</translation>
     </message>
     <message>
-        <location filename="../../src/qml/ClassWidgets/pages/editor/Home.qml" line="220"/>
         <source>Cannot duplicate existing name (⊙x⊙;)</source>
-        <translation>ஏற்கனவே உள்ள பெயரை நகலெடுக்க முடியாது (⊙x⊙;)</translation>
+        <translation type="vanished">ஏற்கனவே உள்ள பெயரை நகலெடுக்க முடியாது (⊙x⊙;)</translation>
     </message>
     <message>
-        <location filename="../../src/qml/ClassWidgets/pages/editor/Home.qml" line="222"/>
         <source>Great! That&apos;s it. ヾ(≧▽≦*)o</source>
-        <translation>அருமை! அவ்வளவுதான். ヾ(≧▽≦*)o</translation>
+        <translation type="vanished">அருமை! அவ்வளவுதான். ヾ(≧▽≦*)o</translation>
     </message>
     <message>
         <source>Warning</source>
@@ -1522,32 +1516,32 @@ Do you want to continue using them, or discard and restore the original schedule
 <context>
     <name>ImportScheduleDialog</name>
     <message>
-        <location filename="../../src/core/convertor/slots.py" line="86"/>
+        <location filename="../../src/core/convertor/slots.py" line="179"/>
         <source>Import CSES Schedule</source>
         <translation>CSES அட்டவணையை இறக்குமதி செய்யவும்</translation>
     </message>
     <message>
-        <location filename="../../src/core/convertor/slots.py" line="89"/>
+        <location filename="../../src/core/convertor/slots.py" line="182"/>
         <source>CSES YAML Files (*.yaml *.yml)</source>
         <translation>CSES YAML கோப்புகள் (*.yaml *.yml)</translation>
     </message>
     <message>
-        <location filename="../../src/core/convertor/slots.py" line="100"/>
+        <location filename="../../src/core/convertor/slots.py" line="193"/>
         <source>Import Class Widgets 1 Schedule</source>
         <translation>வகுப்பு விட்செட்டுகள் 1 அட்டவணையை இறக்குமதி செய்யவும்</translation>
     </message>
     <message>
-        <location filename="../../src/core/convertor/slots.py" line="103"/>
+        <location filename="../../src/core/convertor/slots.py" line="196"/>
         <source>Class Widgets 1 JSON Files (*.json)</source>
         <translation>வகுப்பு விட்செட்டுகள் 1 சாதொபொகு கோப்புகள் (*.json)</translation>
     </message>
     <message>
-        <location filename="../../src/core/schedule/manager.py" line="237"/>
+        <location filename="../../src/core/schedule/manager.py" line="268"/>
         <source>Import Schedule</source>
         <translation>இறக்குமதி அட்டவணை</translation>
     </message>
     <message>
-        <location filename="../../src/core/schedule/manager.py" line="240"/>
+        <location filename="../../src/core/schedule/manager.py" line="271"/>
         <source>Class Widgets 2 JSON Files (*.json)</source>
         <translation>வகுப்பு விட்செட்டுகள் 2 சாதொபொகு கோப்புகள் (*.json)</translation>
     </message>
@@ -3209,17 +3203,17 @@ It&apos;s incompatible and may cause unexpected issues.</source>
         <translation type="vanished">விரைவு பொருள் சேர்</translation>
     </message>
     <message>
-        <location filename="../../src/core/convertor/cses.py" line="144"/>
+        <location filename="../../src/core/convertor/cses.py" line="145"/>
         <source>All Weeks</source>
         <translation>அனைத்து வாரங்களும்</translation>
     </message>
     <message>
-        <location filename="../../src/core/convertor/cses.py" line="146"/>
+        <location filename="../../src/core/convertor/cses.py" line="147"/>
         <source>Odd Weeks</source>
         <translation>ஒற்றைப்படை வாரங்கள்</translation>
     </message>
     <message>
-        <location filename="../../src/core/convertor/cses.py" line="148"/>
+        <location filename="../../src/core/convertor/cses.py" line="149"/>
         <source>Even Weeks</source>
         <translation>வாரங்கள் கூட</translation>
     </message>
@@ -3599,6 +3593,167 @@ It&apos;s incompatible and may cause unexpected issues.</source>
     </message>
 </context>
 <context>
+    <name>ScheduleSetupDialog</name>
+    <message>
+        <location filename="../../src/qml/ClassWidgets/Components/dialogs/ScheduleSetupDialog.qml" line="14"/>
+        <location filename="../../src/qml/ClassWidgets/Components/dialogs/ScheduleSetupDialog.qml" line="54"/>
+        <location filename="../../src/qml/ClassWidgets/Components/dialogs/ScheduleSetupDialog.qml" line="99"/>
+        <location filename="../../src/qml/ClassWidgets/Components/dialogs/ScheduleSetupDialog.qml" line="112"/>
+        <source>New Schedule</source>
+        <translation type="unfinished">புதிய அட்டவணை</translation>
+    </message>
+    <message>
+        <location filename="../../src/qml/ClassWidgets/Components/dialogs/ScheduleSetupDialog.qml" line="55"/>
+        <source>Create a new Class Widgets 2 schedule file.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../src/qml/ClassWidgets/Components/dialogs/ScheduleSetupDialog.qml" line="59"/>
+        <source>Import from File</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../src/qml/ClassWidgets/Components/dialogs/ScheduleSetupDialog.qml" line="60"/>
+        <source>Import a Class Widgets 2, iCalendar, CSES, or Class Widgets 1 schedule file.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../src/qml/ClassWidgets/Components/dialogs/ScheduleSetupDialog.qml" line="67"/>
+        <source>Class Widgets 2 Schedule</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../src/qml/ClassWidgets/Components/dialogs/ScheduleSetupDialog.qml" line="74"/>
+        <source>iCalendar Calendar</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../src/qml/ClassWidgets/Components/dialogs/ScheduleSetupDialog.qml" line="81"/>
+        <source>CSES Schedule Exchange Format</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../src/qml/ClassWidgets/Components/dialogs/ScheduleSetupDialog.qml" line="88"/>
+        <source>Class Widgets 1 Schedule</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../src/qml/ClassWidgets/Components/dialogs/ScheduleSetupDialog.qml" line="100"/>
+        <source>Import Your Schedule</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../src/qml/ClassWidgets/Components/dialogs/ScheduleSetupDialog.qml" line="101"/>
+        <source>Prepare Your Schedule</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../src/qml/ClassWidgets/Components/dialogs/ScheduleSetupDialog.qml" line="199"/>
+        <source>The selected file is not valid.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../src/qml/ClassWidgets/Components/dialogs/ScheduleSetupDialog.qml" line="226"/>
+        <source>Please enter a valid and unused name.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../src/qml/ClassWidgets/Components/dialogs/ScheduleSetupDialog.qml" line="250"/>
+        <source>Failed to complete the schedule. Please check the file and try again.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../src/qml/ClassWidgets/Components/dialogs/ScheduleSetupDialog.qml" line="348"/>
+        <source>Cancel</source>
+        <translation type="unfinished">ரத்துசெய்</translation>
+    </message>
+    <message>
+        <location filename="../../src/qml/ClassWidgets/Components/dialogs/ScheduleSetupDialog.qml" line="348"/>
+        <source>Back</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../src/qml/ClassWidgets/Components/dialogs/ScheduleSetupDialog.qml" line="362"/>
+        <source>Finish</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../src/qml/ClassWidgets/Components/dialogs/ScheduleSetupDialog.qml" line="362"/>
+        <source>Continue</source>
+        <translation type="unfinished">தொடரவும்</translation>
+    </message>
+    <message>
+        <location filename="../../src/qml/ClassWidgets/Components/dialogs/ScheduleSetupDialog.qml" line="377"/>
+        <source>Create a brand-new schedule or import an existing schedule file.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../src/qml/ClassWidgets/Components/dialogs/ScheduleSetupDialog.qml" line="438"/>
+        <source>Choose the file format to import.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../src/qml/ClassWidgets/Components/dialogs/ScheduleSetupDialog.qml" line="504"/>
+        <source>Finish the initial setup to create your new schedule.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../src/qml/ClassWidgets/Components/dialogs/ScheduleSetupDialog.qml" line="505"/>
+        <source>Confirm the details to finish importing.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../src/qml/ClassWidgets/Components/dialogs/ScheduleSetupDialog.qml" line="525"/>
+        <source>Name</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../src/qml/ClassWidgets/Components/dialogs/ScheduleSetupDialog.qml" line="531"/>
+        <source>This name will be used by default. You can change it anytime.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../src/qml/ClassWidgets/Components/dialogs/ScheduleSetupDialog.qml" line="567"/>
+        <source>Cannot duplicate existing name (⊙x⊙;)</source>
+        <translation type="unfinished">ஏற்கனவே உள்ள பெயரை நகலெடுக்க முடியாது (⊙x⊙;)</translation>
+    </message>
+    <message>
+        <location filename="../../src/qml/ClassWidgets/Components/dialogs/ScheduleSetupDialog.qml" line="568"/>
+        <source>Great! That&apos;s it. ヾ(≧▽≦*)o</source>
+        <translation type="unfinished">அருமை! அவ்வளவுதான். ヾ(≧▽≦*)o</translation>
+    </message>
+    <message>
+        <location filename="../../src/qml/ClassWidgets/Components/dialogs/ScheduleSetupDialog.qml" line="585"/>
+        <source>Start date</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../src/qml/ClassWidgets/Components/dialogs/ScheduleSetupDialog.qml" line="591"/>
+        <source>The first day of the schedule, used for multi-week rotation. Usually a Monday.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../src/qml/ClassWidgets/Components/dialogs/ScheduleSetupDialog.qml" line="629"/>
+        <source>Max week cycle</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../src/qml/ClassWidgets/Components/dialogs/ScheduleSetupDialog.qml" line="635"/>
+        <source>Most schools alternate weekly (every 2 weeks). Choose as needed.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../src/qml/ClassWidgets/Components/dialogs/ScheduleSetupDialog.qml" line="651"/>
+        <source>Every</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../src/qml/ClassWidgets/Components/dialogs/ScheduleSetupDialog.qml" line="669"/>
+        <source>weeks</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>ScheduleTableView</name>
     <message>
         <location filename="../../src/qml/ClassWidgets/Components/editor/schedule/ScheduleTableView.qml" line="193"/>
@@ -3607,7 +3762,7 @@ It&apos;s incompatible and may cause unexpected issues.</source>
         <translation type="unfinished">வகுப்பு</translation>
     </message>
     <message>
-        <location filename="../../src/qml/ClassWidgets/Components/editor/schedule/ScheduleTableView.qml" line="900"/>
+        <location filename="../../src/qml/ClassWidgets/Components/editor/schedule/ScheduleTableView.qml" line="905"/>
         <source>No classes this week</source>
         <translation type="unfinished"></translation>
     </message>
