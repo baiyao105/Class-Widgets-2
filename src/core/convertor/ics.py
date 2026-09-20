@@ -21,7 +21,7 @@ from src.core.schedule.model import (
     WeekRule,
     WeekType,
 )
-from src.core.utils import generate_id
+from src.core.utils import generate_id, get_random_subject_color
 
 from .common import build_meta, fill_short_breaks
 
@@ -452,6 +452,7 @@ def _read(path: str | Path, start_date: date | str) -> ScheduleData:
             Subject(
                 id=subject_id,
                 name=summary,
+                color=get_random_subject_color(),
                 location=location or None,
                 isLocalClassroom=not bool(location),
             )

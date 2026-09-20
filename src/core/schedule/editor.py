@@ -1,5 +1,5 @@
 from copy import deepcopy
-from datetime import datetime
+from datetime import datetime, timedelta
 from typing import Optional
 
 from PySide6.QtCore import QObject, Property, Signal, Slot, QTimer
@@ -541,6 +541,10 @@ class ScheduleEditor(QObject):
             if override.title:
                 data["title"] = override.title
                 title_overridden = True
+            if override.startTime:
+                data["startTime"] = override.startTime
+            if override.endTime:
+                data["endTime"] = override.endTime
         if subject_overridden and not title_overridden:
             data["title"] = None
         return data
@@ -574,22 +578,51 @@ class ScheduleEditor(QObject):
         # ISO weekday order, Monday ... Sunday, matching the editor table's
         # Monday-first columns: column index i is dayOfWeek i + 1.
         for day_of_week in (1, 2, 3, 4, 5, 6, 7):
-            day = next(
-                (
-                    candidate
-                    for candidate in self.schedule.days
-                    if not candidate.date
-                    and (
-                        not candidate.dayOfWeek
-                        or day_of_week in candidate.dayOfWeek
-                    )
+            # The editor receives an absolute semester week.  Match the QML
+            # calendar exactly: find the seven-day block from startDate, then
+            # normalize that block to its Monday before resolving columns.
+            try:
+                block_start = datetime.strptime(
+                    self.schedule.meta.startDate, "%Y-%m-%d"
+                ).date() + timedelta(days=(week_list[0] - 1) * 7)
+                week_start = block_start - timedelta(days=block_start.weekday())
+                current_date = week_start + timedelta(days=day_of_week - 1)
+                date_str = current_date.isoformat()
+            except (TypeError, ValueError, IndexError):
+                date_str = None
+
+            # A weekday may be described by several timelines at once, for
+            # example an all-week skeleton plus an independent parity or
+            # specific-week timeline.  Keep the same merge semantics as
+            # ScheduleServices: later timelines replace entries occupying the
+            # same time slot, while disjoint entries are retained.
+            matched_days = []
+            for candidate in self.schedule.days:
+                if candidate.date:
+                    if candidate.date == date_str:
+                        matched_days.append((4, candidate))
+                    continue
+                if (
+                    (not candidate.dayOfWeek or day_of_week in candidate.dayOfWeek)
                     and self._weeks_match(candidate.weeks, week_list, max_week_cycle)
-                ),
-                None,
-            )
-            if not day:
+                ):
+                    rule = normalize_week_rule(candidate.weeks)
+                    if rule is None or rule == WeekType.ALL:
+                        priority = 1
+                    elif isinstance(rule, int) or rule in (WeekType.ODD, WeekType.EVEN):
+                        priority = 2
+                    else:
+                        priority = 3
+                    matched_days.append((priority, candidate))
+            if not matched_days:
                 columns.append([])
                 continue
+
+            merged: dict[tuple[str, str], Entry] = {}
+            for _, day in sorted(matched_days, key=lambda item: item[0]):
+                for entry in day.entries:
+                    if entry.type == EntryType.CLASS:
+                        merged[(entry.startTime, entry.endTime)] = entry
 
             columns.append(
                 [
@@ -599,8 +632,9 @@ class ScheduleEditor(QObject):
                         day_of_week,
                         overrides_by_entry.get(entry.id, []),
                     )
-                    for entry in day.entries
-                    if entry.type == EntryType.CLASS
+                    for entry in sorted(
+                        merged.values(), key=lambda item: item.startTime
+                    )
                 ]
             )
 

@@ -11,7 +11,7 @@ from src.core.schedule.model import (
     Timetable,
     WeekType,
 )
-from src.core.utils import generate_id
+from src.core.utils import generate_id, get_random_subject_color
 
 from .common import build_meta, fill_short_breaks, minutes_to_hhmm
 
@@ -109,6 +109,7 @@ def _build_subjects(cw1: dict) -> tuple[list[Subject], dict[str, str]]:
             Subject(
                 id=subject_id,
                 icon="ic_fluent_book_20_regular",
+                color=get_random_subject_color(),
                 name=subject_name,
             )
         )

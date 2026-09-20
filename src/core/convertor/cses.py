@@ -14,7 +14,7 @@ from src.core.schedule.model import (
     Timetable,
     WeekType,
 )
-from src.core.utils import generate_id
+from src.core.utils import generate_id, get_random_subject_color
 
 from .common import build_meta, fill_short_breaks, to_cw_time
 
@@ -66,6 +66,7 @@ def to_schedule(document: CSESDocument) -> ScheduleData:
             Subject(
                 id=subject_id,
                 icon="ic_fluent_book_20_regular",
+                color=get_random_subject_color(),
                 name=item.name,
                 simplifiedName=item.simplified_name,
                 teacher=item.teacher,
