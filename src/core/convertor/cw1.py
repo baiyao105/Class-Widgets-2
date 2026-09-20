@@ -8,6 +8,7 @@ from src.core.schedule.model import (
     ScheduleData,
     Subject,
     Timeline,
+    Timetable,
     WeekType,
 )
 from src.core.utils import generate_id
@@ -164,6 +165,7 @@ def _build_entries(
 
 def _append_timeline_days(  # noqa: PLR0917
     days: list[Timeline],
+    overrides: list[dict],
     cw1: dict,
     subject_id_map: dict[str, str],
     timeline_key: str,
@@ -187,21 +189,56 @@ def _append_timeline_days(  # noqa: PLR0917
         if not any(entry.type == EntryType.CLASS and entry.title for entry in entries):
             continue
 
-        for entry in entries:
-            if entry.type == EntryType.CLASS and entry.title:
-                subject_id = subject_id_map.get(entry.title)
-                if subject_id:
-                    entry.subjectId = subject_id
+        # CW1 stores course names alongside its time layout.  Convert the
+        # layout into a reusable skeleton and put the names in overrides so
+        # CW1's even-week variant can share the same slots safely.
+        day_of_week = cw1_day + 1
+        if weeks == WeekType.ALL:
+            skeleton_entries = [entry.model_copy(deep=True) for entry in entries]
+            for entry in skeleton_entries:
+                if entry.type == EntryType.CLASS:
+                    entry.subjectId = None
                     entry.title = None
-
-        days.append(
-            Timeline(
-                id=generate_id("day"),
-                entries=entries,
-                dayOfWeek=[cw1_day + 1],
-                weeks=weeks,
+            days.append(
+                Timeline(
+                    id=generate_id("day"),
+                    entries=skeleton_entries,
+                    dayOfWeek=[day_of_week],
+                    weeks=WeekType.ALL,
+                )
             )
-        )
+            slots = {
+                (entry.startTime, entry.endTime): entry.id
+                for entry in skeleton_entries
+                if entry.type == EntryType.CLASS
+            }
+            for source in entries:
+                if source.type != EntryType.CLASS or not source.title:
+                    continue
+                overrides.append(
+                    {
+                        "entryId": slots[(source.startTime, source.endTime)],
+                        "dayOfWeek": [day_of_week],
+                        "weeks": WeekType.ALL,
+                        "subjectId": subject_id_map.get(source.title),
+                        "title": None if subject_id_map.get(source.title) else source.title,
+                    }
+                )
+        else:
+            for entry in entries:
+                if entry.type != EntryType.CLASS or not entry.title:
+                    continue
+                entry.subjectId = subject_id_map.get(entry.title)
+                if entry.subjectId:
+                    entry.title = None
+            days.append(
+                Timeline(
+                    id=generate_id("day"),
+                    entries=entries,
+                    dayOfWeek=[day_of_week],
+                    weeks=weeks,
+                )
+            )
 
 
 def to_schedule(document: CW1Document) -> ScheduleData:
@@ -216,9 +253,11 @@ def to_schedule(document: CW1Document) -> ScheduleData:
 
     subjects, subject_id_map = _build_subjects(cw1)
     days: list[Timeline] = []
+    overrides = []
 
     _append_timeline_days(
         days,
+        overrides,
         cw1,
         subject_id_map,
         "timeline",
@@ -242,6 +281,7 @@ def to_schedule(document: CW1Document) -> ScheduleData:
     if has_even_timeline or has_even_schedule:
         _append_timeline_days(
             days,
+            overrides,
             cw1,
             subject_id_map,
             "timeline_even",
@@ -249,11 +289,53 @@ def to_schedule(document: CW1Document) -> ScheduleData:
             WeekType.EVEN,
         )
 
+    # The legacy format has a separate even-week table.  Reuse an all-week
+    # slot when its time range is identical; only genuinely new even-week
+    # slots remain as an independent Timeline.
+    all_days = {
+        day.dayOfWeek[0]: day
+        for day in days
+        if day.weeks == WeekType.ALL and day.dayOfWeek
+    }
+    retained_days = []
+    for day in days:
+        if day.weeks != WeekType.EVEN or not day.dayOfWeek:
+            retained_days.append(day)
+            continue
+        base = all_days.get(day.dayOfWeek[0])
+        if not base:
+            retained_days.append(day)
+            continue
+        base_slots = {
+            (entry.startTime, entry.endTime): entry.id
+            for entry in base.entries
+            if entry.type == EntryType.CLASS
+        }
+        remaining = []
+        for entry in day.entries:
+            slot = (entry.startTime, entry.endTime)
+            if entry.type != EntryType.CLASS or slot not in base_slots:
+                remaining.append(entry)
+                continue
+            overrides.append(
+                {
+                    "entryId": base_slots[slot],
+                    "dayOfWeek": day.dayOfWeek,
+                    "weeks": WeekType.EVEN,
+                    "subjectId": entry.subjectId,
+                    "title": entry.title,
+                }
+            )
+        if any(entry.type == EntryType.CLASS for entry in remaining):
+            day.entries = remaining
+            retained_days.append(day)
+    days = retained_days
+
     return ScheduleData(
         meta=build_meta(),
         subjects=subjects,
         days=days,
-        overrides=[],
+        overrides=[Timetable(id=generate_id("override"), **item) for item in overrides],
     )
 
 

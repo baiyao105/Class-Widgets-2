@@ -11,6 +11,7 @@ from src.core.schedule.model import (
     ScheduleData,
     Subject,
     Timeline,
+    Timetable,
     WeekType,
 )
 from src.core.utils import generate_id
@@ -73,7 +74,10 @@ def to_schedule(document: CSESDocument) -> ScheduleData:
         )
 
     days: list[Timeline] = []
+    overrides: list[Timetable] = []
     for schedule in document.schedules:
+        if not schedule.enable_day:
+            continue
         entries: list[Entry] = []
         for item in schedule.classes:
             subject_name = (item.subject or "").strip()
@@ -100,20 +104,84 @@ def to_schedule(document: CSESDocument) -> ScheduleData:
             case _:
                 weeks = WeekType.ALL
 
-        days.append(
-            Timeline(
-                id=generate_id("day"),
-                entries=entries,
-                dayOfWeek=[schedule.enable_day] if schedule.enable_day else None,
-                weeks=weeks,
+        if weeks == WeekType.ALL:
+            skeleton = [entry.model_copy(deep=True) for entry in entries]
+            slot_ids = {}
+            for entry in skeleton:
+                if entry.type == EntryType.CLASS:
+                    slot_ids[(entry.startTime, entry.endTime)] = entry.id
+                    entry.subjectId = None
+                    entry.title = None
+            days.append(
+                Timeline(
+                    id=generate_id("day"), entries=skeleton,
+                    dayOfWeek=[schedule.enable_day], weeks=WeekType.ALL,
+                )
             )
-        )
+            for entry in entries:
+                if entry.type != EntryType.CLASS:
+                    continue
+                overrides.append(
+                    Timetable(
+                        id=generate_id("override"),
+                        entryId=slot_ids[(entry.startTime, entry.endTime)],
+                        dayOfWeek=[schedule.enable_day],
+                        weeks=WeekType.ALL,
+                        subjectId=entry.subjectId,
+                        title=entry.title,
+                    )
+                )
+        else:
+            days.append(
+                Timeline(
+                    id=generate_id("day"), entries=entries,
+                    dayOfWeek=[schedule.enable_day], weeks=weeks,
+                )
+            )
+
+    # Fold odd/even classes into an all-week skeleton when they use the same
+    # slot.  A slot that exists only in one parity remains a direct entry in
+    # its parity-specific Timeline, avoiding an empty placeholder every week.
+    all_days = {
+        day.dayOfWeek[0]: day for day in days
+        if day.weeks == WeekType.ALL and day.dayOfWeek
+    }
+    retained: list[Timeline] = []
+    for day in days:
+        if day.weeks not in (WeekType.ODD, WeekType.EVEN) or not day.dayOfWeek:
+            retained.append(day)
+            continue
+        base = all_days.get(day.dayOfWeek[0])
+        if not base:
+            retained.append(day)
+            continue
+        slots = {
+            (entry.startTime, entry.endTime): entry.id
+            for entry in base.entries if entry.type == EntryType.CLASS
+        }
+        remaining = []
+        for entry in day.entries:
+            slot = (entry.startTime, entry.endTime)
+            if entry.type != EntryType.CLASS or slot not in slots:
+                remaining.append(entry)
+                continue
+            overrides.append(
+                Timetable(
+                    id=generate_id("override"), entryId=slots[slot],
+                    dayOfWeek=day.dayOfWeek, weeks=day.weeks,
+                    subjectId=entry.subjectId, title=entry.title,
+                )
+            )
+        if any(entry.type == EntryType.CLASS for entry in remaining):
+            day.entries = remaining
+            retained.append(day)
+    days = retained
 
     return ScheduleData(
         meta=build_meta(),
         subjects=subjects,
         days=days,
-        overrides=[],
+        overrides=overrides,
     )
 
 
@@ -217,8 +285,10 @@ def from_schedule(schedule: ScheduleData) -> CSESDocument:
                         for override in override_map.get((dow, week_key), []):
                             if not (
                                 item["entry_id"] == override.entryId
-                                and override.subjectId
-                                and override.subjectId in subjects_map
+                                and (
+                                    (override.subjectId and override.subjectId in subjects_map)
+                                    or override.title
+                                )
                             ):
                                 continue
                             priority = 1 if week_key == week_str else 0
@@ -227,7 +297,13 @@ def from_schedule(schedule: ScheduleData) -> CSESDocument:
                                 best_priority = priority
 
                     if best_override:
-                        item["subject"] = subjects_map[best_override.subjectId].name
+                        if best_override.subjectId in subjects_map:
+                            item["subject"] = subjects_map[best_override.subjectId].name
+                        elif best_override.title:
+                            item["subject"] = best_override.title
+                        if best_override.startTime and best_override.endTime:
+                            item["start_time"] = _to_cses_time(best_override.startTime)
+                            item["end_time"] = _to_cses_time(best_override.endTime)
 
                 classes = [
                     CSESClass(
