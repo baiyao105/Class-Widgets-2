@@ -1282,7 +1282,7 @@ Please try again later.</source>
 <context>
     <name>ExportScheduleDialog</name>
     <message>
-        <location filename="../../src/core/convertor/slots.py" line="24"/>
+        <location filename="../../src/core/convertor/slots.py" line="23"/>
         <location filename="../../src/core/schedule/manager.py" line="286"/>
         <source>Export Schedule</source>
         <translation>导出课程表</translation>
@@ -1640,22 +1640,22 @@ Please try again later.</source>
 <context>
     <name>ImportScheduleDialog</name>
     <message>
-        <location filename="../../src/core/convertor/slots.py" line="42"/>
+        <location filename="../../src/core/convertor/slots.py" line="86"/>
         <source>Import CSES Schedule</source>
         <translation>导入 CSES 课程表</translation>
     </message>
     <message>
-        <location filename="../../src/core/convertor/slots.py" line="45"/>
+        <location filename="../../src/core/convertor/slots.py" line="89"/>
         <source>CSES YAML Files (*.yaml *.yml)</source>
         <translation>CSES YAML 文件 (*.yaml *.yml)</translation>
     </message>
     <message>
-        <location filename="../../src/core/convertor/slots.py" line="83"/>
+        <location filename="../../src/core/convertor/slots.py" line="100"/>
         <source>Import Class Widgets 1 Schedule</source>
         <translation>导入 Class Widgets 1 课程表</translation>
     </message>
     <message>
-        <location filename="../../src/core/convertor/slots.py" line="86"/>
+        <location filename="../../src/core/convertor/slots.py" line="103"/>
         <source>Class Widgets 1 JSON Files (*.json)</source>
         <translation>Class Widgets 1 JSON 文件 (*.json)</translation>
     </message>
@@ -3457,17 +3457,17 @@ It&apos;s incompatible and may cause unexpected issues.</source>
         <translation type="vanished">快速添加课程</translation>
     </message>
     <message>
-        <location filename="../../src/core/convertor/base.py" line="76"/>
+        <location filename="../../src/core/convertor/cses.py" line="144"/>
         <source>All Weeks</source>
         <translation>每周</translation>
     </message>
     <message>
-        <location filename="../../src/core/convertor/base.py" line="78"/>
+        <location filename="../../src/core/convertor/cses.py" line="146"/>
         <source>Odd Weeks</source>
         <translation>单周</translation>
     </message>
     <message>
-        <location filename="../../src/core/convertor/base.py" line="80"/>
+        <location filename="../../src/core/convertor/cses.py" line="148"/>
         <source>Even Weeks</source>
         <translation>双周</translation>
     </message>
@@ -3601,9 +3601,8 @@ It&apos;s incompatible and may cause unexpected issues.</source>
 <context>
     <name>ScheduleConverter</name>
     <message>
-        <location filename="../../src/core/convertor/cw2.py" line="87"/>
         <source>Class</source>
-        <translation>课程</translation>
+        <translation type="vanished">课程</translation>
     </message>
 </context>
 <context>

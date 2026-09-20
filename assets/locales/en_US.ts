@@ -1017,7 +1017,7 @@ Do you want to continue using them, or discard and restore the original schedule
 <context>
     <name>ExportScheduleDialog</name>
     <message>
-        <location filename="../../src/core/convertor/slots.py" line="24"/>
+        <location filename="../../src/core/convertor/slots.py" line="23"/>
         <location filename="../../src/core/schedule/manager.py" line="286"/>
         <source>Export Schedule</source>
         <translation type="unfinished"></translation>
@@ -1353,22 +1353,22 @@ Do you want to continue using them, or discard and restore the original schedule
 <context>
     <name>ImportScheduleDialog</name>
     <message>
-        <location filename="../../src/core/convertor/slots.py" line="42"/>
+        <location filename="../../src/core/convertor/slots.py" line="86"/>
         <source>Import CSES Schedule</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/core/convertor/slots.py" line="45"/>
+        <location filename="../../src/core/convertor/slots.py" line="89"/>
         <source>CSES YAML Files (*.yaml *.yml)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/core/convertor/slots.py" line="83"/>
+        <location filename="../../src/core/convertor/slots.py" line="100"/>
         <source>Import Class Widgets 1 Schedule</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/core/convertor/slots.py" line="86"/>
+        <location filename="../../src/core/convertor/slots.py" line="103"/>
         <source>Class Widgets 1 JSON Files (*.json)</source>
         <translation type="unfinished"></translation>
     </message>
@@ -2921,17 +2921,17 @@ It&apos;s incompatible and may cause unexpected issues.</source>
 <context>
     <name>Schedule</name>
     <message>
-        <location filename="../../src/core/convertor/base.py" line="76"/>
+        <location filename="../../src/core/convertor/cses.py" line="144"/>
         <source>All Weeks</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/core/convertor/base.py" line="78"/>
+        <location filename="../../src/core/convertor/cses.py" line="146"/>
         <source>Odd Weeks</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/core/convertor/base.py" line="80"/>
+        <location filename="../../src/core/convertor/cses.py" line="148"/>
         <source>Even Weeks</source>
         <translation type="unfinished"></translation>
     </message>
@@ -3079,14 +3079,6 @@ It&apos;s incompatible and may cause unexpected issues.</source>
     <message>
         <location filename="../../src/qml/ClassWidgets/Components/editor/schedule/ScheduleClip.qml" line="292"/>
         <source>Please send the log file to the developer or community to help us sort it out.</source>
-        <translation type="unfinished"></translation>
-    </message>
-</context>
-<context>
-    <name>ScheduleConverter</name>
-    <message>
-        <location filename="../../src/core/convertor/cw2.py" line="87"/>
-        <source>Class</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
