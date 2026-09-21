@@ -9,6 +9,7 @@ from PySide6.QtCore import Property, QObject, QUrl, Signal, Slot
 from PySide6.QtGui import QDesktopServices
 from PySide6.QtWidgets import QApplication, QFileDialog
 
+from src.core.convertor.converter import convert
 from src.core.convertor.slots import ScheduleIO
 from src.core.directories import SCHEDULES_PATH
 from src.core.parser import ScheduleParser
@@ -38,6 +39,7 @@ class ScheduleManager(QObject):
     initialized = Signal()
     scheduleSwitched = Signal(ScheduleData)
     scheduleModified = Signal(ScheduleData)
+    schedulesChanged = Signal()
 
     def __init__(self, schedules_dir: Path, app_central: "AppCentral"):
         super().__init__()
@@ -151,8 +153,10 @@ class ScheduleManager(QObject):
             files.append({
                 "name": p.stem,
                 "path": str(p),
-                "type": "local"  # 未来可以做拓展
+                "type": "local",  # 未来可以做拓展
+                "modifiedAt": datetime.fromtimestamp(p.stat().st_mtime).isoformat(timespec="seconds"),
             })
+        files.sort(key=lambda item: item["name"].casefold())
         return files
 
     @Slot(str)
@@ -167,6 +171,7 @@ class ScheduleManager(QObject):
             with open(path, "w", encoding="utf-8") as f:
                 json.dump(new_schedule.model_dump(), f, ensure_ascii=False, indent=4)
                 logger.success(f"New schedule created: {name}")
+                self.schedulesChanged.emit()
                 return True
         except Exception as e:
             logger.error(f"Error creating new schedule: {e}")
@@ -194,6 +199,7 @@ class ScheduleManager(QObject):
             self.scheduleSwitched.emit(self.schedule)
             self.scheduleModified.emit(self.schedule)
             logger.success(f"New schedule created and loaded: {name}")
+            self.schedulesChanged.emit()
             return True
         except Exception as e:
             logger.error(f"Error creating configured schedule: {e}")
@@ -211,6 +217,7 @@ class ScheduleManager(QObject):
             if path.exists():
                 path.unlink()
                 logger.info(f"Schedule deleted: {name}")
+                self.schedulesChanged.emit()
             return True
         except Exception as e:
             logger.error(f"Error deleting schedule: {e}")
@@ -225,7 +232,81 @@ class ScheduleManager(QObject):
             return False
         shutil.copy(src_path, dest_path)
         logger.success(f"Schedule copied: {src_name} -> {dest_name}")
+        self.schedulesChanged.emit()
         return True
+
+    @Slot("QVariantList", result=bool)
+    def duplicateSchedules(self, names: list) -> bool:
+        """批量复制课程表，并为目标文件生成不冲突的名称。"""
+        copied = False
+        for source_name in names or []:
+            source = str(source_name)
+            source_path = self.schedules_dir / f"{source}.json"
+            if not source_path.exists():
+                continue
+            suffix = " (Copy)"
+            destination_name = source + suffix
+            index = 2
+            while (self.schedules_dir / f"{destination_name}.json").exists():
+                destination_name = f"{source}{suffix} {index}"
+                index += 1
+            shutil.copy2(source_path, self.schedules_dir / f"{destination_name}.json")
+            copied = True
+        if copied:
+            self.schedulesChanged.emit()
+        return copied
+
+    @Slot("QVariantList", result=bool)
+    def deleteSchedules(self, names: list) -> bool:
+        """批量删除课程表；当前正在使用的课程表始终保留。"""
+        deleted = False
+        for name in names or []:
+            name = str(name)
+            if name == self.current_schedule_name:
+                continue
+            path = self.schedules_dir / f"{name}.json"
+            if path.exists():
+                path.unlink()
+                deleted = True
+        if deleted:
+            self.schedulesChanged.emit()
+        return deleted
+
+    @Slot("QVariantList", str, result=bool)
+    def exportSchedules(self, names: list, format_id: str = "json") -> bool:
+        """将多个课程表按指定格式导出到用户选择的目录。
+
+        format_id: "json" 直接复制 CW2 JSON；"cses" 转换为 CSES YAML。
+        """
+        target_format = (format_id or "json").strip().lower()
+        if target_format not in ("json", "cses"):
+            logger.error(f"不支持的导出格式: {format_id}")
+            return False
+
+        file_path = QFileDialog.getExistingDirectory(
+            None,
+            QApplication.translate("ExportScheduleDialog", "Export Schedules"),
+            str(self.schedules_dir),
+        )
+        if not file_path:
+            return False
+
+        destination = Path(file_path)
+        exported = False
+        for name in names or []:
+            source = self.schedules_dir / f"{str(name)}.json"
+            if not source.exists():
+                continue
+            try:
+                if target_format == "cses":
+                    # CSES 是另一种结构，需要真正转换而不是复制。
+                    convert(source, "cw2", destination / f"{source.stem}.yaml", "cses")
+                else:
+                    shutil.copy2(source, destination / source.name)
+                exported = True
+            except Exception as e:
+                logger.exception(f"导出课程表失败: {name}: {e}")
+        return exported
 
     @Slot(str, str, result=bool)
     def rename(self, old_name: str, new_name: str) -> bool:
@@ -254,6 +335,8 @@ class ScheduleManager(QObject):
                 self.app_central.configs.schedule.current_schedule = new_name
                 self.scheduleSwitched.emit(self.schedule)
                 self.scheduleModified.emit(self.schedule)
+
+            self.schedulesChanged.emit()
 
             return True
         except Exception as e:
@@ -294,6 +377,7 @@ class ScheduleManager(QObject):
 
             self.scheduleSwitched.emit(self.schedule)
             self.scheduleModified.emit(self.schedule)
+            self.schedulesChanged.emit()
             logger.success(f"Schedule imported from {src_path.name}")
             return True
         except Exception as e:

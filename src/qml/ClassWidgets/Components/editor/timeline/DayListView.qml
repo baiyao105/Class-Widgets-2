@@ -11,6 +11,7 @@ ColumnLayout {
     property var days: AppCentral.scheduleEditor.days
     readonly property string selectedDayId: timelinesView.currentIndex >= 0 ? days[timelinesView.currentIndex].id : ""
     property string oldId: ""
+    property real listTopMargin: 0
 
     // Layout.fillWidth: true
     Layout.fillHeight: true
@@ -124,6 +125,7 @@ ColumnLayout {
     ListView {
         visible: model.length > 0
         id: timelinesView
+        Layout.topMargin: root.listTopMargin
         Layout.fillHeight: true
         Layout.fillWidth: true
         model: days

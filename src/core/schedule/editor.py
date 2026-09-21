@@ -47,6 +47,7 @@ class ScheduleEditor(QObject):
     overridesChanged = Signal()
     overridesRevisionChanged = Signal()
     dirtyChanged = Signal()
+    scheduleFilesChanged = Signal()
 
     def __init__(self, manager: ScheduleManager):
         super().__init__()
@@ -66,6 +67,22 @@ class ScheduleEditor(QObject):
         self._rebuild_schedule_caches()
         self.updated.connect(self._on_updated)
         self.manager.scheduleSwitched.connect(self.refresh)
+        self.manager.schedulesChanged.connect(self.scheduleFilesChanged)
+
+    @Slot("QVariantList", result=bool)
+    def duplicateSchedules(self, names: list) -> bool:
+        """编辑器首页的批量复制入口。"""
+        return self.manager.duplicateSchedules(names)
+
+    @Slot("QVariantList", str, result=bool)
+    def exportSchedules(self, names: list, format_id: str = "json") -> bool:
+        """编辑器首页的批量导出入口。format_id 支持 "json"（CW2）与 "cses"。"""
+        return self.manager.exportSchedules(names, format_id)
+
+    @Slot("QVariantList", result=bool)
+    def deleteSchedules(self, names: list) -> bool:
+        """编辑器首页的批量删除入口。当前课表会由管理器保留。"""
+        return self.manager.deleteSchedules(names)
 
     def _validate_time_range(self, start_time: str, end_time: str) -> bool:
         """

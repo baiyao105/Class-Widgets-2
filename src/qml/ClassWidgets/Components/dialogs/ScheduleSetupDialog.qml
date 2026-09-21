@@ -75,7 +75,8 @@ Dialog {
             description: "*.ics / *.ical",
             icon: "ic_fluent_calendar_20_regular",
             image: "",
-            id: "ics"
+            id: "ics",
+            beta: true
         },
         {
             title: qsTr("CSES Schedule Exchange Format"),
@@ -472,10 +473,21 @@ Dialog {
                             Layout.fillWidth: true
                             spacing: 0
 
-                            Text {
-                                Layout.fillWidth: true
-                                text: modelData.title
-                                typography: Typography.Body
+                            RowLayout {
+                                spacing: 6
+
+                                Text {
+                                    text: modelData.title
+                                    typography: Typography.Body
+                                }
+
+                                InfoBadge {
+                                    Layout.alignment: Qt.AlignVCenter
+                                    visible: modelData.beta === true
+                                    text: "Beta"
+                                    solid: false
+                                    severity: Severity.Warning
+                                }
                             }
 
                             Text {
@@ -626,7 +638,7 @@ Dialog {
 
                         Text {
                             Layout.fillWidth: true
-                            text: qsTr("Max week cycle")
+                            text: qsTr("Maximum Rotation Weeks")
                             typography: Typography.Body
                         }
 

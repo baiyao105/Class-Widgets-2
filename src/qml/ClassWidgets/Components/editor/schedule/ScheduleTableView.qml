@@ -104,6 +104,26 @@ Item {
         return block
     }
 
+    // Absolute week whose Monday (weekStart) holds the given date. The backend
+    // numbers weeks from meta.startDate, which only matches Monday-based weeks
+    // when startDate is itself a Monday. This reverses weekStartFor() so a
+    // non-Monday startDate still resolves "today" to the Monday-based week the
+    // table actually displays. isoweekday(startDate) is invariant under +7d
+    // steps, so the Monday offset is constant and we can solve for W directly.
+    function weekForDate(date) {
+        let start = parseDate(AppCentral.scheduleEditor.meta.startDate)
+        if (!isFinite(start.getTime()))
+            start = new Date()
+        const isoStart = start.getDay() === 0 ? 7 : start.getDay()
+
+        const monday = new Date(date.getTime())
+        const isoDay = monday.getDay() === 0 ? 7 : monday.getDay()
+        monday.setDate(monday.getDate() - (isoDay - 1))
+
+        const delta = (monday.getTime() - start.getTime()) / 86400000 + isoStart - 1
+        return Math.max(1, Math.floor(delta / 7) + 1)
+    }
+
     // 1=Monday ... 7=Sunday, matching the backend. Columns run Monday ... Sunday,
     // the same order getEffectiveEntries() returns.
     function dayOfWeekForColumn(columnIndex) {
