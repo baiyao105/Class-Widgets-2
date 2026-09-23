@@ -125,10 +125,26 @@ ColumnLayout {
     ListView {
         visible: model.length > 0
         id: timelinesView
-        Layout.topMargin: root.listTopMargin
         Layout.fillHeight: true
         Layout.fillWidth: true
         model: days
+
+        header: Item {
+            width: timelinesView.width
+            height: root.listTopMargin
+        }
+
+        // 列表铺满面板后，滚动条也会一直顶到面板上沿，顶部会被悬浮的日期按钮压住。
+        // 这里把滚动条整体下移一个按钮高度，让它完整可见。
+        // RinUI 的 ScrollBar 内部用 anchors.verticalCenter 定位，必须先清除，
+        // 否则会与下面的 anchors.top 冲突。
+        ScrollBar.vertical: ScrollBar {
+            policy: ScrollBar.AsNeeded
+            anchors.verticalCenter: undefined
+            anchors.top: parent.top
+            anchors.topMargin: root.listTopMargin
+            height: parent ? parent.height - root.listTopMargin : 0
+        }
 
         onModelChanged: {
             for (let i = 0; i < model.length; i++) {
@@ -136,6 +152,22 @@ ColumnLayout {
                     currentIndex = i
                     return
                 }
+            }
+        }
+
+        // RinUI 的 ListView 在 onModelChanged 里会跑 updateAnimation：
+        // 它把 contentY 从 -12 动画到 0。带 header 时列表"顶部"是 -headerHeight，
+        // 这个动画会把 header 占位整段滚出视口，首项于是落到视口 y=0，
+        // 正好被悬浮的日期按钮压住 —— 这就是进页面时默认被遮挡的原因。
+        // 这里换成不含 contentY 的版本：保留淡入，不再改写滚动位置。
+        updateAnimation: ParallelAnimation {
+            NumberAnimation {
+                target: timelinesView
+                property: "opacity"
+                from: 0
+                to: 1
+                duration: Utils.animationSpeed
+                easing.type: Easing.OutQuart
             }
         }
 

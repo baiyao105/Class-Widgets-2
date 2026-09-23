@@ -155,8 +155,11 @@ Item {
     }
 
     // ===== 表格视图 =====
+    // 第 0 列是选择模式下的勾选列（无表头文字），
+    // 第 1、2 列才是名称与修改时间。
     TableModel {
         id: scheduleModel
+        TableModelColumn { display: "selected" }
         TableModelColumn { display: "name" }
         TableModelColumn { display: "editedAt" }
     }
@@ -167,6 +170,8 @@ Item {
         const rows = []
         for (let i = 0; i < items.length; ++i) {
             rows.push({
+                // 勾选列本身不显示文本，勾选状态由 CheckBox 直接反映 selectedNames。
+                selected: "",
                 name: String(items[i].name || ""),
                 editedAt: view.formatModifiedAt(items[i].modifiedAt),
             })
@@ -176,6 +181,13 @@ Item {
     onSchedulesChanged: { rebuildModel(); tableView.forceLayout() }
     Component.onCompleted: rebuildModel()
 
+    // 勾选列宽度。必须始终大于 0：
+    // RinUI 的 TableViewDelegate 只在 column 0 的 delegate 里绘制整行背景
+    // （background.visible: delegate.column === 0，且矩形宽度撑满整行），
+    // 该列宽度为 0 时不会创建 delegate，整行背景与选中高亮都会消失。
+    // 因此这里保持恒定居中列宽，选择模式只切换勾选框的显示，列宽不变、内容也不会跳动。
+    readonly property int selectionColumnWidth: 38
+
     HorizontalHeaderView {
         id: horizontalHeader
         visible: view.viewMode === 1
@@ -183,7 +195,8 @@ Item {
         anchors.right: parent.right
         anchors.top: parent.top
         syncView: tableView
-        model: [qsTr("Name"), qsTr("Last edited")]
+        // 勾选列为空表头
+        model: ["", qsTr("Name"), qsTr("Last edited")]
     }
 
     TableView {
@@ -202,11 +215,16 @@ Item {
         editTriggers: TableView.NoEditTriggers
         rowHeightProvider: function(row) { return 40 }
         columnWidthProvider: function(column) {
-            const nameWidth = Math.floor((tableView.width - 1) * 0.50)
-            const editedWidth = Math.max(0, tableView.width - 1 - nameWidth)
+            // 勾选列恒定占位（见 selectionColumnWidth 的说明），其余宽度按比例分配。
+            const checkboxWidth = view.selectionColumnWidth
+            const rest = Math.max(0, tableView.width - 1 - checkboxWidth)
+            const nameWidth = Math.floor(rest * 0.50)
+            const editedWidth = Math.max(0, rest - nameWidth)
             if (column === 0)
-                return nameWidth
+                return checkboxWidth
             if (column === 1)
+                return nameWidth
+            if (column === 2)
                 return editedWidth
             return 0
         }
@@ -217,8 +235,30 @@ Item {
 
         delegate: TableViewDelegate {
             id: cell
-            highlighted: view.isSelected(view.nameAt(cell.row))
-                || (!view.selectionMode && view.nameAt(cell.row) === view.currentName)
+            // 每行对应的课程表名，供选中判断与勾选框复用。
+            readonly property string rowName: view.nameAt(cell.row)
+            readonly property bool isSelectionColumn: cell.column === 0
+
+            highlighted: view.isSelected(rowName)
+                || (!view.selectionMode && rowName === view.currentName)
+
+            // 勾选列：默认显示课表图标，进入选择模式后换成勾选框。
+            CheckBox {
+                visible: view.selectionMode && cell.isSelectionColumn
+                checked: view.isSelected(cell.rowName)
+                anchors.centerIn: parent
+                onClicked: view.selectionToggled(cell.rowName)
+            }
+
+            // 非选择模式下用图标占位，避免该列空着。
+            // 图标与网格视图的卡片保持一致，选中时用主题主色。
+            Icon {
+                visible: !view.selectionMode && cell.isSelectionColumn
+                anchors.centerIn: parent
+                name: "ic_fluent_calendar_clock_20_regular"
+                size: 20
+                color: cell.highlighted ? Colors.proxy.primaryColor : Colors.proxy.textColor
+            }
 
             TapHandler {
                 acceptedButtons: Qt.LeftButton
@@ -311,11 +351,13 @@ Item {
             title: qsTr("Export")
             position: Position.Right
             MenuItem {
-                text: qsTr("Export to JSON")
+                icon.source: PathManager.images("icons/cw2_editor.png")
+                text: qsTr("Class Widgets 2 Schedule")
                 onTriggered: contextMenu.exportRequested(contextMenu.scheduleName, "json")
             }
             MenuItem {
-                text: qsTr("Export to CSES")
+                icon.source: PathManager.images("icons/smart_teach.svg")
+                text: qsTr("CSES Schedule Exchange Format")
                 onTriggered: contextMenu.exportRequested(contextMenu.scheduleName, "cses")
             }
         }

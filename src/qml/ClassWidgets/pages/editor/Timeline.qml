@@ -23,7 +23,7 @@ Item {
             // closable: false
 
             customContent: Hyperlink {
-                text: qsTr("Set")
+                text: qsTr("Open Editor Settings")
                 onClicked: {
                     navigationView.push(PathManager.qml("pages/editor/Settings.qml"))
                 }
@@ -54,7 +54,6 @@ Item {
                     anchors.top: parent.top
                     anchors.left: parent.left
                     anchors.right: parent.right
-                    // 高度由实际换行后的文本高度决定。
                     implicitHeight: Math.max(iconItem.implicitHeight, labelText.implicitHeight) + 16
                     onClicked: {
                         const currentDate = AppCentral.scheduleEditor.getStartDate()
@@ -62,6 +61,12 @@ Item {
                         const maxWeekCycle = AppCentral.scheduleEditor.getMaxWeekCycle()
                         maxWeekCycleBox.value = maxWeekCycle
                         datePickerDialog.open()
+                    }
+
+                    radius: 6
+
+                    AcrylicBrush {
+                        sourceItem: dayList
                     }
 
                     // 用锚定而不是 Layout 定宽：文本宽度直接由按钮宽度推出，

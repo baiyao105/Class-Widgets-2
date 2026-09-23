@@ -93,11 +93,13 @@ RowLayout {
             position: Position.Bottom
 
             MenuItem {
-                text: qsTr("Export to JSON")
+                icon.source: PathManager.images("icons/cw2_editor.png")
+                text: qsTr("Class Widgets 2 Schedule")
                 onTriggered: root.exportSelected("json")
             }
             MenuItem {
-                text: qsTr("Export to CSES")
+                icon.source: PathManager.images("icons/smart_teach.svg")
+                text: qsTr("CSES Schedule Exchange Format")
                 onTriggered: root.exportSelected("cses")
             }
         }

@@ -66,7 +66,6 @@ Dialog {
         {
             title: qsTr("Class Widgets 2 Schedule"),
             description: "*.json",
-            icon: "ic_fluent_document_20_regular",
             image: PathManager.images("icons/cw2_editor.png"),
             id: "cw2"
         },

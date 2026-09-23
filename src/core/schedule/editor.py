@@ -219,18 +219,36 @@ class ScheduleEditor(QObject):
     @Slot(str)
     def removeSubject(self, subject_id: str) -> None:
         """删除科目"""
-        subject = self.getSubject(subject_id)
-        if not subject:
-            return
+        self.removeSubjects([subject_id])
 
+    @Slot("QVariantList", result=int)
+    def removeSubjects(self, subject_ids: list) -> int:
+        """批量删除科目，并移除引用这些科目的课程条目。返回实际删除的科目数量。
+
+        单个与批量共用这一条路径，保证两者对课程条目的清理行为完全一致。
+        """
+        if not self.schedule:
+            return 0
+
+        targets = {str(sid) for sid in (subject_ids or []) if str(sid)}
+        if not targets:
+            return 0
+
+        removed = [s for s in self.schedule.subjects if s.id in targets]
+        if not removed:
+            return 0
+
+        self.schedule.subjects = [
+            s for s in self.schedule.subjects if s.id not in targets
+        ]
         # 删除相关的课程条目
         for day in self.schedule.days:
-            day.entries = [e for e in day.entries if e.subjectId != subject_id]
+            day.entries = [e for e in day.entries if e.subjectId not in targets]
 
-        self.schedule.subjects.remove(subject)
         self._emit_entries_changed()
         self.updated.emit()
         self.subjectsChanged.emit()
+        return len(removed)
 
     @Slot(str, result="QVariant")
     def getSubject(self, subject_id: str) -> Optional[Subject]:
