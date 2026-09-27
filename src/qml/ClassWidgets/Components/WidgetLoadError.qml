@@ -3,6 +3,7 @@ import QtQuick.Controls
 import QtQuick.Layouts
 import RinUI
 import ClassWidgets.Theme
+import ClassWidgets.Easing
 
 Widget {
     id: root
@@ -35,7 +36,8 @@ Widget {
             property: "scale"
             to: 1
             duration: 220
-            easing.type: Easing.OutBack
+            easing.type: Easing.Bezier
+            easing.bezierCurve: BezierCurve.popBack
         }
     }
 

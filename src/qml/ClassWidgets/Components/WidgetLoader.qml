@@ -1,9 +1,16 @@
-import QtQuick
+﻿import QtQuick
 
 Loader {
     id: loader
 
     property string widgetSource: model.qmlPath
+    property bool editMode: false
+
+    signal contentLoading()
+    signal contentLoaded()
+    signal contentFailed()
+    signal removalRequested(string instanceId)
+
     property bool reloading: false
     property bool loadFailed: false
     property bool loadingErrorPlaceholder: false
@@ -33,7 +40,14 @@ Loader {
         })
     }
 
+    onEditModeChanged: {
+        if (loader.item && loader.item.hasOwnProperty("editMode"))
+            loader.item.editMode = editMode
+    }
+
     onStatusChanged: {
+        if (status === Loader.Loading)
+            contentLoading()
         if (status === Loader.Ready) {
             reloading = false
 
@@ -42,7 +56,8 @@ Loader {
                 if (item && item.hasOwnProperty("widgetName"))
                     item.widgetName = model.name || model.typeId
                 if (item && item.hasOwnProperty("editMode"))
-                    item.editMode = widgetsContainer.editMode
+                    item.editMode = editMode
+                contentLoaded()
                 return
             }
 
@@ -59,11 +74,12 @@ Loader {
                 item.widget_id = model.widget_id
             }
             if (item && item.hasOwnProperty("editMode")) {
-                item.editMode = widgetsContainer.editMode
+                item.editMode = editMode
             }
-            anim.start()
+            contentLoaded()
         } else if (status === Loader.Error) {
             reloading = false
+            contentFailed()
 
             if (loadingErrorPlaceholder) {
                 console.error("Unable to load widget error placeholder:", errorWidgetSource)
@@ -96,16 +112,6 @@ Loader {
         }
     }
 
-    Connections {
-        target: widgetsContainer
-
-        function onEditModeChanged() {
-            if (loader.item && loader.item.hasOwnProperty("editMode")) {
-                loader.item.editMode = widgetsContainer.editMode
-            }
-        }
-    }
-
     function reloadErrorPlaceholder() {
         reloading = true
         loadingErrorPlaceholder = true
@@ -124,7 +130,7 @@ Loader {
         ignoreUnknownSignals: true
 
         function onRemoveRequested() {
-            WidgetsModel.removeInstance(model.instanceId)
+            removalRequested(model.instanceId)
         }
 
         function onRetryRequested() {

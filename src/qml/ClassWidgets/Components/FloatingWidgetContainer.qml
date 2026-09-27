@@ -1,4 +1,5 @@
 import QtQuick
+import ClassWidgets.Easing
 
 Item {
     id: root
@@ -165,7 +166,8 @@ Item {
                 from: 0.8
                 to: 1
                 duration: 400
-                easing.type: Easing.OutBack
+                easing.type: Easing.Bezier
+                easing.bezierCurve: BezierCurve.popBack
             }
         }
     }
