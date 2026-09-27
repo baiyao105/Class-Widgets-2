@@ -3,28 +3,6 @@ import QtQuick.Controls
 import RinUI
 import ClassWidgets.Easing
 
-/*
- * WidgetsLayoutDelegate —— 单个小组件
- *
- * 位置由外层 ListView 管理。本文件负责：
- *   内容尺寸、出现/消失动画、拖拽视觉偏移、右键菜单。
- *
- * 「小组件自己隐藏」和「删除小组件」是两件完全不同的事，必须走两条路径：
- *
- *   · 自己隐藏（contentHidden，即 loader.item.visible === false）
- *       → 保留 naturalWidth，只让 growFactor 1→0 把占位宽度收回，
- *         同时播 fade/scale。回归显示时宽度再放回，是同一组属性的逆行程。
- *   · 删除（requestRemove）
- *       → 先播 fade/scale 把这块内容淡出，**等淡出走完再**收 growFactor，
- *         最后才移除模型行。收宽度期间内容已经不可见，所以不会与邻居重叠。
- *
- * 关键点：内容隐藏后 loader 的尺寸会变成 0，若不保留上一次量到的尺寸，
- * 邻居就会在 visible=false 的那一帧直接瞬移——这正是「隐藏动画播完就
- * 马上排好位置」的原因。因此隐藏期间只收起 growFactor，尺寸一律保留。
- *
- * 容器整体隐藏（点击 / 自动隐藏）由 WidgetsContainer 负责整体滑出屏幕，
- * 这里只额外做视觉收缩，不改变宽度。
- */
 Item {
     id: widgetContainer
 
@@ -38,8 +16,6 @@ Item {
                                        ? (model.instanceId || "") : ""
 
     // 是否处于「应该显示」的状态（用于出现/消失判定）
-    //  · 组件自己 visible=false  → 不显示（收起占位宽度，但保留 naturalWidth）
-    //  · 容器整体隐藏            → 视觉上收起（但宽度不动，由容器滑出）
     readonly property bool contentHidden: loader.status === Loader.Ready
         && loader.item && loader.item.visible === false
 
@@ -73,34 +49,30 @@ Item {
         }
     }
 
-    // 间距并入自身宽度：ListView.spacing 是按 item 数量加的，
-    // 小组件宽度归零时它仍会留空档。乘上 growFactor 后一起收起。
     width: (naturalWidth + spacing) * growFactor
-    // 高度不随因子收放：loader 的 y 依赖它，若一起塌到 0，内容会被顶出并裁切。
     height: naturalHeight
 
-    // ---- 出现 / 消失 ----
     property real visOpacity: 0
     property real visScale: 0.8
     property bool removing: false
-    property bool entrancePlayed: false   // 入场只播一次，避免切主题重播
+    property bool initialized: false   // 入场只播一次，避免切主题重播
 
     opacity: (dragHandler.active ? 0.75 : 1) * visOpacity * containerFade
     scale: visScale * dragRaiseScale
     rotation: host.editMode ? shakeAngle : 0
     z: dragHandler.active ? 1 : 0
 
-    // 拖拽被拿起的项：稍微放大，提示「它被抓起来了」
-    property real dragRaiseScale: 1.0
+    // 拖拽被拿起
+    property real dragRaiseScale: 1
     Behavior on dragRaiseScale {
         enabled: !dragHandler.active
         NumberAnimation { duration: 260; easing.type: Easing.OutCubic }
     }
 
-    // 编辑模式摇晃角度：退出编辑时 rotation 直接回 0，不残留随机角度
+    // 编辑模式摇晃角度
     property real shakeAngle: 0
 
-    // 容器整体隐藏时的视觉收缩（不改宽度）
+    // 容器整体隐藏时的视觉收缩
     property real containerFade: host.hide ? 0 : 1
     Behavior on containerFade {
         NumberAnimation { duration: 300; easing.type: Easing.InOutQuad }
@@ -113,10 +85,6 @@ Item {
             measuredWidth = 0
             measuredHeight = 0
         } else if (loader.status === Loader.Ready) {
-            // 只在内容真正参与布局时重新量尺寸。
-            // 内容自己隐藏后 loader.width 会塌成 0，这时若跟着改写，
-            // 邻居会在 visible=false 的那一帧直接瞬移，隐藏动画等于白播；
-            // 所以隐藏期间一律沿用上一次量到的原始尺寸。
             if (!contentHidden && loader.width > 0) {
                 measuredWidth = loader.width
                 measuredHeight = loader.height
@@ -140,10 +108,7 @@ Item {
             show()
     }
 
-    // ---- 出现 / 消失：同一组属性，逆行程 ----
-
-    // 小组件自己隐藏/显示（visible 切换）走这条：
-    // growFactor 负责占位宽度，visOpacity/visScale 负责视觉，二者同时进行。
+    // 出现
     function show() {
         if (removing)
             return
@@ -164,10 +129,8 @@ Item {
             exitAnim.restart()
     }
 
-    // 出现：opacity 0→1，scale 0.8→1（与历史版本一致）
     SequentialAnimation {
         id: enterAnim
-        // delegate 被销毁时 index 会变成 -1，必须夹住，否则是负时长报错
         PauseAnimation { duration: Math.max(0, widgetContainer.widgetIndex) * 125 }
         ParallelAnimation {
             NumberAnimation {
@@ -190,7 +153,6 @@ Item {
     // 与宽度合拢（走 growFactor 的 InCubic）保持一致的快节奏，收得干脆。
     SequentialAnimation {
         id: exitAnim
-        PauseAnimation { duration: Math.max(0, widgetContainer.widgetIndex) * 125 }
         ParallelAnimation {
             NumberAnimation {
                 target: widgetContainer
@@ -208,11 +170,7 @@ Item {
         }
     }
 
-    // ---- 删除：与「自己隐藏」完全分开的一条路径 ----
-    //
-    // 顺序很重要：先把内容淡出，再收占位宽度，最后才移除模型行。
-    // 若像以前那样让 growFactor 在淡出刚开始时就归零，邻居会立刻滑进
-    // 这块还看得见的位置，形成重叠。
+    // 删除
     function requestRemove() {
         if (removing)
             return
@@ -226,8 +184,6 @@ Item {
             return
         }
 
-        // 已经因为「自己隐藏」而收起来的组件（growFactor 已是 0），
-        // 直接移除即可；再播一遍会把它从 0 弹回 1 再收回去。
         if (growFactor <= 0.001) {
             WidgetsModel.removeInstance(widgetInstanceId)
             return
@@ -313,14 +269,14 @@ Item {
 
             if (widgetContainer.removing)
                 return                      // 正在删除，别播入场
-            if (widgetContainer.entrancePlayed) {
+            if (widgetContainer.initialized) {
                 // 切主题重载：只补齐可见性，不重播动画
                 widgetContainer.growFactor = widgetContainer.contentHidden ? 0 : 1
                 widgetContainer.visOpacity = widgetContainer.contentHidden ? 0 : 1
                 widgetContainer.visScale = widgetContainer.contentHidden ? 0.8 : 1
                 return
             }
-            widgetContainer.entrancePlayed = true
+            widgetContainer.initialized = true
 
             if (widgetContainer.contentHidden)
                 widgetContainer.hide()

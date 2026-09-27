@@ -5,14 +5,6 @@ import ClassWidgets.Easing
 
 /*
  * WidgetsLayout —— 小组件横向排布（水平 ListView）
- *
- * 位置完全交给 ListView，本文件只做两件事：
- *   1. 把 contentWidth / contentHeight 正确算出来给容器用；
- *   2. 提供拖拽排序的落点计算。
- *
- * 注意：水平 ListView 的 contentHeight 等于它自己的 height（它只横向滚动），
- * 所以不能用它来当内容高度，否则会与 ListView.height 形成循环绑定。
- * 这里改成显式遍历 delegate 求最大高度。
  */
 Item {
     id: layoutRoot
@@ -104,29 +96,30 @@ Item {
 
         model: WidgetsModel
 
-        // 增删都通过 delegate 自身的宽度动画完成，位置变化是连续的，
-        // 因此不需要 add/remove 的 displaced 过渡（启用反而会与宽度动画互相重定向）。
-        // 拖拽排序则是离散的模型 move，必须开启 move 的 displaced 过渡，
-        // 否则只有被拖的项在动、被挤移的邻居会瞬间跳位。
-        // 用弹簧曲线 popBack：被拖落的项落位时带轻微 overshoot，更灵动。
         move: Transition {
             NumberAnimation {
                 properties: "x,y"
-                duration: 260
-                easing.type: Easing.Bezier
-                easing.bezierCurve: BezierCurve.popBack
+                duration: 240
+                easing.type: Easing.OutCubic
             }
         }
         addDisplaced: Transition { enabled: false }
         removeDisplaced: Transition { enabled: false }
         displaced: Transition {
-            NumberAnimation {
-                properties: "x,y"
-                duration: 260
-                easing.type: Easing.Bezier
-                easing.bezierCurve: BezierCurve.popBack
-            }
+    id: displacedTransition
+
+    SequentialAnimation {
+        PauseAnimation {
+            duration: 30
         }
+
+        NumberAnimation {
+            properties: "x,y"
+            duration: 260
+            easing.type: Easing.OutCubic
+        }
+    }
+}
 
         delegate: WidgetsLayoutDelegate {
             host: layoutRoot

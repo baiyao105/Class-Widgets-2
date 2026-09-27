@@ -24,8 +24,6 @@ Item {
 
     property real dragOffsetX: 0
     property real dragOffsetY: 0
-    // 是否处于「松开回位」阶段：仅在此阶段才允许 dragOffset 动画，
-    // 拖拽过程中仍是逐帧赋值，避免每帧被动画重定向导致拖拽跟手变慢。
     property bool settleContainerDrag: false
     property real hideMargin: {
         if (floatingMode) return 0
@@ -256,7 +254,10 @@ Item {
             id: acceptButton
             highlighted: true
             icon.name: "ic_fluent_checkmark_20_regular"
-            onClicked: widgetsContainer.editMode = false
+            onClicked: {
+                WidgetsModel.save_config()
+                widgetsContainer.editMode = false
+            }
         }
     }
 
