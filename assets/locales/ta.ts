@@ -5915,7 +5915,7 @@ then tap &quot;Edit Widget Screen&quot; in the menu to experience it.</source>
         <translation type="vanished">விட்செட்கள் திரையைத் திருத்து</translation>
     </message>
     <message>
-        <location filename="../../src/qml/ClassWidgets/Components/WidgetsContainer.qml" line="243"/>
+        <location filename="../../src/qml/ClassWidgets/Components/WidgetsContainer.qml" line="241"/>
         <source>Add</source>
         <translation>கூட்டு</translation>
     </message>
@@ -5923,17 +5923,17 @@ then tap &quot;Edit Widget Screen&quot; in the menu to experience it.</source>
 <context>
     <name>WidgetsLayoutDelegate</name>
     <message>
-        <location filename="../../src/qml/ClassWidgets/Components/WidgetsLayoutDelegate.qml" line="416"/>
+        <location filename="../../src/qml/ClassWidgets/Components/WidgetsLayoutDelegate.qml" line="372"/>
         <source>Edit </source>
         <translation type="unfinished">திருத்தவும் </translation>
     </message>
     <message>
-        <location filename="../../src/qml/ClassWidgets/Components/WidgetsLayoutDelegate.qml" line="432"/>
+        <location filename="../../src/qml/ClassWidgets/Components/WidgetsLayoutDelegate.qml" line="388"/>
         <source>Delete</source>
         <translation type="unfinished">நீக்கு</translation>
     </message>
     <message>
-        <location filename="../../src/qml/ClassWidgets/Components/WidgetsLayoutDelegate.qml" line="438"/>
+        <location filename="../../src/qml/ClassWidgets/Components/WidgetsLayoutDelegate.qml" line="394"/>
         <source>Edit Widgets Screen</source>
         <translation type="unfinished">விட்செட்கள் திரையைத் திருத்து</translation>
     </message>
