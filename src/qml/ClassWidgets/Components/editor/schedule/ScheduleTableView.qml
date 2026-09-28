@@ -923,7 +923,9 @@ Item {
                 }
             }
 
-            // Empty state for schedules without class entries. Mirrors the
+            // Empty state for weeks without any timeline entries. The table
+            // renders whatever the timeline has scheduled for the current week,
+            // so an empty week means no timeline covers it yet. Mirrors the
             // Timeline page's blank placeholder style (EntryListView). Centered
             // in the visible viewport; for an empty table the content height
             // equals the viewport height, so it lands in the exact middle.
@@ -946,14 +948,15 @@ Item {
                         Layout.fillWidth: true
                         horizontalAlignment: Text.AlignHCenter
                         typography: Typography.BodyLarge
-                        text: qsTr("No classes this week")
+                        text: qsTr("Nothing scheduled this week")
                     }
                     Text {
                         horizontalAlignment: Text.AlignHCenter
                         Layout.fillWidth: true
                         typography: Typography.Caption
                         text: qsTr(
-                            "Add classes to this week to fill in your schedule."
+                            "Configure the timeline to display your classes "
+                            + "and activities here."
                         )
                     }
                 }
