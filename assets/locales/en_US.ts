@@ -4490,32 +4490,52 @@ Class Widgets has restored the default theme.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/qml/ClassWidgets/pages/editor/Timeline.qml" line="92"/>
+        <location filename="../../src/qml/ClassWidgets/pages/editor/Timeline.qml" line="97"/>
         <source>Set Start Date &amp; Maximum Rotation Weeks</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/qml/ClassWidgets/pages/editor/Timeline.qml" line="111"/>
-        <source>Set date and max weeks</source>
+        <location filename="../../src/qml/ClassWidgets/pages/editor/Timeline.qml" line="116"/>
+        <source>Start Date &amp; Maximum Rotation Weeks</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/qml/ClassWidgets/pages/editor/Timeline.qml" line="119"/>
-        <source>Start date:</source>
+        <location filename="../../src/qml/ClassWidgets/pages/editor/Timeline.qml" line="133"/>
+        <source>Start date</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/qml/ClassWidgets/pages/editor/Timeline.qml" line="129"/>
-        <source>Max week cycle:</source>
+        <location filename="../../src/qml/ClassWidgets/pages/editor/Timeline.qml" line="139"/>
+        <source>The first day of the schedule, used for multi-week rotation. Usually a Monday.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/qml/ClassWidgets/pages/editor/Timeline.qml" line="145"/>
+        <location filename="../../src/qml/ClassWidgets/pages/editor/Timeline.qml" line="169"/>
+        <source>Maximum Rotation Weeks</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../src/qml/ClassWidgets/pages/editor/Timeline.qml" line="175"/>
+        <source>Most schools alternate weekly (every 2 weeks). Choose as needed.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../src/qml/ClassWidgets/pages/editor/Timeline.qml" line="191"/>
+        <source>Every</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../src/qml/ClassWidgets/pages/editor/Timeline.qml" line="203"/>
+        <source>weeks</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../src/qml/ClassWidgets/pages/editor/Timeline.qml" line="217"/>
         <source>Failed</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/qml/ClassWidgets/pages/editor/Timeline.qml" line="146"/>
+        <location filename="../../src/qml/ClassWidgets/pages/editor/Timeline.qml" line="218"/>
         <source>Failed to set start date or max week cycle. Please report this issue to the community or the developer.</source>
         <translation type="unfinished"></translation>
     </message>
