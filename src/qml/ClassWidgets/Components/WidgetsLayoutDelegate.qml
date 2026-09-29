@@ -254,6 +254,7 @@ Item {
         id: loader
         editMode: host.editMode
         transformOrigin: Item.Center
+        scale: widgetContainer.visualScale  // 补漏掉的scale参
 
         onWidthChanged: widgetContainer.syncNaturalSize()
         onHeightChanged: widgetContainer.syncNaturalSize()
